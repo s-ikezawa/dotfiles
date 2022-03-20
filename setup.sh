@@ -14,3 +14,7 @@ if [ ! -e ~/.zshrc ]; then
   ln -s $CURRENT_DIR/.zshrc ~/.zshrc
 fi
 
+if [ ! -e ~/.p10k.zsh ]; then
+  echo "create .p10k.zsh symlink"
+  ln -s $CURRENT_DIR/.p10k.zsh ~/.p10k.zsh
+fi
