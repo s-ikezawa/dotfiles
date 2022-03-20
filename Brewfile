@@ -2,6 +2,7 @@ tap "Homebrew/bundle"
 tap "Homebrew/cask"
 
 brew "mas"
+brew "zsh-autosuggestions"
 
 cask "visual-studio-code"
 cask "google-chrome"
