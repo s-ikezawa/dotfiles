@@ -10,3 +10,4 @@ cask "cmd-eikana"
 cask "bitwarden"
 
 mas "Quiver", id: 866773894
+mas "Magnet", id: 441258766

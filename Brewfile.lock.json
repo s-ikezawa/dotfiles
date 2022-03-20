@@ -5,7 +5,7 @@
         "revision": "36e0f7a5df44761ccf1901877aaf4ed3a2ff8c06"
       },
       "homebrew/cask": {
-        "revision": "f1adcb945db556f923d60263cf6ccac4eb135ae1"
+        "revision": "eb6cb0f78fa29cf1d2e218dc217fd258b894eda7"
       }
     },
     "cask": {
@@ -80,7 +80,8 @@
       "Quiver": {
         "id": "866773894",
         "version": "3.2.7"
-      }
+      },
+      "Magnet": null
     }
   },
   "system": {
