@@ -6,6 +6,7 @@ tap "romkatv/powerlevel10k"
 brew "mas"
 brew "zsh-autosuggestions"
 brew "powerlevel10k"
+brew "lima"
 
 cask "visual-studio-code"
 cask "google-chrome"
