@@ -7,3 +7,7 @@ else
 fi
 
 brew bundle --file './Brewfile'
+
+CURRENT_DIR=`pwd`
+ln -s $CURRENT_DIR/.zshrc ~/.zshrc
+
