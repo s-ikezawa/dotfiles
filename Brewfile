@@ -1,9 +1,11 @@
 tap "Homebrew/bundle"
 tap "Homebrew/cask"
 tap "Homebrew/cask-fonts"
+tap "romkatv/powerlevel10k"
 
 brew "mas"
 brew "zsh-autosuggestions"
+brew "powerlevel10k"
 
 cask "visual-studio-code"
 cask "google-chrome"
