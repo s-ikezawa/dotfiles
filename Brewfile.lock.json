@@ -26,6 +26,12 @@
         "options": {
           "full_name": "cmd-eikana"
         }
+      },
+      "brave-browser": {
+        "version": "1.36.117.0,136.117",
+        "options": {
+          "full_name": "brave-browser"
+        }
       }
     },
     "brew": {
