@@ -1,0 +1,32 @@
+{
+  "entries": {
+    "tap": {
+      "homebrew/bundle": {
+        "revision": "36e0f7a5df44761ccf1901877aaf4ed3a2ff8c06"
+      },
+      "homebrew/cask": {
+        "revision": "f1adcb945db556f923d60263cf6ccac4eb135ae1"
+      }
+    },
+    "cask": {
+      "visual-studio-code": {
+        "version": "1.65.2",
+        "options": {
+          "full_name": "visual-studio-code"
+        }
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "monterey": {
+        "HOMEBREW_VERSION": "3.4.2",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "d9c9c115ee554a63838205181c95d9c8b11efe67",
+        "CLT": "13.3.0.0.1.1645755326",
+        "Xcode": "13.2.1",
+        "macOS": "12.3"
+      }
+    }
+  }
+}
