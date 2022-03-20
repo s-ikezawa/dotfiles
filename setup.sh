@@ -9,5 +9,8 @@ fi
 brew bundle --file './Brewfile'
 
 CURRENT_DIR=`pwd`
-ln -s $CURRENT_DIR/.zshrc ~/.zshrc
+if [ ! -e ~/.zshrc ]; then
+  echo "create zshrc symlink"
+  ln -s $CURRENT_DIR/.zshrc ~/.zshrc
+fi
 
