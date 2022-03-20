@@ -26,8 +26,9 @@ setopt hist_reduce_blanks
 # 自動補完
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# theme
+# theme(powerlevel10k)
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# lima + docker
+export DOCKER_HOST=unix://$HOME/.lima/docker/sock/docker.sock
