@@ -32,6 +32,12 @@
         "options": {
           "full_name": "brave-browser"
         }
+      },
+      "bitwarden": {
+        "version": "1.32.0",
+        "options": {
+          "full_name": "bitwarden"
+        }
       }
     },
     "brew": {
