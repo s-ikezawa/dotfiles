@@ -20,6 +20,12 @@
         "options": {
           "full_name": "google-chrome"
         }
+      },
+      "cmd-eikana": {
+        "version": "2.2.3",
+        "options": {
+          "full_name": "cmd-eikana"
+        }
       }
     }
   },
