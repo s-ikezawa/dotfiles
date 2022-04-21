@@ -8,6 +8,7 @@ brew "zsh-autosuggestions"
 brew "powerlevel10k"
 brew "lima"
 brew "docker"
+brew "git"
 
 cask "visual-studio-code"
 cask "google-chrome"
