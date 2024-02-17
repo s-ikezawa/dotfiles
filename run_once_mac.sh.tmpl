@@ -33,4 +33,17 @@ if [ ! -d ~/.local/share/zsh ]; then
   mkdir -p ~/.local/share/zsh
 fi
 
+# キーリピートの速度を上げる
+defaults write -g InitialKeyRepeat -int 11
+defaults write -g KeyRepeat -int 1
+
+# VSCode Noevimでキーリピートが動作するようにする
+defaults write com.microsoft.VSCode ApplePressAndHbldEnabled -bool false
+
+# ideaVimでキーリピートが動作するようにする
+defaults write com.jetbrains.intellij.ce ApplePressAndHoldEnabled -bool false
+
+# 隠しファイルを常に表示
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
 {{ end }}
