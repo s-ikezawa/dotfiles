@@ -35,9 +35,15 @@ cask "raycast"
 Brewfile
 
 # FZFのインストーラー起動
+{{ if eq .chezmoi.arch "amd64" -}}
 if [ -f /usr/local/opt/fzf/install ]; then
   /usr/local/opt/fzf/install --xdg --key-bindings --completion --no-update-rc
 fi
+{{ else if eq .chezmoi.arch "arm64" -}}
+if [ -f /opt/homebrew/opt/fzf/install ]; then
+  /opt/homebrew/opt/fzf/install --xdg --key-bindings --completion --no-update-rc
+fi
+{{- end }}
 
 echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
 if [ ! -d ~/.local/share/zsh ]; then
