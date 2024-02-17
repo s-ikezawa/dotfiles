@@ -14,12 +14,16 @@ if ! command -v brew &>/dev/null; then
 fi
 
 brew bundle --no-lock --file=/dev/stdin << Brewfile
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
 brew "chezmoi"
 brew "git"
 brew "zsh-completion"
 cask "1password"
 cask "1password-cli"
 cask "arc"
+cask "wezterm"
+cask "font-hackgen-nerd"
 Brewfile
 
 echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
