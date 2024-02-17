@@ -22,5 +22,8 @@ cask "arc"
 Brewfile
 
 echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
+if [ ! -d ~/.local/share/zsh ]; then
+  mkdir -p ~/.local/share/zsh
+fi
 
 {{ end }}
