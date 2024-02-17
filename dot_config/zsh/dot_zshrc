@@ -54,3 +54,20 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # 補完リストの表示間隔を狭くする
 setopt list_packed
 
+#=======================================================================================
+# fzf (Fuzzy finder)
+#=======================================================================================
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!**/.git/*"'
+export FZF_DEFAULT_OPTS="--height 60% --reverse --border=sharp --margin=0,1 --color=light"
+export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!**/.git/*"'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=header,grid {}' --preview-window=right:60%"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+
+#=======================================================================================
+# zoxide (cdコマンドをrustで書いたもの)
+#=======================================================================================
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi

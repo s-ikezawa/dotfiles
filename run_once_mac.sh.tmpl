@@ -19,6 +19,8 @@ tap "homebrew/cask-fonts"
 brew "chezmoi"
 brew "git"
 brew "zsh-completion"
+brew "fzf"
+brew "zoxide"
 cask "1password"
 cask "1password-cli"
 cask "arc"
@@ -27,6 +29,11 @@ cask "font-hackgen-nerd"
 cask "karabiner-elements"
 cask "raycast"
 Brewfile
+
+# FZFのインストーラー起動
+if [ -f /usr/local/opt/fzf/install ]; then
+  /usr/local/opt/fzf/install --xdg --key-bindings --completion --no-update-rc
+fi
 
 echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
 if [ ! -d ~/.local/share/zsh ]; then
