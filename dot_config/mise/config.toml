@@ -1,5 +1,6 @@
 [tools]
 go = "1.22.0"
+lua = "latest"
 
 [settings]
 go_set_gobin = false
