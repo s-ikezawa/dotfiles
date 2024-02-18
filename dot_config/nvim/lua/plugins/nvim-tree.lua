@@ -9,12 +9,12 @@ return {
 			sort = {
 				sorter = "case_sensitive",
 			},
-      view = {
-        width = 35,
-      },
-      renderer = {
-        group_empty = true,
-      },
+			view = {
+				width = 35,
+			},
+			renderer = {
+				group_empty = true,
+			},
 			filters = {
 				dotfiles = false,
 			},

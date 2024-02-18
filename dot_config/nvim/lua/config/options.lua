@@ -18,10 +18,12 @@ opt.hlsearch = false
 opt.termguicolors = true
 opt.relativenumber = true
 -- opt.colorcolumn = "120"
-opt.signcolumn = "yes" 
+opt.signcolumn = "yes"
 opt.cmdheight = 1
 opt.scrolloff = 10
 opt.completeopt = "menuone,noinsert,noselect"
+opt.winblend = 0
+opt.pumblend = 0
 
 -- Behaviour
 opt.hidden = true
@@ -37,4 +39,3 @@ opt.mouse:append("a")
 opt.clipboard:append("unnamedplus")
 opt.modifiable = true
 opt.encoding = "UTF-8"
-
