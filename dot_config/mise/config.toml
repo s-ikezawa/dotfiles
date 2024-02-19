@@ -2,6 +2,7 @@
 go = "1.22.0"
 lua = "latest"
 deno = "latest"
+java = "adoptopenjdk-21.0.2+13.0.LTS"
 
 [settings]
 go_set_gobin = false
