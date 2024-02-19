@@ -12,3 +12,5 @@ export GOPATH=${XDG_DATA_HOME}/go
 export GOBIN=${GOPATH}/bin
 PATH="${GOBIN}:${PATH}"
 
+# PostgreSQL Client
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
