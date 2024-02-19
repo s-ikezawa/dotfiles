@@ -57,7 +57,11 @@ setopt list_packed
 #=======================================================================================
 # zsh-abbr
 #=======================================================================================
+{{ if eq .chezmoi.arch "amd64" -}}
 [ -f /usr/local/share/zsh-abbr/zsh-abbr.zsh ] && source /usr/local/share/zsh-abbr/zsh-abbr.zsh
+{{ else if eq .chezmoi.arch "arm64" -}}
+[ -f /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh ] && source /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh
+{{- end }}
 
 abbr -S lg='lazygit'
 abbr -S idea='open -na "IntelliJ IDEA CE.app"'
