@@ -55,6 +55,14 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 setopt list_packed
 
 #=======================================================================================
+# zsh-abbr
+#=======================================================================================
+[ -f /usr/local/share/zsh-abbr/zsh-abbr.zsh ] && source /usr/local/share/zsh-abbr/zsh-abbr.zsh
+
+abbr -S lg='lazygit'
+abbr -S idea='open -na "IntelliJ IDEA CE.app"'
+
+#=======================================================================================
 # fzf (Fuzzy finder)
 #=======================================================================================
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
