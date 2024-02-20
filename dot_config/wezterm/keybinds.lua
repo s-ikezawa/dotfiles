@@ -14,6 +14,7 @@ return {
     { key = 'J', mods = 'LEADER', action = act.AdjustPaneSize{ 'Down', 5 } },
     { key = 'K', mods = 'LEADER', action = act.AdjustPaneSize{ 'Up', 5 } },
     { key = 'L', mods = 'LEADER', action = act.AdjustPaneSize{ 'Right', 5 } },
+    { key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
     { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
 
     -- Window(Tab)
@@ -29,10 +30,14 @@ return {
     { key = '7', mods = 'LEADER', action = act.ActivateTab(6) },
     { key = '8', mods = 'LEADER', action = act.ActivateTab(7) },
     { key = '9', mods = 'LEADER', action = act.ActivateTab(8) },
+    { key = 'q', mods = 'LEADER', action = act.CloseCurrentTab{ confirm = true } },
 
     -- Copy Mode
     { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
     { key = ']', mods = 'LEADER', action = act.PasteFrom 'Clipboard'},
+
+    { key = 'r', mods = 'LEADER', action = act.ReloadConfiguration },
+    { key = 'K', mods = 'CTRL', action = act.ClearScrollback 'ScrollbackOnly' },
   },
 
   key_tables = {
