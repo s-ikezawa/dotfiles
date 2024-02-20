@@ -13,31 +13,36 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-require("config.options")
-require("config.keymaps")
-require("config.autocmd")
 
-require("lazy").setup("plugins", {
-  install = {
-    colorscheme = { "catppuccin" },
-  },
-  rtp = {
-    disabled_plugin = {
-      "gzip",
-      "matchit",
-      "matchparen",
-      "netrw",
-      "netrwPlugin",
-      "tarPlugin",
-      "tohtml",
-      "tutor",
-      "zipPlugin",
+if vim.g.vscode then
+  vim.opt.foldopen=
+  require("config.vscode-keymaps")
+else
+  require("config.options")
+  require("config.keymaps")
+  require("config.autocmd")
+  
+  require("lazy").setup("plugins", {
+    install = {
+      colorscheme = { "catppuccin" },
     },
-  },
-  change_detection = {
-    enabled = true,
-    notify = false,
-  },
-})
-vim.cmd[[colorscheme catppuccin]]
-
+    rtp = {
+      disabled_plugin = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrw",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+    change_detection = {
+      enabled = true,
+      notify = false,
+    },
+  })
+  vim.cmd[[colorscheme catppuccin]]
+end
