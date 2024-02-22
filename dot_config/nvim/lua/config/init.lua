@@ -15,7 +15,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 if vim.g.vscode then
-  vim.opt.foldopen=
   require("config.vscode-keymaps")
 else
   require("config.options")
