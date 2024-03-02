@@ -15,5 +15,6 @@ config.window_background_opacity = 0.9
 config.text_background_opacity = 0.9
 config.macos_window_background_blur = 15
 config.audible_bell = "Disabled"
+config.scrollback_lines = 100000
 
 return config
