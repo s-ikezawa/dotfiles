@@ -4,6 +4,7 @@ lua = "latest"
 deno = "latest"
 java = "adoptopenjdk-21.0.2+13.0.LTS"
 rust = "latest"
+yarn = "1.22.19"
 
 [settings]
 go_set_gobin = false
