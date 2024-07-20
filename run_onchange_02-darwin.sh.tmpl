@@ -1,0 +1,15 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "darwin" }}
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew bundle --no-lock --file=/dev/stdin << Brewfile
+
+brew "chezmoi"
+cask "1password"
+cask "1password-cli"
+
+Brewfile
+
+{{ end }}

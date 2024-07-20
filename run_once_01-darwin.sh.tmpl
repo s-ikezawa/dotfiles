@@ -1,0 +1,15 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "darwin" }}
+
+# XDG用ディレクトリの作成
+mkdir -p $HOME/.config/ $HOME/.cache $HOME/.local/share/zsh $HOME/.local/state
+
+# ZSHの設定ファイルをXDG構成から読み込むように設定
+echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
+
+# Homebrewのインストール
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+{{ end }}
