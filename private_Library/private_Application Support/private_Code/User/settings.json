@@ -8,6 +8,7 @@
     "explorer.compactFolders": false,
     "editor.tabSize": 2,
     "editor.formatOnSave": true,
+    "editor.renderWhitespace": "boundary",
     "[typescript]": {
         "editor.defaultFormatter": "biomejs.biome",
         "editor.codeActionsOnSave": {
