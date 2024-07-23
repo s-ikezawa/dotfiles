@@ -6,3 +6,8 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 # mise
 export PATH="$XDG_DATA_HOME/mise/shims:$PATH"
+
+# Golang
+export GOPATH="$XDG_DATA_HOME/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
