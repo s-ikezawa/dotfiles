@@ -20,5 +20,6 @@
         "editor.codeActionsOnSave": {
             "quickfix.biome": "explicit"
         }
-    }
+    },
+    "git.openRepositoryInParentFolders": "always"
 }
