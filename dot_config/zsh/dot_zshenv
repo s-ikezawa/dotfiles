@@ -11,3 +11,6 @@ export PATH="$XDG_DATA_HOME/mise/shims:$PATH"
 export GOPATH="$XDG_DATA_HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$GOBIN:$PATH"
+
+# Postgresql
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
