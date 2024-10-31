@@ -60,3 +60,7 @@ fi
 ln -snfv $REPO_DIR/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -snfv $REPO_DIR/vscode/snippets ~/Library/Application\ Support/Code/User/snippets
 ln -snfv $REPO_DIR/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+
+# Mac
+# 言語を切り替えた時にインジケーターを表示しない
+defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0
