@@ -46,3 +46,6 @@ ln -snfv $REPO_DIR/alacritty $XDG_CONFIG_HOME/alacritty
 
 # git
 ln -snfv $REPO_DIR/git $XDG_CONFIG_HOME/git
+
+# neovim
+ln -snfv $REPO_DIR/nvim $XDG_CONFIG_HOME/nvim
