@@ -3,6 +3,9 @@ vim.g.maplocalleader = " "
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = ""
+vim.opt.backup = false
+vim.opt.swapfile = false
+vim.opt.writebackup = false
 
 -- ui
 vim.opt.termguicolors = true
@@ -14,6 +17,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number" -- 行番号のみハイライトする
 
 -- indention
 vim.opt.expandtab = true
