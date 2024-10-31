@@ -17,10 +17,17 @@ if !(type brew > /dev/null 2>&1); then
 fi
 
 # repository clone
+REPO_DIR=$HOME/Projects/github.com/s-ikezawa/dotfiles
 if [ ! -d $HOME/Projects/github.com/s-ikezawa/dotfiles ]; then
-  git clone https://github.com/s-ikezawa/dotfiles.git $HOME/Projects/github.com/s-ikezawa/dotfiles
+  git clone https://github.com/s-ikezawa/dotfiles.git ${REPO_DIR}
 fi
-cd $HOME/Projects/github.com/s-ikezawa/dotfiles
+cd ${REPO_DIR}
 
 # package install
 brew bundle --file=./Brewfile
+
+# /etc/zshenvはMacの場合なので他のOSの場合は要確認
+echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
+
+# link
+ln -sf $REPO_DIR/zsh $HOME/.config/zsh

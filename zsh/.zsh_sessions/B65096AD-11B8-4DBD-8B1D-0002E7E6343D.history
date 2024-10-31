@@ -1,0 +1,21 @@
+cd
+cd .ssh
+mkdir .ssh
+cd .ssh
+touch config
+vim config
+cd
+cd .config
+ls
+cd zsh
+ls
+ls -alG
+touch .zprofile
+nvim .zprofile
+vim .zprofile
+touch .zshrc
+vim .zshrc
+vim .zprofile
+vim .zshrc
+~/bin/chezmoi add --template .zshrc
+~/bin/chezmoi add --template .zprofile
