@@ -33,7 +33,7 @@ echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
 # link
 ################################################################################
 # zsh
-ln -sf $REPO_DIR/zsh $XDG_CONFIG_HOME/zsh
+ln -snfv $REPO_DIR/zsh $XDG_CONFIG_HOME/zsh
 
 # karabiner-elements
 if [ ! -d $XDG_CONFIG_HOME/karabiner ]; then
