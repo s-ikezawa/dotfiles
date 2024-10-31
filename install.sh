@@ -39,7 +39,10 @@ ln -sf $REPO_DIR/zsh $XDG_CONFIG_HOME/zsh
 if [ ! -d $XDG_CONFIG_HOME/karabiner ]; then
   mkdir -p $XDG_CONFIG_HOME/karabiner
 fi
-ln -sf $REPO_DIR/karabiner/karabiner.json $XDG_CONFIG_HOME/karabiner/karabiner.json
+ln -snfv $REPO_DIR/karabiner/karabiner.json $XDG_CONFIG_HOME/karabiner/karabiner.json
 
 # alacritty
-ln -sf $REPO_DIR/alacritty $XDG_CONFIG_HOME/alacritty
+ln -snfv $REPO_DIR/alacritty $XDG_CONFIG_HOME/alacritty
+
+# git
+ln -snfv $REPO_DIR/git $XDG_CONFIG_HOME/git
