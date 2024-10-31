@@ -14,3 +14,8 @@ vim.opt.tabstop = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+-- search
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.wildmenu = true
