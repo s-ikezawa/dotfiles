@@ -1,0 +1,22 @@
+[general]
+import = [
+  # "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  # "~/.config/alacritty/catppuccin-macchiato.toml"
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[font]
+normal = { family = "UDEV Gothic NF", style = "Regular" }
+bold = { family = "UDEV Gothic NF", style = "Bold" }
+italic = { family = "UDEV Gothic NF", style = "Italic" }
+bold_italic = { family = "UDEV Gothic NF", style = "BoldItalic" }
+size = 16.0 # default 11.25
+offset = { x = 1, y = 2 }
+
+[window]
+padding = { x = 8, y = 4 }
+
+[scrolling]
+history = 100000
+multiplier = 3
