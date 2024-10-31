@@ -6,6 +6,7 @@ brew "ghq"
 brew "git"
 brew "mas"
 brew "mise"
+brew "nvim"
 brew "zoxide"
 brew "zsh-completions"
 
