@@ -49,3 +49,14 @@ ln -snfv $REPO_DIR/git $XDG_CONFIG_HOME/git
 
 # neovim
 ln -snfv $REPO_DIR/nvim $XDG_CONFIG_HOME/nvim
+
+# vscode
+if [ ! -d ~/Library/Application\ Support/Code/User ]; then
+  mkdir -p ~/Library/Application\ Support/Code/User
+fi
+if [ ! -d ~/Library/Application\ Support/Code/User/snippets ]; then
+  rm -rf ~/Library/Application\ Support/Code/User/snippets
+fi
+ln -snfv $REPO_DIR/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+ln -snfv $REPO_DIR/vscode/snippets ~/Library/Application\ Support/Code/User/snippets
+ln -snfv $REPO_DIR/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
