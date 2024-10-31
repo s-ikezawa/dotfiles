@@ -18,6 +18,15 @@ vim.opt.splitright = true
 vim.opt.wrap = false
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number" -- 行番号のみハイライトする
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = '→ ',
+  trail = '·',
+  lead = '·',
+  extends = '»',
+  precedes = '«',
+  nbsp = '×',
+}
 
 -- indention
 vim.opt.expandtab = true
