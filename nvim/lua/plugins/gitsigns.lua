@@ -3,10 +3,6 @@ return {
   event = "VeryLazy",
   config = function()
     require("gitsigns").setup({
-      signs = {
-        delete = { text = "󰍵" },
-        changedelete = { text = "󱕖" },
-      },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
         local function map(mode, l, r, opts)
