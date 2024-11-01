@@ -2,9 +2,9 @@ return {
   "lewis6991/gitsigns.nvim",
   event = "VeryLazy",
   config = function()
-    require("gitsigns").setup({
+    require("gitsigns").setup {
       on_attach = function(bufnr)
-        local gitsigns = require("gitsigns")
+        local gitsigns = require "gitsigns"
         local function map(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
@@ -14,27 +14,27 @@ return {
         -- Navigation
         map("n", "]c", function()
           if vim.wo.diff then
-            vim.cmd.normal({ "]c", bang = true })
+            vim.cmd.normal { "]c", bang = true }
           else
-            gitsigns.nav_hunk("next")
+            gitsigns.nav_hunk "next"
           end
         end, { desc = "Jump to next git change" })
 
         map("n", "[c", function()
           if vim.wo.diff then
-            vim.cmd.normal({ "[c", bang = true })
+            vim.cmd.normal { "[c", bang = true }
           else
-            gitsigns.nav_hunk("prev")
+            gitsigns.nav_hunk "prev"
           end
         end, { desc = "Jump to previous git change" })
 
         -- Actions
         -- visual mode
         map("v", "<leader>hs", function()
-          gitsigns.stage_hunk { vim.fn.line("."), vim.fn.line("v") }
+          gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
         end, { desc = "stage git hunk" })
         map("v", "<leader>hr", function()
-          gitsigns.reset_hunk { vim.fn.line("."), vim.fn.line("v") }
+          gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
         end, { desc = "reset git hunk" })
 
         -- normal mode
@@ -46,7 +46,7 @@ return {
         map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git preview hunk" })
         map("n", "<leader>hd", gitsigns.diffthis, { desc = "git diff against index" })
         map("n", "<leader>hD", function()
-          gitsigns.diffthis('@')
+          gitsigns.diffthis "@"
         end, { desc = "git diff against last commit" })
 
         -- toggle
@@ -54,8 +54,8 @@ return {
         map("n", "<leader>td", gitsigns.toggle_deleted, { desc = "Toggle git show deleted" })
 
         -- Text object
-        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-      end
-    })
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+      end,
+    }
   end,
 }

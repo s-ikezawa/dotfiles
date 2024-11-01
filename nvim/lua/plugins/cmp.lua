@@ -4,10 +4,11 @@ return {
   dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
     { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
     "saadparwaiz1/cmp_luasnip",
     "windwp/nvim-autopairs",
-    "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
     local cmp = require "cmp"
@@ -47,23 +48,28 @@ return {
       },
       sources = {
         { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
       },
       formatting = {
+        fields = { "kind", "abbr", "menu" },
         format = function(entry, item)
           if entry.source.name == "nvim_lsp" then
             local lspserver_name = nil
             pcall(function()
               lspserver_name = entry.source.source.client.name
-              item.menu = lspserver_name
+              item.menu = "[" .. lspserver_name .. "]"
             end)
+          else
+            item.menu = "[" .. entry.source.name .. "]"
           end
 
           local icons = require("icons").kinds
           if icons[item.kind] then
-            item.kind = icons[item.kind] .. item.kind
+            -- item.kind = icons[item.kind] .. item.kind
+            item.kind = icons[item.kind]
           end
 
           local widths = {
