@@ -11,19 +11,7 @@ return {
   },
   opts = {
     servers = {
-      lua_ls = {
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = "Replace",
-            },
-            diagnostics = {
-              globals = { "vim" },
-            },
-            hint = { enable = true },
-          },
-        },
-      },
+      lua_ls = require "lsp.lua_ls",
     },
     formatters = {
       "stylua",
@@ -32,17 +20,13 @@ return {
   config = function(_, opts)
     local ensure_installed = vim.tbl_keys(opts.servers or {})
     vim.list_extend(ensure_installed, opts.formatters)
-    require("mason-tool-installer").setup({
+    require("mason-tool-installer").setup {
       ensure_installed = ensure_installed,
-    })
+    }
 
-    local capabilities = vim.tbl_deep_extend(
-      "force",
-      vim.lsp.protocol.make_client_capabilities(),
-      require("cmp_nvim_lsp").default_capabilities()
-    )
+    local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities())
 
-    require("mason-lspconfig").setup({
+    require("mason-lspconfig").setup {
       handlers = {
         function(server_name)
           local server = opts.servers[server_name] or {}
@@ -50,6 +34,6 @@ return {
           require("lspconfig")[server_name].setup(server)
         end,
       },
-    })
+    }
   end,
 }
