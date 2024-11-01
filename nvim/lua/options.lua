@@ -20,12 +20,12 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number" -- 行番号のみハイライトする
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = '→ ',
-  trail = '·',
-  lead = '·',
-  extends = '»',
-  precedes = '«',
-  nbsp = '×',
+  tab = "→ ",
+  trail = "·",
+  lead = "·",
+  extends = "»",
+  precedes = "«",
+  nbsp = "×",
 }
 
 -- indention
@@ -43,7 +43,7 @@ vim.opt.smartcase = true
 vim.opt.wildmenu = true
 
 -- diagnostic
-vim.diagnostic.config({
+vim.diagnostic.config {
   severity_sort = true,
   virtual_text = {
     format = function(diagnostic)
@@ -56,6 +56,6 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = " ",
       [vim.diagnostic.severity.INFO] = " ",
       [vim.diagnostic.severity.HINT] = " ",
-    }
-  }
-})
+    },
+  },
+}

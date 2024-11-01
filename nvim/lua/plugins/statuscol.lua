@@ -2,8 +2,8 @@ return {
   "luukvbaal/statuscol.nvim",
   event = "VeryLazy",
   config = function()
-    local builtin = require("statuscol.builtin")
-    require("statuscol").setup({
+    local builtin = require "statuscol.builtin"
+    require("statuscol").setup {
       bt_ignore = {
         "terminal",
         "nofile",
@@ -15,7 +15,7 @@ return {
         { -- Diagnosticの表示
           sign = {
             namespace = { "diagnostic/signs" },
-            maxwidth = 2,
+            maxwidth = 1,
           },
         },
         { -- 行番号の表示
@@ -30,6 +30,6 @@ return {
           },
         },
       },
-    })
-  end
+    }
+  end,
 }

@@ -10,17 +10,21 @@ return {
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
+    local cmp = require "cmp"
+    local luasnip = require "luasnip"
 
-    cmp.setup({
+    cmp.setup {
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
       },
       completion = {
-        completeopt = "menu,menuone,noinsert"
+        completeopt = "menu,menuone,noinsert",
+      },
+      window = {
+        completion = cmp.config.window.bordered { border = "rounded" },
+        documentation = cmp.config.window.bordered { border = "rounded" },
       },
       mapping = cmp.mapping.preset.insert {
         ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -46,11 +50,40 @@ return {
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
-      }
-    })
+      },
+      formatting = {
+        format = function(entry, item)
+          if entry.source.name == "nvim_lsp" then
+            local lspserver_name = nil
+            pcall(function()
+              lspserver_name = entry.source.source.client.name
+              item.menu = lspserver_name
+            end)
+          end
 
-    require("nvim-autopairs").setup({})
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+          local icons = require("icons").kinds
+          if icons[item.kind] then
+            item.kind = icons[item.kind] .. item.kind
+          end
+
+          local widths = {
+            abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+            menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+          }
+
+          for key, width in pairs(widths) do
+            if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+              item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
+            end
+          end
+
+          return item
+        end,
+      },
+    }
+
+    require("nvim-autopairs").setup {}
+    local cmp_autopairs = require "nvim-autopairs.completion.cmp"
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-  end
+  end,
 }

@@ -25,12 +25,17 @@ return {
     }
 
     local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities())
+    local handlers = {
+      ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+      ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+    }
 
     require("mason-lspconfig").setup {
       handlers = {
         function(server_name)
           local server = opts.servers[server_name] or {}
           server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+          server.handlers = handlers
           require("lspconfig")[server_name].setup(server)
         end,
       },
