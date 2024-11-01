@@ -14,8 +14,8 @@ return {
       segments = {
         { -- Diagnosticの表示
           sign = {
-            name = { "Diagnostic.*" },
-            maxwidth = 1,
+            namespace = { "diagnostic/signs" },
+            maxwidth = 2,
           },
         },
         { -- 行番号の表示
