@@ -2,5 +2,7 @@
     "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.iconTheme": "catppuccin-mocha",
     "editor.fontFamily": "'Moralerspace Xenon'",
-    "editor.fontSize": 16
+    "editor.fontSize": 16,
+    "terminal.integrated.fontFamily": "'Moralerspace Xenon NF'",
+    "terminal.integrated.fontSize": 16
 }
