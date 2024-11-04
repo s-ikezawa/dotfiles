@@ -1,4 +1,6 @@
 {
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
     "editor.fontFamily": "'Moralerspace Xenon'",
     "editor.fontSize": 16
 }
