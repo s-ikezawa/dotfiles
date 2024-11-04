@@ -4,5 +4,11 @@
     "editor.fontFamily": "'Moralerspace Xenon'",
     "editor.fontSize": 16,
     "terminal.integrated.fontFamily": "'Moralerspace Xenon NF'",
-    "terminal.integrated.fontSize": 16
+    "terminal.integrated.fontSize": 16,
+    // ========================================================================
+    // Extension: VSCode Neovim
+    // ========================================================================
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    }
 }
