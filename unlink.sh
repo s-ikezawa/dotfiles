@@ -1,0 +1,3 @@
+XDG_CONFIG_HOME=$HOME/.config
+
+unlink $XDG_CONFIG_HOME/zsh
