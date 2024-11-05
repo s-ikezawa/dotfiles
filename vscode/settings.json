@@ -28,6 +28,12 @@
   // ========================================================================
   "markdown.extension.list.indentationSize": "inherit",
   // ========================================================================
+  // Extension: Markdown preview enhanced
+  // ========================================================================
+  "markdown-preview-enhanced.mermaidTheme": "dark",
+  "markdown-preview-enhanced.codeBlockTheme": "github-dark.css",
+  "markdown-preview-enhanced.previewTheme": "github-dark.css",
+  // ========================================================================
   // Extension: Markdownlint
   // ========================================================================
   "markdownlint.config": {
