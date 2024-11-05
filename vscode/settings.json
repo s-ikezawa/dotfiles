@@ -1,6 +1,8 @@
 {
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
   "editor.fontFamily": "'Moralerspace Xenon'",
   "editor.fontSize": 16,
   "editor.minimap.enabled": false,
@@ -10,9 +12,10 @@
   "terminal.integrated.fontFamily": "'Moralerspace Xenon NF'",
   "terminal.integrated.fontSize": 16,
   "[markdown]": {
+    "files.trimTrailingWhitespace": false,
     "editor.wordWrap": "on",
     "editor.tabSize": 4, // Markdownはスペース4つでないと正常にパースできない場合がある
-    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": false
   },
   // ========================================================================
   // Extension: VSCode Neovim
