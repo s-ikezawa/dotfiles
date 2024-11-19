@@ -11,3 +11,6 @@ ln -snfv $REPO_DIR/vscode/keybindings.json $HOME/Library/Application\ Support/Co
 
 # neovim
 ln -snfv $REPO_DIR/nvim $XDG_CONFIG_HOME/nvim
+
+# git
+ln -snfv $REPO_DIR/git $XDG_CONFIG_HOME/git

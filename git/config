@@ -1,0 +1,4 @@
+[core]
+	quotepath = false
+[status]
+	showUntrackedFiles = all
