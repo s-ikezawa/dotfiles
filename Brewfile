@@ -1,6 +1,7 @@
 tap "hanasuke/moralerspace"
 tap "homebrew/bundle"
 brew "neovim"
+brew "webp"
 cask "1password"
 cask "1password-cli"
 cask "arc"
