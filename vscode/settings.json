@@ -1,6 +1,7 @@
 {
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.startupEditor": "none",
   "explorer.compactFolders": false, // ファイルがないフォルダをコンパクト表示しない
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
@@ -12,6 +13,7 @@
   "editor.renderWhitespace": "boundary",
   "terminal.integrated.fontFamily": "'Moralerspace Xenon NF'",
   "terminal.integrated.fontSize": 16,
+  "git.openRepositoryInParentFolders": "always",
   "[markdown]": {
     "files.trimTrailingWhitespace": false,
     "editor.wordWrap": "on",
