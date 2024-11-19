@@ -1,6 +1,7 @@
 {
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "catppuccin-mocha",
+  "explorer.compactFolders": false, // ファイルがないフォルダをコンパクト表示しない
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "editor.fontFamily": "'Moralerspace Xenon'",
