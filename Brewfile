@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 brew "chezmoi"
+brew "starship"
 cask "1password"
 cask "1password-cli"
 cask "alacritty"
