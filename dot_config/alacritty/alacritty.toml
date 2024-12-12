@@ -1,0 +1,12 @@
+[general]
+import = [
+  # "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  # "~/.config/alacritty/catppuccin-macchiato.toml"
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[font]
+normal = { family = "HackGen Console NF", style = "Regular" }
+bold = { family = "HackGen Console NF", style = "Bold" }
+size = 16.0
