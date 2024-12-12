@@ -6,6 +6,9 @@ import = [
   "~/.config/alacritty/catppuccin-mocha.toml"
 ]
 
+[env]
+TERM = "xterm-256color"
+
 [font]
 normal = { family = "HackGen Console NF", style = "Regular" }
 bold = { family = "HackGen Console NF", style = "Bold" }
