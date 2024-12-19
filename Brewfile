@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 brew "chezmoi"
+brew "lua-language-server"
 brew "neovim"
 brew "starship"
 cask "1password"
