@@ -6,6 +6,6 @@ end
 
 config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font("HackGen Console NF")
-config.font_size = 16.0
+config.font_size = 18.0
 
 return config
