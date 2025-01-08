@@ -1,0 +1,10 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "darwin" }}
+# Homebrewのインストール
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval $(/opt/homebrew/bin/brew shellenv)
+brew bundle --file=~/.local/share/chezmoi/Brewfile
+
+echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
+{{ end }}
