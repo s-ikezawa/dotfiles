@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 brew "chezmoi"
+brew "devcontainer"
 cask "1password"
 cask "1password-cli"
 cask "arc"
