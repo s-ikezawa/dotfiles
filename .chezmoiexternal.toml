@@ -5,3 +5,9 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
+[".local/share/tmux/plugins/catppuccin"]
+type = "archive"
+url = "https://github.com/catppuccin/tmux/archive/refs/tags/latest.tar.gz"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
