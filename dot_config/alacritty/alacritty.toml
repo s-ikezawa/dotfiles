@@ -2,7 +2,7 @@
 import = [ "~/.config/alacritty/theme/catppuccin-mocha.toml" ]
 
 [window]
-padding = { x = 10, y = 10 }
+padding = { x = 5, y = 5 }
 decorations = "Buttonless"
 
 [env]
