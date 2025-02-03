@@ -1,0 +1,23 @@
+theme = "catppuccin-mocha"
+
+font-family = "UDEV Gothic NF Regular"
+font-family-bold = "UDEV Gothic NF Bold"
+font-family-italic = "UDEV Gothic NF Italic"
+font-family-bold-italic = "UDEV Gothic NF BoldItalic"
+font-size = 20 
+
+cursor-opacity = 0.6
+cursor-style-blink = false
+
+# リサイズした時にsurfaceのサイズがオーバーレイで表示されないようにする
+resize-overlay = never 
+
+keybind = ctrl+super+h=goto_split:left
+keybind = ctrl+super+j=goto_split:bottom
+keybind = ctrl+super+k=goto_split:top
+keybind = ctrl+super+l=goto_split:right
+keybind = alt+super+h=resize_split:left,20
+keybind = alt+super+j=resize_split:down,20
+keybind = alt+super+k=resize_split:up,20
+keybind = alt+super+l=resize_split:right,20
+
