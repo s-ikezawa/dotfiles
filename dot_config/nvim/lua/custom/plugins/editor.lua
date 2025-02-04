@@ -12,6 +12,7 @@ return {
           mode = { "n", "v" },
           { "<leader>f", group = "file/find", },
           { "<leader>g", group = "git", },
+          { "<leader>s", group = "search" },
         },
       },
     },
