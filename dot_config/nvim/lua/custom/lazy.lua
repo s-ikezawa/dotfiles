@@ -20,7 +20,7 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  default = {
+  defaults = {
     lazy = true,
   },
   spec = {
