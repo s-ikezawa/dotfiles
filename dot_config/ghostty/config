@@ -1,10 +1,10 @@
 theme = "catppuccin-mocha"
 
-font-family = "UDEV Gothic NF Regular"
-font-family-bold = "UDEV Gothic NF Bold"
-font-family-italic = "UDEV Gothic NF Italic"
-font-family-bold-italic = "UDEV Gothic NF BoldItalic"
-font-size = 20 
+font-family = "UDEV Gothic 35NF Regular"
+font-family-bold = "UDEV Gothic 35NF Bold"
+font-family-italic = "UDEV Gothic 35NF Italic"
+font-family-bold-italic = "UDEV Gothic 35NF BoldItalic"
+font-size = 16 
 
 cursor-opacity = 0.6
 cursor-style-blink = false
