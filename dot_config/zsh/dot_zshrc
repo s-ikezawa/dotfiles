@@ -1,0 +1,41 @@
+# ~~~~~~~~~~ Path configuration ~~~~~~~~~~ 
+
+setopt extended_glob null_glob
+
+path=(
+  $path
+  $HOME/.local/bin
+  $XDG_CONFIG_HOME/zsh/scripts
+)
+
+# Remove duplicate entries and non-existent directories
+typeset -U path
+path=($^path(N-/))
+
+export PATH
+
+# ~~~~~~~~~~ History ~~~~~~~~~~ 
+
+HISTFILE=$XDG_CACHE_HOME/zsh/history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt HIST_IGNORE_SPACE # Don't save when prefixed with space
+setopt HIST_IGNORE_DUPS  # Don't save duplicate lines
+setopt SHARE_HISTORY     # Share history between sessions
+
+# ~~~~~~~~~~ Completion ~~~~~~~~~~ 
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+
+autoload -Uz compinit
+compinit -u -d $XDG_CACHE_HOME/zsh/compdump
+
+zstyle ':completion:*' menu select
+
+# ~~~~~~~~~~ Other ~~~~~~~~~~ 
+
+eval "$(starship init zsh)"
+
