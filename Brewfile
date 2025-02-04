@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 brew "chezmoi"
 brew "git"
+brew "neovim"
 brew "starship"
 brew "zoxide"
 brew "zsh-completions"
