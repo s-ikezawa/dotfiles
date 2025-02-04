@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 brew "chezmoi"
+brew "git"
 brew "starship"
 brew "zsh-completions"
 cask "1password"
