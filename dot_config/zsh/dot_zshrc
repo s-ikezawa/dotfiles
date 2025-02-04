@@ -35,7 +35,14 @@ compinit -u -d $XDG_CACHE_HOME/zsh/compdump
 
 zstyle ':completion:*' menu select
 
+# ~~~~~~~~~~ Alias ~~~~~~~~~~ 
+alias ls="ls -G"
+alias lsa="ls -aG"
+alias ll="ls -lG"
+alias lla="ls -alG"
+
 # ~~~~~~~~~~ Other ~~~~~~~~~~ 
 
+eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
