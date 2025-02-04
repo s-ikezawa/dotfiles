@@ -6,7 +6,7 @@ return {
       -- classic window下部一杯に表示される
       -- modern window下部両端のスペースありで表示される
       -- helix window右下に表示される
-      preset = "helix", 
+      preset = "helix",
       spec = {
         {
           mode = { "n", "v" },
