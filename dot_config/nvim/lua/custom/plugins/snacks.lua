@@ -9,7 +9,10 @@ return {
     dashboard = { enabled = false },
     debug = { enabled = false },
     dim = { enabled = false },
-    explorer = { enabled = false },
+    explorer = {
+      enabled = true,
+      replace_netrw = true,
+    },
     git = { enabled = false },
     gitbrowse = { enabled = false },
     indent = { enabled = false },
@@ -31,5 +34,8 @@ return {
     win = { enabled = false },
     words = { enabled = false },
     zen = { enabled = false },
+  },
+  keys = {
+    { "<leader>fe", function() Snacks.explorer.open() end, desc = "File Explorer(cwd)", },
   },
 }
