@@ -1,0 +1,21 @@
+[".local/bin/lua-language-server"]
+type = "archive"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+
+[".local/bin/stylua"]
+type = "archive-file"
+{{ if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.arch "arm64" -}}
+url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.2/stylua-macos-aarch64.zip"
+{{- else -}}
+url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.2/stylua-macos-x86_64.zip"
+{{- end -}}
+{{- else -}}
+{{ if eq .chezmoi.arch "arm64" -}}
+url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.2/stylua-{{ .chezmoi.os }}-aarch64.zip"
+{{- else -}}
+url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.0.2/stylua-{{ .chezmoi.os }}-x86_64.zip"
+{{- end -}}
+{{- end }}
+path = "stylua"
+
