@@ -42,6 +42,11 @@ return {
         require("blink.cmp").get_lsp_capabilities() or {},
         opts.capabilities or {}
       )
+      -- LSP Hoverのデザイン変更
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+        vim.lsp.handlers.hover,
+        { border = "rounded" }
+      )
 
       for server, config in pairs(opts.servers) do
         local server_opts = vim.tbl_deep_extend(
