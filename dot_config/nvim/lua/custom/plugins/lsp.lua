@@ -43,17 +43,10 @@ return {
         opts.capabilities or {}
       )
       -- LSP Hoverのデザイン変更
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { border = "rounded" }
-      )
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 
       for server, config in pairs(opts.servers) do
-        local server_opts = vim.tbl_deep_extend(
-          "force",
-          { capabilities = vim.deepcopy(capabilities) },
-          config
-        )
+        local server_opts = vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, config)
 
         lspconfig[server].setup(server_opts)
       end
@@ -74,28 +67,102 @@ return {
           wk.add({
             { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
             --{ "gd", vim.lsp.buf.definition, desc = "Goto Definition" },
-            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+            {
+              "gd",
+              function()
+                Snacks.picker.lsp_definitions()
+              end,
+              desc = "Goto Definition",
+            },
             --{ "gr", vim.lsp.buf.references, desc = "Refrences", nowait = true },
-            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+            {
+              "gr",
+              function()
+                Snacks.picker.lsp_references()
+              end,
+              nowait = true,
+              desc = "References",
+            },
             --{ "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
-            { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+            {
+              "gI",
+              function()
+                Snacks.picker.lsp_implementations()
+              end,
+              desc = "Goto Implementation",
+            },
             --{ "gy", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
-            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
+            {
+              "gy",
+              function()
+                Snacks.picker.lsp_type_definitions()
+              end,
+              desc = "Goto Type Definition",
+            },
             --{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-            { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+            {
+              "gD",
+              function()
+                Snacks.picker.lsp_declarations()
+              end,
+              desc = "Goto Declaration",
+            },
             { "K", vim.lsp.buf.hover, desc = "Hover" },
             { "gK", vim.lsp.buf.signature_help, desc = "Signature Help" },
             { "<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help", mode = { "i" } },
             { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" } },
             { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" } },
             { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh Codelens", mode = { "n", "v" } },
-            { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File", mode = { "n" } },
+            {
+              "<leader>cR",
+              function()
+                Snacks.rename.rename_file()
+              end,
+              desc = "Rename File",
+              mode = { "n" },
+            },
             { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
             { "<leader>cA", vim.lsp.buf.code_action, desc = "Source Action" },
-            { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end },
-            { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end },
-            { "<a-n>", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end },
-            { "<a-p>", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end },
+            {
+              "]]",
+              function()
+                Snacks.words.jump(vim.v.count1)
+              end,
+              desc = "Next Reference",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "[[",
+              function()
+                Snacks.words.jump(-vim.v.count1)
+              end,
+              desc = "Prev Reference",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "<a-n>",
+              function()
+                Snacks.words.jump(vim.v.count1)
+              end,
+              desc = "Next Reference",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
+            {
+              "<a-p>",
+              function()
+                Snacks.words.jump(-vim.v.count1)
+              end,
+              desc = "Prev Reference",
+              cond = function()
+                return Snacks.words.is_enabled()
+              end,
+            },
             { "]d", diagnostic_goto(true), desc = "Next Diagnostic" },
             { "[d", diagnostic_goto(false), desc = "Prev Diagnostic" },
             { "]e", diagnostic_goto(true, "ERROR"), desc = "Next Error" },
@@ -119,10 +186,10 @@ return {
             vim.lsp.codelens.refresh()
             vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
               buffer = ev.buf,
-              callback = vim.lsp.codelens.refresh
+              callback = vim.lsp.codelens.refresh,
             })
           end
-        end
+        end,
       })
 
       vim.diagnostic.config({
@@ -146,7 +213,7 @@ return {
           },
         },
       })
-    end
+    end,
   },
   {
     "folke/lazydev.nvim",

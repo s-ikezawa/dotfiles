@@ -3,4 +3,3 @@ else
   require("custom.lazy")
   require("custom.options")
 end
-
