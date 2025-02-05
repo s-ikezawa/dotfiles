@@ -14,11 +14,22 @@ return {
           mini = true,
           native_lsp = {
             enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+              ok = { "italic" },
+            },
             underlines = {
               errors = { "undercurl" },
               hints = { "undercurl" },
               warnings = { "undercurl" },
               information = { "undercurl" },
+              ok = { "undercurl" },
+            },
+            inlay_hints = {
+              background = true,
             },
           },
         },

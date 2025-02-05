@@ -63,6 +63,14 @@ return {
         callback = function(ev)
           -- keymaps
           local wk = require("which-key")
+          local diagnostic_goto = function(next, severity)
+            local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+            severity = severity and vim.diagnostic.severity[severity] or nil
+            return function()
+              go({ severity = severity })
+            end
+          end
+
           wk.add({
             { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
             --{ "gd", vim.lsp.buf.definition, desc = "Goto Definition" },
@@ -88,6 +96,12 @@ return {
             { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end },
             { "<a-n>", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end },
             { "<a-p>", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end },
+            { "]d", diagnostic_goto(true), desc = "Next Diagnostic" },
+            { "[d", diagnostic_goto(false), desc = "Prev Diagnostic" },
+            { "]e", diagnostic_goto(true, "ERROR"), desc = "Next Error" },
+            { "[e", diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
+            { "]w", diagnostic_goto(true, "ERROR"), desc = "Next Warning" },
+            { "[w", diagnostic_goto(false, "ERROR"), desc = "Prev Warning" },
           })
 
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
