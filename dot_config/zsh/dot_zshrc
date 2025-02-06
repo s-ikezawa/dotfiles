@@ -50,6 +50,8 @@ alias lla="ls -alG"
 
 # ~~~~~~~~~~ Other ~~~~~~~~~~ 
 
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-
+if type brew &>/dev/null; then
+  eval "$(mise activate bash)"
+  eval "$(zoxide init zsh)"
+  eval "$(starship init zsh)"
+fi
