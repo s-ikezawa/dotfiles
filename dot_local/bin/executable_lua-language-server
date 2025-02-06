@@ -1,0 +1,2 @@
+#!/bin/bash
+exec "$XDG_DATA_HOME/lua/src/lua-language-server/bin/lua-language-server" "$@"

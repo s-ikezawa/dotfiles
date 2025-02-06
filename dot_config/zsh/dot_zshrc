@@ -8,13 +8,6 @@ path=(
   $XDG_CONFIG_HOME/zsh/scripts
 )
 
-if [ -f $HOME/.local/bin/lua-language-server/bin/lua-language-server ]; then
-  path=(
-    $path
-    $HOME/.local/bin/lua-language-server/bin
-  )
-fi
-
 # Remove duplicate entries and non-existent directories
 typeset -U path
 path=($^path(N-/))
