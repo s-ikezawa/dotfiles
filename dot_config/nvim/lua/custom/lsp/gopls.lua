@@ -13,7 +13,7 @@ return {
       -- workspaceFiles = {}, "workspaceFiles": unexpected setting
       -- Formatting
       -- local = "", -- luaの定義ずみ変数名となっておりエラーになるのでコメントアウト
-      gofumpt = false,
+      gofumpt = true,
       -- UI
       codelenses = {
         generate = true,
