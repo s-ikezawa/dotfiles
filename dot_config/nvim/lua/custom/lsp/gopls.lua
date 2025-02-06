@@ -5,7 +5,13 @@ return {
       -- Build
       buildFlags = {},
       -- env = {}, -- nvalid type []interface {} (want JSON object)
-      directoryFilters = { "-**/node_modules" },
+      directoryFilters = {
+        "-node_modules",
+        "-.git",
+        "-.vscode",
+        "-.idea",
+        "-.vscode-test",
+      },
       templateExtensions = {},
       -- memoryMode = "", this setting is deprecated;
       expandWorkspaceToModule = true,
@@ -19,13 +25,13 @@ return {
         generate = true,
         regenerate_cgo = true,
         test = true, -- default: off
-        run_govulncheck = false,
+        run_govulncheck = true, -- default off
         tidy = true,
         upgrade_dependency = true,
         vendor = true,
-        vulncheck = false,
+        vulncheck = true, -- default off
       },
-      semanticTokens = false,
+      semanticTokens = true, -- default false
       noSemanticString = false,
       noSemanticNumber = false,
       -- semanticTokenTypes = {}, -- "semanticTokenTypes": unexpected setting
@@ -95,7 +101,7 @@ return {
         waitgroup = true,
         yield = true,
       },
-      staticcheck = false,
+      staticcheck = true, -- default false
       vulncheck = "Off", -- Imports, Off (default Off)
       diagnosticsDelay = "1s",
       diagnosticsTrigger = "Edit", -- Edit, Save
