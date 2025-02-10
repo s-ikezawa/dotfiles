@@ -15,10 +15,16 @@ return {
     },
     git = { enabled = false },
     gitbrowse = { enabled = false },
-    indent = { enabled = true },
-    input = { enabled = true },
+    indent = {
+      enabled = true,
+    },
+    input = {
+      enabled = true,
+    },
     layout = { enabled = false },
-    lazygit = { enabled = false },
+    lazygit = {
+      enabled = true,
+    },
     notifier = { enabled = false },
     notify = { enabled = false },
     picker = {
@@ -26,7 +32,9 @@ return {
     },
     profiler = { enabled = false },
     quickfile = { enabled = false },
-    rename = { enabled = true },
+    rename = {
+      enabled = true,
+    },
     scope = { enabled = false },
     scratch = { enabled = false },
     statuscolumn = { enabled = false },
@@ -34,7 +42,9 @@ return {
     toggle = { enabled = false },
     util = { enabled = false },
     win = { enabled = false },
-    words = { enabled = true },
+    words = {
+      enabled = true,
+    },
     zen = { enabled = false },
   },
   keys = {
@@ -339,6 +349,13 @@ return {
         Snacks.picker.lsp_workspace_symbols()
       end,
       desc = "LSP Workspace Symbols",
+    },
+    {
+      "<leader>gg",
+      function()
+        Snacks.lazygit()
+      end,
+      desc = "Lazygit",
     },
   },
 }
