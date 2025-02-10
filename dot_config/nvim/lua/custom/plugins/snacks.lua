@@ -25,8 +25,8 @@ return {
     lazygit = {
       enabled = true,
     },
-    notifier = { enabled = false },
-    notify = { enabled = false },
+    notifier = { enabled = true },
+    notify = { enabled = true },
     picker = {
       enabled = true,
     },
