@@ -15,7 +15,7 @@ return {
     },
     git = { enabled = false },
     gitbrowse = { enabled = false },
-    indent = { enabled = false },
+    indent = { enabled = true },
     input = { enabled = true },
     layout = { enabled = false },
     lazygit = { enabled = false },
