@@ -12,3 +12,7 @@ vim.opt.listchars = { tab = "→ ", trail = "•" }
 vim.opt.list = true
 
 vim.opt.laststatus = 3
+
+-- 分割位置の設定
+vim.opt.splitbelow = true
+vim.opt.splitright = true
