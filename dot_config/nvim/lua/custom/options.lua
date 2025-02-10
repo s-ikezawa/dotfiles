@@ -10,3 +10,5 @@ vim.opt.softtabstop = 2
 -- 不可視文字の表示
 vim.opt.listchars = { tab = "→ ", trail = "•" }
 vim.opt.list = true
+
+vim.opt.laststatus = 3
