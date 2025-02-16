@@ -5,6 +5,12 @@ exact = true
 stripComponents = 1
 refreshPeriod = "168h"
 
+[".config/tmux/plugins/catppuccin/tmux"]
+type = "git-repo"
+url = "https://github.com/catppuccin/tmux"
+clone.args = ["-b", "v2.1.2"]
+
+
 [".local/share/lua/src/lua-language-server"]
 type = "archive"
 url = "https://github.com/LuaLS/lua-language-server/releases/download/3.13.5/lua-language-server-3.13.5-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
