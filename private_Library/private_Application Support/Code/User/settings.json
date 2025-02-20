@@ -11,11 +11,14 @@
     "workbench.tree.indent": 20,
 
     // vscodevim
+    "vim.leader": ",",
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.normalModeKeyBindingsNonRecursive": [
         { "before": ["H"], "after": ["g", "T"] }, // 左のタブに移動
         { "before": ["L"], "after": ["g", "t"] }, // 右のタブに移動
+        { "before": ["<Leader>", "s"], "commands": [":split"] }, // 水平に分割する
+        { "before": ["<Leader>", "v"], "commands": [":vsplit"] }, // 垂直に分割する
         { "before": ["<C-h>"], "after": ["<C-w>", "h"] }, // 左のウィンドウに移動
         { "before": ["<C-j>"], "after": ["<C-w>", "j"] }, // 下のウィンドウに移動
         { "before": ["<C-k>"], "after": ["<C-w>", "k"] }, // 上のウィンドウに移動
