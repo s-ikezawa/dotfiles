@@ -8,5 +8,18 @@
     "editor.minimap.enabled": false,
 
     // ファイルツリーのインデントサイズを変更(default: 8)
-    "workbench.tree.indent": 20
+    "workbench.tree.indent": 20,
+
+    // vscodevim
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // shift + hl でタブを移動する
+        {
+            "before": ["H"],
+            "after": ["g", "T"]
+        },
+        {
+            "before": ["L"],
+            "after": ["g", "t"]
+        }
+    ]
 }
