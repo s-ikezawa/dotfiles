@@ -8,4 +8,8 @@ brew bundle --file=~/.local/share/chezmoi/Brewfile
 
 # XDG
 echo "export ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zshenv
+
+# vscodevimでキーリピートが効くようにする
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
 {{ end }}
