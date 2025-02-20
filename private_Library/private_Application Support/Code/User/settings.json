@@ -11,6 +11,7 @@
     "workbench.tree.indent": 20,
 
     // vscodevim
+    "vim.useSystemClipboard": true,
     "vim.normalModeKeyBindingsNonRecursive": [
         // shift + hl でタブを移動する
         {
