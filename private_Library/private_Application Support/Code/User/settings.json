@@ -1,1 +1,5 @@
-{}
+{
+    // エディタ部分のフォントとサイズを指定する
+    "editor.fontFamily": "'UDEV Gothic NF'",
+    "editor.fontSize": 14
+}
