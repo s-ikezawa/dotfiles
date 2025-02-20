@@ -5,10 +5,40 @@
         "command": "workbench.view.explorer",
         "when": "!explorerViewletVisible"
     },
-    // filesExplorerにフォーカスしている時 ctrl + l でエディターにフォーカスを移動する
+    // filesExplorerにフォーカスしているとき
     {
         "key": "ctrl+l",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "filesExplorerFocus"
     },
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "shift+a",
+        "command": "explorer.newFolder",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "shift+d",
+        "command": "deleteFile",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "r",
+        "command": "renameFile",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "y",
+        "command": "filesExplorer.copy",
+        "when": "filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "p",
+        "command": "filesExplorer.paste",
+        "when": "filesExplorerFocus && !inputFocus"
+    }
 ]
