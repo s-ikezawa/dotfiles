@@ -1,8 +1,9 @@
 {
     // エディタ部分のフォントとサイズを指定する
-    "editor.fontFamily": "'UDEV Gothic NF'",
+    "editor.fontFamily": "'UDEV Gothic NFLG'",
     "editor.fontSize": 14,
-    
+    "editor.fontLigatures": true,
+
     // ミニマップを表示しない
     "editor.minimap.enabled": false,
 
