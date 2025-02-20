@@ -26,6 +26,16 @@
         { "before": ["u"], "after": ["undo"] }, // vscodeのundoを使うようにする
         { "before": ["<C-r>"], "after": ["redo"] }, // vscodeのredoを使うようにする
         { "before": ["<Leader>", "f"], "commands": [ { "command": "workbench.action.quickOpen" } ] }, // ファイルを検索する
+
+        // カーソル移動時に折り畳みされている箇所を開かないようにする
+        { "before": ["j"], "after": ["g", "j"] }, 
+        { "before": ["k"], "after": ["g", "k"] }, 
+
+        // 検索結果を画面中央に
+        { "before": ["n"], "after": ["n", "z", "z"] },
+        { "before": ["N"], "after": ["N", "z", "z"] },
+        { "before": ["*"], "after": ["*", "z", "z"] },
+        { "before": ["#"], "after": ["#", "z", "z"] },
     ],
     "vim.insertModeKeyBindings": [
         { "before": ["j", "k"], "after": ["<Esc>"] }, // jkでinsert modeからnormal modeに移行
