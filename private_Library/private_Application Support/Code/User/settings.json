@@ -20,5 +20,7 @@
         { "before": ["<C-j>"], "after": ["<C-w>", "j"] }, // 下のウィンドウに移動
         { "before": ["<C-k>"], "after": ["<C-w>", "k"] }, // 上のウィンドウに移動
         { "before": ["<C-l>"], "after": ["<C-w>", "l"] }, // 右のウィンドウに移動
+        { "before": ["u"], "after": ["undo"] }, // vscodeのundoを使うようにする
+        { "before": ["<C-r>"], "after": ["redo"] }, // vscodeのredoを使うようにする
     ]
 }
