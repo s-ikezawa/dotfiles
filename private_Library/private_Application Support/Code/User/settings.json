@@ -22,5 +22,8 @@
         { "before": ["<C-l>"], "after": ["<C-w>", "l"] }, // 右のウィンドウに移動
         { "before": ["u"], "after": ["undo"] }, // vscodeのundoを使うようにする
         { "before": ["<C-r>"], "after": ["redo"] }, // vscodeのredoを使うようにする
+    ],
+    "vim.insertModeKeyBindings": [
+        { "before": ["j", "k"], "after": ["<Esc>"] }, // jkでinsert modeからnormal modeに移行
     ]
 }
