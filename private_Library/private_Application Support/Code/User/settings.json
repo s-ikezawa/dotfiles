@@ -14,14 +14,11 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.normalModeKeyBindingsNonRecursive": [
-        // shift + hl でタブを移動する
-        {
-            "before": ["H"],
-            "after": ["g", "T"]
-        },
-        {
-            "before": ["L"],
-            "after": ["g", "t"]
-        }
+        { "before": ["H"], "after": ["g", "T"] }, // 左のタブに移動
+        { "before": ["L"], "after": ["g", "t"] }, // 右のタブに移動
+        { "before": ["<C-h>"], "after": ["<C-w>", "h"] }, // 左のウィンドウに移動
+        { "before": ["<C-j>"], "after": ["<C-w>", "j"] }, // 下のウィンドウに移動
+        { "before": ["<C-k>"], "after": ["<C-w>", "k"] }, // 上のウィンドウに移動
+        { "before": ["<C-l>"], "after": ["<C-w>", "l"] }, // 右のウィンドウに移動
     ]
 }
