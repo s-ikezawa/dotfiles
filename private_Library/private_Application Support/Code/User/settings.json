@@ -1,8 +1,9 @@
 {
-    // エディタ部分のフォントとサイズを指定する
+    // フォントとサイズを指定する
     "editor.fontFamily": "'UDEV Gothic NFLG'",
     "editor.fontSize": 14,
     "editor.fontLigatures": true,
+    "terminal.integrated.fontSize": 14,
 
     // 行番号を相対的に表示する
     "editor.lineNumbers": "relative",

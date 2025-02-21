@@ -40,5 +40,40 @@
         "key": "p",
         "command": "filesExplorer.paste",
         "when": "filesExplorerFocus && !inputFocus"
+    },
+    // ターミナル関連
+    // ターミナルを開閉する
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+    },
+    // 新しいターミナルを開く
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalFocus"
+    },
+    // ターミナルを閉じる
+    {
+        "key": "ctrl+shift+w",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus"
+    },
+    // ターミナルからエディタへ移動する
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    // ctrl + tab でターミナルを移動する
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.terminal.focusPrevious",
+        "when": "terminalFocus"
     }
 ]
