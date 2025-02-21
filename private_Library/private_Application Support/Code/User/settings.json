@@ -13,6 +13,9 @@
     // 空白やタブ文字を表示する
     "editor.renderWhitespace": "boundary",
 
+    // パンクズリストを表示しない
+    "breadcrumbs.enabled": false,
+
     // ファイルツリーのインデントサイズを変更(default: 8)
     "workbench.tree.indent": 20,
 
