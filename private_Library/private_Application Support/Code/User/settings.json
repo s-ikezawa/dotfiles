@@ -4,6 +4,9 @@
     "editor.fontSize": 14,
     "editor.fontLigatures": true,
 
+    // 行番号を相対的に表示する
+    "editor.lineNumbers": "relative",
+
     // ミニマップを表示しない
     "editor.minimap.enabled": false,
 
