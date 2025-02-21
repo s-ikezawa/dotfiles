@@ -10,6 +10,9 @@
     // 1行が長い場合は折り返す
     "editor.wordWrap": "on",
 
+    // 空白やタブ文字を表示する
+    "editor.renderWhitespace": "boundary",
+
     // ファイルツリーのインデントサイズを変更(default: 8)
     "workbench.tree.indent": 20,
 
