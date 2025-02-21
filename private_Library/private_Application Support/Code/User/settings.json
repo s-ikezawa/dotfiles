@@ -16,6 +16,9 @@
     // 常に新しいタブでファイルを開く
     "workbench.editor.enablePreview": false,
 
+    // タブを入力したらスペースに変換する
+    "editor.insertSpaces": true,
+
     // パンクズリストを表示しない
     "breadcrumbs.enabled": false,
 
