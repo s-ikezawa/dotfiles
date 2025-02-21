@@ -7,6 +7,9 @@
     // ミニマップを表示しない
     "editor.minimap.enabled": false,
 
+    // 1行が長い場合は折り返す
+    "editor.wordWrap": "on",
+
     // ファイルツリーのインデントサイズを変更(default: 8)
     "workbench.tree.indent": 20,
 
