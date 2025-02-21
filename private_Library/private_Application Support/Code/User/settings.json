@@ -13,6 +13,9 @@
     // 空白やタブ文字を表示する
     "editor.renderWhitespace": "boundary",
 
+    // 常に新しいタブでファイルを開く
+    "workbench.editor.enablePreview": false,
+
     // パンクズリストを表示しない
     "breadcrumbs.enabled": false,
 
