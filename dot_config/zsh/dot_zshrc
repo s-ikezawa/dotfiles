@@ -42,6 +42,9 @@ alias lsa="ls -aG"
 alias ll="ls -lG"
 alias lla="ls -alG"
 
+alias ob="cd ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/MyBrain"
+
+
 # ~~~~~~~~~~ Other ~~~~~~~~~~ 
 
 if type brew &>/dev/null; then
