@@ -42,7 +42,7 @@ alias lsa="ls -aG"
 alias ll="ls -lG"
 alias lla="ls -alG"
 
-alias ob="cd ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/MyBrain"
+alias ob="cd ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/obsidian-vault"
 
 
 # ~~~~~~~~~~ Other ~~~~~~~~~~ 
