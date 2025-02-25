@@ -1,4 +1,7 @@
 {
+    // フォルダーをコンパクト表示しないようにした
+    "explorer.compactFolders": false,
+
     // フォントとサイズを指定する
     "editor.fontFamily": "'UDEV Gothic NFLG'",
     "editor.fontSize": 14,
