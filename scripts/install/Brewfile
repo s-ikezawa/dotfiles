@@ -1,0 +1,11 @@
+# Git
+brew "git"
+
+# Password Manager
+cask "1password"
+cask "1password-cli"
+
+# Web browser
+cask "google-chrome"
+cask "firefox"
+cask "zen-browser"
