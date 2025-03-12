@@ -14,3 +14,12 @@
 
 [pull]
   ff = only
+
+[fetch]
+  prune = true
+
+[rebase]
+  autostash = true
+
+[color]
+  ui = auto
