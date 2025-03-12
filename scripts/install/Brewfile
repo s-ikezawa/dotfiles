@@ -2,6 +2,7 @@ brew "stow"
 
 # Git
 brew "git"
+brew "gh"
 
 # Password Manager
 cask "1password"

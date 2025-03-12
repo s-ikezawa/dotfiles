@@ -1,0 +1,21 @@
+##
+# OS created files
+##
+.DS_Store
+thumbs.db
+
+##
+# backup
+##
+$~*
+~*
+*~
+*tmp
+*swp
+
+##
+# history & log
+##
+.*hist*
+.*info*
+*.log

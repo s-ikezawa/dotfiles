@@ -8,6 +8,12 @@ if ! [ -d ${HOME}/.config/zsh ]; then
 fi
 stow -d ./config -t ${HOME}/.config/zsh zsh;
 
+# Git
+if ! [ -d ${HOME}/.config/git ]; then
+  mkdir -p ${HOME}/.config/git;
+fi 
+stow -d ./config -t ${HOME}/.config/git git;
+
 # Ghostty
 if ! [ -d ${HOME}/.config/ghostty ]; then
   mkdir -p ${HOME}/.config/ghostty;

@@ -1,0 +1,16 @@
+[init]
+  defaultBranch = main
+
+[core]
+  autocrls = input
+  editor = vim
+
+[push]
+  default = current
+  autoSetupRemote = true
+
+[merge]
+  ff = false
+
+[pull]
+  ff = only
