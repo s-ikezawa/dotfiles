@@ -1,0 +1,24 @@
+theme = catppuccin-macchiato
+
+# フォント
+font-size = 18
+font-family = "PlemolJP Console NF Medium"
+font-family-bold = "PlemolJP Console NF Bold"
+font-family-italic = "PlemolJP Console NF Medium Italic"
+font-family-bold-italic = "PlemolJP Console NF Bold Italic"
+# これをつけないとプログラムが㌘になってしまう。
+font-feature = -dlig 
+
+# カーソル
+# カーソルのカスタマイズを行う場合はシェル統合のカーソル機能を無効化する必要があります。
+shell-integration-features = no-cursor
+
+# カーソルの種類の指定
+cursor-style = block
+
+# カーソルを点滅させない
+cursor-style-blink = false
+
+# その他
+# リサイズ時のオーバーレイを非表示にする
+resize-overlay = never

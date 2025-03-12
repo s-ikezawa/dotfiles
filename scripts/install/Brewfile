@@ -11,3 +11,11 @@ cask "1password-cli"
 cask "google-chrome"
 cask "firefox"
 cask "zen-browser"
+
+# Terminal
+cask "ghostty"
+
+# Font
+cask "font-plemol-jp"
+cask "font-plemol-jp-hs"
+cask "font-plemol-jp-nf"
