@@ -7,6 +7,9 @@ brew "git"
 cask "1password"
 cask "1password-cli"
 
+# Window Management
+cask "rectangle-pro"
+
 # Web browser
 cask "google-chrome"
 cask "firefox"
