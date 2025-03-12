@@ -17,6 +17,7 @@ cask "firefox"
 cask "zen-browser"
 
 # Terminal
+brew "starship"
 cask "ghostty"
 
 # Font

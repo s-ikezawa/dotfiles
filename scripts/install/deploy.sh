@@ -20,6 +20,9 @@ if ! [ -d ${HOME}/.config/ghostty ]; then
 fi
 stow -d ./config -t ${HOME}/.config/ghostty ghostty;
 
+# Starship
+stow -d ./config -t ${HOME}/.config starship;
+
 # VisualStudioCode
 if ! [ -d ${HOME}/Library/Application\ Support/Code/User ]; then
   mkdir ${HOME}/Library/Application\ Support/Code/User;
