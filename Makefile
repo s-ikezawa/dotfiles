@@ -2,7 +2,7 @@ PATH := /opt/homebrew/bin:${PATH}
 
 .PHONY: all
 
-all: install deploy
+all: install deploy defaults
 
 install: brew bundle
 
@@ -14,6 +14,9 @@ bundle:
 
 deploy:
 	@scripts/install/deploy.sh;
+
+defaults:
+	@scripts/install/defaults.sh;
 
 uninstall:
 	@scripts/uninstall/homebrew.sh;
