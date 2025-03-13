@@ -1,7 +1,14 @@
 {
+    //=========================================================================
     // Editor
-    "editor.minimap.enabled": false,
+    //=========================================================================
+    "editor.minimap.enabled": false, // minimapは非表示
+    "editor.cursorBlinking": "solid", // カーソルを点滅させない
+    "editor.cursorSmoothCaretAnimation": "on", // カーソルの移動をスムーズにする
+
+    //=========================================================================
     // Fonts
+    //=========================================================================
     "editor.fontFamily": "PlemolJP",
     "editor.fontSize": 16,
     "terminal.integrated.fontFamily": "PlemolJP Console NF",
