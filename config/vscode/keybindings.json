@@ -20,6 +20,12 @@
         "command": "moveFileToTrash",
         "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     },
+    // ファイル/フォルダ名変更
+    {
+        "key": "r",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
 
     //=========================================================================
     // Command Palette(ctrl+shift+p)
