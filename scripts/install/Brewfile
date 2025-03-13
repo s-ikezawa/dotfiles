@@ -8,13 +8,15 @@ brew "gh"
 cask "1password"
 cask "1password-cli"
 
-# Window Management
-cask "rectangle-pro"
+# Utility
+cask "rectangle-pro"  # Window manager
+cask "the-unarchiver" # archiver
 
 # Web browser
 cask "google-chrome"
 cask "firefox"
 cask "zen-browser"
+cask "arc"
 
 # Terminal
 brew "starship"
