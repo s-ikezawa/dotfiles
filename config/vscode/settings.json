@@ -1,4 +1,6 @@
 {
+    // Editor
+    "editor.minimap.enabled": false,
     // Fonts
     "editor.fontFamily": "PlemolJP",
     "editor.fontSize": 16,
