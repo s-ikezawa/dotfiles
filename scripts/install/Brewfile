@@ -27,3 +27,4 @@ cask "font-plemol-jp-nf"
 
 # Editor
 cask "visual-studio-code"
+vscode "yzhang.markdown-all-in-one"
