@@ -1,0 +1,9 @@
+{
+    // Fonts
+    "editor.fontFamily": "PlemolJP",
+    "editor.fontSize": 16,
+    "terminal.integrated.fontFamily": "PlemolJP Console NF",
+    "terminal.integrated.fontSize": 16,
+    "chat.editor.fontFamily": "PlemolJP",
+    "chat.editor.fontSize": 16
+}
