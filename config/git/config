@@ -4,6 +4,7 @@
 [core]
   autocrls = input
   editor = vim
+  quotepath = false
 
 [push]
   default = current
