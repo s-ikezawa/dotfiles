@@ -1,4 +1,7 @@
+
+# CLI tools
 brew "stow"
+brew "mise"
 
 # Git
 brew "git"
