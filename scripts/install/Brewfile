@@ -34,6 +34,7 @@ cask "font-plemol-jp-nf"
 cask "visual-studio-code"
 vscode "vscodevim.vim"
 vscode "yzhang.markdown-all-in-one"
+vscode "hverlin.mise-vscode"
 
 # AI
 cask "claude"
