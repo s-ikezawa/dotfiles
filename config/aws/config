@@ -1,0 +1,10 @@
+[default]
+region = ap-northeast-1
+output = json
+
+[profile olive]
+region = ap-northeast-1
+output = json
+mfa_serial = arn:aws:iam::442615599648:mfa/my-1password
+credential_process = "/Users/s-ikezawa/.aws/op-credential-helper.sh" "Olive AWS Console" -v "ebisol inc."
+

@@ -14,6 +14,12 @@ if ! [ -d ${HOME}/.config/git ]; then
 fi 
 stow -d ./config -t ${HOME}/.config/git git;
 
+# AWS CLI
+if ! [ -d ${HOME}/.aws ]; then
+  mkdir -p ${HOME}/.aws;
+fi
+stow -d ./config -t ${HOME}/.aws aws
+
 # Ghostty
 if ! [ -d ${HOME}/.config/ghostty ]; then
   mkdir -p ${HOME}/.config/ghostty;

@@ -12,6 +12,9 @@ brew:
 bundle:
 	@scripts/install/brew-bundle.sh;
 
+clitools:
+	@scripts/install/clitools.sh;
+
 deploy:
 	@scripts/install/deploy.sh;
 
