@@ -8,6 +8,7 @@ brew "git"
 brew "gh"
 
 # AWS
+brew "pipx"
 brew "awscli"
 
 # Password Manager
