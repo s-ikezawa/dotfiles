@@ -2,6 +2,7 @@
 brew "stow"
 brew "mise"
 brew "mas"
+brew "zsh-completions"
 
 # Git
 brew "git"
