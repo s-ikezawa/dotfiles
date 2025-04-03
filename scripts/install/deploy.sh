@@ -8,6 +8,14 @@ if ! [ -d ${HOME}/.config/zsh ]; then
 fi
 stow -d ./config -t ${HOME}/.config/zsh zsh;
 
+if ! [ -d ${HOME}/.cache/zsh ]; then
+  mkdir -p ${HOME}/.cache/zsh;
+fi
+
+if ! [ -d ${HOME}/.local ]; then
+  mkdir -p ${HOME}/.local/share ${HOME}/.local/state ${HOME}/.local/bin
+fi
+
 # Git
 if ! [ -d ${HOME}/.config/git ]; then
   mkdir -p ${HOME}/.config/git;
