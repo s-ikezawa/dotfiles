@@ -14,6 +14,12 @@
     "editor.fontSize": 16,
     "terminal.integrated.fontFamily": "PlemolJP Console NF",
     "terminal.integrated.fontSize": 16,
+
+    //=========================================================================
+    // Github Copilot
+    //=========================================================================
     "chat.editor.fontFamily": "PlemolJP",
-    "chat.editor.fontSize": 16
+    "chat.editor.fontSize": 16,
+    "chat.editing.confirmEditRequestRemoval": false,
+    "github.copilot.chat.localeOverride": "ja" // 日本語化
 }
