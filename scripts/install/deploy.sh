@@ -37,6 +37,12 @@ stow -d ./config -t ${HOME}/.config/ghostty ghostty;
 # Starship
 stow -d ./config -t ${HOME}/.config starship;
 
+# mise
+if ! [ -d ${HOME}/.config/mise ]; then
+  mkdir -p ${HOME}/.config/mise;
+fi
+stow -d ./config -t ${HOME}/.config/mise mise;
+
 # VisualStudioCode
 if ! [ -d ${HOME}/Library/Application\ Support/Code/User ]; then
   mkdir ${HOME}/Library/Application\ Support/Code/User;
