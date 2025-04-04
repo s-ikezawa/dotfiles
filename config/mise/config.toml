@@ -1,2 +1,3 @@
 [tools]
-pnpm = "9.7.1"
+node = "latest"
+pnpm = "latest"
