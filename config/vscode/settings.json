@@ -21,5 +21,6 @@
     "chat.editor.fontFamily": "PlemolJP",
     "chat.editor.fontSize": 16,
     "chat.editing.confirmEditRequestRemoval": false,
+    "chat.agent.enabled": true,
     "github.copilot.chat.localeOverride": "ja" // 日本語化
 }
