@@ -42,6 +42,7 @@ vscode "yzhang.markdown-all-in-one"
 vscode "3w36zj6.textlint"
 vscode "davidanson.vscode-markdownlint"
 vscode "bierner.markdown-mermaid"
+vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
 
 # AI
 cask "claude"
