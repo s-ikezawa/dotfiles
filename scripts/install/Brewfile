@@ -41,6 +41,7 @@ vscode "vscodevim.vim"
 vscode "yzhang.markdown-all-in-one"
 vscode "3w36zj6.textlint"
 vscode "davidanson.vscode-markdownlint"
+vscode "bierner.markdown-mermaid"
 
 # AI
 cask "claude"
