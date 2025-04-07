@@ -1,3 +1,14 @@
+[alias]
+  br = branch
+  co = checkout
+  dm = "!f(){ \
+    git checkout main && \
+    git fetch && \
+    git branch --merged | grep -Ev '^\\*|main|stage|release|production' | xargs -r git branch -d; \
+  }; f"
+  st = status
+  sw = switch
+
 [init]
   defaultBranch = main
 
