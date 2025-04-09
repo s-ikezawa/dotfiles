@@ -43,6 +43,7 @@ vscode "3w36zj6.textlint"
 vscode "davidanson.vscode-markdownlint"
 vscode "bierner.markdown-mermaid"
 vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+vscode "42crunch.vscode-openapi"
 
 # AI
 cask "claude"
