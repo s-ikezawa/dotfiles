@@ -1,5 +1,10 @@
 {
     //=========================================================================
+    // Explore
+    //=========================================================================
+    "explorer.compactFolders": false, // フォルダをコンパクトに表示しない
+
+    //=========================================================================
     // Editor
     //=========================================================================
     "editor.lineNumbers": "relative", // 行番号を相対表示
@@ -15,13 +20,5 @@
     "terminal.integrated.fontFamily": "PlemolJP Console NF",
     "terminal.integrated.fontSize": 16,
 
-    //=========================================================================
-    // Github Copilot
-    //=========================================================================
-    "chat.editor.fontFamily": "PlemolJP",
-    "chat.editor.fontSize": 16,
-    "chat.editing.confirmEditRequestRemoval": false,
-    "chat.agent.enabled": true,
-    "github.copilot.chat.localeOverride": "ja",
-    "redhat.telemetry.enabled": true // 日本語化
+    "redhat.telemetry.enabled": true
 }
