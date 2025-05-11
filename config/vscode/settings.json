@@ -20,5 +20,11 @@
     "terminal.integrated.fontFamily": "PlemolJP Console NF",
     "terminal.integrated.fontSize": 16,
 
+    //=========================================================================
+    // Markdown lint
+    //=========================================================================
+    "markdownlint.config": {
+        "MD041": false, // 最初の見出しがh1であることを強制しない
+    },
     "redhat.telemetry.enabled": true
 }
