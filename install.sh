@@ -12,7 +12,7 @@ create_symlinks() {
       if [ -d "$dir" ]; then
           dir_name=${dir%/}
           log_info "Stowing $dir_name..."
-          stow "$dir_name" -t ~/
+          stow --ignore .DS_Store "$dir_name" -t ~/
       fi          
     done
   fi
