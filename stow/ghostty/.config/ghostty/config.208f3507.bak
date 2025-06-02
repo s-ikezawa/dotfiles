@@ -12,4 +12,3 @@ font-feature = -dlig
 font-thicken = true
 font-thicken-strength = 1
 
-keybind = shift+enter=text:\n
