@@ -1,5 +1,6 @@
 brew "docker"
 brew "git"
+brew "mise"
 brew "stow"
 brew "tree"
 brew "zsh"

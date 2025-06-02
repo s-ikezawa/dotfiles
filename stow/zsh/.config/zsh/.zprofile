@@ -10,3 +10,13 @@ fi
 export HOMEBREW_NO_ANALYTICS=1   # 分析データ送信を無効化
 export HOMEBREW_NO_AUTO_UPDATE=1 # 自動アップデートを無効化（お好みで）
 export HOMEBREW_BUNDLE_FILE="$HOME/Projects/s-ikezawa/dotfiles/Brewfile" # Brewfileの場所を指定
+
+#------------------------------------------------------------------------------------------------------
+# mise
+#------------------------------------------------------------------------------------------------------
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh --shims)"
+fi
+
+
+typeset -U path PATH # PATHの重複削除

@@ -1,33 +1,7 @@
 # ヒストリー設定（XDG対応）
+export HISTFILE="$XDG_STATE_HOME/zsh/history" # なぜかMacだとzshrcに書かないと反映されない
 HISTSIZE=50000                    # メモリ内の履歴数
-SAVEHIST=50000                    # ファイルに保存する履歴数
-
-# 方法3: 関数でラップして確実に設定
-setup_xdg_history() {
-    local xdg_histfile="$XDG_STATE_HOME/zsh/history"
-    
-    # ディレクトリ作成
-    [[ ! -d "${xdg_histfile:h}" ]] && mkdir -p "${xdg_histfile:h}"
-    
-    # HISTFILEを設定
-    export HISTFILE="$xdg_histfile"
-    
-    # 既存履歴の移行
-    if [[ -f "$HOME/.zsh_history" && ! -f "$HISTFILE" ]]; then
-        echo "Migrating history from ~/.zsh_history to $HISTFILE"
-        mv "$HOME/.zsh_history" "$HISTFILE"
-    fi
-    
-    # 確認
-    if [[ "$HISTFILE" != "$xdg_histfile" ]]; then
-        echo "Warning: HISTFILE was reset to $HISTFILE, forcing to $xdg_histfile"
-        export HISTFILE="$xdg_histfile"
-    fi
-}
-
-# 関数を実行
-setup_xdg_history
-
+SAVEHIST=5000000                  # ファイルに保存する履歴数
 
 # ヒストリーオプション
 setopt HIST_EXPIRE_DUPS_FIRST     # 履歴がいっぱいになったら重複を先に削除
@@ -63,4 +37,11 @@ fi
 # Homebrew補完の設定（Homebrewがインストールされている場合）
 if command -v brew &> /dev/null; then
     fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
+fi
+
+#------------------------------------------------------------------------------------------------------
+# mise
+#------------------------------------------------------------------------------------------------------
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
 fi
