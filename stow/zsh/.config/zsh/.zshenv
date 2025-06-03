@@ -34,3 +34,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 export GOBIN="$XDG_DATA_HOME/go/bin"
 export PATH="$GOBIN:$PATH"
 
+#---------------------------------------------------------------------------------------------
+# PostgreSQL
+#---------------------------------------------------------------------------------------------
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

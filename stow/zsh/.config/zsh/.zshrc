@@ -40,8 +40,12 @@ if command -v brew &> /dev/null; then
 fi
 
 #------------------------------------------------------------------------------------------------------
-# mise
+# eval 
 #------------------------------------------------------------------------------------------------------
 if command -v mise &> /dev/null; then
     eval "$(mise activate zsh)"
+fi
+
+if command -v gh &> /dev/null; then
+    eval "$(gh completion -s zsh)"
 fi

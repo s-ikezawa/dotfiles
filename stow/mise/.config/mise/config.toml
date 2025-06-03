@@ -2,3 +2,4 @@
 go = "1.24.3"
 node = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
+python = "latest"
