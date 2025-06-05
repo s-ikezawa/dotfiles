@@ -150,4 +150,44 @@ return {
       })
     end,
   },
+
+  -- Claude Code統合
+  {
+    'greggh/claude-code.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    keys = {
+      { '<C-,>', '<cmd>ClaudeCode<cr>', desc = 'Claude Codeをトグル' },
+      { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = 'Claude Codeを開く' },
+      { '<leader>cC', '<cmd>ClaudeCodeContinue<cr>', desc = 'Claude Code会話を継続' },
+      { '<leader>cV', '<cmd>ClaudeCodeVerbose<cr>', desc = 'Claude Code詳細モード' },
+    },
+    config = function()
+      require('claude-code').setup({
+        -- ターミナルウィンドウの設定
+        terminal = {
+          position = 'bottom', -- 'bottom', 'top', 'left', 'right', 'float'
+          size = 15, -- ウィンドウのサイズ（行数またはパーセンテージ）
+          direction = 'horizontal', -- 'horizontal' or 'vertical'
+        },
+        -- キーマップの設定
+        keymaps = {
+          toggle = '<C-,>', -- Claude Codeのトグル
+          continue = '<leader>cC', -- 会話の継続
+          verbose = '<leader>cV', -- 詳細モード
+        },
+        -- Claude Code CLIの設定
+        claude_code = {
+          cmd = 'claude-code', -- Claude Code CLIのコマンド
+          args = {}, -- 追加の引数
+        },
+        -- ファイル監視の設定
+        file_watcher = {
+          enabled = true, -- ファイル変更の自動検出
+          debounce_delay = 100, -- デバウンス遅延（ミリ秒）
+        },
+      })
+    end,
+  },
 }
