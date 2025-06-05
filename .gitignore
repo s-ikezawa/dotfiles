@@ -1,1 +1,6 @@
 .DS_Store
+*.backup
+# 実際の.zshenvファイルは除外（機密情報を含むため）
+stow/zsh/.config/zsh/.zshenv
+# テンプレートファイルはGit管理対象なので除外しない
+# stow/zsh/.config/zsh/.zshenv.template
