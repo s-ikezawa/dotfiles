@@ -100,6 +100,13 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
+    cmd = { 'ClaudeCode' },
+    keys = {
+      { '<C-,>', '<cmd>ClaudeCode<cr>', desc = 'Claude Codeをトグル' },
+      { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = 'Claude Codeを開く' },
+      { '<leader>cC', '<cmd>ClaudeCode --continue<cr>', desc = 'Claude Code会話を継続' },
+      { '<leader>cV', '<cmd>ClaudeCode --verbose<cr>', desc = 'Claude Code詳細モード' },
+    },
     config = function()
       require('claude-code').setup({
         -- コマンド設定

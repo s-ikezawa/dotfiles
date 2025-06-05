@@ -26,7 +26,7 @@ require('config.autocmds')
 -- プラグインの設定を読み込む
 require('lazy').setup('plugins', {
   defaults = {
-    lazy = false, -- デフォルトで遅延読み込みを有効化
+    lazy = true, -- デフォルトで遅延読み込みを有効化
   },
   install = {
     colorscheme = { 'habamax' }, -- インストール中のカラースキーム

@@ -3,6 +3,7 @@ return {
   -- statuscol.nvim: カスタムstatuscolumn
   {
     'luukvbaal/statuscol.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
@@ -44,6 +45,7 @@ return {
       'nvim-tree/nvim-web-devicons',
       'MunifTanjim/nui.nvim',
     },
+    cmd = { 'Neotree' },
     keys = {
       { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'ファイルエクスプローラーをトグル' },
       { '<leader>E', '<cmd>Neotree reveal<cr>', desc = '現在のファイルをエクスプローラーで表示' },
