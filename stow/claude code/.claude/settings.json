@@ -3,6 +3,7 @@
     "allow": [
       "List(*)",
       "Fetch(https://*)",
+      "WebFetch(domain:*)",
       "Bash(ls:*)",
       "Bash(rg:*)",
       "Bash(mv:*)",
