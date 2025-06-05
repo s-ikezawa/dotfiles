@@ -4,3 +4,6 @@
 stow/zsh/.config/zsh/.zshenv
 # テンプレートファイルはGit管理対象なので除外しない
 # stow/zsh/.config/zsh/.zshenv.template
+
+# Neovim関連
+stow/neovim/.config/nvim/lazy-lock.json
