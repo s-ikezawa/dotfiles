@@ -21,13 +21,6 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export SHELL_SESSIONS_DISABLE=1
 
 #---------------------------------------------------------------------------------------------
-# Amazon Web Service
-# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-#---------------------------------------------------------------------------------------------
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
-
-#---------------------------------------------------------------------------------------------
 # Golang
 #---------------------------------------------------------------------------------------------
 export GOPATH="$XDG_DATA_HOME/go"
