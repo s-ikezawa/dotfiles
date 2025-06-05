@@ -192,6 +192,7 @@ return {
       'nvim-tree/nvim-web-devicons',
       'MunifTanjim/nui.nvim',
     },
+    cmd = 'Neotree',
     keys = {
       { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'ファイルエクスプローラーをトグル' },
       { '<leader>E', '<cmd>Neotree reveal<cr>', desc = '現在のファイルをエクスプローラーで表示' },
@@ -261,6 +262,106 @@ return {
             },
           },
         },
+      })
+    end,
+  },
+
+  -- which-key: キーマップヘルプ表示
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 500
+    end,
+    config = function()
+      local wk = require('which-key')
+      wk.setup({
+        -- アイコンプロバイダー設定
+        icons = {
+          rules = false, -- mini.iconsの代わりにカスタムアイコンを使用
+        },
+        -- ウィンドウ設定
+        win = {
+          border = 'rounded', -- none, single, double, shadow, rounded
+          wo = {
+            winblend = 0, -- 透明度（0-100）
+          },
+        },
+        -- レイアウト設定
+        layout = {
+          height = { min = 4, max = 25 }, -- 最小/最大の行数
+          width = { min = 20, max = 50 }, -- 最小/最大の列数
+          spacing = 3, -- グループ間のスペース
+          align = 'left', -- left, center, right
+        },
+        -- トリガー設定（新しいAPI）
+        triggers = {
+          { '<auto>', mode = 'n' }, -- ノーマルモードで自動トリガー
+          { '<auto>', mode = 'v' }, -- ビジュアルモードで自動トリガー
+          { '<leader>', mode = { 'n', 'v' } }, -- リーダーキーでトリガー
+        },
+      })
+
+      -- キーマップの登録（新しい形式）
+      wk.add({
+        -- ウィンドウ操作
+        { '<leader>w', group = 'ウィンドウ' },
+        { '<leader>ws', '<C-w>s', desc = '水平分割' },
+        { '<leader>wv', '<C-w>v', desc = '垂直分割' },
+        { '<leader>wc', '<C-w>c', desc = 'ウィンドウを閉じる' },
+        { '<leader>wo', '<C-w>o', desc = '他のウィンドウを閉じる' },
+        { '<leader>w=', '<C-w>=', desc = 'ウィンドウサイズを均等化' },
+
+        -- バッファ操作（init.luaで定義済み）
+        { '<leader>b', group = 'バッファ' },
+
+        -- Claude Code操作
+        { '<leader>c', group = 'Claude' },
+        { '<leader>cc', '<Cmd>ClaudeCode<CR>', desc = 'Claude Codeを開く' },
+        { '<leader>cC', '<Cmd>ClaudeCode --continue<CR>', desc = '最新の会話を再開' },
+        { '<leader>cV', '<Cmd>ClaudeCode --verbose<CR>', desc = '詳細モードで開く' },
+
+        -- その他
+        { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'ファイルエクスプローラー' },
+        { '<leader>E', '<cmd>Neotree reveal<cr>', desc = '現在のファイルを表示' },
+        { '<leader>q', '<cmd>q<cr>', desc = '終了' },
+        { '<leader>Q', '<cmd>qa<cr>', desc = 'すべて終了' },
+        { '<leader>x', '<cmd>x<cr>', desc = '保存して終了' },
+        
+        -- コメント操作（Neovim 0.10のデフォルト機能）
+        { 'gc', desc = 'コメント（モーション）', mode = { 'n', 'v' } },
+        { 'gcc', desc = '行をコメントトグル' },
+        { 'gco', desc = '下に行コメントを追加' },
+        { 'gcO', desc = '上に行コメントを追加' },
+      })
+
+      -- Treesitterのテキストオブジェクト操作の説明を追加
+      wk.add({
+        -- 外側のテキストオブジェクト
+        { 'a', group = '外側', mode = 'o' },
+        { 'af', desc = 'function', mode = 'o' },
+        { 'ac', desc = 'class', mode = 'o' },
+        { 'aa', desc = 'parameter', mode = 'o' },
+        
+        -- 内側のテキストオブジェクト
+        { 'i', group = '内側', mode = 'o' },
+        { 'if', desc = 'function', mode = 'o' },
+        { 'ic', desc = 'class', mode = 'o' },
+        { 'ia', desc = 'parameter', mode = 'o' },
+
+        -- 移動操作の説明
+        { ']', group = '次へ' },
+        { ']m', desc = '関数の開始' },
+        { ']M', desc = '関数の終了' },
+        { ']]', desc = 'クラスの開始' },
+        { '][', desc = 'クラスの終了' },
+        
+        { '[', group = '前へ' },
+        { '[m', desc = '関数の開始' },
+        { '[M', desc = '関数の終了' },
+        { '[[', desc = 'クラスの開始' },
+        { '[]', desc = 'クラスの終了' },
       })
     end,
   },
