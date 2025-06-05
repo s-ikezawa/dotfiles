@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 -- プラグインの設定を読み込む
 require('lazy').setup('plugins', {
   defaults = {
-    lazy = true, -- デフォルトで遅延読み込みを有効化
+    lazy = false, -- デフォルトで遅延読み込みを有効化
   },
   install = {
     colorscheme = { 'habamax' }, -- インストール中のカラースキーム
@@ -82,7 +82,7 @@ opt.undodir = vim.fn.expand('~/.local/state/nvim/undo//')
 
 -- その他
 opt.clipboard = 'unnamedplus' -- システムクリップボードを使用
-opt.mouse = 'a'              -- マウスを有効化
+opt.mouse = ''               -- マウスを無効化
 opt.splitright = true        -- 垂直分割時に右に開く
 opt.splitbelow = true        -- 水平分割時に下に開く
 opt.updatetime = 250         -- アップデート時間
