@@ -47,7 +47,7 @@ opt.clipboard = 'unnamedplus' -- システムクリップボードを使用
 opt.mouse = ''               -- マウスを無効化
 opt.splitright = true        -- 垂直分割時に右に開く
 opt.splitbelow = true        -- 水平分割時に下に開く
-opt.updatetime = 250         -- アップデート時間
+opt.updatetime = 100         -- アップデート時間（Gitステータス更新を高速化）
 opt.timeoutlen = 300         -- キーコンボのタイムアウト
 
 -- 不可視文字の表示

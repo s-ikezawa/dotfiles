@@ -42,11 +42,33 @@ return {
         -- The name used here must be the same name you would use in a require() call.
         sources = {
           "filesystem",
+          "git_status", -- Gitステータス表示を有効化
           -- "buffers",
-          -- "git_status",
           -- "document_symbols",
         },
         close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+        
+        -- イベントハンドラーを設定してGitステータスの更新を高速化
+        event_handlers = {
+          {
+            event = "file_opened",
+            handler = function()
+              require("neo-tree.command").execute({ action = "refresh" })
+            end
+          },
+          {
+            event = "file_moved",
+            handler = function()
+              require("neo-tree.command").execute({ action = "refresh" })
+            end
+          },
+          {
+            event = "file_renamed",
+            handler = function()
+              require("neo-tree.command").execute({ action = "refresh" })
+            end
+          },
+        },
         default_component_configs = {
           git_status = {
             symbols = {
@@ -66,6 +88,15 @@ return {
           },
         },
         filesystem = {
+          -- ファイルシステム監視を有効化してGit変更を即座に反映
+          follow_current_file = {
+            enabled = true, -- 現在のファイルに自動的にフォーカス
+            leave_dirs_open = true, -- ディレクトリを開いた状態に保つ
+          },
+          -- Gitステータス更新の設定
+          use_libuv_file_watcher = true, -- libuv watcher使用で高速化
+          scan_mode = "deep", -- ディープスキャンでGit状態を正確に取得
+          
           filtered_items = {
             visible = false, -- when true, they will just be displayed differently than normal items
             force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
@@ -94,6 +125,20 @@ return {
             },
             never_show_by_pattern = { -- uses glob style patterns
               --".null-ls_*",
+            },
+          },
+        },
+        
+        -- Gitステータス専用の設定
+        git_status = {
+          window = {
+            position = "float",
+            popup = {
+              size = {
+                height = "25%",
+                width = "50%",
+              },
+              position = "50%",
             },
           },
         },
