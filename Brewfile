@@ -1,11 +1,12 @@
 brew "aws-sam-cli"
 brew "awscli"
 brew "awscli-local"
-brew "docker"
+brew "docker", link: false
 brew "gh"
 brew "git"
 brew "libpq"
 brew "mise"
+brew "ripgrep"
 brew "stow"
 brew "tree"
 brew "zsh"
