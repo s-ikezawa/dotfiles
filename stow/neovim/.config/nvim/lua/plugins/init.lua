@@ -41,6 +41,7 @@ return {
           operators = {},
         },
         integrations = {
+          neotree = true,
           nvimtree = true,
           treesitter = true,
           native_lsp = {
@@ -144,6 +145,119 @@ return {
             goto_previous_end = {
               ['[M'] = '@function.outer',
               ['[]'] = '@class.outer',
+            },
+          },
+        },
+      })
+    end,
+  },
+
+  -- Web DevIcons: ファイルアイコン
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('nvim-web-devicons').setup({
+        -- グローバルにアイコンを有効化
+        override = {},
+        -- デフォルトアイコンを設定
+        default = true,
+        -- 厳密モード（アイコンが見つからない場合に警告）
+        strict = true,
+        -- フォルダアイコンの色を統一
+        override_by_filename = {
+          ['.gitignore'] = {
+            icon = '',
+            color = '#f1502f',
+            name = 'Gitignore'
+          }
+        },
+        -- 拡張子によるアイコンのオーバーライド
+        override_by_extension = {
+          ['log'] = {
+            icon = '',
+            color = '#81e043',
+            name = 'Log'
+          }
+        }
+      })
+    end,
+  },
+
+  -- Neo-tree: ファイルエクスプローラー
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    keys = {
+      { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'ファイルエクスプローラーをトグル' },
+      { '<leader>E', '<cmd>Neotree reveal<cr>', desc = '現在のファイルをエクスプローラーで表示' },
+    },
+    config = function()
+      -- Neo-treeをデフォルト設定で初期化
+      -- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/lua/neo-tree/defaults.lua
+      require('neo-tree').setup({
+        -- If a user has a sources list it will replace this one.
+        -- Only sources listed here will be loaded.
+        -- You can also add an external source by adding it's name to this list.
+        -- The name used here must be the same name you would use in a require() call.
+        sources = {
+          "filesystem",
+          -- "buffers",
+          -- "git_status",
+          -- "document_symbols",
+        },
+        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+        default_component_configs = {
+          git_status = {
+            symbols = {
+              -- Change type
+              added     = "✚", -- NOTE: you can set any of these to an empty string to not show them
+              deleted   = "✖",
+              modified  = "",
+              renamed   = "󰁕",
+              -- Status type
+              untracked = "",
+              ignored   = "",
+              unstaged  = "",
+              staged    = "",
+              conflict  = "",
+            },
+            align = "right",
+          },
+        },
+        filesystem = {
+          filtered_items = {
+            visible = false, -- when true, they will just be displayed differently than normal items
+            force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
+            show_hidden_count = false, -- when true, the number of hidden items in each folder will be shown as the last entry
+            hide_dotfiles = false,
+            hide_gitignored = true,
+            hide_hidden = false, -- only works on Windows for hidden files/directories
+            hide_by_name = {
+              ".DS_Store",
+              "thumbs.db"
+              --"node_modules",
+            },
+            hide_by_pattern = { -- uses glob style patterns
+              --"*.meta",
+              --"*/src/*/tsconfig.json"
+            },
+            always_show = { -- remains visible even if other settings would normally hide it
+              --".gitignored",
+            },
+            always_show_by_pattern = { -- uses glob style patterns
+              --".env*",
+            },
+            never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
+              --".DS_Store",
+              --"thumbs.db"
+            },
+            never_show_by_pattern = { -- uses glob style patterns
+              --".null-ls_*",
             },
           },
         },

@@ -49,3 +49,7 @@ fi
 if command -v gh &> /dev/null; then
     eval "$(gh completion -s zsh)"
 fi
+
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi

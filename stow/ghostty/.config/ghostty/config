@@ -3,8 +3,8 @@ theme = catppuccin-mocha
 #=================================================================
 # Font
 #=================================================================
-font-size = 15
-font-family = UDEV Gothic 35NF
+font-size = 18
+font-family = "UDEV Gothic NF"
 font-feature = -dlig
 
 # フォントの太さの調整

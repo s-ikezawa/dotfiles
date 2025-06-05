@@ -30,6 +30,10 @@ require('lazy').setup('plugins', {
     enabled = true, -- 自動アップデートチェックを有効化
     notify = false, -- アップデート通知を無効化
   },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
   performance = {
     rtp = {
       disabled_plugins = {
@@ -73,6 +77,15 @@ opt.sidescrolloff = 8    -- 水平スクロール時の余白
 opt.signcolumn = 'yes'   -- サインカラムを常に表示
 opt.termguicolors = true -- 24bitカラーを有効化
 opt.cursorline = true    -- カーソル行をハイライト
+
+-- フォント設定（GUI版Neovim用）
+if vim.g.neovide then
+  vim.g.neovide_font_family = 'UDEV Gothic NF'
+  vim.g.neovide_font_size = 15
+end
+
+-- アイコン表示のための設定
+vim.g.have_nerd_font = true
 
 -- ファイル
 opt.swapfile = false     -- スワップファイルを作成しない
