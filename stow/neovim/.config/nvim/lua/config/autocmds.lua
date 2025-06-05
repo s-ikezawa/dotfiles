@@ -65,10 +65,27 @@ autocmd({ 'BufWritePost', 'FocusGained', 'CursorHold', 'CursorHoldI' }, {
           break
         end
       end
-      
+
       if neo_tree_win then
         require("neo-tree.command").execute({ action = "refresh" })
       end
     end
   end,
 })
+
+-- GitSignsのstatuscolumn更新（エラー処理を追加）
+augroup('GitSignsStatusColumn', { clear = true })
+autocmd({ 'BufWritePost', 'FocusGained' }, {
+  group = 'GitSignsStatusColumn',
+  pattern = '*',
+  callback = function()
+    -- GitSignsがバッファにアタッチされているかチェック
+    local gitsigns = package.loaded.gitsigns
+    if gitsigns then
+      vim.schedule(function()
+        pcall(vim.cmd, 'redraw!')
+      end)
+    end
+  end,
+})
+

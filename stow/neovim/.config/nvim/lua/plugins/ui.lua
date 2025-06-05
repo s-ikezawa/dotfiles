@@ -1,5 +1,21 @@
 -- UI関連プラグイン設定
 return {
+  -- statuscol.nvim: カスタムstatuscolumn
+  {
+    'luukvbaal/statuscol.nvim',
+    config = function()
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true,
+        segments = {
+          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          { text = { "%s" }, click = "v:lua.ScSa" },
+          { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa", },
+        }
+      })
+    end,
+  },
+
   -- Web DevIcons: ファイルタイプアイコン
   {
     'nvim-tree/nvim-web-devicons',
@@ -202,6 +218,23 @@ return {
         { '<leader>cC', '<Cmd>ClaudeCode --continue<CR>', desc = '最新の会話を再開' },
         { '<leader>cV', '<Cmd>ClaudeCode --verbose<CR>', desc = '詳細モードで開く' },
 
+        -- Git操作 (gitsigns)
+        { '<leader>h', group = 'Git ハンク' },
+        { '<leader>hs', desc = 'ハンクをステージ' },
+        { '<leader>hr', desc = 'ハンクをリセット' },
+        { '<leader>hS', desc = 'バッファをステージ' },
+        { '<leader>hu', desc = 'ステージを取り消し' },
+        { '<leader>hR', desc = 'バッファをリセット' },
+        { '<leader>hp', desc = 'ハンクをプレビュー' },
+        { '<leader>hb', desc = 'ライン blame' },
+        { '<leader>hd', desc = 'diff を表示' },
+        { '<leader>hD', desc = 'diff ~ を表示' },
+        
+        -- Git トグル操作
+        { '<leader>t', group = 'トグル' },
+        { '<leader>tb', desc = 'ライン blame をトグル' },
+        { '<leader>td', desc = '削除行をトグル' },
+
         -- ファイルエクスプローラー（neo-treeプラグインで定義済みのため削除）
         -- { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'ファイルエクスプローラー' },
         -- { '<leader>E', '<cmd>Neotree reveal<cr>', desc = '現在のファイルを表示' },
@@ -232,12 +265,14 @@ return {
 
         -- 移動操作の説明
         { ']', group = '次へ' },
+        { ']c', desc = '次のGitハンク' },
         { ']m', desc = '関数の開始' },
         { ']M', desc = '関数の終了' },
         { ']]', desc = 'クラスの開始' },
         { '][', desc = 'クラスの終了' },
         
         { '[', group = '前へ' },
+        { '[c', desc = '前のGitハンク' },
         { '[m', desc = '関数の開始' },
         { '[M', desc = '関数の終了' },
         { '[[', desc = 'クラスの開始' },

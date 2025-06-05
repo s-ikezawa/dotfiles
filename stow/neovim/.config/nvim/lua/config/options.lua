@@ -23,9 +23,10 @@ opt.incsearch = true     -- インクリメンタルサーチ
 opt.wrap = false         -- 行折り返しを無効
 opt.scrolloff = 8        -- スクロール時の余白
 opt.sidescrolloff = 8    -- 水平スクロール時の余白
-opt.signcolumn = 'yes'   -- サインカラムを常に表示
+opt.signcolumn = 'yes:1' -- サインカラムを有効化
 opt.termguicolors = true -- 24bitカラーを有効化
 opt.cursorline = true    -- カーソル行をハイライト
+
 
 -- フォント設定（GUI版Neovim用）
 if vim.g.neovide then
