@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "github": {
+    "GitHub": {
       "command": "docker",
       "args": [
         "run",
@@ -13,6 +13,13 @@
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
+    },
+    "Context7": {
+      "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
     },
     "awslabs.aws-documentation-mcp-server": {
       "command": "docker",
