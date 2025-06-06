@@ -1,0 +1,5 @@
+name: 4K
+root: ~/
+
+windows:
+  - editor: nvim
