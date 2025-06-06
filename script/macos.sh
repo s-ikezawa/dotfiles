@@ -4,7 +4,9 @@
 defaults write com.apple.Finder AppleShowAllFiles YES
 killall Finder
 
+#------------------------------------------------------------------------------------------------------------------
 # 1PasswordからGitHub Personal Access Tokenを取得してzshenvファイルを生成
+#------------------------------------------------------------------------------------------------------------------
 echo "GitHub Personal Access Tokenを1Passwordから取得して.zshenvファイルを生成します..."
 
 # 1Password CLIがインストールされているか確認
