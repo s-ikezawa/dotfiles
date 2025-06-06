@@ -75,5 +75,42 @@
   },
   "env": {},
   "cleanupPeriodDays": 30,
-  "includeCoAuthoredBy": false
+  "includeCoAuthoredBy": false,
+  "mcpServers": {
+    "GitHub": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "Context7": {
+      "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "--interactive",
+        "--env",
+        "FASTMCP_LOG_LEVEL=ERROR",
+        "awslabs/aws-documentation-mcp-server:latest"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
 }
