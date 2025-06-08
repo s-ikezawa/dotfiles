@@ -272,7 +272,7 @@ setup_dotfiles_with_stow() {
                 echo "📦 既存の~/.claudeディレクトリをバックアップしました"
             fi
             # stowでClaude設定を配置
-            stow -v -t "$HOME" claude
+            stow -v -t "$HOME/.claude" claude
             echo "✅ Claude Code設定のstow配置が完了しました"
         fi
         
