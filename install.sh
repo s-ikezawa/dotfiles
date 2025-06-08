@@ -250,6 +250,9 @@ setup_dotfiles_with_stow() {
     if [[ -d "config" ]]; then
         echo "📁 設定ファイルをstowで配置します..."
         
+        # ~/.configディレクトリを作成（存在しない場合）
+        mkdir -p "$HOME/.config"
+        
         # stowで設定をシンボリックリンク
         stow -v -t "$HOME/.config" --ignore=".DS_Store" config
         echo "✅ 設定ファイルの配置が完了しました！"
