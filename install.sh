@@ -197,6 +197,29 @@ setup_system_zshenv() {
     fi
 }
 
+# macOS用のDock設定
+setup_macos_dock() {
+    if [[ "$OS" == "macos" ]]; then
+        echo "🖥️  macOSのDock設定を行います..."
+        
+        # Dockを左側に配置
+        defaults write com.apple.dock orientation left
+        echo "✅ Dockを左側に配置しました"
+        
+        # Dockのサイズを最小に設定
+        defaults write com.apple.dock tilesize -int 16
+        echo "✅ Dockのサイズを最小に設定しました"
+        
+        # Dockの自動隠しを有効化
+        defaults write com.apple.dock autohide -bool true
+        echo "✅ Dockの自動隠しを有効化しました"
+        
+        # Dockの設定を即座に反映
+        killall Dock
+        echo "✅ Dock設定が反映されました"
+    fi
+}
+
 # stowを使って設定ファイルをシンボリックリンクで配置
 setup_dotfiles_with_stow() {
     echo "🔗 stowを使って設定ファイルを配置します..."
@@ -236,6 +259,9 @@ install_macos_packages
 
 # システムレベルのzsh設定
 setup_system_zshenv
+
+# macOSのDock設定
+setup_macos_dock
 
 # stowを使って設定ファイルを配置
 setup_dotfiles_with_stow
