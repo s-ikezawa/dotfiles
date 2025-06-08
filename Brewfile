@@ -23,6 +23,9 @@ cask "1password-cli"
 cask "google-chrome"
 cask "firefox"
 
+# AI tools
+cask "claude"
+
 # Terminal
 cask "ghostty"
 

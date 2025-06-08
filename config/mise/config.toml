@@ -25,3 +25,6 @@ env_file = ".env"
 nodejs = "latest"
 python = "latest"
 go = "latest"
+
+# npm経由でインストールするツール
+"npm:@anthropic-ai/claude-code" = "latest"
