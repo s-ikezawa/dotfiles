@@ -4,9 +4,15 @@
 
 ## インストール方法
 
-### 推奨方法（対話モード）
+### ワンライナー（推奨）
 
-リポジトリをクローンしてから実行（推奨）：
+パスワード入力が可能なワンライナー：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh -o /tmp/install.sh && bash /tmp/install.sh && rm /tmp/install.sh
+```
+
+### 従来のクローン方法
 
 ```bash
 git clone https://github.com/s-ikezawa/dotfiles.git
@@ -14,13 +20,13 @@ cd dotfiles
 ./install.sh
 ```
 
-### ワンライナー（制限あり）
+### パイプ経由（制限あり）
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh | bash
 ```
 
-**注意**: ワンライナーでの実行時、macOSでHomebrewが未インストールの場合は管理者権限の入力ができないため、手動でのインストールが必要になります。
+**注意**: パイプ経由での実行時は、パスワード入力ができないためHomebrewが未インストールの場合はエラーになります。
 
 ## 含まれる設定ファイル
 
