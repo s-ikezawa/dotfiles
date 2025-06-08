@@ -197,10 +197,18 @@ setup_system_zshenv() {
     fi
 }
 
-# macOS用のDock設定
-setup_macos_dock() {
+# macOS用のシステム設定
+setup_macos_settings() {
     if [[ "$OS" == "macos" ]]; then
-        echo "🖥️  macOSのDock設定を行います..."
+        echo "🖥️  macOSのシステム設定を行います..."
+        
+        # キーリピート設定
+        echo "⌨️  キーリピート設定を変更します..."
+        defaults write NSGlobalDomain InitialKeyRepeat -int 11
+        echo "✅ InitialKeyRepeatを11に設定しました"
+        
+        defaults write NSGlobalDomain KeyRepeat -int 1
+        echo "✅ KeyRepeatを1に設定しました"
         
         # Dockを左側に配置
         defaults write com.apple.dock orientation left
@@ -268,8 +276,8 @@ install_macos_packages
 # システムレベルのzsh設定
 setup_system_zshenv
 
-# macOSのDock設定
-setup_macos_dock
+# macOSのシステム設定（Dock、キーリピートなど）
+setup_macos_settings
 
 # stowを使って設定ファイルを配置
 setup_dotfiles_with_stow
