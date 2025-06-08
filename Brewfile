@@ -19,3 +19,11 @@ cask "1password-cli"
 # Web browsers
 cask "google-chrome"
 cask "firefox"
+
+# Terminal
+cask "ghostty"
+
+# Fonts
+cask "font-udev-gothic"
+cask "font-udev-gothic-nf"
+cask "font-udev-gothic-hs"

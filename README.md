@@ -20,14 +20,6 @@ cd dotfiles
 ./install.sh
 ```
 
-### パイプ経由（制限あり）
-
-```bash
-curl -sSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh | bash
-```
-
-**注意**: パイプ経由での実行時は、パスワード入力ができないためHomebrewが未インストールの場合はエラーになります。
-
 ### インストール後の追加手順
 
 dotfilesのインストールが完了したら、新しいターミナルセッションを開いて以下のコマンドを実行してください：
@@ -44,7 +36,27 @@ mise install
 - Git設定
 - mise設定（プログラミング言語バージョン管理）
 - npm、pip、Go言語のXDG準拠設定
+- Ghosttyターミナル設定
+- UDEV Gothicフォント
 - その他の開発環境設定
+
+## ターミナル環境（Ghostty）
+
+このdotfilesではGhosttyターミナルとUDEV Gothicフォントを使用します。
+
+### インストールされるもの
+- **Ghostty**: 高性能なGPUアクセラレーション対応ターミナル
+- **UDEV Gothic**: プログラミングに最適化された日本語対応フォント
+- **UDEV Gothic Nerd Font**: アイコンフォント付きバージョン
+- **UDEV Gothic HS**: 半角スペース調整版
+
+### Ghostty設定の特徴
+- UDEV Gothic Nerd Fontを使用
+- 背景透明度95%
+- 適切なパディング設定
+- zshシェル統合
+- 日本語IME対応
+- 標準的なmacOSキーバインド
 
 ## XDG Base Directory準拠
 
