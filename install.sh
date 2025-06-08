@@ -251,7 +251,7 @@ setup_dotfiles_with_stow() {
         echo "📁 設定ファイルをstowで配置します..."
         
         # stowで設定をシンボリックリンク
-        stow -v -t "$HOME/.config" config
+        stow -v -t "$HOME/.config" --ignore=".DS_Store" config
         echo "✅ 設定ファイルの配置が完了しました！"
         
         # 設定が正しく配置されたか確認
@@ -266,28 +266,18 @@ setup_dotfiles_with_stow() {
         # Claude Code設定のstow適用
         if [[ -d "claude" ]]; then
             echo "🤖 Claude Code設定をstowで配置します..."
-            # 既存の~/.claudeディレクトリがある場合は削除
-            if [[ -e "$HOME/.claude" ]] && [[ ! -L "$HOME/.claude" ]]; then
-                rm -rf "$HOME/.claude"
-                echo "🗑️  既存の~/.claudeディレクトリを削除しました"
-            fi
             # ~/.claudeディレクトリを作成
             mkdir -p "$HOME/.claude"
             # stowでClaude設定を配置（gitignoreされているフォルダは除外）
-            stow -v -t "$HOME/.claude" --ignore="projects" --ignore="statsig" --ignore="todos" --ignore="ide" claude
+            stow -v -t "$HOME/.claude" --ignore=".DS_Store" --ignore="projects" --ignore="statsig" --ignore="todos" --ignore="ide" claude
             echo "✅ Claude Code設定のstow配置が完了しました"
         fi
         
-        # VSCode設定のシンボリックリンク作成
+        # VSCode設定のstow適用
         if [[ -d "vscode" ]]; then
-            echo "💻 VSCode設定をリンクします..."
-            stow -v -t "$HOME" vscode
-            
-            # macOSの場合、"Application Support"ディレクトリへのシンボリックリンクを作成
-            if [[ "$OS" == "macos" ]] && [[ -d "$HOME/Library/ApplicationSupport" ]]; then
-                ln -sf "$HOME/Library/ApplicationSupport" "$HOME/Library/Application Support"
-                echo "✅ VSCode設定のリンクが完了しました"
-            fi
+            echo "💻 VSCode設定をstowで配置します..."
+            stow -v -t "$HOME" --ignore=".DS_Store" vscode
+            echo "✅ VSCode設定のstow配置が完了しました"
         fi
     else
         echo "⚠️  configディレクトリが見つかりません。スキップします。"
