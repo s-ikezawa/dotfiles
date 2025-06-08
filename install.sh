@@ -135,4 +135,55 @@ install_yum_packages() {
 # パッケージマネージャーのインストールを実行
 install_package_manager
 
+# dotfilesリポジトリをクローン
+clone_dotfiles() {
+    DOTFILES_DIR="$HOME/Projects/github.com/s-ikezawa"
+    REPO_URL="https://github.com/s-ikezawa/dotfiles.git"
+    
+    echo "📂 dotfilesリポジトリをクローンします..."
+    
+    # ディレクトリが存在しない場合は作成
+    if [[ ! -d "$DOTFILES_DIR" ]]; then
+        echo "📁 ディレクトリを作成します: $DOTFILES_DIR"
+        mkdir -p "$DOTFILES_DIR"
+    fi
+    
+    # リポジトリをクローン
+    if [[ -d "$DOTFILES_DIR/dotfiles" ]]; then
+        echo "📦 dotfilesリポジトリは既に存在します。更新します..."
+        cd "$DOTFILES_DIR/dotfiles"
+        git pull origin main
+    else
+        echo "⬇️  dotfilesリポジトリをクローンします..."
+        cd "$DOTFILES_DIR"
+        git clone "$REPO_URL"
+        cd dotfiles
+    fi
+    
+    echo "✅ dotfilesリポジトリの準備が完了しました！"
+    echo "📍 現在のディレクトリ: $(pwd)"
+}
+
+# macOS用のパッケージインストール
+install_macos_packages() {
+    if [[ "$OS" == "macos" ]]; then
+        echo "🍺 Brewfileからパッケージをインストールします..."
+        
+        # Brewfileが存在するか確認
+        if [[ -f "Brewfile" ]]; then
+            echo "📋 Brewfileが見つかりました。パッケージをインストールします..."
+            brew bundle install
+            echo "✅ brew bundle installが完了しました！"
+        else
+            echo "⚠️  Brewfileが見つかりません。スキップします。"
+        fi
+    fi
+}
+
+# dotfilesリポジトリをクローン
+clone_dotfiles
+
+# macOSの場合はパッケージをインストール
+install_macos_packages
+
 echo "✅ dotfiles インストールが完了しました！"
