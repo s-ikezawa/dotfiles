@@ -12,3 +12,7 @@ brew "curl"
 brew "wget"
 brew "tree"
 brew "jq"
+
+# Password management
+cask "1password"
+cask "1password-cli"
