@@ -12,6 +12,9 @@ brew "wget"
 brew "tree"
 brew "jq"
 
+# Container tools
+cask "docker"
+
 # Password management
 cask "1password"
 cask "1password-cli"
