@@ -29,6 +29,10 @@ cask "claude"
 # Terminal
 cask "ghostty"
 
+# Editors
+cask "visual-studio-code"
+brew "neovim"
+
 # Fonts
 cask "font-udev-gothic"
 cask "font-udev-gothic-nf"
