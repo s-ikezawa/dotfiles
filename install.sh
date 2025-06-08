@@ -263,17 +263,29 @@ setup_dotfiles_with_stow() {
             echo "✅ ~/.config/git/config が作成されました"
         fi
         
-        # Claude Codeディレクトリのシンボリックリンク作成
-        if [[ -d "$HOME/.config/claude" ]]; then
-            echo "🤖 Claude Code設定をリンクします..."
+        # Claude Code設定のstow適用
+        if [[ -d "claude" ]]; then
+            echo "🤖 Claude Code設定をstowで配置します..."
             # 既存の~/.claudeディレクトリがある場合はバックアップ
             if [[ -e "$HOME/.claude" ]] && [[ ! -L "$HOME/.claude" ]]; then
                 mv "$HOME/.claude" "$HOME/.claude.bak"
                 echo "📦 既存の~/.claudeディレクトリをバックアップしました"
             fi
-            # シンボリックリンクを作成
-            ln -sf "$HOME/.config/claude" "$HOME/.claude"
-            echo "✅ Claude Code設定のリンクが完了しました"
+            # stowでClaude設定を配置
+            stow -v -t "$HOME" claude
+            echo "✅ Claude Code設定のstow配置が完了しました"
+        fi
+        
+        # VSCode設定のシンボリックリンク作成
+        if [[ -d "vscode" ]]; then
+            echo "💻 VSCode設定をリンクします..."
+            stow -v -t "$HOME" vscode
+            
+            # macOSの場合、"Application Support"ディレクトリへのシンボリックリンクを作成
+            if [[ "$OS" == "macos" ]] && [[ -d "$HOME/Library/ApplicationSupport" ]]; then
+                ln -sf "$HOME/Library/ApplicationSupport" "$HOME/Library/Application Support"
+                echo "✅ VSCode設定のリンクが完了しました"
+            fi
         fi
     else
         echo "⚠️  configディレクトリが見つかりません。スキップします。"
