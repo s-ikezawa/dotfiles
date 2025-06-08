@@ -211,14 +211,8 @@ setup_dotfiles_with_stow() {
     if [[ -d "config" ]]; then
         echo "📁 設定ファイルをstowで配置します..."
         
-        # 既存の.configをバックアップ（必要に応じて）
-        if [[ -e "$HOME/.config" && ! -L "$HOME/.config" ]]; then
-            echo "📝 既存の ~/.config をバックアップします..."
-            mv "$HOME/.config" "$HOME/.config.backup.$(date +%Y%m%d_%H%M%S)"
-        fi
-        
         # stowで設定をシンボリックリンク
-        stow -v -t "$HOME" config
+        stow -v -t "$HOME/.config" config
         echo "✅ 設定ファイルの配置が完了しました！"
         
         # 設定が正しく配置されたか確認
