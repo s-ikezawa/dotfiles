@@ -38,3 +38,9 @@ fi
 # 補完システムを有効化
 autoload -Uz compinit
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+# miseの初期化（プログラミング言語バージョン管理）
+if command -v mise >/dev/null 2>&1; then
+    # miseのシェル統合を有効化
+    eval "$(mise activate zsh)"
+fi

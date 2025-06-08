@@ -1,0 +1,12 @@
+# .envrc テンプレートファイル
+# プロジェクトルートにコピーして使用してください
+
+# mise設定を有効化
+use mise
+
+# プロジェクト固有の環境変数を設定
+# export PROJECT_ENV=development
+# export API_KEY=your_api_key_here
+
+# パスを追加する場合
+# export PATH="$PWD/bin:$PATH"

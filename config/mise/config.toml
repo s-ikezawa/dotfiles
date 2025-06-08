@@ -1,0 +1,27 @@
+# mise 設定ファイル
+# ~/.config/mise/config.toml
+
+[settings]
+# 自動でツールをインストールするかどうか
+auto_install = true
+
+# プラグインの自動更新
+plugin_autoupdate_last_check_duration = "7d"
+
+# パフォーマンス向上のための設定
+jobs = 4
+
+# 実験的機能の有効化（IDE連携など）
+experimental = true
+
+# ディレクトリ変更時の自動アクティベーション
+activate_aggressive = false
+
+# 環境変数ファイルの設定
+env_file = ".env"
+
+# グローバルツールの定義
+[tools]
+nodejs = "latest"
+python = "latest"
+go = "latest"

@@ -6,8 +6,7 @@ brew "git"
 brew "zsh"
 brew "zsh-completions"
 brew "stow"
-
-# Additional useful tools
+brew "mise"
 brew "curl"
 brew "wget"
 brew "tree"

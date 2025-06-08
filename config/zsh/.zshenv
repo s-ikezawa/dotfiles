@@ -23,3 +23,8 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 # アプリケーション用のディレクトリが存在することを確認
 [[ ! -d "$(dirname "$HISTFILE")" ]] && mkdir -p "$(dirname "$HISTFILE")"
 [[ ! -d "$(dirname "$LESSHISTFILE")" ]] && mkdir -p "$(dirname "$LESSHISTFILE")"
+
+# mise（プログラミング言語バージョン管理ツール）の環境変数設定
+export MISE_CONFIG_DIR="$XDG_CONFIG_HOME/mise"
+export MISE_DATA_DIR="$XDG_DATA_HOME/mise"
+export MISE_CACHE_DIR="$XDG_CACHE_HOME/mise"
