@@ -180,10 +180,50 @@ install_macos_packages() {
     fi
 }
 
+# stowを使って設定ファイルをシンボリックリンクで配置
+setup_dotfiles_with_stow() {
+    echo "🔗 stowを使って設定ファイルを配置します..."
+    
+    # stowが利用可能か確認
+    if ! command -v stow >/dev/null 2>&1; then
+        echo "❌ stowが見つかりません。パッケージインストールが完了していない可能性があります。"
+        return 1
+    fi
+    
+    # zshディレクトリが存在するか確認
+    if [[ -d "zsh" ]]; then
+        echo "📁 zsh設定ファイルをstowで配置します..."
+        
+        # 既存の.zshenvをバックアップ（存在する場合）
+        if [[ -f "$HOME/.zshenv" && ! -L "$HOME/.zshenv" ]]; then
+            echo "📝 既存の ~/.zshenv をバックアップします..."
+            mv "$HOME/.zshenv" "$HOME/.zshenv.backup.$(date +%Y%m%d_%H%M%S)"
+        fi
+        
+        # stowでzsh設定をシンボリックリンク
+        stow -v -t "$HOME" zsh
+        echo "✅ zsh設定ファイルの配置が完了しました！"
+        
+        # 設定が正しく配置されたか確認
+        if [[ -L "$HOME/.zshenv" ]]; then
+            echo "✅ ~/.zshenv がシンボリックリンクとして作成されました"
+        fi
+        
+        if [[ -d "$HOME/.config/zsh" ]]; then
+            echo "✅ ~/.config/zsh ディレクトリが作成されました"
+        fi
+    else
+        echo "⚠️  zshディレクトリが見つかりません。スキップします。"
+    fi
+}
+
 # dotfilesリポジトリをクローン
 clone_dotfiles
 
 # macOSの場合はパッケージをインストール
 install_macos_packages
+
+# stowを使って設定ファイルを配置
+setup_dotfiles_with_stow
 
 echo "✅ dotfiles インストールが完了しました！"
