@@ -1,7 +1,7 @@
 # ~/.config/zsh/.zshrc
-# Zsh configuration file following XDG Base Directory Specification
+# XDG Base Directory Specificationに従ったZsh設定ファイル
 
-# History settings
+# 履歴設定
 HISTFILE="$XDG_STATE_HOME/zsh/history"
 HISTSIZE=10000
 SAVEHIST=10000
@@ -12,29 +12,29 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
 
-# Ensure history directory exists
+# 履歴ディレクトリが存在することを確認
 [[ ! -d "$(dirname "$HISTFILE")" ]] && mkdir -p "$(dirname "$HISTFILE")"
 
-# Change directory options
+# ディレクトリ変更オプション
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 
-# Completion settings
+# 補完設定
 setopt COMPLETE_IN_WORD
 setopt ALWAYS_TO_END
 
-# Basic aliases
+# 基本的なエイリアス
 alias ls='ls -G'
 alias ll='ls -la'
 alias la='ls -la'
 alias grep='grep --color=auto'
 
-# Load zsh-completions if available
+# zsh-completionsが利用可能な場合は読み込み
 if [[ -d "/opt/homebrew/share/zsh-completions" ]]; then
     fpath=("/opt/homebrew/share/zsh-completions" $fpath)
 fi
 
-# Enable completion system
+# 補完システムを有効化
 autoload -Uz compinit
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"

@@ -180,6 +180,23 @@ install_macos_packages() {
     fi
 }
 
+# /etc/zshenvにZDOTDIRを設定
+setup_system_zshenv() {
+    echo "⚙️  システムレベルのzsh設定を行います..."
+    
+    # /etc/zshenvにZDOTDIRを設定
+    local zshenv_content='export ZDOTDIR="$HOME/.config/zsh"'
+    
+    if [[ ! -f "/etc/zshenv" ]] || ! grep -q "ZDOTDIR" /etc/zshenv; then
+        echo "📝 /etc/zshenv にZDOTDIRを設定します..."
+        echo "🔐 管理者権限が必要です："
+        echo "$zshenv_content" | sudo tee -a /etc/zshenv > /dev/null
+        echo "✅ /etc/zshenv の設定が完了しました！"
+    else
+        echo "✅ /etc/zshenv は既に設定されています"
+    fi
+}
+
 # stowを使って設定ファイルをシンボリックリンクで配置
 setup_dotfiles_with_stow() {
     echo "🔗 stowを使って設定ファイルを配置します..."
@@ -190,30 +207,30 @@ setup_dotfiles_with_stow() {
         return 1
     fi
     
-    # zshディレクトリが存在するか確認
-    if [[ -d "zsh" ]]; then
-        echo "📁 zsh設定ファイルをstowで配置します..."
+    # configディレクトリが存在するか確認
+    if [[ -d "config" ]]; then
+        echo "📁 設定ファイルをstowで配置します..."
         
-        # 既存の.zshenvをバックアップ（存在する場合）
-        if [[ -f "$HOME/.zshenv" && ! -L "$HOME/.zshenv" ]]; then
-            echo "📝 既存の ~/.zshenv をバックアップします..."
-            mv "$HOME/.zshenv" "$HOME/.zshenv.backup.$(date +%Y%m%d_%H%M%S)"
+        # 既存の.configをバックアップ（必要に応じて）
+        if [[ -e "$HOME/.config" && ! -L "$HOME/.config" ]]; then
+            echo "📝 既存の ~/.config をバックアップします..."
+            mv "$HOME/.config" "$HOME/.config.backup.$(date +%Y%m%d_%H%M%S)"
         fi
         
-        # stowでzsh設定をシンボリックリンク
-        stow -v -t "$HOME" zsh
-        echo "✅ zsh設定ファイルの配置が完了しました！"
+        # stowで設定をシンボリックリンク
+        stow -v -t "$HOME" config
+        echo "✅ 設定ファイルの配置が完了しました！"
         
         # 設定が正しく配置されたか確認
-        if [[ -L "$HOME/.zshenv" ]]; then
-            echo "✅ ~/.zshenv がシンボリックリンクとして作成されました"
-        fi
-        
         if [[ -d "$HOME/.config/zsh" ]]; then
             echo "✅ ~/.config/zsh ディレクトリが作成されました"
         fi
+        
+        if [[ -f "$HOME/.config/git/config" ]]; then
+            echo "✅ ~/.config/git/config が作成されました"
+        fi
     else
-        echo "⚠️  zshディレクトリが見つかりません。スキップします。"
+        echo "⚠️  configディレクトリが見つかりません。スキップします。"
     fi
 }
 
@@ -223,7 +240,12 @@ clone_dotfiles
 # macOSの場合はパッケージをインストール
 install_macos_packages
 
+# システムレベルのzsh設定
+setup_system_zshenv
+
 # stowを使って設定ファイルを配置
 setup_dotfiles_with_stow
 
 echo "✅ dotfiles インストールが完了しました！"
+echo "📁 設定ファイルの場所: $HOME/.config/"
+echo "🔄 新しいターミナルセッションでzsh設定が有効になります"
