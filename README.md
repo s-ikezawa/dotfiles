@@ -43,7 +43,31 @@ mise install
 - Shell設定 (zsh) - XDG Base Directory仕様準拠
 - Git設定
 - mise設定（プログラミング言語バージョン管理）
+- npm、pip、Go言語のXDG準拠設定
 - その他の開発環境設定
+
+## XDG Base Directory準拠
+
+このdotfilesはXDG Base Directory仕様に準拠しており、設定ファイルやデータが適切なディレクトリに配置されます。
+
+### プログラミング言語の設定
+
+各プログラミング言語のパッケージ管理ツールもXDG準拠に設定されています：
+
+#### npm（Node.js）
+- **設定ファイル**: `~/.config/npm/npmrc`
+- **グローバルパッケージ**: `~/.local/share/npm/`
+- **キャッシュ**: `~/.cache/npm/`
+
+#### pip（Python）
+- **設定ファイル**: `~/.config/pip/pip.conf`
+- **ログファイル**: `~/.local/share/pip/pip.log`
+- **キャッシュ**: `~/.cache/pip/`
+
+#### Go言語
+- **GOPATH**: `~/.local/share/go/`
+- **モジュールキャッシュ**: `~/.cache/go/mod/`
+- **ビルドキャッシュ**: `~/.cache/go-build/`
 
 ## プログラミング言語管理（mise）
 

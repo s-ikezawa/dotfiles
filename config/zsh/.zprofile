@@ -11,3 +11,14 @@ fi
 if [[ -d "$HOME/.local/share/mise/shims" ]]; then
     export PATH="$HOME/.local/share/mise/shims:$PATH"
 fi
+
+# プログラミング言語のグローバルパッケージパス設定
+# npm（Node.js）グローバルパッケージ
+if [[ -d "$XDG_DATA_HOME/npm/bin" ]]; then
+    export PATH="$XDG_DATA_HOME/npm/bin:$PATH"
+fi
+
+# Go言語のバイナリパス
+if [[ -d "$GOPATH/bin" ]]; then
+    export PATH="$GOPATH/bin:$PATH"
+fi

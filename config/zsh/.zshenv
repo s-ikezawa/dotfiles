@@ -7,11 +7,15 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# XDG_RUNTIME_DIRの設定（macOSではデフォルトでは存在しないため）
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/runtime}"
+
 # ディレクトリが存在しない場合は作成
 [[ ! -d "$XDG_CONFIG_HOME" ]] && mkdir -p "$XDG_CONFIG_HOME"
 [[ ! -d "$XDG_DATA_HOME" ]] && mkdir -p "$XDG_DATA_HOME"
 [[ ! -d "$XDG_CACHE_HOME" ]] && mkdir -p "$XDG_CACHE_HOME"
 [[ ! -d "$XDG_STATE_HOME" ]] && mkdir -p "$XDG_STATE_HOME"
+[[ ! -d "$XDG_RUNTIME_DIR" ]] && mkdir -p "$XDG_RUNTIME_DIR"
 
 # その他のアプリケーションをXDGディレクトリに移動
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
@@ -28,3 +32,26 @@ export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export MISE_CONFIG_DIR="$XDG_CONFIG_HOME/mise"
 export MISE_DATA_DIR="$XDG_DATA_HOME/mise"
 export MISE_CACHE_DIR="$XDG_CACHE_HOME/mise"
+
+# npm（Node.js）のXDG準拠設定
+export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
+
+# pip（Python）のXDG準拠設定
+export PIP_CONFIG_FILE="$XDG_CONFIG_HOME/pip/pip.conf"
+export PIP_LOG_FILE="$XDG_DATA_HOME/pip/pip.log"
+
+# Go言語のXDG準拠設定
+export GOPATH="$XDG_DATA_HOME/go"
+export GOCACHE="$XDG_CACHE_HOME/go-build"
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
+
+# プログラミング言語用ディレクトリの作成
+[[ ! -d "$NPM_CONFIG_PREFIX" ]] && mkdir -p "$NPM_CONFIG_PREFIX"
+[[ ! -d "$NPM_CONFIG_CACHE" ]] && mkdir -p "$NPM_CONFIG_CACHE"
+[[ ! -d "$(dirname "$PIP_CONFIG_FILE")" ]] && mkdir -p "$(dirname "$PIP_CONFIG_FILE")"
+[[ ! -d "$(dirname "$PIP_LOG_FILE")" ]] && mkdir -p "$(dirname "$PIP_LOG_FILE")"
+[[ ! -d "$GOPATH" ]] && mkdir -p "$GOPATH"
+[[ ! -d "$GOCACHE" ]] && mkdir -p "$GOCACHE"
+[[ ! -d "$GOMODCACHE" ]] && mkdir -p "$GOMODCACHE"
