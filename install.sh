@@ -262,6 +262,19 @@ setup_dotfiles_with_stow() {
         if [[ -f "$HOME/.config/git/config" ]]; then
             echo "✅ ~/.config/git/config が作成されました"
         fi
+        
+        # Claude Codeディレクトリのシンボリックリンク作成
+        if [[ -d "$HOME/.config/claude" ]]; then
+            echo "🤖 Claude Code設定をリンクします..."
+            # 既存の~/.claudeディレクトリがある場合はバックアップ
+            if [[ -e "$HOME/.claude" ]] && [[ ! -L "$HOME/.claude" ]]; then
+                mv "$HOME/.claude" "$HOME/.claude.bak"
+                echo "📦 既存の~/.claudeディレクトリをバックアップしました"
+            fi
+            # シンボリックリンクを作成
+            ln -sf "$HOME/.config/claude" "$HOME/.claude"
+            echo "✅ Claude Code設定のリンクが完了しました"
+        fi
     else
         echo "⚠️  configディレクトリが見つかりません。スキップします。"
     fi
