@@ -15,7 +15,7 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 ### 従来のクローン方法
 
 ```bash
-git clone https://github.com/s-ikezawa/dotfiles.git
+git clone git@github.com:s-ikezawa/dotfiles.git
 cd dotfiles
 ./install.sh
 ```

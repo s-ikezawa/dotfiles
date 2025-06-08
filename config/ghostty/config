@@ -54,3 +54,4 @@ macos-titlebar-style = native
 # ターミナルの高度な設定
 copy-on-select = false
 bold-is-bright = true
+keybind = shift+enter=text:\n
