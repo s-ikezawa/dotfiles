@@ -214,6 +214,14 @@ setup_macos_dock() {
         defaults write com.apple.dock autohide -bool true
         echo "✅ Dockの自動隠しを有効化しました"
         
+        # 最近使用したアプリをDockに表示をOFF
+        defaults write com.apple.dock show-recents -bool false
+        echo "✅ 最近使用したアプリのDock表示をOFFにしました"
+        
+        # 壁紙をクリックしてデスクトップを表示をステージマネージャー使用時のみに変更
+        defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+        echo "✅ 壁紙クリックでデスクトップ表示をステージマネージャー使用時のみに設定しました"
+        
         # Dockの設定を即座に反映
         killall Dock
         echo "✅ Dock設定が反映されました"
