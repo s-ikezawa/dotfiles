@@ -266,13 +266,15 @@ setup_dotfiles_with_stow() {
         # Claude Code設定のstow適用
         if [[ -d "claude" ]]; then
             echo "🤖 Claude Code設定をstowで配置します..."
-            # 既存の~/.claudeディレクトリがある場合はバックアップ
+            # 既存の~/.claudeディレクトリがある場合は削除
             if [[ -e "$HOME/.claude" ]] && [[ ! -L "$HOME/.claude" ]]; then
-                mv "$HOME/.claude" "$HOME/.claude.bak"
-                echo "📦 既存の~/.claudeディレクトリをバックアップしました"
+                rm -rf "$HOME/.claude"
+                echo "🗑️  既存の~/.claudeディレクトリを削除しました"
             fi
-            # stowでClaude設定を配置
-            stow -v -t "$HOME/.claude" claude
+            # ~/.claudeディレクトリを作成
+            mkdir -p "$HOME/.claude"
+            # stowでClaude設定を配置（gitignoreされているフォルダは除外）
+            stow -v -t "$HOME/.claude" --ignore="projects" --ignore="statsig" --ignore="todos" --ignore="ide" claude
             echo "✅ Claude Code設定のstow配置が完了しました"
         fi
         
