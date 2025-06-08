@@ -66,29 +66,37 @@ install_homebrew() {
     else
         echo "📦 Homebrew をインストールします..."
         
-        # 非対話モードの場合の警告
-        if [[ ! -t 0 ]]; then
-            echo "⚠️  非対話モードで実行されています"
-            echo "🔐 Homebrewのインストールには管理者権限が必要です"
+        # 非対話モードかどうかを判定（複数の方法で確認）
+        if [[ ! -t 0 ]] || [[ -n "${CI:-}" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]] || [[ "${TERM:-}" == "dumb" ]]; then
             echo ""
-            echo "以下のコマンドを手動で実行してください："
-            echo "sudo -v && /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+            echo "⚠️  非対話モード（パイプ経由）で実行されています"
+            echo "🔐 Homebrewのインストールには管理者権限が必要ですが、パスワード入力ができません"
             echo ""
-            echo "または、リポジトリをクローンしてから実行してください："
-            echo "git clone https://github.com/s-ikezawa/dotfiles.git && cd dotfiles && ./install.sh"
+            echo "📋 以下の方法で実行してください："
+            echo ""
+            echo "🎯 方法1: リポジトリをクローンして実行（推奨）"
+            echo "   git clone https://github.com/s-ikezawa/dotfiles.git"
+            echo "   cd dotfiles"
+            echo "   ./install.sh"
+            echo ""
+            echo "🎯 方法2: Homebrewを手動インストール後に再実行"
+            echo "   /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+            echo "   curl -sSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh | bash"
+            echo ""
+            echo "❌ スクリプトを終了します"
             exit 1
         fi
         
         echo "🔐 管理者権限が必要です。パスワードを入力してください："
         
-        # 事前にsudo権限を取得
+        # 事前にsudo権限を取得してタイムスタンプを更新
         if ! sudo -v; then
             echo "❌ 管理者権限の取得に失敗しました"
             exit 1
         fi
         
         # Homebrewのインストール（公式のインストールスクリプトを使用）
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
         # Apple Silicon Mac用のPATHを設定
         echo "🍎 Apple Silicon Mac - セッション用のPATHを設定します"
