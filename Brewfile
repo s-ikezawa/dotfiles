@@ -16,3 +16,7 @@ brew "jq"
 # Password management
 cask "1password"
 cask "1password-cli"
+
+# Web browsers
+cask "google-chrome"
+cask "firefox"
