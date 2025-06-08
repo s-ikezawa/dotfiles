@@ -266,6 +266,10 @@ setup_dotfiles_with_stow() {
             echo "✅ ~/.config/git/config が作成されました"
         fi
         
+        if [[ -f "$HOME/.config/tmux/tmux.conf" ]]; then
+            echo "✅ ~/.config/tmux/tmux.conf が作成されました"
+        fi
+        
         # Claude Code設定のstow適用
         if [[ -d "claude" ]]; then
             echo "🤖 Claude Code設定をstowで配置します..."

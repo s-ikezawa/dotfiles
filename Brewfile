@@ -11,6 +11,7 @@ brew "curl"
 brew "wget"
 brew "tree"
 brew "jq"
+brew "tmux"
 
 # Container tools
 cask "docker"
