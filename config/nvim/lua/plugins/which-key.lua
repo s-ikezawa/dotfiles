@@ -14,6 +14,7 @@ return {
       { "<leader>t", group = "タブ" },
       { "<leader>s", group = "分割" },
       { "<leader>n", group = "無効化" },
+      { "<leader>e", group = "エクスプローラー" },
     })
   end,
 }
