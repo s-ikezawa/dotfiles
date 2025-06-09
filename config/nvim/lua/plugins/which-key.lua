@@ -15,6 +15,7 @@ return {
       { "<leader>s", group = "分割" },
       { "<leader>n", group = "無効化" },
       { "<leader>e", group = "エクスプローラー" },
+      { "<leader>h", group = "Git変更箇所" },
     })
   end,
 }

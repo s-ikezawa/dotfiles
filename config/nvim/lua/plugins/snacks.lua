@@ -42,10 +42,21 @@ return {
           },
         },
       },
-      -- その他のsnacks.nvim機能も利用可能
       bigfile = { enabled = true },
       quickfile = { enabled = true },
-      statuscolumn = { enabled = false },
+      statuscolumn = { 
+        enabled = true,
+        left = { "mark", "sign" }, -- 左側: マークとサイン
+        right = { "fold", "git" }, -- 右側: フォールドとGit情報
+        folds = {
+          open = true, -- オープンフォールドを表示
+          git_hl = false, -- Gitハイライトを無効
+        },
+        git = {
+          patterns = { "GitSign", "MiniDiffSign" }, -- Git関連のサイン
+        },
+        refresh = 50, -- リフレッシュ間隔(ms)
+      },
       words = { enabled = true },
     })
 
