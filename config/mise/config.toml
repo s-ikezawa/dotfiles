@@ -29,6 +29,7 @@ go = "latest"
 
 # npm経由でインストールするツール
 "npm:@anthropic-ai/claude-code" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest" # neovimのsnacks.imageで利用
 
 # pipx経由でインストールするツール
 "pipx:aws-mfa-v2" = "latest"

@@ -12,6 +12,11 @@ brew "wget"
 brew "tree"
 brew "jq"
 brew "tmux"
+brew "fd"
+brew "imagemagick"
+brew "ghostscript"
+brew "tectonic"
+brew "ripgrep"
 
 # Cloud tools
 brew "awscli"
