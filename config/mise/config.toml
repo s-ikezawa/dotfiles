@@ -24,7 +24,11 @@ env_file = ".env"
 [tools]
 nodejs = "latest"
 python = "latest"
+pipx = "latest"
 go = "latest"
 
 # npm経由でインストールするツール
 "npm:@anthropic-ai/claude-code" = "latest"
+
+# pipx経由でインストールするツール
+"pipx:aws-mfa-v2" = "latest"

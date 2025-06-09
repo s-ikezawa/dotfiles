@@ -13,6 +13,9 @@ brew "tree"
 brew "jq"
 brew "tmux"
 
+# Cloud tools
+brew "awscli"
+
 # Container tools
 cask "docker"
 
