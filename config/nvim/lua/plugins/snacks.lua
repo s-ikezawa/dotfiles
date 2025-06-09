@@ -5,6 +5,18 @@ return {
   config = function()
     local Snacks = require("snacks")
     
+    -- VSCode風のGitステータスカラー設定
+    -- ハイライトグループを検索するコマンド:
+    -- :lua Snacks.picker.highlights({pattern = "hl_group:^Snacks"})
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUntracked", { fg = "#73C991" }) -- 緑色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusAdded", { fg = "#73C991" }) -- 緑色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusModified", { fg = "#E2C08D" }) -- 黄色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusDeleted", { fg = "#F44747" }) -- 赤色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusRenamed", { fg = "#73C991" }) -- 緑色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusCopied", { fg = "#73C991" }) -- 緑色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusStaged", { fg = "#73C991" }) -- 緑色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUnmerged", { fg = "#F44747" }) -- 赤色
+    vim.api.nvim_set_hl(0, "SnacksPickerGitStatusIgnored", { fg = "#848484" }) -- グレー
     
     Snacks.setup({
       picker = {
