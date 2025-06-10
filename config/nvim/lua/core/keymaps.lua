@@ -38,3 +38,20 @@ keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
 keymap.set("x", "<leader>p", [["_dP]])
+
+-- ターミナルモードでのスクロール
+keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "ターミナルから左の分割ウィンドウへ移動" })
+keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "ターミナルから下の分割ウィンドウへ移動" })
+keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { desc = "ターミナルから上の分割ウィンドウへ移動" })
+keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { desc = "ターミナルから右の分割ウィンドウへ移動" })
+
+-- ターミナルモードでhjklでスクロール（ノーマルモードに切り替えてからスクロール）
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    -- ターミナルバッファでのみ有効なキーマップ
+    vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]], { buffer = true, desc = "ターミナルモードからノーマルモードへ" })
+    vim.keymap.set("n", "i", "i", { buffer = true, desc = "ターミナルモードに戻る" })
+    vim.keymap.set("n", "a", "a", { buffer = true, desc = "ターミナルモードに戻る" })
+  end,
+})
