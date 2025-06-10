@@ -30,7 +30,7 @@ opt.splitbelow = true
 
 opt.iskeyword:append("-")
 
-opt.mouse = "a"
+opt.mouse = ""
 
 opt.backup = false
 opt.writebackup = false
