@@ -20,6 +20,8 @@ return {
     
     Snacks.setup({
       picker = {
+        enabled = true,
+        hidden = true, -- 隠しファイルの表示
         sources = {
           explorer = {
             finder = "explorer",
@@ -62,7 +64,12 @@ return {
 
     -- keymaps
     local keymap = vim.keymap
+    -- Explorer
     keymap.set("n", "<leader>ee", function() Snacks.explorer() end, { desc = "ファイルエクスプローラーをトグル" })
     keymap.set("n", "<leader>ef", function() Snacks.explorer({ reveal = true }) end, { desc = "現在のファイルをエクスプローラーで表示" })
+    -- Picker
+    keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "ファイル検索" })
+    keymap.set("n", "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Gitファイル検索" })
+    keymap.set("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "バッファ一覧を表示" })
   end,
 }
