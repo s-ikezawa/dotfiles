@@ -7,5 +7,13 @@
         "key": "cmd+d",
         "command": "editor.action.deleteLines",
         "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\\\r\n"
+        },
+        "when": "terminalFocus"
     }
 ]
