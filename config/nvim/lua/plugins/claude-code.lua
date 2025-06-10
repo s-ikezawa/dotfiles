@@ -7,7 +7,7 @@ return {
     require("claude-code").setup({
       -- Terminal window settings
       window = {
-        split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
+        split_ratio = 0.5,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
         position = "rightbelow vsplit",  -- Position of the window: "botright", "topleft", "vertical", "rightbelow vsplit", etc.
         enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
         hide_numbers = true,    -- Hide line numbers in the terminal window

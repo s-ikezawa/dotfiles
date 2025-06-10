@@ -14,6 +14,11 @@ keymap.set("n", "<leader>sh", "<C-w>s", { desc = "ウィンドウを水平分割
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "分割を均等化" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "現在の分割を閉じる" })
 
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "左の分割ウィンドウへ移動" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "下の分割ウィンドウへ移動" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "上の分割ウィンドウへ移動" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "右の分割ウィンドウへ移動" })
+
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "新しいタブを開く" })
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "現在のタブを閉じる" })
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "次のタブへ移動" })
