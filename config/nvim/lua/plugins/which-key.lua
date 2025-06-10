@@ -16,6 +16,7 @@ return {
       { "<leader>n", group = "無効化" },
       { "<leader>e", group = "エクスプローラー" },
       { "<leader>h", group = "Git変更箇所" },
+      { "<leader>c", group = "Claude Code" },
     })
   end,
 }
