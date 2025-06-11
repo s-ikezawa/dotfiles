@@ -11,7 +11,10 @@ return {
         Snacks.setup({
             bigfile = { enabled = true },
             dashboard = { enabled = false },
-            explorer = { enabled = true },
+            explorer = { 
+                enabled = true,
+                replace_netrw = true,
+            },
             image = { enabled = true },
             indent = {
                 enabled = true,
@@ -40,6 +43,9 @@ return {
                             severity = { pos = "right" },
                         },
                         exclude = { ".DS_Store" },
+                        -- Git状態更新を強制するための追加設定
+                        refresh_git_status = true,
+                        show_ignored = false, -- 通常時は無視ファイルを非表示
                     },
                 },
             },
@@ -67,6 +73,19 @@ return {
         -- Explorer
         keymap.set("n", "<leader>ee", function() Snacks.explorer() end, { desc = "ファイルエクスプローラーをトグル" })
         keymap.set("n", "<leader>ef", function() Snacks.explorer({ reveal = true }) end, { desc = "現在のファイルをエクスプローラーで表示" })
+        keymap.set("n", "<leader>er", function() 
+            -- Explorer Git状態の手動リフレッシュ
+            local gitsigns = require("gitsigns")
+            gitsigns.refresh()
+            
+            -- Snacksのピッカーが開いている場合はリフレッシュ
+            local picker = Snacks.picker.get()
+            if picker and picker.opts.finder == "explorer" then
+                picker:refresh()
+            end
+            
+            vim.notify("Explorer and Git signs refreshed", "info")
+        end, { desc = "エクスプローラーとGitサインを手動リフレッシュ" })
         -- Picker
         keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "ファイル検索" })
         keymap.set("n", "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Gitファイル検索" })
