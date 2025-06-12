@@ -22,14 +22,19 @@ env_file = ".env"
 
 # グローバルツールの定義
 [tools]
-nodejs = "latest"
-python = "latest"
-pipx = "latest"
+# Golang系
 go = "latest"
 
-# npm経由でインストールするツール
+# NodeJS系
+nodejs = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest" # neovimのsnacks.imageで利用
 
-# pipx経由でインストールするツール
+# Python系
+python = "latest"
+pipx = "latest"
 "pipx:aws-mfa-v2" = "latest"
+
+# Lua系
+lua = "latest"
+# lualocks = "latest" # homebrewでインストール

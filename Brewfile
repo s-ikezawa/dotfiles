@@ -17,6 +17,8 @@ brew "imagemagick"
 brew "ghostscript"
 brew "tectonic"
 brew "ripgrep"
+brew "luarocks"
+brew "lazygit"
 
 # Cloud tools
 brew "awscli"
