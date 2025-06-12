@@ -23,7 +23,7 @@ function M.setup()
       focusable = false,
       style = "minimal",
       border = "rounded",
-      source = "always",
+      source = true,
       header = "",
       prefix = "",
     },
@@ -36,8 +36,6 @@ function M.setup()
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
     callback = function(ev)
-      local opts = { buffer = ev.buf }
-      
       -- キーマッピング
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf, desc = "宣言へ移動" })
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "定義へ移動" })
@@ -56,12 +54,14 @@ function M.setup()
       vim.keymap.set("n", "<leader>f", function()
         vim.lsp.buf.format { async = true }
       end, { buffer = ev.buf, desc = "フォーマット" })
-      
+
       -- 診断関連のキーマッピング
       vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { buffer = ev.buf, desc = "診断を表示" })
       vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { buffer = ev.buf, desc = "前の診断へ" })
       vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { buffer = ev.buf, desc = "次の診断へ" })
-      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { buffer = ev.buf, desc = "診断をリストへ" })
+      vim.keymap.set("n", "<leader>q", function()
+        vim.diagnostic.setqflist({ open = true })
+      end, { buffer = ev.buf, desc = "診断をquickfixリストへ" })
     end,
   })
 

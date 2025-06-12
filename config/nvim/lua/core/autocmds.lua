@@ -59,3 +59,29 @@ autocmd("BufReadPost", {
     end
   end,
 })
+
+-- Quickfixリストの自動更新
+autocmd("DiagnosticChanged", {
+  desc = "Auto-update quickfix list when diagnostics change",
+  group = vim.api.nvim_create_augroup("diagnostic_quickfix", { clear = true }),
+  callback = function()
+    -- quickfixリストが開いている場合のみ更新
+    if vim.fn.getqflist({winid = 0}).winid ~= 0 then
+      vim.diagnostic.setqflist({ open = false })
+    end
+  end,
+})
+
+-- ファイル保存時とバッファ変更時にquickfixリストを更新
+autocmd({ "BufWritePost", "InsertLeave" }, {
+  desc = "Update quickfix list on file save and insert leave",
+  group = vim.api.nvim_create_augroup("quickfix_update", { clear = true }),
+  callback = function()
+    vim.schedule(function()
+      -- quickfixリストが開いている場合のみ更新
+      if vim.fn.getqflist({winid = 0}).winid ~= 0 then
+        vim.diagnostic.setqflist({ open = false })
+      end
+    end)
+  end,
+})
