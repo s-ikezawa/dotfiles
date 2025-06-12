@@ -5,4 +5,3 @@ require("core.lazy")
 
 -- LSP設定
 require("config.lsp").setup()
-

@@ -64,3 +64,4 @@ opt.pumheight = 10
 opt.conceallevel = 0
 
 opt.fillchars = { eob = " " }
+

@@ -38,4 +38,5 @@ pipx = "latest"
 # Lua系
 lua = "latest"
 lua-language-server = "latest"
+stylua = "latest"
 # lualocks = "latest" # homebrewでインストール
