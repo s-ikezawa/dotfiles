@@ -6,13 +6,13 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "検索ハイライトをク
 
 keymap.set("n", "x", '"_x')
 
-keymap.set("n", "<leader>+", "<C-a>", { desc = "数値をインクリメント" })
-keymap.set("n", "<leader>-", "<C-x>", { desc = "数値をデクリメント" })
+keymap.set("n", "<leader>ni", "<C-a>", { desc = "数値をインクリメント" })
+keymap.set("n", "<leader>nd", "<C-x>", { desc = "数値をデクリメント" })
 
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "ウィンドウを垂直分割" })
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "ウィンドウを水平分割" })
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "分割を均等化" })
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "現在の分割を閉じる" })
+keymap.set("n", "<leader>wv", "<C-w>v", { desc = "ウィンドウを垂直分割" })
+keymap.set("n", "<leader>wh", "<C-w>s", { desc = "ウィンドウを水平分割" })
+keymap.set("n", "<leader>we", "<C-w>=", { desc = "分割を均等化" })
+keymap.set("n", "<leader>wx", "<cmd>close<CR>", { desc = "現在の分割を閉じる" })
 
 keymap.set("n", "<C-h>", "<C-w>h", { desc = "左の分割ウィンドウへ移動" })
 keymap.set("n", "<C-j>", "<C-w>j", { desc = "下の分割ウィンドウへ移動" })
@@ -37,7 +37,7 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
-keymap.set("x", "<leader>p", [["_dP]])
+keymap.set("x", "<leader>ep", [["_dP]], { desc = "削除せずに貼り付け" })
 
 -- ターミナルモードでのスクロール
 keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "ターミナルから左の分割ウィンドウへ移動" })

@@ -63,6 +63,9 @@ return {
                 git = {
                     patterns = { "GitSign", "MiniDiffSign" }, -- Git関連のサイン
                 },
+                sign = {
+                    patterns = { "Diagnostic" }, -- 診断サインのパターンを追加
+                },
                 refresh = 50, -- リフレッシュ間隔(ms)
             },
             words = { enabled = true },
