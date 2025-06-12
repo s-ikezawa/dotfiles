@@ -37,12 +37,14 @@ return {
 						follow_file = true,
 						focus = "list",
 						auto_close = false,
+						auto_refresh = 100,
 						layout = { preset = "sidebar", preview = false },
 						formatters = {
 							file = { filename_only = true },
 							severity = { pos = "right" },
 						},
 						exclude = { ".DS_Store" },
+						include = { "*.backup" }, -- .backupファイルを明示的に含める
 						-- Git状態更新を強制するための追加設定
 						refresh_git_status = true,
 						show_ignored = false, -- 通常時は無視ファイルを非表示
@@ -66,7 +68,7 @@ return {
 				sign = {
 					patterns = { "Diagnostic" }, -- 診断サインのパターンを追加
 				},
-				refresh = 50, -- リフレッシュ間隔(ms)
+				refresh = 100, -- リフレッシュ間隔(ms)
 			},
 			words = { enabled = true },
 		})

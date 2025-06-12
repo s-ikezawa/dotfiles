@@ -86,3 +86,27 @@ autocmd({ "BufWritePost", "InsertLeave" }, {
 	end,
 })
 
+-- Gitステータスの自動更新
+autocmd({ "BufWritePost", "BufReadPost", "BufNewFile", "FocusGained" }, {
+	desc = "Update git status when files change",
+	group = vim.api.nvim_create_augroup("git_status_update", { clear = true }),
+	callback = function()
+		vim.schedule(function()
+			-- Gitsignsの更新
+			local gitsigns = require("gitsigns")
+			if gitsigns then
+				gitsigns.refresh()
+			end
+			
+			-- Snacks explorerの更新
+			local snacks = require("snacks")
+			if snacks and snacks.picker then
+				local picker = snacks.picker.get()
+				if picker and picker.opts and picker.opts.finder == "explorer" then
+					picker:refresh()
+				end
+			end
+		end)
+	end,
+})
+

@@ -26,7 +26,7 @@ return {
 			linehl = false,
 			word_diff = false,
 			watch_gitdir = {
-				interval = 500,
+				interval = 100,
 				follow_files = true,
 			},
 			attach_to_untracked = true,
@@ -38,7 +38,7 @@ return {
 				ignore_whitespace = false,
 			},
 			sign_priority = 6,
-			update_debounce = 50,
+			update_debounce = 100,
 			status_formatter = nil,
 			max_file_length = 40000,
 			preview_config = {
