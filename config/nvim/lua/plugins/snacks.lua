@@ -11,7 +11,7 @@ return {
         Snacks.setup({
             bigfile = { enabled = true },
             dashboard = { enabled = false },
-            explorer = { 
+            explorer = {
                 enabled = true,
                 replace_netrw = true,
             },
@@ -52,7 +52,7 @@ return {
             quickfile = { enabled = true },
             scope = { enabled = false },
             scroll = { enabled = true },
-            statuscolumn = { 
+            statuscolumn = {
                 enabled = true,
                 left = { "mark", "sign" }, -- 左側: マークとサイン
                 right = { "fold", "git" }, -- 右側: フォールドとGit情報
@@ -76,17 +76,17 @@ return {
         -- Explorer
         keymap.set("n", "<leader>ee", function() Snacks.explorer() end, { desc = "ファイルエクスプローラーをトグル" })
         keymap.set("n", "<leader>ef", function() Snacks.explorer({ reveal = true }) end, { desc = "現在のファイルをエクスプローラーで表示" })
-        keymap.set("n", "<leader>er", function() 
+        keymap.set("n", "<leader>er", function()
             -- Explorer Git状態の手動リフレッシュ
             local gitsigns = require("gitsigns")
             gitsigns.refresh()
-            
+
             -- Snacksのピッカーが開いている場合はリフレッシュ
             local picker = Snacks.picker.get()
-            if picker and picker.opts.finder == "explorer" then
+            if picker and picker.opts and picker.opts.finder == "explorer" then
                 picker:refresh()
             end
-            
+
             vim.notify("Explorer and Git signs refreshed", "info")
         end, { desc = "エクスプローラーとGitサインを手動リフレッシュ" })
         -- Picker
