@@ -45,3 +45,8 @@ if command -v mise >/dev/null 2>&1; then
     # miseのシェル統合を有効化
     eval "$(mise activate zsh)"
 fi
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/s-ikezawa/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
