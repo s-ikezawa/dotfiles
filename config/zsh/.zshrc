@@ -29,6 +29,7 @@ alias ls='ls -G'
 alias ll='ls -la'
 alias la='ls -la'
 alias grep='grep --color=auto'
+alias vim='nvim'
 
 # zsh-completionsが利用可能な場合は読み込み
 if [[ -d "/opt/homebrew/share/zsh-completions" ]]; then
