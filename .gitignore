@@ -3,3 +3,7 @@ claude/projects/
 claude/statsig/
 claude/todos/
 claude/ide/
+
+# 生成されたzshenv（機密情報を含む）
+config/zsh/.zshenv
+

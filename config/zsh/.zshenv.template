@@ -55,3 +55,7 @@ export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 [[ ! -d "$GOPATH" ]] && mkdir -p "$GOPATH"
 [[ ! -d "$GOCACHE" ]] && mkdir -p "$GOCACHE"
 [[ ! -d "$GOMODCACHE" ]] && mkdir -p "$GOMODCACHE"
+
+# ===== 機密情報セクション開始 =====
+# 以下は環境変数として設定される機密情報です
+# これらの値は1Passwordから読み込まれ、スクリプト実行時に自動追加されます
