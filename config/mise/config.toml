@@ -33,6 +33,7 @@ nodejs = "latest"
 # Python系
 python = "latest"
 pipx = "latest"
+uv = "latest"
 "pipx:aws-mfa-v2" = "latest"
 
 # Lua系
