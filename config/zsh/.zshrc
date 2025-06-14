@@ -36,6 +36,11 @@ if [[ -d "/opt/homebrew/share/zsh-completions" ]]; then
     fpath=("/opt/homebrew/share/zsh-completions" $fpath)
 fi
 
+# Docker completionsが利用可能な場合は読み込み
+if [[ -d "$HOME/.docker/completions" ]]; then
+    fpath=("$HOME/.docker/completions" $fpath)
+fi
+
 # 補完システムを有効化
 autoload -Uz compinit
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
@@ -45,8 +50,3 @@ if command -v mise >/dev/null 2>&1; then
     # miseのシェル統合を有効化
     eval "$(mise activate zsh)"
 fi
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/s-ikezawa/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions

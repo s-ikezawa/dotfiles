@@ -3,6 +3,7 @@
 
 # Essential development tools
 brew "git"
+brew "gh"
 brew "zsh"
 brew "zsh-completions"
 brew "stow"
