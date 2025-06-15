@@ -87,7 +87,7 @@ autocmd({ "BufWritePost", "InsertLeave" }, {
 })
 
 -- Gitステータスの自動更新
-autocmd({ "BufWritePost", "BufReadPost", "BufNewFile", "FocusGained" }, {
+autocmd({ "BufWritePost", "BufReadPost", "BufNewFile", "FocusGained", "DirChanged" }, {
 	desc = "Update git status when files change",
 	group = vim.api.nvim_create_augroup("git_status_update", { clear = true }),
 	callback = function()
@@ -101,6 +101,33 @@ autocmd({ "BufWritePost", "BufReadPost", "BufNewFile", "FocusGained" }, {
 			-- Snacks explorerの更新
 			local snacks = require("snacks")
 			if snacks and snacks.picker then
+				local picker = snacks.picker.get()
+				if picker and picker.opts and picker.opts.finder == "explorer" then
+					picker:refresh()
+				end
+			end
+		end)
+	end,
+})
+
+-- ファイルシステムの変更をポーリングして検出
+autocmd({ "CursorHold", "CursorHoldI" }, {
+	desc = "Check for external file changes",
+	group = vim.api.nvim_create_augroup("external_changes", { clear = true }),
+	callback = function()
+		-- ファイルシステムの変更をチェック
+		vim.cmd("checktime")
+		
+		-- Gitステータスを更新
+		vim.schedule(function()
+			local ok_gitsigns, gitsigns = pcall(require, "gitsigns")
+			if ok_gitsigns then
+				gitsigns.refresh()
+			end
+			
+			-- Snacks explorerが開いている場合はリフレッシュ
+			local ok_snacks, snacks = pcall(require, "snacks")
+			if ok_snacks and snacks.picker then
 				local picker = snacks.picker.get()
 				if picker and picker.opts and picker.opts.finder == "explorer" then
 					picker:refresh()

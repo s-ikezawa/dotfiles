@@ -38,7 +38,7 @@ opt.swapfile = false
 opt.undofile = true
 opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 
-opt.updatetime = 300
+opt.updatetime = 200 -- CursorHoldイベントをより頻繁にトリガー
 opt.timeoutlen = 300
 
 opt.conceallevel = 0

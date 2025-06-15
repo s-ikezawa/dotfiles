@@ -30,14 +30,14 @@ return {
 						tree = true,
 						git_status = true,
 						git_untracked = true,
-						git_status_open = false,
+						git_status_open = true, -- 開いているディレクトリの再帰的Gitステータスを表示
 						diagnostics = true,
 						diagnostics_open = false,
 						watch = true,
 						follow_file = true,
 						focus = "list",
 						auto_close = false,
-						auto_refresh = 100,
+						auto_refresh = 50, -- より頻繁にリフレッシュ
 						layout = { preset = "sidebar", preview = false },
 						formatters = {
 							file = {
@@ -51,6 +51,23 @@ return {
 						-- Git状態更新を強制するための追加設定
 						refresh_git_status = true,
 						show_ignored = false, -- 通常時は無視ファイルを非表示
+						-- キーマップの追加
+						win = {
+							list = {
+								keys = {
+									["<F5>"] = {
+										function(picker)
+											-- Gitステータスを強制的に更新
+											vim.cmd("!git status")
+											vim.defer_fn(function()
+												picker:refresh()
+											end, 100)
+										end,
+										desc = "Gitステータスを強制更新",
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -90,10 +107,20 @@ return {
 			local gitsigns = require("gitsigns")
 			gitsigns.refresh()
 
-			-- Snacksのピッカーが開いている場合はリフレッシュ
+			-- Snacksのピッカーが開いている場合は一度閉じて再度開く
 			local picker = Snacks.picker.get()
 			if picker and picker.opts and picker.opts.finder == "explorer" then
-				picker:refresh()
+				-- 現在のパスを保存
+				local current_file = vim.api.nvim_buf_get_name(0)
+				-- explorerを閉じる
+				picker:close()
+				-- 少し待機してから再度開く
+				vim.defer_fn(function()
+					Snacks.explorer({ reveal = true, file = current_file })
+				end, 100)
+			else
+				-- explorerが開いていない場合は通常のリフレッシュ
+				vim.cmd("checktime")
 			end
 
 			vim.notify("Explorer and Git signs refreshed", "info")
