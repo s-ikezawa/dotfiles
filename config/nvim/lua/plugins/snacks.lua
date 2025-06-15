@@ -40,7 +40,10 @@ return {
 						auto_refresh = 100,
 						layout = { preset = "sidebar", preview = false },
 						formatters = {
-							file = { filename_only = true },
+							file = {
+								filename_only = true,
+								icon_width = 3, -- アイコンの幅を3文字に設定（デフォルトは2）
+							},
 							severity = { pos = "right" },
 						},
 						exclude = { ".DS_Store" },
