@@ -4,6 +4,7 @@
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
   },
   "includeCoAuthoredBy": false,
+  "model": "sonnet"
   "permissions": {
     "allow": [],
     "deny": [
@@ -11,5 +12,4 @@
       "Bash(sudo rm -rf *)"
     ]
   },
-  "model": "sonnet"
 }
