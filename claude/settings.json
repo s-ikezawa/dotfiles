@@ -1,16 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint)",
-      "Bash(npm run typecheck)",
-      "Bash(npm run test:*)",
-      "Bash(npm run dev)",
-      "Bash(npm run build)",
-      "Bash(rg *)",
-      "Bash(mise *)",
-      "Bash(git *)",
-      "Read(~/.zshrc)",
-      "Read(~/.config/*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
