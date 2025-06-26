@@ -270,16 +270,6 @@ setup_dotfiles_with_stow() {
             echo "✅ ~/.config/tmux/tmux.conf が作成されました"
         fi
         
-        # Claude Code設定のstow適用
-        if [[ -d "claude" ]]; then
-            echo "🤖 Claude Code設定をstowで配置します..."
-            # ~/.claudeディレクトリを作成
-            mkdir -p "$HOME/.claude"
-            # stowでClaude設定を配置（gitignoreされているフォルダは除外）
-            stow -v -t "$HOME/.claude" --ignore=".DS_Store" --ignore="projects" --ignore="statsig" --ignore="todos" --ignore="ide" claude
-            echo "✅ Claude Code設定のstow配置が完了しました"
-        fi
-        
         # VSCode設定のstow適用
         if [[ -d "vscode" ]]; then
             echo "💻 VSCode設定をstowで配置します..."
