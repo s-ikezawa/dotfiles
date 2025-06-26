@@ -28,6 +28,7 @@ go = "latest"
 # NodeJS系
 nodejs = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
+"npm:@google/gemini-cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest" # neovimのsnacks.imageで利用
 
 # Python系

@@ -35,6 +35,9 @@ cask "1password-cli"
 cask "google-chrome"
 cask "firefox"
 
+# note tools
+cask "obsidian"
+
 # AI tools
 cask "claude"
 
