@@ -3,6 +3,7 @@ config/claude/projects/
 config/claude/statsig/
 config/claude/todos/
 config/claude/ide/
+config/claude/.claude.json
 
 # 生成されたzshenv（機密情報を含む）
 config/zsh/.zshenv
