@@ -4,4 +4,4 @@ require("core.keymaps")
 require("core.lazy")
 
 -- LSP設定
--- require("config.lsp").setup()
+require("config.lsp").setup()
