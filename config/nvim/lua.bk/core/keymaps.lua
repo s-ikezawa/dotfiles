@@ -9,22 +9,6 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<leader>ni", "<C-a>", { desc = "数値をインクリメント" })
 keymap.set("n", "<leader>nd", "<C-x>", { desc = "数値をデクリメント" })
 
-keymap.set("n", "<leader>wv", "<C-w>v", { desc = "ウィンドウを垂直分割" })
-keymap.set("n", "<leader>wh", "<C-w>s", { desc = "ウィンドウを水平分割" })
-keymap.set("n", "<leader>we", "<C-w>=", { desc = "分割を均等化" })
-keymap.set("n", "<leader>wx", "<cmd>close<CR>", { desc = "現在の分割を閉じる" })
-
-keymap.set("n", "<C-h>", "<C-w>h", { desc = "左の分割ウィンドウへ移動" })
-keymap.set("n", "<C-j>", "<C-w>j", { desc = "下の分割ウィンドウへ移動" })
-keymap.set("n", "<C-k>", "<C-w>k", { desc = "上の分割ウィンドウへ移動" })
-keymap.set("n", "<C-l>", "<C-w>l", { desc = "右の分割ウィンドウへ移動" })
-
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "新しいタブを開く" })
-keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "現在のタブを閉じる" })
-keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "次のタブへ移動" })
-keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "前のタブへ移動" })
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "現在のバッファを新しいタブで開く" })
-
 keymap.set("v", "<", "<gv")
 keymap.set("v", ">", ">gv")
 
@@ -39,7 +23,36 @@ keymap.set("n", "N", "Nzzzv")
 
 keymap.set("x", "<leader>ep", [["_dP]], { desc = "削除せずに貼り付け" })
 
--- ターミナルモードでのスクロール
+---------------------------------------------------------------------------------------------------------
+-- Window
+---------------------------------------------------------------------------------------------------------
+keymap.set("n", "<leader>wv", "<C-w>v", { desc = "ウィンドウを垂直分割" })
+keymap.set("n", "<leader>wh", "<C-w>s", { desc = "ウィンドウを水平分割" })
+keymap.set("n", "<leader>we", "<C-w>=", { desc = "分割を均等化" })
+keymap.set("n", "<leader>wx", "<cmd>close<CR>", { desc = "現在の分割を閉じる" })
+
+keymap.set("n", "<leader>wr", "<C-w>>", { desc = "ウィンドウ幅を増やす" })
+keymap.set("n", "<leader>wl", "<C-w><", { desc = "ウィンドウ幅を減らす" })
+keymap.set("n", "<leader>wu", "<C-w>+", { desc = "ウィンドウ高さを増やす" })
+keymap.set("n", "<leader>wd", "<C-w>-", { desc = "ウィンドウ高さを減らす" })
+
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "左の分割ウィンドウへ移動" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "下の分割ウィンドウへ移動" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "上の分割ウィンドウへ移動" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "右の分割ウィンドウへ移動" })
+
+---------------------------------------------------------------------------------------------------------
+-- Tab
+---------------------------------------------------------------------------------------------------------
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "新しいタブを開く" })
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "現在のタブを閉じる" })
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "次のタブへ移動" })
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "前のタブへ移動" })
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "現在のバッファを新しいタブで開く" })
+
+---------------------------------------------------------------------------------------------------------
+-- Terminal
+---------------------------------------------------------------------------------------------------------
 keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "ターミナルから左の分割ウィンドウへ移動" })
 keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "ターミナルから下の分割ウィンドウへ移動" })
 keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { desc = "ターミナルから上の分割ウィンドウへ移動" })
@@ -60,4 +73,3 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.keymap.set("n", "a", "a", { buffer = true, desc = "ターミナルモードに戻る" })
 	end,
 })
-

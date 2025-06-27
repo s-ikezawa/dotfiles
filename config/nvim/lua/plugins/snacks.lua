@@ -2,138 +2,178 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
-	config = function()
-		local Snacks = require("snacks")
-
-		-- ハイライトグループを検索するコマンド:
-		-- :lua Snacks.picker.highlights({pattern = "hl_group:^Snacks"})
-
-		Snacks.setup({
-			bigfile = { enabled = true },
-			dashboard = { enabled = false },
-			explorer = {
-				enabled = true,
-				replace_netrw = true,
-			},
-			image = { enabled = true },
-			indent = {
-				enabled = true,
-			},
-			input = { enabled = true },
-			notifier = { enabled = true },
-			picker = {
-				enabled = true,
-				hidden = true, -- 隠しファイルの表示
-				sources = {
-					explorer = {
-						finder = "explorer",
-						tree = true,
-						git_status = true,
-						git_untracked = true,
-						git_status_open = true, -- 開いているディレクトリの再帰的Gitステータスを表示
-						diagnostics = true,
-						diagnostics_open = false,
-						watch = true,
-						follow_file = true,
-						focus = "list",
-						auto_close = false,
-						auto_refresh = 50, -- より頻繁にリフレッシュ
-						layout = { preset = "sidebar", preview = false },
-						formatters = {
-							file = {
-								filename_only = true,
-								icon_width = 3, -- アイコンの幅を3文字に設定（デフォルトは2）
-							},
-							severity = { pos = "right" },
-						},
-						exclude = { ".DS_Store" },
-						include = { "*.backup" }, -- .backupファイルを明示的に含める
-						-- Git状態更新を強制するための追加設定
-						refresh_git_status = true,
-						show_ignored = false, -- 通常時は無視ファイルを非表示
-						-- キーマップの追加
-						win = {
-							list = {
-								keys = {
-									["<F5>"] = {
-										function(picker)
-											-- Gitステータスを強制的に更新
-											vim.cmd("!git status")
-											vim.defer_fn(function()
-												picker:refresh()
-											end, 100)
-										end,
-										desc = "Gitステータスを強制更新",
-									},
-								},
+	keys = {
+		{
+			"<leader>e",
+			function()
+				Snacks.explorer()
+			end,
+			desc = "ファイルエクスプローラー",
+		},
+	},
+	opts = {
+		picker = {
+			hidden = true, -- show hidden files
+			ignored = true, -- show ignored files
+			follow = true, -- follow symlinks
+			sources = {
+				explorer = {
+					finder = "explorer",
+					sort = { fields = { "sort" } },
+					supports_live = true,
+					tree = true,
+					diagnostics = true,
+					diagnostics_open = false,
+					git_status = true,
+					git_status_open = false,
+					git_untracked = true,
+					follow_file = true,
+					focus = "list",
+					auto_close = false,
+					jump = { close = false },
+					layout = { preset = "sidebar", preview = false },
+					-- エクスプローラーを右側に表示するには
+					-- opts.picker.sources.explorer の設定に以下の行を追加します。
+					-- layout = { position = "right" }
+					formatters = {
+						file = { filename_only = true },
+						severity = { pos = "right" },
+					},
+					matcher = { sort_empty = false, fuzzy = false },
+					config = function(opts)
+						return require("snacks.picker.source.explorer").setup(opts)
+					end,
+					win = {
+						list = {
+							keys = {
+								["<BS>"] = "explorer_up",
+								["l"] = "confirm",
+								["h"] = "explorer_close", -- close directory
+								["a"] = "explorer_add",
+								["d"] = "explorer_del",
+								["r"] = "explorer_rename",
+								["c"] = "explorer_copy",
+								["m"] = "explorer_move",
+								["o"] = "explorer_open", -- open with system application
+								["P"] = "toggle_preview",
+								["y"] = { "explorer_yank", mode = { "n", "x" } },
+								["p"] = "explorer_paste",
+								["u"] = "explorer_update",
+								["<c-c>"] = "tcd",
+								["<leader>/"] = "picker_grep",
+								["<c-t>"] = "terminal",
+								["."] = "explorer_focus",
+								["I"] = "toggle_ignored",
+								["H"] = "toggle_hidden",
+								["Z"] = "explorer_close_all",
+								["]g"] = "explorer_git_next",
+								["[g"] = "explorer_git_prev",
+								["]d"] = "explorer_diagnostic_next",
+								["[d"] = "explorer_diagnostic_prev",
+								["]w"] = "explorer_warn_next",
+								["[w"] = "explorer_warn_prev",
+								["]e"] = "explorer_error_next",
+								["[e"] = "explorer_error_prev",
 							},
 						},
 					},
 				},
 			},
-			quickfile = { enabled = true },
-			scope = { enabled = false },
-			scroll = { enabled = true },
-			statuscolumn = {
-				enabled = true,
-				left = { "mark", "sign" }, -- 左側: マークとサイン
-				right = { "fold", "git" }, -- 右側: フォールドとGit情報
-				folds = {
-					open = true, -- オープンフォールドを表示
-					git_hl = false, -- Gitハイライトを無効
+			icons = {
+				files = {
+					enabled = true, -- show file icons
+					dir = "󰉋 ",
+					dir_open = "󰝰 ",
+					file = "󰈔 ",
+				},
+				keymaps = {
+					nowait = "󰓅 ",
+				},
+				tree = {
+					vertical = "│ ",
+					middle = "├╴",
+					last = "└╴",
+				},
+				undo = {
+					saved = " ",
+				},
+				ui = {
+					live = "󰐰 ",
+					hidden = "h",
+					ignored = "i",
+					follow = "f",
+					selected = "● ",
+					unselected = "○ ",
+					-- selected = " ",
 				},
 				git = {
-					patterns = { "GitSign", "MiniDiffSign" }, -- Git関連のサイン
+					enabled = true, -- show git icons
+					commit = "󰜘 ", -- used by git log
+					staged = "●", -- staged changes. always overrides the type icons
+					added = "",
+					deleted = "",
+					ignored = " ",
+					modified = "○",
+					renamed = "",
+					unmerged = " ",
+					untracked = "?",
 				},
-				sign = {
-					patterns = { "Diagnostic" }, -- 診断サインのパターンを追加
+				diagnostics = {
+					Error = " ",
+					Warn = " ",
+					Hint = " ",
+					Info = " ",
 				},
-				refresh = 100, -- リフレッシュ間隔(ms)
+				lsp = {
+					unavailable = "",
+					enabled = " ",
+					disabled = " ",
+					attached = "󰖩 ",
+				},
+				kinds = {
+					Array = " ",
+					Boolean = "󰨙 ",
+					Class = " ",
+					Color = " ",
+					Control = " ",
+					Collapsed = " ",
+					Constant = "󰏿 ",
+					Constructor = " ",
+					Copilot = " ",
+					Enum = " ",
+					EnumMember = " ",
+					Event = " ",
+					Field = " ",
+					File = " ",
+					Folder = " ",
+					Function = "󰊕 ",
+					Interface = " ",
+					Key = " ",
+					Keyword = " ",
+					Method = "󰊕 ",
+					Module = " ",
+					Namespace = "󰦮 ",
+					Null = " ",
+					Number = "󰎠 ",
+					Object = " ",
+					Operator = " ",
+					Package = " ",
+					Property = " ",
+					Reference = " ",
+					Snippet = "󱄽 ",
+					String = " ",
+					Struct = "󰆼 ",
+					Text = " ",
+					TypeParameter = " ",
+					Unit = " ",
+					Unknown = " ",
+					Value = " ",
+					Variable = "󰀫 ",
+				},
 			},
-			words = { enabled = true },
-		})
-
-		-- keymaps
-		local keymap = vim.keymap
-		-- Explorer
-		keymap.set("n", "<leader>ee", function()
-			Snacks.explorer()
-		end, { desc = "ファイルエクスプローラーをトグル" })
-		keymap.set("n", "<leader>ef", function()
-			Snacks.explorer({ reveal = true })
-		end, { desc = "現在のファイルをエクスプローラーで表示" })
-		keymap.set("n", "<leader>er", function()
-			-- Explorer Git状態の手動リフレッシュ
-			local gitsigns = require("gitsigns")
-			gitsigns.refresh()
-
-			-- Snacksのピッカーが開いている場合は一度閉じて再度開く
-			local picker = Snacks.picker.get()
-			if picker and picker.opts and picker.opts.finder == "explorer" then
-				-- 現在のパスを保存
-				local current_file = vim.api.nvim_buf_get_name(0)
-				-- explorerを閉じる
-				picker:close()
-				-- 少し待機してから再度開く
-				vim.defer_fn(function()
-					Snacks.explorer({ reveal = true, file = current_file })
-				end, 100)
-			else
-				-- explorerが開いていない場合は通常のリフレッシュ
-				vim.cmd("checktime")
-			end
-
-			vim.notify("Explorer and Git signs refreshed", "info")
-		end, { desc = "エクスプローラーとGitサインを手動リフレッシュ" })
-		-- Picker
-		keymap.set("n", "<leader>ff", function()
-			Snacks.picker.files()
-		end, { desc = "ファイル検索" })
-		keymap.set("n", "<leader>fg", function()
-			Snacks.picker.git_files()
-		end, { desc = "Gitファイル検索" })
-		keymap.set("n", "<leader>fb", function()
-			Snacks.picker.buffers()
-		end, { desc = "バッファ一覧を表示" })
-	end,
+		},
+		explorer = {
+			replace_netrw = true,
+		},
+	},
 }
