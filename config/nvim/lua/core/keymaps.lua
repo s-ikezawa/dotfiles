@@ -9,6 +9,12 @@ keymap("n", "<C-j>", "<C-w>j", { desc = "Navigate to window below" })
 keymap("n", "<C-k>", "<C-w>k", { desc = "Navigate to window above" })
 keymap("n", "<C-l>", "<C-w>l", { desc = "Navigate to right window" })
 
+-- ウィンドウのリサイズ
+keymap("n", "<leader>H", "<C-w>5<", { desc = "Decrease window width" })
+keymap("n", "<leader>J", "<C-w>5-", { desc = "Decrease window height" })
+keymap("n", "<leader>K", "<C-w>5+", { desc = "Increase window height" })
+keymap("n", "<leader>L", "<C-w>5>", { desc = "Increase window width" })
+
 -------------------------------------------------------------------------------
 --- Terminal Mode
 -------------------------------------------------------------------------------
