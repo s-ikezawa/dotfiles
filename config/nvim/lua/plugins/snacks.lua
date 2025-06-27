@@ -175,5 +175,20 @@ return {
 		explorer = {
 			replace_netrw = true,
 		},
+		statuscolumn = {
+			enabled = true,
+			left = { "mark", "sign" }, -- 左側: マークとサイン
+			right = { "fold", "git" }, -- 右側: フォールドとGit情報
+			folds = {
+				open = true, -- オープンフォールドを表示
+				git_hl = false, -- Gitハイライトを無効
+			},
+			git = {
+				patterns = { "GitSign", "MiniDiffSign" }, -- Git関連のサイン
+			},
+			sign = {
+				patterns = { "Diagnostic" }, -- 診断サインのパターンを追加
+			},
+		},
 	},
 }
