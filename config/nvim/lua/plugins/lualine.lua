@@ -3,7 +3,7 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	event = "VeryLazy",
 	config = function()
-		require("lualine").setup({
+		require("lualine").setup {
 			options = {
 				theme = "catppuccin",
 				component_separators = { left = "", right = "" },
@@ -19,7 +19,7 @@ return {
 					{
 						function()
 							local bufnr = vim.api.nvim_get_current_buf()
-							local clients = vim.lsp.get_clients({ bufnr = bufnr })
+							local clients = vim.lsp.get_clients { bufnr = bufnr }
 
 							if not clients or #clients == 0 then
 								return "󰅖 No LSP"
@@ -40,7 +40,7 @@ return {
 						end,
 						color = function()
 							local bufnr = vim.api.nvim_get_current_buf()
-							local clients = vim.lsp.get_clients({ bufnr = bufnr })
+							local clients = vim.lsp.get_clients { bufnr = bufnr }
 							if not clients or #clients == 0 then
 								return { fg = "#f38ba8" } -- catppuccin red
 							else
@@ -67,6 +67,6 @@ return {
 			winbar = {},
 			inactive_winbar = {},
 			extensions = {},
-		})
+		}
 	end,
 }

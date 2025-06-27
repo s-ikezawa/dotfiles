@@ -3,7 +3,7 @@ local M = {}
 
 function M.setup()
 	-- 診断表示の設定
-	vim.diagnostic.config({
+	vim.diagnostic.config {
 		virtual_text = {
 			prefix = "●",
 			spacing = 4,
@@ -27,7 +27,7 @@ function M.setup()
 			header = "",
 			prefix = "",
 		},
-	})
+	}
 
 	-- Neovim v0.11以降: 全ての浮動ウィンドウに丸角ボーダーを設定
 	vim.o.winborder = "rounded"
@@ -41,12 +41,7 @@ function M.setup()
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "定義へ移動" })
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf, desc = "ホバー情報" })
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = ev.buf, desc = "実装へ移動" })
-			vim.keymap.set(
-				"n",
-				"<C-k>",
-				vim.lsp.buf.signature_help,
-				{ buffer = ev.buf, desc = "シグネチャヘルプ" }
-			)
+			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "シグネチャヘルプ" })
 			vim.keymap.set(
 				"n",
 				"<leader>wa",
@@ -62,12 +57,7 @@ function M.setup()
 			vim.keymap.set("n", "<leader>wl", function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 			end, { buffer = ev.buf, desc = "ワークスペース一覧" })
-			vim.keymap.set(
-				"n",
-				"<leader>D",
-				vim.lsp.buf.type_definition,
-				{ buffer = ev.buf, desc = "型定義へ移動" }
-			)
+			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = ev.buf, desc = "型定義へ移動" })
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "リネーム" })
 			vim.keymap.set(
 				{ "n", "v" },
@@ -80,13 +70,13 @@ function M.setup()
 			-- 診断関連のキーマッピング
 			vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { buffer = ev.buf, desc = "診断を表示" })
 			vim.keymap.set("n", "[d", function()
-				vim.diagnostic.jump({ count = -1 })
+				vim.diagnostic.jump { count = -1 }
 			end, { buffer = ev.buf, desc = "前の診断へ" })
 			vim.keymap.set("n", "]d", function()
-				vim.diagnostic.jump({ count = 1 })
+				vim.diagnostic.jump { count = 1 }
 			end, { buffer = ev.buf, desc = "次の診断へ" })
 			vim.keymap.set("n", "<leader>q", function()
-				vim.diagnostic.setqflist({ open = true })
+				vim.diagnostic.setqflist { open = true }
 			end, { buffer = ev.buf, desc = "診断をquickfixリストへ" })
 		end,
 	})

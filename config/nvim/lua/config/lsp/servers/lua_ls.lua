@@ -31,21 +31,20 @@ M.config = {
 
 function M.setup()
 	-- lua-language-serverのパスを取得
-	local lua_ls_path = vim.fn.trim(vim.fn.system("mise which lua-language-server 2>/dev/null"))
+	local lua_ls_path = vim.fn.trim(vim.fn.system "mise which lua-language-server 2>/dev/null")
 
 	if vim.fn.filereadable(lua_ls_path) == 1 then
 		-- LSPサーバーの自動起動設定
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "lua",
 			callback = function()
-				vim.lsp.start({
+				vim.lsp.start {
 					name = "lua_ls",
 					cmd = { lua_ls_path },
-					root_dir = vim.fs.dirname(
-						vim.fs.find({ "init.lua", ".luarc.json", ".luarc.jsonc" }, { upward = true })[1]
-					) or vim.fn.getcwd(),
+					root_dir = vim.fs.dirname(vim.fs.find({ "init.lua", ".luarc.json", ".luarc.jsonc" }, { upward = true })[1])
+						or vim.fn.getcwd(),
 					settings = M.config.settings,
-				})
+				}
 			end,
 		})
 	else

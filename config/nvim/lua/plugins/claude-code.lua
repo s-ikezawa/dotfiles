@@ -4,7 +4,7 @@ return {
 		"nvim-lua/plenary.nvim",
 	},
 	config = function()
-		require("claude-code").setup({
+		require("claude-code").setup {
 			-- Terminal window settings
 			window = {
 				split_ratio = 0.4, -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
@@ -48,6 +48,6 @@ return {
 				window_navigation = false, -- Enable window navigation keymaps (<C-h/j/k/l>)
 				scrolling = true, -- Enable scrolling keymaps (<C-f/b>) for page up/down
 			},
-		})
+		}
 	end,
 }

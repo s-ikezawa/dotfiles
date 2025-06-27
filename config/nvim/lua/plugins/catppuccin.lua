@@ -3,7 +3,7 @@ return {
 	name = "catppuccin",
 	priority = 1000,
 	config = function()
-		require("catppuccin").setup({
+		require("catppuccin").setup {
 			flavour = "mocha",
 			custom_highlights = function()
 				return {
@@ -19,8 +19,7 @@ return {
 					SnacksPickerGitStatusIgnored = { fg = "#848484" }, -- グレー
 				}
 			end,
-		})
-		vim.cmd.colorscheme("catppuccin")
+		}
+		vim.cmd.colorscheme "catppuccin"
 	end,
 }
-
