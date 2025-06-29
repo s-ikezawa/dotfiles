@@ -1,15 +1,3 @@
 {
-  "cleanupPeriodDays": 30,
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
-  },
-  "includeCoAuthoredBy": false,
   "model": "sonnet"
-  "permissions": {
-    "allow": [],
-    "deny": [
-      "Bash(rm -rf /)",
-      "Bash(sudo rm -rf *)"
-    ]
-  },
 }

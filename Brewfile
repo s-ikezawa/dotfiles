@@ -20,6 +20,7 @@ brew "tectonic"
 brew "ripgrep"
 brew "luarocks"
 brew "lazygit"
+brew "golangci-lint"
 
 # Cloud tools
 brew "awscli"
