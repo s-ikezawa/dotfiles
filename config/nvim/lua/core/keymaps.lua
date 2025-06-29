@@ -25,9 +25,8 @@ keymap("i", "<C-[>", "<Esc>", { desc = "Exit insert mode" })
 -------------------------------------------------------------------------------
 --- Terminal Mode
 -------------------------------------------------------------------------------
--- ターミナルモードからノーマルモードへ（jjまたはCtrl+[を使用）
+-- ターミナルモードからノーマルモードへ（jkを使用）
 keymap("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-keymap("t", "<C-[>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- ターミナルからウィンドウ間の移動
 keymap("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Navigate to left window from terminal" })
