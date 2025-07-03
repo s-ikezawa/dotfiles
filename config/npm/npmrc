@@ -1,23 +1,6 @@
-# npm設定ファイル
-# ~/.config/npm/npmrc
-
-# グローバルパッケージのインストール先をXDG準拠に設定
 prefix=${XDG_DATA_HOME}/npm
-
-# キャッシュディレクトリをXDG準拠に設定
 cache=${XDG_CACHE_HOME}/npm
-
-# 一時ディレクトリをXDG準拠に設定
-tmp=${XDG_RUNTIME_DIR}/npm
-
-# パッケージロック時の挙動を改善
 package-lock=true
-
-# セキュリティ監査を有効化
 audit-level=moderate
-
-# 進捗表示を改善
 progress=true
-
-# インストール時の詳細ログを有効化
 loglevel=info

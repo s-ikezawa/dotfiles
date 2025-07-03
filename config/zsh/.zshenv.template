@@ -36,7 +36,6 @@ export MISE_CACHE_DIR="$XDG_CACHE_HOME/mise"
 # npm（Node.js）のXDG準拠設定
 export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
-export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 
 # pip（Python）のXDG準拠設定
 export PIP_CONFIG_FILE="$XDG_CONFIG_HOME/pip/pip.conf"
