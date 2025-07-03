@@ -41,4 +41,6 @@ uv = "latest"
 lua = "latest"
 lua-language-server = "latest"
 stylua = "latest"
+
+[env]
 # lualocks = "latest" # homebrewでインストール
