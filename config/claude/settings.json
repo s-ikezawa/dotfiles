@@ -1,5 +1,16 @@
 {
   "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/slack-question-notify.sh"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
