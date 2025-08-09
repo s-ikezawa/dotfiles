@@ -8,6 +8,7 @@ packages:
       - zsh-completions
       - awscli
       - libpq
+      - gh
     casks:
       - 1password
       - 1password-cli
