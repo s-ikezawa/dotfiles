@@ -1,5 +1,6 @@
 {
   "env": {},
   "model": "sonnet",
-  "includeCoAuthoredBy": false
+  "includeCoAuthoredBy": false,
+  "autoApproveTools": ["Read", "Write", "Edit"]
 }
