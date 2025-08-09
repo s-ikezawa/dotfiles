@@ -4,6 +4,7 @@ packages:
       - git
       - chezmoi
       - mise
+      - mas
     casks:
       - 1password
       - 1password-cli
@@ -11,3 +12,4 @@ packages:
       - google-chrome
       - firefox
       - appcleaner
+      - claude
