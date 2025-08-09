@@ -5,6 +5,7 @@ packages:
       - chezmoi
       - mise
       - mas
+      - zsh-completions
     casks:
       - 1password
       - 1password-cli

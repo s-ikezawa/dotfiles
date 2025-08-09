@@ -1,3 +1,12 @@
 {{- if eq .chezmoi.os "darwin" -}}
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+{{ end -}}
+autoload -Uz compinit
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump
+
+{{ if eq .chezmoi.os "darwin" -}}
+# mise
 eval "$(mise activate zsh)"
 {{ end -}}
