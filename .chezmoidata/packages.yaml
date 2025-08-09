@@ -13,3 +13,5 @@ packages:
       - firefox
       - appcleaner
       - claude
+    appstores:
+      - '"XCode",id:497799835'
