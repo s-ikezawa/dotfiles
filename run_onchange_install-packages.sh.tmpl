@@ -12,5 +12,8 @@ cask {{ . | quote }}
 {{ range .packages.darwin.appstores -}}
 mas {{ . }}
 {{ end -}}
+{{ range .packages.darwin.vscode_extensions -}}
+vscode {{ . | quote }}
+{{ end -}}
 EOF
 {{ end -}}
