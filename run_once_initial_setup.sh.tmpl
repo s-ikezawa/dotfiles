@@ -2,4 +2,5 @@
 
 {{ if eq .chezmoi.os "darwin" -}}
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "ZDOTDIR=$HOME/.config/zsh" | sudo tee -a /etc/zshenv > /dev/null
 {{- end }}
