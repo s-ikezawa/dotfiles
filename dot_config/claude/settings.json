@@ -2,5 +2,9 @@
   "env": {},
   "model": "sonnet",
   "includeCoAuthoredBy": false,
-  "autoApproveTools": ["Read", "Write", "Edit"]
+  "autoApproveTools": ["Read", "Write", "Edit"],
+  "statusLine": {
+    "type": "command",
+    "command": "~/.config/claude/statusline.js"
+  }
 }
