@@ -17,5 +17,7 @@ packages:
       - claude
       - ghostty
       - font-plemol-jp-nf
+      - docker
+      - visual-studio-code
     appstores:
       - '"XCode",id:497799835'
