@@ -7,6 +7,7 @@ packages:
       - mas
       - zsh-completions
       - awscli
+      - libpq
     casks:
       - 1password
       - 1password-cli
