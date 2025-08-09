@@ -13,5 +13,7 @@ packages:
       - firefox
       - appcleaner
       - claude
+      - ghostty
+      - font-plemol-jp-nf
     appstores:
       - '"XCode",id:497799835'
