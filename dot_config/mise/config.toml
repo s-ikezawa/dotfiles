@@ -1,4 +1,12 @@
 [tools]
 node = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
+"pipx:aws-mfa-v2" = "latest"
+python = "latest"
+uv = "latest"
+
+[settings]
+
+[settings.pipx]
+uvx = true
 
