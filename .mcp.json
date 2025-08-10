@@ -12,6 +12,23 @@
         "@modelcontextprotocol/server-sequential-thinking"
       ],
       "env": {}
+    },
+    "Serena": {
+      "type": "stdio",
+      "command": "/Users/s-ikezawa/.local/share/mise/shims/uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--enable-web-dashboard",
+        "false",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "."
+      ],
+      "env": {}
     }
   }
 }
