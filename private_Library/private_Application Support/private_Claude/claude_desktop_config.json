@@ -2,7 +2,17 @@
     "mcpServers": {
         "Context7": {
             "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
-            "args": ["-y", "@upstash/context7-mcp"]
+            "args": [
+                "-y",
+                "@upstash/context7-mcp"
+            ]
+        },
+        "SequentialThinking": {
+            "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ]
         }
     }
 }
