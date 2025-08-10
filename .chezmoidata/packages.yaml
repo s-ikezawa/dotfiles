@@ -21,6 +21,7 @@ packages:
       - font-plemol-jp-nf
       - docker
       - visual-studio-code
+      - figma
     appstores:
       - '"XCode",id:497799835'
     vscode_extensions:
