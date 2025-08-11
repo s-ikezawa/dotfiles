@@ -15,6 +15,7 @@ packages:
       - slack
       - google-chrome
       - firefox
+      - arc
       - appcleaner
       - claude
       - ghostty
