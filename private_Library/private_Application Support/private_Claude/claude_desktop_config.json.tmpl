@@ -21,6 +21,25 @@
                 "-y",
                 "@modelcontextprotocol/server-sequential-thinking"
             ]
+        },
+        "FigmaDeveloper": {
+{{- if eq .chezmoi.hostname "ebisol-mac-m2" }}
+            "command": "/Users/shinichi.ikezawa/.local/share/mise/shims/npx",
+{{- else if eq .chezmoi.hostname "private-mac-m3" }}
+            "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+{{- end }}
+            "args": [
+                "-y",
+                "figma-developer-mcp",
+                "--stdio"
+            ],
+            "env": {
+{{- range (onepassword "fnyoetdvmlg2t5xrrgops3f2ga").fields }}
+{{-   if eq .label "Personal Access Token For MCP Server" }}
+                "FIGMA_API_KEY": {{ .value | quote }}
+{{-   end }}
+{{- end }}
+            }
         }
     }
 }
