@@ -23,6 +23,7 @@ packages:
       - docker
       - visual-studio-code
       - figma
+      - obsidian
     appstores:
       - '"XCode",id:497799835'
     vscode_extensions:
