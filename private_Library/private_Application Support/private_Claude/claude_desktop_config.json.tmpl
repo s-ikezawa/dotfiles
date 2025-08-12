@@ -1,14 +1,22 @@
 {
     "mcpServers": {
         "Context7": {
+{{- if eq .chezmoi.hostname "ebisol-mac-m2" }}
+            "command": "/Users/shinichi.ikezawa/.local/share/mise/shims/npx",
+{{- else if eq .chezmoi.hostname "private-mac-m3" }}
             "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+{{- end }}
             "args": [
                 "-y",
                 "@upstash/context7-mcp"
             ]
         },
         "SequentialThinking": {
+{{- if eq .chezmoi.hostname "ebisol-mac-m2" }}
+            "command": "/Users/shinichi.ikezawa/.local/share/mise/shims/npx",
+{{- else if eq .chezmoi.hostname "private-mac-m3" }}
             "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
+{{- end }}
             "args": [
                 "-y",
                 "@modelcontextprotocol/server-sequential-thinking"
