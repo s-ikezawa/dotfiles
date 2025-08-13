@@ -28,3 +28,4 @@ packages:
       - '"XCode",id:497799835'
     vscode_extensions:
       - anthropic.claude-code
+      - golang.go

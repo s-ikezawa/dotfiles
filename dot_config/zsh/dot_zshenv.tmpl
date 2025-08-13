@@ -3,6 +3,11 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
+# Golang
+export GOPATH="$XDG_DATA_HOME/go"
+export GOBIN="$XDG_DATA_HOME/go/bin"
+export PATH="$GOBIN:$PATH"
+
 {{ if eq .chezmoi.os "darwin" -}}
 # PostgreSQL
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
