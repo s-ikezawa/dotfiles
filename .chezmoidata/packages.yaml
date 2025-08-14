@@ -25,6 +25,7 @@ packages:
       - visual-studio-code
       - figma
       - obsidian
+      - alt-tab
     appstores:
       - '"XCode",id:497799835'
     vscode_extensions:
