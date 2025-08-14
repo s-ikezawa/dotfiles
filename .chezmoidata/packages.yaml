@@ -9,6 +9,7 @@ packages:
       - awscli
       - libpq
       - gh
+      - tmux
     casks:
       - 1password
       - 1password-cli
