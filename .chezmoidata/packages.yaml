@@ -21,7 +21,7 @@ packages:
       - claude
       - ghostty
       - font-plemol-jp-nf
-      - docker
+      - docker-desktop
       - visual-studio-code
       - figma
       - obsidian
