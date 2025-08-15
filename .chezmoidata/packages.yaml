@@ -26,8 +26,10 @@ packages:
       - figma
       - obsidian
       - alt-tab
+      - raycast
     appstores:
       - '"XCode",id:497799835'
+      - '"Amphetamine",id:937984704'
     vscode_extensions:
       - anthropic.claude-code
       - golang.go
