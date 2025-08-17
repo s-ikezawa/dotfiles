@@ -4,3 +4,77 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
+format = """
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$golang\
+$java\
+$kotlin\
+$scala\
+$php\
+$nodejs\
+$gradle\
+$terraform\
+$line_break\
+$character
+"""
+
+# starship が現在のディレクトリのファイルをチェックするのを10ミリ秒待ちます
+scan_timeout = 10
+
+[hostname]
+ssh_only = false
+disabled = false
+format = '$ssh_symbols$hostname '
+
+[directory]
+truncation_length = 99 
+truncate_to_repo = false
+
+[git_branch]
+symbol = " " # nf-dev-git_branch
+
+[golang]
+symbol = " " # nf-dev-go
+
+[gradle]
+symbol = " " # nf-dev-gradle
+
+[haskell]
+symbol = " " # nf-dev-haskell
+
+[java]
+symbol = " " # nf-dev-java
+
+[julia]
+symbol = " " # nf-dev-julia
+
+[kotlin]
+symbol = " " # nf-dev-kotlin
+
+[kubernetes]
+symbol = " " # nf-dev-kubernets
+
+[lua]
+symbol = " " # nf-dev-lua
+
+[nodejs]
+symbol = " " # nf-fa-node_js
+
+[php]
+symbol = " " # nf-dev-php
+
+[python]
+symbol = " " # nf-dev-python
+
+[rust]
+symbol = " " # nf-dev-rust
+
+[scala]
+symbol = " " # nf-dev-scala
+
+[terraform]
+symbol = " " # nf-dev-terraform
+
