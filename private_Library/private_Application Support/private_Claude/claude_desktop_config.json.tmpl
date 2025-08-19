@@ -22,24 +22,16 @@
                 "@modelcontextprotocol/server-sequential-thinking"
             ]
         },
-        "FigmaDeveloper": {
+        "figma-dev-mode-mcp-server": {
 {{- if eq .chezmoi.hostname "shinichi" }}
             "command": "/Users/shinichi.ikezawa/.local/share/mise/shims/npx",
 {{- else if eq .chezmoi.hostname "personal-mac-m3" }}
             "command": "/Users/s-ikezawa/.local/share/mise/shims/npx",
 {{- end }}
             "args": [
-                "-y",
-                "figma-developer-mcp",
-                "--stdio"
-            ],
-            "env": {
-{{- range (onepassword "fnyoetdvmlg2t5xrrgops3f2ga").fields }}
-{{-   if eq .label "Personal Access Token For MCP Server" }}
-                "FIGMA_API_KEY": {{ .value | quote }}
-{{-   end }}
-{{- end }}
-            }
+                "mcp-remote",
+                "http://127.0.0.1:3845/mcp"
+            ]
         }
     }
 }
