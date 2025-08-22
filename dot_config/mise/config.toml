@@ -3,6 +3,7 @@ go = "latest"
 node = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "pipx:aws-mfa-v2" = "latest"
+pnpm = "latest"
 python = "latest"
 uv = "latest"
 
