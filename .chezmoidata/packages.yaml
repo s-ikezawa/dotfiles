@@ -8,6 +8,7 @@ packages:
       - zsh-completions
       - awscli
       - libpq
+      - mysql-client@8.0
       - gh
       - tmux
       - starship

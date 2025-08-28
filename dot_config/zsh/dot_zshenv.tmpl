@@ -11,8 +11,9 @@ export PATH="$GOBIN:$PATH"
 {{ if eq .chezmoi.os "darwin" -}}
 # PostgreSQL
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/libpq/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/libpq/include"
+
+# MySQL Client 8.0
+export PATH="/opt/homebrew/opt/mysql-client@8.0/bin:$PATH"
 
 # Claude
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"  # 設定ファイルのパス
