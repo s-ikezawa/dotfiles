@@ -32,6 +32,19 @@
                 "mcp-remote",
                 "http://127.0.0.1:3845/mcp"
             ]
+        },
+        "serena": {
+{{- if eq .chezmoi.hostname "shinichi" }}
+            "command": "/Users/shinichi.ikezawa/.local/share/mise/shims/uvx",
+{{- else if eq .chezmoi.hostname "personal-mac-m3" }}
+            "command": "/Users/s-ikezawa/.local/share/mise/shims/uvx",
+{{- end }}
+            "args": [
+                "--from",
+                "git+https://github.com/oraios/serena",
+                "serena",
+                "start-mcp-server"
+            ]
         }
     }
 }
