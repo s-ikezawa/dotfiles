@@ -37,3 +37,4 @@ packages:
       - anthropic.claude-code
       - golang.go
       - biomejs.biome
+      - csstools.postcss
