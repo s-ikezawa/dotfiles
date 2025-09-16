@@ -12,6 +12,7 @@ packages:
       - gh
       - tmux
       - starship
+      - biome
     casks:
       - 1password
       - 1password-cli
@@ -35,3 +36,4 @@ packages:
     vscode_extensions:
       - anthropic.claude-code
       - golang.go
+      - biomejs.biome
