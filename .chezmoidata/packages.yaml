@@ -36,5 +36,6 @@ packages:
     vscode_extensions:
       - anthropic.claude-code
       - golang.go
+      - bradlc.vscode-tailwindcss
       - biomejs.biome
       - csstools.postcss
