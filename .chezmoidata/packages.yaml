@@ -33,6 +33,8 @@ packages:
       - '"XCode",id:497799835'
       - '"Amphetamine",id:937984704'
     vscode_extensions:
+      - catppuccin.catppuccin-vsc
+      - catppuccin.catppuccin-vsc-icons
       - anthropic.claude-code
       - golang.go
       - bradlc.vscode-tailwindcss
