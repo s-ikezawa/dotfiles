@@ -2,11 +2,12 @@
 go = "latest"
 golangci-lint = "latest"
 node = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
-"pipx:aws-mfa-v2" = "latest"
 pnpm = "latest"
+biome = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
 python = "latest"
 uv = "latest"
+"pipx:aws-mfa-v2" = "latest"
 
 [settings]
 

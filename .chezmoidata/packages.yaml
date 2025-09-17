@@ -12,7 +12,6 @@ packages:
       - gh
       - tmux
       - starship
-      - biome
     casks:
       - 1password
       - 1password-cli
