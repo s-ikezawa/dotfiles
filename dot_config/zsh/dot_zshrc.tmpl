@@ -1,11 +1,30 @@
-{{- if eq .chezmoi.os "darwin" -}}
+#============================================================================
+# History
+#============================================================================
+export HISTFILE=${XDG_CACHE_HOME}/zsh/history # Macだとzshenvに書いても反映されないのでここに書く
+export HISTSIZE=1000                          # メモリに保存される履歴の件数
+export SAVEHIST=99999                         # 履歴ファイルに保存される履歴の件数
+setopt share_history                          # 履歴を他のシェルとリアルタイム共有
+setopt hist_ignore_dups                       # 重複を記録しない
+setopt hist_ignore_space                      # 履歴に保存するときに余分なスペースを削除する
+setopt hist_reduce_blanks                     # 履歴に保存するときに余分なスペースを削除する
+setopt hist_save_no_dups                      # 重複するコマンドが保存される時は古い履歴を削除する
+setopt inc_append_history                     # 実行時に履歴をファイルに追加していく
+
+#============================================================================
+# Completion
+#============================================================================
+{{- if eq .chezmoi.os "darwin" }}
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 fi
 {{ end -}}
 autoload -Uz compinit
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump
+compinit -d ${XDG_CACHE_HOME}/zsh/zcompdump
 
+#============================================================================
+# Other
+#============================================================================
 {{ if eq .chezmoi.os "darwin" -}}
 # mise
 eval "$(mise activate zsh)"
