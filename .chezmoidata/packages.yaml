@@ -12,6 +12,7 @@ packages:
       - gh
       - tmux
       - starship
+      - neovim
     casks:
       - 1password
       - 1password-cli
@@ -40,3 +41,4 @@ packages:
       - bradlc.vscode-tailwindcss
       - biomejs.biome
       - csstools.postcss
+      - asvetliakov.vscode-neovim
