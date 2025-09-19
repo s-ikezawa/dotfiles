@@ -2,16 +2,24 @@
     "editor.fontFamily": "'PlemolJP Console NF'",
     "editor.fontSize": 16,
     "editor.minimap.enabled": false,
-    "terminal.integrated.fontFamily": "'PlemolJP Console NF'",
-    "terminal.integrated.fontSize": 16,
+    "editor.cursorBlinking": "smooth",
+    "explorer.compactFolders": false,
     "extensions.ignoreRecommendations": true,
-    "terminal.integrated.scrollback": 99999,
     "files.insertFinalNewline": true,
     "workbench.tree.indent": 16,
     "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.iconTheme": "catppuccin-mocha",
-    "editor.cursorBlinking": "smooth",
-    "explorer.compactFolders": false,
+    "terminal.integrated.fontFamily": "'PlemolJP Console NF'",
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "zsh",
+            "args": [
+                "-l"
+            ]
+        },
+    },
+    "terminal.integrated.scrollback": 9999,
     "[javascript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "biomejs.biome",
@@ -57,7 +65,7 @@
     "go.toolsManagement.autoUpdate": true,
     "go.useLanguageServer": true,
     "gopls": {
-        "formatting.gofumpt": true,
+        "formatting.gofumpt": false,
         "ui.completion.usePlaceholders": true,
         "ui.semanticTokens": true,
         "ui.diagnostic.staticcheck": false
