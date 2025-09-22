@@ -7,6 +7,7 @@ packages:
       - mas
       - zsh-completions
       - awscli
+      - aws-cdk
       - libpq
       - mysql-client@8.0
       - gh
