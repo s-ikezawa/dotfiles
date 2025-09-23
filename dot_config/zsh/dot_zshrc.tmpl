@@ -32,3 +32,10 @@ eval "$(mise activate zsh)"
 # starship
 eval "$(starship init zsh)"
 {{ end -}}
+
+# Nodejs
+if command -v node >/dev/null 2>&1; then
+  export NODE_MODULE_PATH=$(which node 2>/dev/null | sed 's|/bin/node|/lib/node_modules|')
+  export CDK_MODULE_PATH=$(which cdk 2>/dev/null | sed 's|/bin/cdk|/lib/node_modules|')
+  export NODE_PATH="$NODE_MODULE_PATH${CDK_MODULE_PATH:+:$CDK_MODULE_PATH}${NODE_PATH:+:$NODE_PATH}"
+fi
