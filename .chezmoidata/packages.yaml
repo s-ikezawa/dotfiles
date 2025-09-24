@@ -43,3 +43,4 @@ packages:
       - biomejs.biome
       - csstools.postcss
       - asvetliakov.vscode-neovim
+      - amazonwebservices.aws-toolkit-vscode
