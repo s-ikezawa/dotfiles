@@ -3,4 +3,5 @@
 [fetch]
 	prune = true
 [alias]
+	plog = "log --pretty=format:'%C(auto)%h %s %d'"
 	delete-merged-branch = "!f () { git branch --merged | egrep -v '\\*|main|master|stage|production' | xargs git branch -d; };f"
