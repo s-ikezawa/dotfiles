@@ -16,6 +16,7 @@ packages:
       - neovim
       - tbls
       - go-task
+      - tree
     casks:
       - 1password
       - 1password-cli
@@ -33,6 +34,7 @@ packages:
       - obsidian
       - alt-tab
       - raycast
+      - the-unarchiver
     appstores:
       - '"XCode",id:497799835'
       - '"Amphetamine",id:937984704'
