@@ -17,6 +17,8 @@ packages:
       - tbls
       - go-task
       - tree
+      - jq
+      - yq
     casks:
       - 1password
       - 1password-cli
