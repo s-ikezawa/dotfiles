@@ -2,5 +2,9 @@
   "defaultMode": "acceptEdits",
   "includeCoAuthoredBy": false,
   "permissions": {
-  }
+    "allow": [
+      "mcp__context7",
+    ]
+  },
+  "enableAllProjectMcpServers": true
 }
