@@ -1,0 +1,12 @@
+# フォント設定
+font-family = PlemolJP Console NF
+font-style = Medium
+font-style-italic = Italic
+font-style-bold = Bold
+font-style-bold-italic = Bold Italic
+font-size = 16 
+
+# リガチャ無効
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
