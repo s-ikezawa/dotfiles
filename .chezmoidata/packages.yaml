@@ -1,0 +1,15 @@
+packages:
+  darwin:
+    brews:
+      - git
+      - gh
+      - chezmoi
+      - mas
+      - zsh-completions
+      - mise
+    casks:
+      - 1password
+      - 1password-cli
+      - google-chrome
+      - firefox
+      - ghostty
