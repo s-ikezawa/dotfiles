@@ -1,0 +1,18 @@
+packages:
+  darwin:
+    brews:
+      - git
+      - bash
+      - zsh
+      - zsh-completions
+      - chezmoi
+    casks:
+      - 1password
+      - 1password-cli
+      - zen
+      - google-chrome
+      - firefox
+      - ghostty
+      - font-plemol-jp
+      - font-plemol-jp-hs
+      - font-plemol-jp-nf
