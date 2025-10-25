@@ -20,3 +20,16 @@ vim.opt.tabstop = 2
 -- 分割設定
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+-- 補完
+vim.opt.completeopt = {
+  "menu",
+  "menuone",
+  "noinsert",
+  "noselect",
+  "fuzzy"
+}
+
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
