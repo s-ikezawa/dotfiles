@@ -1,0 +1,12 @@
+font-family = PlemolJP Console NF
+font-style = Medium
+font-style-italic = Medium Italic
+font-style-bold = Bold
+font-style-bold-italic = Bold Italic
+font-size = 16
+
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
+
+macos-option-as-alt = left
