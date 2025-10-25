@@ -6,6 +6,7 @@ packages:
       - zsh
       - zsh-completions
       - chezmoi
+      - tmux
     casks:
       - 1password
       - 1password-cli
