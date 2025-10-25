@@ -32,6 +32,40 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.completion.get()
       end)
     end
+
+    -- 保存時のフォーマット
+    if client:supports_method("textDocument/formatting") then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("MyLspFormat", {}),
+        buffer = buf,
+        callback = function()
+          -- Golang OrganizeImports
+          if vim.bo[buf].filetype == "go" and client:supports_method("textDocument/codeAction") then
+            local enc = client.offset_encoding or "utf-16"
+            local range_params = vim.lsp.util.make_range_params(nil, enc)
+            local params = vim.tbl_extend("force", range_params, {
+              context = { only = { "source.organizeImports" } }
+            })
+
+            local result = vim.lsp.buf_request_sync(buf, "textDocument/codeAction", params, 3000)
+            for _, res in pairs(result or {}) do
+              for _, r in pairs(res.result or {}) do
+                if r.edit then
+                  vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
+              end
+            end
+          end
+
+          -- Format
+          vim.lsp.buf.format({
+            bufnr = buf,
+            id = client.id,
+            async = false,
+            timeout_ms = 3000
+          })
+        end
+      })
+    end
   end
 })
-
