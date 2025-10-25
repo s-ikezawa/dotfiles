@@ -22,3 +22,10 @@ fi
 autoload -Uz compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
+#============================================================================
+# eval
+#============================================================================
+if type zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
+fi
