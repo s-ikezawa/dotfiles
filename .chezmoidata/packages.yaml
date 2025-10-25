@@ -6,6 +6,7 @@ packages:
       - zsh
       - zsh-completions
       - chezmoi
+      - ripgrep
       - tmux
       - fzf
       - zoxide
