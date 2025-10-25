@@ -2,6 +2,10 @@
 vim.g.mapleader = " "
 vim.g.localmapleader = " "
 
+-- clipboard
+vim.opt.clipboard = { "unnamedplus", "unnamed" }
+vim.g.clipboard = "osc52"
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
