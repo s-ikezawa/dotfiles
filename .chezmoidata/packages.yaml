@@ -2,6 +2,7 @@ packages:
   darwin:
     brews:
       - git
+      - gh
       - bash
       - zsh
       - zsh-completions
