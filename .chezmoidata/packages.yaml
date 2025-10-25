@@ -12,6 +12,8 @@ packages:
       - tmux
       - fzf
       - zoxide
+      - jq
+      - yq
     casks:
       - 1password
       - 1password-cli
