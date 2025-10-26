@@ -12,3 +12,10 @@ export XDG_STATE_HOME=$HOME/.local/state
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 export MAX_MCP_OUTPUT_TOKENS=50000
 
+####################################################################################################
+# NPM
+####################################################################################################
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
+export NPM_CONFIG_CACHE=$XDG_CACHE_HOME/npm
+export PATH="$XDG_DATA_HOME/npm/bin:$PATH"
+export MISE_NODE_DEFAULT_PACKAGES_FILE=$XDG_CONFIG_HOME/mise/default-npm-packages
