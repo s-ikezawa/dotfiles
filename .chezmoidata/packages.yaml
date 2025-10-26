@@ -16,6 +16,7 @@ packages:
       - yq
       - neovim
       - mise
+      - tree-sitter-cli
     casks:
       - 1password
       - 1password-cli
