@@ -1,0 +1,8 @@
+[profile olive]
+region = ap-northeast-1
+output = json
+mfa_serial = arn:aws:iam::442615599648:mfa/my-1password
+[profile boleto]
+region = ap-northeast-1
+output = json
+mfa_serial = arn:aws:iam::418273986278:mfa/my-1password
