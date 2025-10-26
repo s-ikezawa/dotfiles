@@ -17,3 +17,6 @@ window-padding-balance = true
 
 macos-titlebar-style = transparent
 macos-option-as-alt = left
+
+# ClaudeCode
+keybind = shift+enter=text:\x1b\r
