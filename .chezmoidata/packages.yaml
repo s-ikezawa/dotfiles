@@ -30,3 +30,5 @@ packages:
       - font-plemol-jp
       - font-plemol-jp-hs
       - font-plemol-jp-nf
+      - slack
+      - claude
