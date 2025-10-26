@@ -19,3 +19,9 @@ export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
 export NPM_CONFIG_CACHE=$XDG_CACHE_HOME/npm
 export PATH="$XDG_DATA_HOME/npm/bin:$PATH"
 export MISE_NODE_DEFAULT_PACKAGES_FILE=$XDG_CONFIG_HOME/mise/default-npm-packages
+
+####################################################################################################
+# PHP
+# 古くてビルドが難しいので homebrew で shivammathur/php を利用
+####################################################################################################
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"

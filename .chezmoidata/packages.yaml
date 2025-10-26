@@ -1,5 +1,7 @@
 packages:
   darwin:
+    taps:
+      - shivammathur/php
     brews:
       - git
       - gh
@@ -17,6 +19,7 @@ packages:
       - neovim
       - mise
       - tree-sitter-cli
+      - shivammathur/php/php@7.4
     casks:
       - 1password
       - 1password-cli
