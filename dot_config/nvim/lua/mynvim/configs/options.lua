@@ -36,6 +36,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.wrap = false
 -- 行の折り返し位置を単語の境界にする（wrapがtrueの場合に有効）
 vim.opt.linebreak = true
+-- LSPのhoverなどの罫線
+vim.o.winborder = "double"
 
 -- ===================================
 -- インデント・タブ設定
