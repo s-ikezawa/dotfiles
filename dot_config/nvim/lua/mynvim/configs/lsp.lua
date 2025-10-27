@@ -25,6 +25,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local buf = args.buf
 
+    -- descriptionを追加するヘルパー関数
+    local function desc(description)
+      return { buffer = buf, silent = true, desc = description }
+    end
+
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, desc("定義へジャンプ"))
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, desc("宣言へジャンプ"))
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, desc("実装へジャンプ"))
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, desc("型定義へジャンプ"))
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, desc("参照を表示"))
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, desc("ホバー情報を表示"))
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, desc("シグネチャヘルプを表示"))
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, desc("シンボルをリネーム"))
+    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, desc("コードアクション"))
+    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, desc("診断情報を表示"))
+    vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, desc("次の診断へ移動"))
+    vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, desc("前の診断へ移動"))
+
     -- 補完機能の有効化 (Ctrl+Space)
     if client:supports_method("textDocument/completion") then
       vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
