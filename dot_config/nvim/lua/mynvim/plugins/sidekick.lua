@@ -24,7 +24,7 @@ return {
   },
   keys = {
     {
-      "<leader>cc",
+      "<leader>ac",
       function()
         require("sidekick.cli").toggle("claude")
       end,
