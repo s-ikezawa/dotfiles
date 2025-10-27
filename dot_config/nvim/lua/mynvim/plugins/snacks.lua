@@ -7,6 +7,6 @@ return {
     explorer = { enabled = true },
   },
   keys = {
-    { "<leader>e", function() require("snacks").explorer.open() end, desc = "ファイルツリーをトグル" }
+    { "<leader>fe", function() require("snacks").explorer.open() end, desc = "ファイルツリーをトグル" }
   }
 }

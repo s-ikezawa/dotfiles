@@ -1,0 +1,69 @@
+return {
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  config = function()
+    local wk = require("which-key")
+
+    wk.setup({
+      preset = "modern",
+      delay = 500,
+    })
+
+    -- キーマッピングのグループ設定
+    wk.add({
+      -- ファイル操作
+      { "<leader>f", group = "📁 File" },
+      { "<leader>fs", desc = "💾 保存" },
+      { "<leader>fe", desc = "🌲 エクスプローラー" },
+      { "<leader>fp", desc = "📋 パスをコピー" },
+
+      -- ウィンドウ操作
+      { "<leader>w", group = "🪟 Window" },
+      { "<leader>wv", desc = "↔️ 垂直分割" },
+      { "<leader>wh", desc = "↕️ 水平分割" },
+      { "<leader>wq", desc = "❌ 閉じる" },
+      { "<leader>wQ", desc = "🚫 全て閉じる" },
+
+      -- バッファ操作
+      { "<leader>b", group = "📄 Buffer" },
+      { "<leader>bd", desc = "❌ バッファを閉じる" },
+
+      -- タブ操作
+      { "<leader>T", group = "📑 Tab" },
+      { "<leader>Tn", desc = "➕ 新しいタブ" },
+      { "<leader>Tc", desc = "❌ タブを閉じる" },
+      { "<leader>To", desc = "🔒 他のタブを閉じる" },
+
+      -- LSP
+      { "<leader>l", group = "💡 LSP" },
+      { "<leader>lr", desc = "✏️ リネーム" },
+      { "<leader>la", desc = "⚡ コードアクション" },
+      { "<leader>le", desc = "🔍 診断情報" },
+
+      -- トグル機能
+      { "<leader>t", group = "🔄 Toggle" },
+      { "<leader>ts", desc = "📝 スペルチェック" },
+      { "<leader>tr", desc = "🔢 相対行番号" },
+      { "<leader>tl", desc = "👁️ 空白文字表示" },
+
+      -- クイックフィックス
+      { "<leader>q", group = "🔧 Quickfix" },
+      { "<leader>qo", desc = "📖 開く" },
+      { "<leader>qc", desc = "❌ 閉じる" },
+
+      -- クリップボード
+      { "<leader>y", group = "📋 Yank" },
+      { "<leader>p", group = "📌 Paste" },
+
+      -- AI
+      { "<leader>a", group = "🤖 AI" },
+      { "<leader>ac", desc = "💬 ClaudeCode" },
+
+      -- Git (将来的に使用予定)
+      { "<leader>g", group = "🔱 Git" },
+
+      -- Search (将来的に使用予定)
+      { "<leader>s", group = "🔍 Search" },
+    })
+  end,
+}

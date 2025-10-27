@@ -37,9 +37,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gr", vim.lsp.buf.references, desc("参照を表示"))
     vim.keymap.set("n", "K", vim.lsp.buf.hover, desc("ホバー情報を表示"))
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, desc("シグネチャヘルプを表示"))
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, desc("シンボルをリネーム"))
-    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, desc("コードアクション"))
-    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, desc("診断情報を表示"))
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, desc("シンボルをリネーム"))
+    vim.keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, desc("コードアクション"))
+    vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, desc("診断情報を表示"))
     vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, desc("次の診断へ移動"))
     vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, desc("前の診断へ移動"))
 
