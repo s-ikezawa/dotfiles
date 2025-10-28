@@ -5,8 +5,6 @@ return {
     "nvim-mini/mini.icons",
   },
   ft = { "markdown" },
-  ---@module 'render-markdown'
-  ---@type render.md.UserConfig
   opts = {
     -- カーソル行のみレンダリングしない。カーソル行以外はレンダリングする
     render_modes = true,

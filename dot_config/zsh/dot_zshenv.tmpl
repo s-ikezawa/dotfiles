@@ -13,6 +13,14 @@ export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
 export MAX_MCP_OUTPUT_TOKENS=50000
 
 ####################################################################################################
+# Go
+####################################################################################################
+export GOPATH=$XDG_DATA_HOME/go
+export GOBIN=$XDG_DATA_HOME/go/bin
+export PATH="$GOBIN:$PATH"
+export MISE_GO_DEFAULT_PACKAGES_FILE=$XDG_CONFIG_HOME/mise/default-go-packages
+
+####################################################################################################
 # NPM
 ####################################################################################################
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
