@@ -10,7 +10,8 @@ return {
 
     local filetypes = {
       "c", "markdown", "markdown-inline", "query", "lua", "vim", "vimdoc",
-      "json", "jsonc", "json5", "php", "php_only", "phpdoc", "xml", "yaml"
+      "json", "jsonc", "json5", "php", "php_only", "phpdoc", "xml", "yaml",
+      "latex", "html"
     }
     require("nvim-treesitter").install(filetypes)
 
