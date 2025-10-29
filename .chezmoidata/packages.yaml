@@ -34,3 +34,5 @@ packages:
       - font-plemol-jp-nf
       - slack
       - claude
+      - obsidian
+      - session-manager-plugin # AWS Session Manager Plugin
