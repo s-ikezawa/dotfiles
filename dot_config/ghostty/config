@@ -20,3 +20,6 @@ macos-option-as-alt = left
 
 # ClaudeCode
 keybind = shift+enter=text:\x1b\r
+
+# ブラケットペーストモードを無効化(SQLをペーストした時の表示崩れに対応)
+clipboard-paste-bracketed-safe = false
