@@ -7,6 +7,7 @@ return {
     wk.setup({
       preset = "modern",
       delay = 500,
+      sort = { "alphanum" }, -- アルファベット順でソート
     })
 
     -- キーマッピングのグループ設定
