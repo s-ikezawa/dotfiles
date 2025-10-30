@@ -153,6 +153,20 @@ vim.opt.virtualedit = "block"
 vim.opt.synmaxcol = 300
 
 -- ===================================
+-- 折りたたみ設定
+-- ===================================
+-- Tree-sitterを使用した折りたたみ（Neovim 0.10以降で利用可能）
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- 折りたたみを有効化
+vim.opt.foldenable = true
+-- ファイルを開いたときに折りたたまずに全て展開した状態にする
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+-- 折りたたみ列を表示（0で非表示、1以上で表示）
+vim.opt.foldcolumn = "1"
+
+-- ===================================
 -- 環境変数設定
 -- ===================================
 -- mise shimsをPATHに追加（開発ツールのバージョン管理）
