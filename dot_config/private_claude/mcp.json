@@ -1,11 +1,4 @@
 {
   "mcpServers": {
-    "skill-seeker": {
-      "command": "python3",
-      "args": [
-        "/Users/s-ikezawa/Projects/github.com/yusufkaraaslan/Skill_Seekers/skill_seeker_mcp/server.py"
-      ],
-      "cwd": "/Users/s-ikezawa/Projects/github.com/yusufkaraaslan/Skill_Seekers"
-    }
   }
 }
