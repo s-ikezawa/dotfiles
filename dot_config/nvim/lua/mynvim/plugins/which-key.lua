@@ -43,8 +43,10 @@ return {
       { "<leader>lpf", desc = "👁️ 関数定義をプレビュー" },
       { "<leader>lpc", desc = "👁️ クラス定義をプレビュー" },
 
-      -- トグル機能
-      { "<leader>t", group = "🔄 Toggle" },
+      -- ターミナル/トグル機能
+      { "<leader>t", group = "💻 Terminal/Toggle" },
+      { "<leader>tt", desc = "🖥️ ターミナルをトグル" },
+      { "<leader>tf", desc = "🎈 フローティングターミナル" },
       { "<leader>ts", desc = "📝 スペルチェック" },
       { "<leader>tr", desc = "🔢 相対行番号" },
       { "<leader>tl", desc = "👁️ 空白文字表示" },
