@@ -62,8 +62,11 @@ return {
       { "<leader>a", group = "🤖 AI" },
       { "<leader>ac", desc = "💬 ClaudeCode" },
 
-      -- Git (将来的に使用予定)
+      -- Git
       { "<leader>g", group = "🔱 Git" },
+      { "<leader>gg", desc = "🚀 Lazygitを開く" },
+      { "<leader>gl", desc = "📜 Gitログを開く" },
+      { "<leader>gf", desc = "📄 ファイルのGitログを開く" },
 
       -- Search (将来的に使用予定)
       { "<leader>s", group = "🔍 Search" },
