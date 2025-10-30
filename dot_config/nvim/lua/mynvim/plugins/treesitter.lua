@@ -25,10 +25,10 @@ return {
     -- Treesitterを利用した折り畳み
     vim.opt.foldmethod = "expr"
     vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-    vim.opt.foldenable = true -- 折りたたみを有効化
-    vim.opt.foldlevel = 99 -- ファイルを開いた時は全て展開された状態
+    vim.opt.foldenable = true   -- 折りたたみを有効化
+    vim.opt.foldlevel = 99      -- ファイルを開いた時は全て展開された状態
     vim.opt.foldlevelstart = 99 -- ファイルを開いた時は全て展開された状態
-    vim.opt.foldcolumn = "1" -- 折りたたみ列を表示
+    vim.opt.foldcolumn = "1"    -- 折りたたみ列を表示
 
     -- Indentation
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"

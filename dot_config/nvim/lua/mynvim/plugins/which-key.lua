@@ -39,6 +39,8 @@ return {
       { "<leader>lr", desc = "✏️ リネーム" },
       { "<leader>la", desc = "⚡ コードアクション" },
       { "<leader>le", desc = "🔍 診断情報" },
+      { "<leader>lpf", desc = "👁️ 関数定義をプレビュー" },
+      { "<leader>lpc", desc = "👁️ クラス定義をプレビュー" },
 
       -- トグル機能
       { "<leader>t", group = "🔄 Toggle" },
@@ -64,6 +66,13 @@ return {
 
       -- Search (将来的に使用予定)
       { "<leader>s", group = "🔍 Search" },
+
+      -- Exchange/Swap
+      { "<leader>x", group = "🔄 Exchange" },
+      { "<leader>xp", desc = "➡️ 次のパラメータと入れ替え" },
+      { "<leader>xP", desc = "⬅️ 前のパラメータと入れ替え" },
+      { "<leader>xf", desc = "➡️ 次の関数と入れ替え" },
+      { "<leader>xF", desc = "⬅️ 前の関数と入れ替え" },
     })
   end,
 }
