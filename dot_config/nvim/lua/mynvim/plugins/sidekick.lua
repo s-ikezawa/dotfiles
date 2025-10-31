@@ -4,7 +4,7 @@ return {
     cli = {
       tools = {
         claude = {
-          cmd = { "claude", "--mcp-config=" .. vim.fn.expand("$HOME") .. "/.config/claude/mcp.json" }
+          cmd = { "claude", "--mcp-config=/Users/s-ikezawa/.config/claude/mcp.json" }
         },
       },
       win = {
