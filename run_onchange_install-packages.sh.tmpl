@@ -15,4 +15,11 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+
+# Claude Code
+if type claude &>/dev/null; then
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 {{- end }}
+
