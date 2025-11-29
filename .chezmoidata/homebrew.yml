@@ -3,4 +3,6 @@ homebrew:
   tools:
     - chezmoi
   casks:
+    - 1password
+    - 1password-cli
   vscode:
