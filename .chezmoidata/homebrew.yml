@@ -4,6 +4,7 @@ homebrew:
     - chezmoi
     - zsh-completions
     - neovim
+    - tree-sitter-cli
   casks:
     - 1password
     - 1password-cli
