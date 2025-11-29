@@ -2,12 +2,16 @@
     //=========================================================================
     // Editor
     //=========================================================================
+    // エディターのフォント設定
     "editor.fontFamily": "PlemolJP35 Console NF",
     "editor.fontWeight": 500,
     "editor.fontSize": 16,
+    // ミニマップは非表示
+    "editor.minimap.enabled": false,
     //=========================================================================
     // Terminal
     //=========================================================================
+    // ターミナルのフォント設定
     "terminal.integrated.fontFamily": "PlemolJP35 Console NF",
     "terminal.integrated.fontWeight": 500,
     "terminal.integrated.fontSize": 16
