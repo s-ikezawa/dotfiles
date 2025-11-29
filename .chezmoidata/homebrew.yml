@@ -11,4 +11,8 @@ homebrew:
     - slack
     - rectangle-pro
     - alt-tab
+    - ghostty
+    - font-plemol-jp
+    - font-plemol-jp-hs
+    - font-plemol-jp-nf
   vscode:
