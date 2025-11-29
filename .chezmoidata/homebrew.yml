@@ -19,3 +19,5 @@ homebrew:
     - visual-studio-code
   vscode:
     - asvetliakov.vscode-neovim
+    - catppuccin.catppuccin-vsc
+    - catppuccin.catppuccin-vsc-icons
