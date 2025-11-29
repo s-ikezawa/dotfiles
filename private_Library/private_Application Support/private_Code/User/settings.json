@@ -6,6 +6,8 @@
     "editor.fontFamily": "PlemolJP35 Console NF",
     "editor.fontWeight": 500,
     "editor.fontSize": 16,
+    // 行番号を相対番号で表示
+    "editor.lineNumbers": "relative",
     // ミニマップは非表示
     "editor.minimap.enabled": false,
     //=========================================================================
@@ -14,5 +16,12 @@
     // ターミナルのフォント設定
     "terminal.integrated.fontFamily": "PlemolJP35 Console NF",
     "terminal.integrated.fontWeight": 500,
-    "terminal.integrated.fontSize": 16
+    "terminal.integrated.fontSize": 16,
+    //=========================================================================
+    // Extension
+    //=========================================================================
+    // VSCode-Neovim
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    }
 }
