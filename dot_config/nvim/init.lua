@@ -8,6 +8,14 @@ if not vim.g.vscode then
 
   -- 24bitカラーを有効化
   vim.opt.termguicolors = true
+
+  -- インデント
+  vim.opt.expandtab = true
+  vim.opt.shiftwidth = 2
+  vim.opt.softtabstop = 2
+  vim.opt.tabstop = 2
+  vim.opt.autoindent = true
+  vim.opt.smartindent = true
 end
 
 -- リーダーキー設定
