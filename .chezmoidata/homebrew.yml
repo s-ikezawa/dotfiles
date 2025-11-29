@@ -2,6 +2,7 @@ homebrew:
   taps:
   tools:
     - chezmoi
+    - zsh-completions
   casks:
     - 1password
     - 1password-cli
@@ -9,4 +10,5 @@ homebrew:
     - firefox
     - slack
     - rectangle-pro
+    - alt-tab
   vscode:
