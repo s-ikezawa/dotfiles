@@ -4,3 +4,7 @@
 if not vim.g.vscode then
   vim.opt.number = true
 end
+
+-- クリップボード連携
+vim.opt.clipboard = "unnamedplus"
+

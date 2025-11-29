@@ -18,3 +18,4 @@ homebrew:
     - font-plemol-jp-nf
     - visual-studio-code
   vscode:
+    - asvetliakov.vscode-neovim
