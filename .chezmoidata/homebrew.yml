@@ -8,4 +8,5 @@ homebrew:
     - google-chrome
     - firefox
     - slack
+    - rectangle-pro
   vscode:
