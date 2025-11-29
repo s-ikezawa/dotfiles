@@ -9,14 +9,8 @@ return {
     })
 
     local types = {
-      'c',
-      'lua',
-      'luadoc',
-      'markdown',
-      'markdown_inline',
-      'query',
-      'vim',
-      'vimdoc',
+      -- default
+      'c', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
     }
 
     require('nvim-treesitter').install(types)
