@@ -1,2 +1,14 @@
 {
+    //=========================================================================
+    // Editor
+    //=========================================================================
+    "editor.fontFamily": "PlemolJP35 Console NF",
+    "editor.fontWeight": 500,
+    "editor.fontSize": 16,
+    //=========================================================================
+    // Terminal
+    //=========================================================================
+    "terminal.integrated.fontFamily": "PlemolJP35 Console NF",
+    "terminal.integrated.fontWeight": 500,
+    "terminal.integrated.fontSize": 16
 }

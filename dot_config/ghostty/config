@@ -46,11 +46,11 @@
 # this within config files if you want to clear previously set values in
 # configuration files or on the CLI if you want to clear values set on the
 # CLI.
-font-family = "PlemolJP35 Console NF Medium"
+font-family = "PlemolJP Console NF Medium"
 
-font-family-bold = "PlemolJP35 Console NF Bold"
-font-family-italic = "PlemolJP35 Console NF Italic"
-font-family-bold-italic = "PlemolJP35 Console NF Bold Italic"
+font-family-bold = "PlemolJP Console NF Bold"
+font-family-italic = "PlemolJP Console NF Italic"
+font-family-bold-italic = "PlemolJP Console NF Bold Italic"
 # The named font style to use for each of the requested terminal font styles.
 # This looks up the style based on the font style string advertised by the
 # font itself. For example, "Iosevka Heavy" has a style of "Heavy".
