@@ -1,0 +1,6 @@
+homebrew:
+  taps:
+  tools:
+    - chezmoi
+  casks:
+  vscode:

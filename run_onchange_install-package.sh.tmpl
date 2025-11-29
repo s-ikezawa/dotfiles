@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew bundle --file=/dev/stdin <<EOF
+{{ range .homebrew.taps -}}
+tap {{ . | quote }}
+{{ end -}}
+
+{{ range .homebrew.tools -}}
+brew {{ . | quote }}
+{{ end -}}
+
+{{ range .homebrew.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+
+{{ range .homebrew.vscode -}}
+vscode {{ . | quote }}
+{{ end -}}
+EOF
+{{- end }}
