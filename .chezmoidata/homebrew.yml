@@ -16,4 +16,5 @@ homebrew:
     - font-plemol-jp
     - font-plemol-jp-hs
     - font-plemol-jp-nf
+    - visual-studio-code
   vscode:
