@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+{{ if (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) -}}
+mkdir -p $HOME/.config $HOME/.cache $HOME/.local/share $HOME/.local/state
+{{- end }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "ZDOTDIR=$HOME/.config/zsh" | sudo tee -a /etc/zshenv > /dev/null
+{{- end }}
