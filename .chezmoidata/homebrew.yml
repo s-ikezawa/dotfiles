@@ -3,6 +3,7 @@ homebrew:
   tools:
     - chezmoi
     - zsh-completions
+    - neovim
   casks:
     - 1password
     - 1password-cli
