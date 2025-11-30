@@ -11,6 +11,7 @@ homebrew:
     - fd
     - git
     - lazygit
+    - libpq
   casks:
     - 1password
     - 1password-cli
