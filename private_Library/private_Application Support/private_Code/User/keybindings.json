@@ -1,3 +1,9 @@
 // Place your key bindings in this file to override the defaults
 [
+    // 右クリックメニューを開く
+    {
+      "key": "shift+f10",
+      "command": "editor.action.showContextMenu",
+      "when": "textInputFocus"
+    }
 ]
