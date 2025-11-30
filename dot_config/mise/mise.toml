@@ -1,0 +1,6 @@
+[tools]
+# Python
+python = "latest"
+uv = "latest"
+"pipx:aws-mfa-v2" = "latest"
+
