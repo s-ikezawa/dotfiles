@@ -5,5 +5,53 @@
       "key": "shift+f10",
       "command": "editor.action.showContextMenu",
       "when": "textInputFocus"
-    }
+    },
+    //=========================================================================,
+    // SCM(Source Control Management)
+    //=========================================================================,
+    // コミットメッセージ欄にフォーカス
+    {
+      "key": "i",
+      "command": "workbench.scm.action.focusPreviousInput",
+      "when": "sideBarFocus && focusedView == 'workbench.scm'"
+    },
+    // 上のリソースグループにフォーカス
+    {
+      "key": "ctrl+k",
+      "command": "workbench.scm.action.focusPreviousResourceGroup",
+      "when": "sideBarFocus && focusedView == 'workbench.scm'"
+    },
+    // 下のリソースグループにフォーカス
+    {
+      "key": "ctrl+j",
+      "command": "workbench.scm.action.focusNextResourceGroup",
+      "when": "sideBarFocus && focusedView == 'workbench.scm'"
+    },
+    // Enterでdiffを開きつつカーソルはそのまま
+    {
+      "key": "enter",
+      "command": "list.selectAndPreserveFocus",
+      "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
+    // ステージ & アンステージ(個別のファイルはdiffが開いた後じゃないと動かない？？)
+    {
+      "key": "s",
+      "command": "git.stage",
+      "when": "listFocus && sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
+    {
+      "key": "shift+s",
+      "command": "git.stageAll",
+      "when": "listFocus && sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
+    {
+      "key": "u",
+      "command": "git.unstage",
+      "when": "listFocus && sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
+    {
+      "key": "shift+u",
+      "command": "git.unstageAll",
+      "when": "listFocus && sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
 ]

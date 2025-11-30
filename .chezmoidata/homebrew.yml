@@ -9,6 +9,8 @@ homebrew:
     - mise
     - ripgrep
     - fd
+    - git
+    - lazygit
   casks:
     - 1password
     - 1password-cli
