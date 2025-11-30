@@ -5,6 +5,8 @@ homebrew:
     - zsh-completions
     - neovim
     - tree-sitter-cli
+    - awscli
+    - mise
   casks:
     - 1password
     - 1password-cli
