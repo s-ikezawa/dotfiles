@@ -25,6 +25,7 @@ homebrew:
     - font-plemol-jp-hs
     - font-plemol-jp-nf
     - visual-studio-code
+    - obsidian
   vscode:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc
