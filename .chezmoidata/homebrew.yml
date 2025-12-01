@@ -12,6 +12,7 @@ homebrew:
     - git
     - lazygit
     - libpq
+    - tmux
   casks:
     - 1password
     - 1password-cli
