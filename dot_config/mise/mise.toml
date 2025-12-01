@@ -4,3 +4,6 @@ python = "latest"
 uv = "latest"
 "pipx:aws-mfa-v2" = "latest"
 
+# Node
+node = "latest"
+pnpm = "latest"
