@@ -13,6 +13,7 @@ homebrew:
     - lazygit
     - libpq
     - tmux
+    - starship
   casks:
     - 1password
     - 1password-cli
