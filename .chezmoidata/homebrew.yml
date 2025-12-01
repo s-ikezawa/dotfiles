@@ -26,6 +26,7 @@ homebrew:
     - font-plemol-jp-nf
     - visual-studio-code
     - obsidian
+    - session-manager-plugin # AWS Session Manager Plugin
   vscode:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc
