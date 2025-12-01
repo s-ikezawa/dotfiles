@@ -29,6 +29,8 @@ homebrew:
     - visual-studio-code
     - obsidian
     - session-manager-plugin # AWS Session Manager Plugin
+    - claude
+    - claude-code
   vscode:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc
