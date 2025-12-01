@@ -10,8 +10,10 @@ return {
     {
       '<leader>gg',
       function()
-        Snacks.lazygit().open({ win = { position = 'float', width = 0.95, height = 0.95, border = 'none' } })
-      end
+        Snacks.lazygit.open({ win = { position = 'float', width = 0.95, height = 0.95, border = 'none' } })
+      end,
+      mode = { 'n' },
+      desc = 'LazyGitをフローティングウィンドウで開く'
     },
     -- ターミナル
     { 
