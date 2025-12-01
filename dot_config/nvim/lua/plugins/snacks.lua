@@ -6,7 +6,17 @@ return {
     -- ファイルピッカー(<leader>f)
     { '<leader>fe', function() Snacks.explorer.open() end, mode = { 'n' }, desc = 'ファイルエクスプローラのトグル' },
     { '<leader>ff', function() Snacks.picker.files() end, mode = { 'n' }, desc = 'ファイルピッカー' },
+    -- ターミナル
+    { 
+      '<leader>tt',
+      function()
+        Snacks.terminal.toggle(nil, { win = { position = 'bottom', width = 0, height = 0.2 } } )
+      end,
+      mode = { 'n' },
+      desc = 'ターミナルの開閉をトグル'
+    },
   },
+  ---@type snacks.Config
   opts = {
     bigfile = { enabled = false },
     dashboard = { enabled = false },
