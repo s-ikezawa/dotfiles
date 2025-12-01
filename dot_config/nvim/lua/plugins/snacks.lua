@@ -10,7 +10,14 @@ return {
     {
       '<leader>gg',
       function()
-        Snacks.lazygit.open({ win = { position = 'float', width = 0.95, height = 0.95, border = 'none' } })
+        Snacks.lazygit.open({
+          win = {
+            position = 'float',
+            width = 0.95,
+            height = 0.95,
+            border = 'none'
+          }
+        })
       end,
       mode = { 'n' },
       desc = 'LazyGitをフローティングウィンドウで開く'
@@ -19,7 +26,13 @@ return {
     { 
       '<leader>tt',
       function()
-        Snacks.terminal.toggle(nil, { win = { position = 'bottom', width = 0, height = 0.2 } } )
+        Snacks.terminal.toggle(nil, {
+          win = {
+            position = 'bottom',
+            width = 0,
+            height = 0.2
+          }
+        })
       end,
       mode = { 'n' },
       desc = 'ターミナルの開閉をトグル'
