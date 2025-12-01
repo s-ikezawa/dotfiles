@@ -9,7 +9,11 @@ tap {{ . | quote }}
 {{ end -}}
 
 {{ range .homebrew.tools -}}
+{{ if (or (eq . "neovim") ) -}}
+brew {{ . | quote }}, args: ["HEAD"]
+{{ else -}}
 brew {{ . | quote }}
+{{ end -}}
 {{ end -}}
 
 {{ range .homebrew.casks -}}
@@ -21,3 +25,4 @@ vscode {{ . | quote }}
 {{ end -}}
 EOF
 {{- end }}
+
