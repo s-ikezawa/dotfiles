@@ -6,6 +6,13 @@ return {
     -- ファイルピッカー(<leader>f)
     { '<leader>fe', function() Snacks.explorer.open() end, mode = { 'n' }, desc = 'ファイルエクスプローラのトグル' },
     { '<leader>ff', function() Snacks.picker.files() end, mode = { 'n' }, desc = 'ファイルピッカー' },
+    -- Git
+    {
+      '<leader>gg',
+      function()
+        Snacks.lazygit().open({ win = { position = 'float', width = 0.95, height = 0.95, border = 'none' } })
+      end
+    },
     -- ターミナル
     { 
       '<leader>tt',
