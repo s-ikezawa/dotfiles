@@ -26,19 +26,19 @@ if not vim.g.vscode then
   --===========================================================================
   -- extui
   --===========================================================================
-  if vim.fn.has('nvim-0.12') then
-    local ok, extui = pcall(require, 'vim._extui')
-    if ok then
-      extui.enable({
-        enbale = true,
-        msg = {
-          target = 'cmd', -- 'box' or 'cmd'
-          timeout = { box = 5000 }, -- boxメッセージの表示時間(msec)
-        }
-      })
-    end
-    vim.opt.cmdheight = 0
-  end
+  -- if vim.fn.has('nvim-0.12') then
+  --   local ok, extui = pcall(require, 'vim._extui')
+  --   if ok then
+  --     extui.enable({
+  --       enbale = true,
+  --       msg = {
+  --         target = 'cmd', -- 'box' or 'cmd'
+  --         timeout = { box = 5000 }, -- boxメッセージの表示時間(msec)
+  --       }
+  --     })
+  --   end
+  --   vim.opt.cmdheight = 0
+  -- end
 end
 
 -- リーダーキー設定
