@@ -24,6 +24,7 @@ require("lazy").setup({
     { import = "plugins.colorscheme" },
     { import = "plugins.coding" },
     { import = "plugins.treesitter" },
+    { import = "plugins.ui" },
     { import = "plugins.util" },
   },
   change_detection = {
