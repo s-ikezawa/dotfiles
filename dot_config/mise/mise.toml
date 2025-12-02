@@ -7,3 +7,6 @@ uv = "latest"
 # Node
 node = "latest"
 pnpm = "latest"
+
+# Lua
+lua-language-server = "latest"
