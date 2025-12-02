@@ -22,6 +22,8 @@ require("lazy").setup({
   },
   spec = {
     { import = "plugins.colorscheme" },
+    { import = "plugins.treesitter" },
+    { import = "plugins.util" },
   },
   change_detection = {
     enable = true,
