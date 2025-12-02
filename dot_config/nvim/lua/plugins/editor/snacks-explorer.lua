@@ -2,6 +2,23 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  opts = {
+    explorer = {
+      enabled = true,
+    },
+    picker = {
+      sources = {
+        explorer = {
+          layout = {
+            layout = {
+              position = 'left',
+              width = 0.15
+            }
+          }
+        },
+      },
+    },
+  },
   keys = {
     {
       '<leader>fe',
@@ -12,7 +29,4 @@ return {
       desc = 'Snacks Open Explorer'
     }
   },
-  opts = {
-    explorer = { enabled = true }
-  }
 }
