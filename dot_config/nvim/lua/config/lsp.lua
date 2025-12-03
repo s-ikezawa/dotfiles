@@ -1,8 +1,24 @@
 vim.lsp.enable({
   'lua_ls',
+  -- Typescript
+  'ts_ls',
+  'biome',
 })
 
 vim.diagnostic.config({
+  underline = true,
+  update_in_insert = false,
+  virtual_text = {
+    spacing = 2,
+    source = 'if_many',
+    prefix = "●",
+    format = function(diagnostic)
+      local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', ' ')
+      return message
+    end
+  },
+  virtual_lines = false,
+  severity_sort = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = " ",
@@ -19,7 +35,7 @@ vim.diagnostic.config({
 local function code_action_sync(client, bufnr, cmd)
   local enc = (vim.lsp.get_client_by_id(client.id) or {}).offset_encoding or "utf-16"
   -- https://github.com/golang/tools/blob/gopls/v0.11.0/gopls/doc/vim.md#imports
-  local params = vim.lsp.util.make_range_params(_, enc)
+  local params = vim.lsp.util.make_range_params(nil, enc)
   params.context = { only = { cmd }, diagnostics = {} }
   -- gopls のドキュメントでは`vim.lsp.buf_request_sync` を使っているが、
   -- ここでは対象の Language Server を1つに絞るために `vim.lsp.Client` の `request_sync` を使う

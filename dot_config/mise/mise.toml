@@ -8,6 +8,8 @@ uv = "latest"
 node = "latest"
 pnpm = "latest"
 biome = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
 
 # Lua
 lua-language-server = "latest"
