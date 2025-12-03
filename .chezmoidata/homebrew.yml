@@ -31,6 +31,7 @@ homebrew:
     - session-manager-plugin # AWS Session Manager Plugin
     - claude
     - claude-code
+    - docker-desktop
   vscode:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc

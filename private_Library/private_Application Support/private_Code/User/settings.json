@@ -23,6 +23,8 @@
 	// 不可視文字の表示
 	"editor.renderWhitespace": "all",
 	"editor.renderControlCharacters": true,
+	// tokenの色付けを増やす
+	"editor.semanticHighlighting.enabled": true,
 	//=========================================================================
 	// Terminal
 	//=========================================================================
