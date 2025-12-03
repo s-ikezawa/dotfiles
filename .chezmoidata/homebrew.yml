@@ -35,3 +35,4 @@ homebrew:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc
     - catppuccin.catppuccin-vsc-icons
+    - biomejs.biome
