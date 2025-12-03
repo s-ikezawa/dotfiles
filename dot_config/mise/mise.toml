@@ -7,6 +7,7 @@ uv = "latest"
 # Node
 node = "latest"
 pnpm = "latest"
+biome = "latest"
 
 # Lua
 lua-language-server = "latest"
