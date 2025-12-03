@@ -4,6 +4,7 @@ return {
   dependencies = {
     { 'nvim-treesitter/nvim-treesitter' },
   },
+  vscode = true,
   opts = {
     select = {
       lookahead = true,

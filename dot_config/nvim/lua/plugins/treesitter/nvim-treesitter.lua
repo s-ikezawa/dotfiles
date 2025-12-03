@@ -3,6 +3,7 @@ return {
   branch = 'main',
   lazy = false,
   build = ':TSUpdate',
+  vscode = true,
   init = function()
     local types = {
       'c',

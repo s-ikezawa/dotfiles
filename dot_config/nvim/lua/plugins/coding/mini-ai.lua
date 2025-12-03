@@ -5,6 +5,7 @@ return {
     { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
     { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
   },
+  vscode = true,
   config = function()
     require('mini.ai').setup({
       custom_textobjects = {
