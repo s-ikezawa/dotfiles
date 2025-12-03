@@ -11,7 +11,7 @@
     //=========================================================================,
     // コミットメッセージ欄にフォーカス
     {
-      "key": "i",
+      "key": "ctrl+i",
       "command": "workbench.scm.action.focusPreviousInput",
       "when": "sideBarFocus && focusedView == 'workbench.scm'"
     },
