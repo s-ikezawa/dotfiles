@@ -40,6 +40,8 @@ vim.opt.wrap = true
 vim.opt.linebreak = true
 -- LSPのhoverなどの罫線
 vim.o.winborder = "double"
+-- ファイルが変更されたら自動でリロード
+vim.opt.autoread = true
 
 -- ===================================
 -- インデント・タブ設定

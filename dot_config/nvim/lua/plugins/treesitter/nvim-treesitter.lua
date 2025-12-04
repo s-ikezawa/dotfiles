@@ -13,7 +13,12 @@ return {
       'markdown', 'markdown_inline',
       -- vim
       'vim', 'vimdoc',
+      -- other
+      'yaml',
     }
+
+    -- parser install
+    require('nvim-treesitter').install(types)
 
     -- Highlighting
     vim.api.nvim_create_autocmd('FileType', {
