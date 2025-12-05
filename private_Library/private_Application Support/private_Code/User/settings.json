@@ -109,5 +109,6 @@
 	},
 	// biome
 	"biome.enabled": true,
-	"biome.lsp.bin": "/Users/s-ikezawa/.local/share/mise/shims/biome"
+	"biome.lsp.bin": "/Users/s-ikezawa/.local/share/mise/shims/biome",
+	"github.copilot.nextEditSuggestions.enabled": true
 }
