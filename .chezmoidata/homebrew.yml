@@ -39,3 +39,5 @@ homebrew:
     - catppuccin.catppuccin-vsc
     - catppuccin.catppuccin-vsc-icons
     - biomejs.biome
+    - anthropic.claude-code
+
