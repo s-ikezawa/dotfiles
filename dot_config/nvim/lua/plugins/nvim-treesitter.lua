@@ -1,0 +1,75 @@
+vim.pack.add({
+  {
+    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    version = 'main',
+  }
+})
+
+require('nvim-treesitter').setup({
+  install_dir = vim.fn.stdpath('data') .. '/site'
+})
+
+local ensure_installed = {
+  -- a
+  -- b
+  -- c
+  'c',
+  -- d
+  -- e
+  -- f
+  -- g
+  -- h
+  -- i
+  -- j
+  -- k
+  -- l
+  'lua', 'luadoc',
+  -- m
+  'markdown', 'markdown_inline',
+  -- n
+  -- o
+  -- p
+  -- q
+  -- r
+  -- s
+  -- t
+  -- u
+  -- v
+  'vim', 'vimdoc',
+  -- w
+  -- x
+  -- y
+  -- z
+}
+
+require('nvim-treesitter').install()
+
+-- Highlighting
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = ensure_installed,
+  callback = function() vim.treesitter.start() end,
+})
+
+-- Folds
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldmethod = 'expr'
+
+-- Indentation
+vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+
+-- Hook
+vim.api.nvim_create_autocmd('PackChanged', {
+  desc = 'Handle nvim-treesitter updates',
+  group = vim.api.nvim_create_augroup('nvim-treesitter-pack-changed-update', { clear = true }),
+  callback = function(event)
+    if event.data.kind == 'update' then
+      vim.notify('nvim-treesitter updated, running TSUpdate...', vim.log.levels.INFO)
+      local ok = pcall(vim.cmd, 'TSUpdate')
+      if ok then
+        vim.notify('TSUpdate completed successfully.', vim.log.levels.INFO)
+      else
+        vim.notify('TSUpdate command not available yet, skipping', vim.log.levels.WARN)
+      end
+    end
+  end,
+})
