@@ -1,4 +1,8 @@
+--=============================================================================
+-- Configurations
+--=============================================================================
 require('config.options')
+require('config.keymaps')
 if not vim.g.vscode then
   require('config.lsp')
 end
@@ -7,11 +11,12 @@ end
 -- Plugins
 --=============================================================================
 if not vim.g.vscode then
--- Colorscheme
-require('plugins.catppuccin')
--- LSP
-require('plugins.nvim-lspconfig')
+  require('plugins.catppuccin')
+  require('plugins.mini-pairs')
+  require('plugins.mini-icons')
+  require('plugins.lspconfig')
+  require('plugins.blink-cmp')
 end
 
--- Treesitter
-require('plugins.nvim-treesitter')
+require('plugins.treesitter')
+
