@@ -15,6 +15,7 @@ homebrew:
     - tmux
     - starship
     - eza
+    - lefthook
   casks:
     - 1password
     - 1password-cli
