@@ -19,4 +19,5 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 ####################################################################################################
 # Claude Code
 ####################################################################################################
-export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude" # 設定ファイルの保存先を変更
+export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1  # Bashコマンド実行後にプロジェクトルートに自動的に戻る設定
