@@ -1,6 +1,8 @@
 vim.lsp.enable({
   -- Lua
   'lua_ls',
+  -- TypeScript
+  'ts_ls',
 })
 
 vim.diagnostic.config({

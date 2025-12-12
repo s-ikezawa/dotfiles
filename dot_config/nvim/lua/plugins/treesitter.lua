@@ -8,7 +8,6 @@ vim.pack.add({
 require('nvim-treesitter').setup({
   install_dir = vim.fn.stdpath('data') .. '/site'
 })
-
 local ensure_installed = {
   -- a
   -- b
@@ -21,28 +20,32 @@ local ensure_installed = {
   -- h
   -- i
   -- j
+  'javascript', 'jsdoc', 'json', 'jsonc',
   -- k
   -- l
   'lua', 'luadoc',
   -- m
-  'markdown', 'markdown_inline',
+  'terraform', 'markdown', 'markdown_inline',
   -- n
   -- o
   -- p
   -- q
   -- r
   -- s
+  'scss', 'sql',
   -- t
+  'toml', 'typescript', 'tsx',
   -- u
   -- v
   'vim', 'vimdoc',
   -- w
   -- x
   -- y
+  'yaml',
   -- z
 }
 
-require('nvim-treesitter').install()
+require('nvim-treesitter').install(ensure_installed)
 
 -- Highlighting
 vim.api.nvim_create_autocmd('FileType', {

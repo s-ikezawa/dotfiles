@@ -16,6 +16,7 @@ if not vim.g.vscode then
   require('plugins.mini-icons')
   require('plugins.lspconfig')
   require('plugins.blink-cmp')
+  require('plugins.snacks')
 end
 
 require('plugins.treesitter')

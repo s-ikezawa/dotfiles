@@ -1,3 +1,7 @@
+-- リーダーキー
+vim.g.mapleader = ","
+vim.g.localmapleader = ","
+
 -- 行番号を表示
 vim.opt.number = true
 
@@ -49,3 +53,6 @@ vim.opt.completeopt = {
   "noselect", -- 自動的に選択しない
   "fuzzy"     -- ファジー検索を有効化
 }
+
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
