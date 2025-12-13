@@ -17,6 +17,7 @@ local ensure_installed = {
   -- e
   -- f
   -- g
+  'go', 'gomod', 'gosum', 'gowork',
   -- h
   -- i
   -- j

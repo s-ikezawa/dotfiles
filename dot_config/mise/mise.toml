@@ -1,6 +1,7 @@
 [tools]
 # Go
 go = "latest"
+"go:golang.org/x/tools/gopls@latest" = "latest"
 
 # Python
 python = "latest"

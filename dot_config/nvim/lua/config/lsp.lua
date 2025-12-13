@@ -1,4 +1,6 @@
 vim.lsp.enable({
+  -- Go
+  'gopls',
   -- Lua
   'lua_ls',
   -- TypeScript
