@@ -7,7 +7,7 @@ vim.pack.add({
 
 local Snacks = require('snacks')
 Snacks.setup({
-  explorer = { enabled = true }
+  explorer = { enabled = false }
 })
 
 vim.keymap.set('n', '<leader>fb', function() Snacks.picker.buffers() end)

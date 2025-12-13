@@ -2,6 +2,9 @@
 vim.g.mapleader = ","
 vim.g.localmapleader = ","
 
+-- システムのクリップボードと連携
+vim.opt.clipboard = 'unnamedplus'
+
 -- 行番号を表示
 vim.opt.number = true
 

@@ -18,15 +18,68 @@ vim.diagnostic.config({
   },
 })
 
+local function code_action_sync(client, bufnr, cmd)
+  local params = vim.lsp.util.make_range_params(
+    0,
+    client.offset_encoding or 'utf-16'
+  )
+  params.context = { only = { cmd }, diagnostics = {} }
+
+  local res = client:request_sync('textDocument/codeAction', params, 3000, bufnr)
+  for _, r in pairs(res and res.result or {}) do
+    if r.edit then
+      local enc = (vim.lsp.get_client_by_id(client.id) or {}).offset_encoding or 'utf-16'
+      vim.lsp.util.apply_workspace_edit(r.edit, enc)
+    end
+  end
+end
+
+local function organize_imports_sync(client, bufnr)
+  code_action_sync(client, bufnr, 'source.organizeImports')
+end
+
+local function format_sync(client, bufnr)
+  code_action_sync(client, bufnr, 'source.format')
+end
+
+local function fix_all_sync(client, bufnr)
+  code_action_sync(client, bufnr, 'source.fixAll')
+end
+
+local save_handlers_by_client_name = {
+  gopls = {
+    organize_imports_sync,
+    format_sync
+  },
+  biome = {
+    fix_all_sync,
+    organize_imports_sync,
+    format_sync
+  }
+}
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp', {}),
   callback = function(args)
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      callback = function()
+        local bufnr = args.buf
+        local shouldSleep = false
+        for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+          local save_handlers = save_handlers_by_client_name[client.name]
+          for _, f in pairs(save_handlers or {}) do
+            if shouldSleep then
+              vim.api.nvim_command('sleep 10ms')
+            else
+              shouldSleep = true
+            end
 
-    -- Native Completion
-    -- if client:supports_method('textDocument/completion') then
-    --   vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-    -- end
+            f(client, bufnr)
+          end
+        end
+      end
+    })
   end
 })
+
 
