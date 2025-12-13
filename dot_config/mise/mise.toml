@@ -5,6 +5,7 @@ uv = "latest"
 "pipx:aws-mfa-v2" = "latest"
 
 # Node
+bun = "latest"
 node = "latest"
 pnpm = "latest"
 biome = "latest"

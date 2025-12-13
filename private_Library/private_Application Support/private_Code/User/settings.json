@@ -1,2 +1,21 @@
 {
+    // Theme
+    "workbench.colorTheme": "Catppuccin Mocha",
+    // フォント
+    "editor.fontFamily": "PlemolJP35 Console NF",
+    "editor.fontWeight": 500,
+    "editor.fontSize": 16,
+    // ミニマップは表示しない
+    "editor.minimap.enabled": false,
+    // <Tab>を押したら<Space>2個を挿入する
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    // 不可視文字を表示する
+    "editor.renderWhitespace": "all",
+    // Treesitterみたいに色を増やす
+    "editor.semanticHighlighting.enabled": true,
+    // VSCode Neovim
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
 }
