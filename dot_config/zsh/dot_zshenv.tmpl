@@ -25,6 +25,7 @@ export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1  # Bashコマンド実行後�
 ####################################################################################################
 # Go
 ####################################################################################################
-export GOBIN="$XDG_DATA_HOME/go/bin"
+export GOPATH="$XDG_DATA_HOME/go"
+export GOBIN="$GOPATH/bin"
 export PATH="$GOBIN:$PATH"
 
