@@ -12,11 +12,11 @@ end
 --=============================================================================
 if not vim.g.vscode then
   require('plugins.catppuccin')
-  require('plugins.mini-pairs')
-  require('plugins.mini-icons')
+  require('plugins.mini')
   require('plugins.lspconfig')
   require('plugins.blink-cmp')
   require('plugins.snacks')
+  require('plugins.sidekick')
 end
 
 require('plugins.treesitter')
