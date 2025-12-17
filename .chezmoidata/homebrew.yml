@@ -34,6 +34,7 @@ homebrew:
     - claude
     - claude-code
     - docker-desktop
+    - the-unarchiver
   vscode:
     - asvetliakov.vscode-neovim
     - catppuccin.catppuccin-vsc

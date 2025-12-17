@@ -8,3 +8,6 @@ if vim.g.vscode then
     { noremap = true, silent = true }
   )
 end
+
+-- Terminal mode: jk to escape
+vim.keymap.set('t', 'jk', '<C-\\><C-n>', { noremap = true, silent = true })
