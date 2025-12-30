@@ -1,0 +1,18 @@
+[core]
+  quotepath = false
+  excludesFile = ~/.config/git/ignore
+
+[color]
+  ui = auto
+
+[fetch]
+  prune = true
+
+[pull]
+  ff = only
+
+[status]
+  showUntrackedFiles = all
+
+[alias]
+  plog = log --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=iso
