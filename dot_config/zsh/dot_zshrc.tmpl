@@ -4,6 +4,10 @@ if [[ -d "$(brew --prefix eza 2>/dev/null)" ]]; then
   alias ll="eza -al --icons"
 fi
 
+if [[ -d "$(brew --prefix mise 2>/dev/null)" ]]; then
+  eval "$(mise activate zsh)"
+fi
+
 if [[ -d "$(brew --prefix zoxide 2>/dev/null)" ]]; then
   eval "$(zoxide init zsh --cmd cd)"
 fi
