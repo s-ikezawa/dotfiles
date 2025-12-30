@@ -1,0 +1,20 @@
+theme = "Catppuccin Mocha"
+
+# Font
+font-size = 15 
+font-family = "PlemolJP35 Console NF"
+font-style = "Medium"
+font-style-bold = "Bold"
+font-style-italic = "Medium Italic"
+font-style-bold-italic = "Bold Italic"
+
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+
+# MacOS Only
+font-thicken = true
+font-thicken-strength = 255
+
+macos-option-as-alt = true
