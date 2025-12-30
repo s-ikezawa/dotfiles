@@ -6,6 +6,14 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --file=/dev/stdin <<EOF
 
 brew "chezmoi"
+brew "git"
+brew "fzf"
+brew "eza"       # ls
+brew "ripgrep"   # grep
+brew "fd"        # find
+brew "bat"       # cat
+brew "zoxide"    # cd
+brew "git-delta" # git diff
 
 cask "1password"
 cask "1password-cli"

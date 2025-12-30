@@ -1,12 +1,25 @@
 [core]
-  quotepath = false
   excludesFile = ~/.config/git/ignore
+  pager = delta
+  quotepath = false
 
 [color]
   ui = auto
 
+[delta]
+  navigate = true
+  dark = true
+  #side-by-side = true
+  line-numbers = true
+
 [fetch]
   prune = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  conflictStyle = zdiff3
 
 [pull]
   ff = only
