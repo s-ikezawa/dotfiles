@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew bundle --file=/dev/stdin <<EOF
+brew "chezmoi"
+EOF
+{{- end }}
