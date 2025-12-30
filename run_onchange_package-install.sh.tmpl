@@ -5,5 +5,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 brew bundle --file=/dev/stdin <<EOF
 brew "chezmoi"
+
+cask "1password"
+cask "1password-cli"
 EOF
 {{- end }}
