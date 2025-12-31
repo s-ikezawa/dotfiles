@@ -18,3 +18,4 @@ font-thicken = true
 font-thicken-strength = 255
 
 macos-option-as-alt = true
+keybind = shift+enter=text:\x1b\r
