@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew bundle --verbose --file=/dev/stdin <<EOF
+brew "chezmoi"
+brew "mas"
+
+cask "1password"
+cask "1password-cli"
+cask "google-drive"
+cask "google-chrome"
+cask "firefox"
+cask "ghostty"
+cask "font-plemol-jp-nf"
+cask "claude"
+cask "claude-code"
+cask "the-unarchiver"
+EOF
+{{- end }}
