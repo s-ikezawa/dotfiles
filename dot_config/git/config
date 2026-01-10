@@ -29,3 +29,9 @@
   followTags = true # コミットと一緒にタグも push する
 [commit]
   verbose = true # コミットメッセージ作成時に差分を表示
+
+[includeIf "gitdir:~/Projects/github.com/ebisol"]
+  path = ~/.config/git/ebisol
+
+[includeIf "gitdir:~/Projects/github.com/s-ikezawa"]
+  path = ~/.config/git/private
