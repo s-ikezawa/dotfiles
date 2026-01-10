@@ -1,0 +1,11 @@
+font-family = PlemolJP35 Console NF
+font-style = Medium
+font-size = 15
+font-feature = -dlig
+
+## Mac Only
+font-thicken = true
+font-thicken-strength = 255
+
+# 左のOptionキーのみをAltとして認識する
+macos-option-as-alt = left
