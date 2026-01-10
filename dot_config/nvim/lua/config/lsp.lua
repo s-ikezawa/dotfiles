@@ -9,7 +9,7 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = "",
       [vim.diagnostic.severity.INFO] = "",
       [vim.diagnostic.severity.HINT] = "",
-    }
+    },
   },
 })
 
@@ -40,11 +40,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, { buffer = args.buf, desc = "インレイヒントをトグル" })
 
     -- CodeAction
-    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = args.buf, desc = "コードアクションを表示" })
+    vim.keymap.set(
+      { "n", "v" },
+      "<leader>ca",
+      vim.lsp.buf.code_action,
+      { buffer = args.buf, desc = "コードアクションを表示" }
+    )
 
     vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = args.buf, desc = "ホバー表示" })
-    vim.keymap.set("n", "<leader>x", vim.diagnostic.open_float, { buffer = args.buf, desc = "診断詳細をポップアップ" })
-    vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { buffer = args.buf, desc = "次の診断へ" })
-    vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { buffer = args.buf, desc = "前の診断へ" })
+    vim.keymap.set(
+      "n",
+      "<leader>x",
+      vim.diagnostic.open_float,
+      { buffer = args.buf, desc = "診断詳細をポップアップ" }
+    )
+    vim.keymap.set("n", "]d", function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end, { buffer = args.buf, desc = "次の診断へ" })
+    vim.keymap.set("n", "[d", function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end, { buffer = args.buf, desc = "前の診断へ" })
   end,
 })

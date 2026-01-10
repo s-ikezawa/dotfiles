@@ -1,6 +1,5 @@
 return {
   "folke/sidekick.nvim",
-  event = "VimEnter",
   cmd = "Sidekick",
   opts = {
     cli = {
@@ -20,23 +19,31 @@ return {
   keys = {
     {
       "<leader>ac",
-      function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
-      desc = "Claude Codeを起動/終了"
+      function()
+        require("sidekick.cli").toggle({ name = "claude", focus = true })
+      end,
+      desc = "Claude Codeを起動/終了",
     },
     {
       "<leader>af",
-      function() require("sidekick.cli").send({ msg = "{file}" }) end,
+      function()
+        require("sidekick.cli").send({ msg = "{file}" })
+      end,
       desc = "ファイル名を送信",
     },
     {
       "<leader>at",
-      function() require("sidekick.cli").send({ msg = "{this}" }) end,
+      function()
+        require("sidekick.cli").send({ msg = "{this}" })
+      end,
       mode = { "n", "x" },
       desc = "",
     },
     {
       "<leader>av",
-      function() require("sidekick.cli").send({ msg = "```\n{selection}\n```" }) end,
+      function()
+        require("sidekick.cli").send({ msg = "```\n{selection}\n```" })
+      end,
       mode = { "x" },
       desc = "選択された部分を送信",
     },
