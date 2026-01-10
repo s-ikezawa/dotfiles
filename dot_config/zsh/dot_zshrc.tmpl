@@ -69,4 +69,8 @@ if [[ -d "$(brew --prefix fzf 2>/dev/null)" ]]; then
   zle -N ghq-fzf
   bindkey "^g" ghq-fzf
 fi
+
+if [[ -d "$(brew --prefix mise 2>/dev/null)" ]]; then
+  eval "$(mise activate zsh)"
+fi
 {{- end }}
