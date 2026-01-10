@@ -49,12 +49,13 @@ fi
 
 if [[ -d "$(brew --prefix fzf 2>/dev/null)" ]]; then
   export FZF_DEFAULT_OPTS="
-    --height 40% 
-    --layout=reverse 
-    --border 
-    --preview 'bat  --color=always --style=header,grid --line-range :100 {}'
-    --preview-window=right:60%
-  "
+    --height 50%                               # 画面の半分を使用
+    --layout=reverse                           # 上から下へ表示
+    --border                                   # 枠線を表示
+    --preview-window=right:60%:wrap            # 右側60%をプレビューに、長い行は折り返し
+    --preview 'bat --color=always --style=header,grid --line-range :100 {}' 
+  "  
+
   export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
