@@ -4,7 +4,7 @@
   defaultBranch = main
 [core]
   excludefile = ~/.config/git/ignore
-  editor = vim
+  editor = nvim
   autocrls = input
   quotepath = false
   pager = delta
