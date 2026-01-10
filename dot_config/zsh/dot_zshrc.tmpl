@@ -1,0 +1,48 @@
+#-----------------------------------------------------------------------------------------------
+# History
+#-----------------------------------------------------------------------------------------------
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export HISTSIZE=100000        # メモリ上に保持する最大履歴数
+export SAVEHIST=1000000       # ファイルに保存する最大履歴数（多めに設定）
+setopt EXTENDED_HISTORY       # 実行時刻と経過時間を記録
+setopt INC_APPEND_HISTORY     # コマンド実行直後にファイルへ追記
+setopt SHARE_HISTORY          # 複数ターミナル間で履歴を即座に共有
+setopt HIST_IGNORE_DUPS       # 直前と同じコマンドは記録しない
+setopt HIST_IGNORE_ALL_DUPS   # 履歴全体から重複を削除（最新を優先）
+setopt HIST_IGNORE_SPACE      # 行頭がスペースのコマンドは記録しない
+setopt HIST_EXPIRE_DUPS_FIRST # 履歴上限時に重複分から先に削除
+setopt HIST_REDUCE_BLANKS     # 余計な空白を削除して記録
+setopt HIST_SAVE_NO_DUPS      # ファイル書き込み時にも重複を除去
+setopt HIST_VERIFY            # 履歴展開（!）を即実行せず確認
+setopt HIST_NO_STORE          # historyコマンド自体は記録しない
+
+#-----------------------------------------------------------------------------------------------
+# Completion
+#-----------------------------------------------------------------------------------------------
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+autoload -Uz compinit
+compinit -u -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+#-----------------------------------------------------------------------------------------------
+# Plugins
+#-----------------------------------------------------------------------------------------------
+{{ if eq .chezmoi.os "darwin" -}}
+if [[ -d "$(brew --prefix zsh-autosuggestions 2>/dev/null)" ]]; then
+  export ZSH_AUTOSUGGEST_STRATEGY=(history completion) # 提案ロジック
+  export ZSH_AUTOSUGGEST_USE_ASYNC=1                  # 非同期モード有効化
+  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'     # 提案の色
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+if [[ -d "$(brew --prefix eza 2>/dev/null)" ]]; then
+  alias ls="eza -a --icons"
+  alias ll="eza -al --icons"
+  alias tree="eza -T -L 3"
+fi
+
+if [[ -d "$(brew --prefix zoxide 2>/dev/null)" ]]; then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
+{{- end }}

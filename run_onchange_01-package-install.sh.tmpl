@@ -6,6 +6,15 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew bundle --verbose --file=/dev/stdin <<EOF
 brew "chezmoi"
 brew "mas"
+brew "git"
+brew "zsh-completions"
+brew "zsh-autosuggestions"
+brew "eza"     # ls
+brew "ripgrep" # grep
+brew "fd"      # find
+brew "bat"     # cat
+brew "zoxide"  # cd
+brew "fzf"     # required zoxide
 brew "FelixKratz/formulae/borders"
 brew "tmux"
 cask "1password"
