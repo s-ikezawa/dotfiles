@@ -26,6 +26,19 @@ autoload -Uz compinit
 compinit -u -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 
 #-----------------------------------------------------------------------------------------------
+# User Func
+#-----------------------------------------------------------------------------------------------
+function ghq-fzf() {
+  local src=$(ghq list --full-path | fzf --query "$LBUFFER")
+  if [ -n "$src" ]; then
+    BUFFER = "cd $src"
+    zle accept-line
+  fi
+}
+zle -N ghq-fzf
+bindkey "^g" ghq-fzf
+
+#-----------------------------------------------------------------------------------------------
 # Plugins
 #-----------------------------------------------------------------------------------------------
 {{ if eq .chezmoi.os "darwin" -}}
@@ -46,3 +59,5 @@ if [[ -d "$(brew --prefix zoxide 2>/dev/null)" ]]; then
   eval "$(zoxide init zsh --cmd cd)"
 fi
 {{- end }}
+
+
