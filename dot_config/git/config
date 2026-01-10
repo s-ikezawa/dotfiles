@@ -1,0 +1,26 @@
+[init]
+  defaultBranch = main
+[core]
+  excludefile = ~/.config/git/ignore
+  editor = vim
+  autocrls = input
+  quotepath = false
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:refname
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  side-by-side = true
+  line-numbers = true
+[pull]
+  rebase = true
+[push]
+  autoSetupRemote = true # 新規ブランチで初回の push 時の -u を不要にする
+  followTags = true # コミットと一緒にタグも push する
+[commit]
+  verbose = true # コミットメッセージ作成時に差分を表示
