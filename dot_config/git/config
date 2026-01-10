@@ -5,6 +5,7 @@
   editor = vim
   autocrls = input
   quotepath = false
+  pager = delta
 [column]
   ui = auto
 [branch]
@@ -14,9 +15,11 @@
 [interactive]
   diffFilter = delta --color-only
 [delta]
-  navigate = true
-  side-by-side = true
-  line-numbers = true
+  navigate = true     # n / N キーで差分間をジャンプ可能
+  side-by-side = true # 左右2分割で差分を表示（広い画面で便利）
+  line-numbers = true # 行番号を表示
+[merge]
+  conflictstyle = zdiff3
 [pull]
   rebase = true
 [push]
