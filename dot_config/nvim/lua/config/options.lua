@@ -45,3 +45,6 @@ opt.undodir = undo_dir      -- 保存先ディレクトリ
 opt.updatetime = 250        -- 変更が保存されるまでの時間（短いほどLSPの反応が速くなる）
 opt.timeoutlen = 400        -- キー入力待ち時間
 opt.completeopt = { "menu", "menuone", "noselect" } -- 補完メニューの挙動
+
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
