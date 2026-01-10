@@ -29,6 +29,8 @@
   followTags = true # コミットと一緒にタグも push する
 [commit]
   verbose = true # コミットメッセージ作成時に差分を表示
+[ghq]
+  root = ~/Projects
 
 [includeIf "gitdir:~/Projects/github.com/ebisol"]
   path = ~/.config/git/ebisol
