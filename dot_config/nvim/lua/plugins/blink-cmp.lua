@@ -11,6 +11,22 @@ return {
     completion = {
       documentation = {
         auto_show = true,
+        auto_show_delay_ms = 200, -- 少し遅らせて表示(タイピング中に出ないように)
+        window = {
+          direction_priority = {
+            menu_north = { "e", "w", "n", "s" },
+            menu_south = { "e", "w", "s", "n" },
+          },
+        },
+      },
+      menu = {
+        border = "rounded",
+      },
+    },
+    signature = {
+      enabled = false,
+      window = {
+        border = "rounded",
       },
     },
     sources = {

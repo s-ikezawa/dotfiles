@@ -7,6 +7,9 @@ return {
   event = "VimEnter",
   opts = {
     lsp = {
+      hover = { enabled = false },
+      signature = { enabled = false },
+      message = { enabled = true }, -- LSPの進捗などは出したいのでtrue
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
         ["vim.lsp.util.stylize_markdown"] = true,
@@ -34,6 +37,7 @@ return {
     views = {
       hover = {
         border = { style = "rounded" },
+        position = { row = 2, col = 2 },
       },
     },
   },
