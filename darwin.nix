@@ -46,4 +46,13 @@
       "1password-cli"
     ];
   };
+
+  programs.zsh = {
+    enable = true;
+    enableGlobalCompInit = false;
+  };
+
+  environment.etc."zshenv".text = ''
+    export ZDDTDIR="$HOME/.config/zsh"
+  '';
 }
