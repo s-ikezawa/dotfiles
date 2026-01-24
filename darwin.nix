@@ -21,6 +21,16 @@
       KeyRepeat = 1; # リピート速度(min: 1)
       InitialKeyRepeat = 11; # リピート開始までの時間(min: 10)
     };
+
+    WindowManager = {
+      EnableStandardClickToShowDesktop = false; # 壁紙をクリックしてデスクトップを表示するを無効化
+      EnableTilingByEdgeDrag = false;           # 端へのドラッグでタイル化
+      EnableTilingOptionAccelerator = false;    # Optionキーでのタイル化
+      EnableTopTilingByEdgeDrag = false;        # 上端へのドラッグでタイル化
+      EnableTiledWindowMargins = false;         # タイル表示されたウインドウを隙間を入れて配置
+      GloballyEnabled = false;                  # ステージマネージャーを無効化
+      StandardHideWidgets = true;               # ウィジェットを非表示にする
+    };
   };
 
   homebrew = {
