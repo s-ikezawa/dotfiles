@@ -16,6 +16,11 @@
       largesize = 128;      # 拡大時のサイズ(max:128)
       orientation = "left"; # 表示位置(bottom, left, right)
     };
+
+    NSGlobalDomain = {
+      KeyRepeat = 1; # リピート速度(min: 1)
+      InitialKeyRepeat = 11; # リピート開始までの時間(min: 10)
+    };
   };
 
   homebrew = {
