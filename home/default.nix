@@ -21,6 +21,10 @@
       source = ./config/ghostty;
       recursive = true;
     };
+    "claude" = {
+      source = ./config/claude;
+      recursive = true;
+    };
   };
 
   programs.zsh = {
@@ -61,10 +65,15 @@
 
     # .zshenvに出力
     envExtra = ''
+      # XDG Base Directory
       export XDG_CONFIG_HOME="$HOME/.config"
       export XDG_CACHE_HOME="$HOME/.cache"
       export XDG_DATA_HOME="$HOME/.local/share"
       export XDG_STATE_HOME="$HOME/.local/state"
+
+      # Claude Code
+      export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
+      export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
     '';
 
     # .zprofileに出力
