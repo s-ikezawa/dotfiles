@@ -100,4 +100,71 @@
       eval "$(mise activate zsh)"
     '';
   };
+
+  programs.tmux = {
+    enable = true;
+
+    prefix = "C-a";
+    baseIndex = 1;
+    escapeTime = 0;
+    historyLimit = 100000;
+    mouse = false;
+    terminal = "tmux-256color";
+    keyMode = "vi";
+
+    extraConfig = ''
+      # インデックス
+      set -g pane-base-index 1
+      set -g renumber-windows on
+
+      # True Colors
+      set -sg terminal-overrides ",xterm-256color:Tc"
+
+      # Paneの境界線
+      set -g pane-border-lines simple
+
+      #QoL
+      set -g repeat-time 1000
+      set -g display-time 4000
+      set -g focus-events on
+      set -g assume-paste-time 0
+
+      # StatusLine
+      set -g status-position top
+      set -g status-interval 60
+      set -g status-style "fg=default,bg=default"
+      set -g message-style "fg=default,bg=default"
+      set -g status-left-length 100
+      set -g status-left "#[bold]  #h   #S #[nobold]| "
+      set -g status-right ""
+      set -g window-status-current-format "#[bold]● #[underscore]#I:#W"
+      set -g window-status-format "  #I:#W"
+
+      # Key Bindings
+      bind C-a send-prefix # <C-a>2回でプログラムに<C-a>を送る
+      bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
+      bind v split-window -h -c "#{pane_current_path}"
+      bind s split-window -v -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
+      bind -r h select-pane -L
+      bind -r j select-pane -D
+      bind -r k select-pane -U
+      bind -r l select-pane -R
+      bind -r H resize-pane -L 1
+      bind -r J resize-pane -D 1
+      bind -r K resize-pane -U 1
+      bind -r L resize-pane -R 1
+
+      # Copy Mode
+      set -s set-clipboard on
+      bind -T copy-mode-vi v { send-keys -X begin-selection }
+      bind -T copy-mode-vi C-v { send-keys -X rectangle-toggle }
+      bind -T copy-mode-vi V { send-keys -X select-line }
+      bind -T copy-mode-vi y { send-keys -X copy-pipe }
+
+      # インクリメンタル検索
+      bind -T copy-mode-vi / command-prompt -i -p "search down" "send -X search-forward-incremental \"%%%\""
+      bind -T copy-mode-vi ? command-prompt -i -p "search up" "send -X search-backward-incremental \"%%%\""
+    '';
+  };
 }
