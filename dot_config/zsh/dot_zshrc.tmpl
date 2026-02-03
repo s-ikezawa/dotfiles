@@ -1,3 +1,6 @@
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" -}}
+alias ls="eza"
+alias ll="eza -al"
+alias tree="eza -a -T -L 3 -I '.git|node_modules' --group-directories-first"
 eval "$(mise activate zsh)"
 {{- end }}
