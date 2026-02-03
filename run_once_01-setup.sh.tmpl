@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# XDG Base Directory
+mkdir -p "$HOME/.config" "$HOME/.chache" "$HOME/.local/share" "$HOME/.local/state"
+
 {{- if eq .chezmoi.os "darwin" }}
 # 事前にパスワード入力をしておく
 sudo -v
@@ -7,21 +10,30 @@ sudo -v
 # ZDOTDIRの設定を追加
 grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
 
-# XDG Base Directory
-mkdir -p "$HOME/.config" "$HOME/.chache" "$HOME/.local/share" "$HOME/.local/state"
-
 # homebrew をインストール
-command -v brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
-# mise をダウンロード
-export PATH="$HOME/.local/bin:$PATH"
-command -v mise || curl https://mise.run | sh
-
-# Rust をインストール(miseでcargoバックエンドを使うため)
+# Rust をインストール
 export RUSTUP_HOME="$HOME/.local/share/rustup"
 export CARGO_HOME="$HOME/.local/share/cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
-command -v rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+command -v rustup > /dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# mise をインストール
+export PATH="$HOME/.local/bin:$PATH"
+command -v mise > /dev/null || curl https://mise.run | sh
+
+# Rust製のツールをインストール
+brew install openssl@3  # sheldonの依存関係
+cargo install usage-cli # miseのコマンド補完に使う
+cargo install sheldon   # zshプラグインマネージャ
+cargo install eza       # Rust製のls
+
+# 補完ファイルのダウンロード
+mkdir -p "$HOME/.local/share/zsh/completions"
+curl -o "$HOME/.local/share/zsh/completions/_sheldon" https://raw.githubusercontent.com/rossmacarthur/sheldon/refs/heads/trunk/completions/sheldon.zsh
+curl -o "$HOME/.local/share/zsh/completions/_eza" https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza
 
 # MacOSの設定
 ## キーリピート

@@ -1,6 +1,32 @@
 {{- if eq .chezmoi.os "darwin" -}}
+# 必要なディレクトリの作成
+mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_DATA_HOME/zsh/completions"
+
+# sheldonでプラグインをロード
+fpath=("$XDG_DATA_HOME/zsh/completions" $fpath)
+eval "$(sheldon source)"
+
+# 補完
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
+
+## 大文字・小文字を区別しない
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+## 補完候補をメニュー形式で選択
+zstyle ':completion:*' menu select
+
+## 補完候補に色をつける
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+## キャッシュを有効化
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+
+# Alias
 alias ls="eza --icons"
 alias ll="eza -al --icons"
 alias tree="eza -a -T -L 3 -I '.git|node_modules' --group-directories-first --icons"
+
+# eval
 eval "$(mise activate zsh)"
 {{- end }}
