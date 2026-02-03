@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+{{- if eq .chezmoi.os "darwin" }}
+# XDG Base Directory
+mkdir -p $HOME/.config $HOME/.chache $HOME/.local/share $HOME/.local/state
+
+# homebrew をインストール
+command -v brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+{{- end }}
