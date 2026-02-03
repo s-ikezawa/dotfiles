@@ -4,14 +4,24 @@
 # 事前にパスワード入力をしておく
 sudo -v
 
+# ZDOTDIRの設定を追加
+grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
+
 # XDG Base Directory
-mkdir -p $HOME/.config $HOME/.chache $HOME/.local/share $HOME/.local/state
+mkdir -p "$HOME/.config" "$HOME/.chache" "$HOME/.local/share" "$HOME/.local/state"
 
 # homebrew をインストール
 command -v brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# ZDOTDIRの設定を追加
-grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
+# mise をダウンロード
+export PATH="$HOME/.local/bin:$PATH"
+command -v mise || curl https://mise.run | sh
+
+# Rust をインストール(miseでcargoバックエンドを使うため)
+export RUSTUP_HOME="$HOME/.local/share/rustup"
+export CARGO_HOME="$HOME/.local/share/cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+command -v rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # MacOSの設定
 ## キーリピート
