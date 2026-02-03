@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
 {{- if eq .chezmoi.os "darwin" }}
+# 事前にパスワード入力をしておく
+sudo -v
+
 # XDG Base Directory
 mkdir -p $HOME/.config $HOME/.chache $HOME/.local/share $HOME/.local/state
 
 # homebrew をインストール
 command -v brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# MacOSの設定
+# ZDOTDIRの設定を追加
+grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
 
+# MacOSの設定
 ## キーリピート
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
