@@ -6,4 +6,36 @@ mkdir -p $HOME/.config $HOME/.chache $HOME/.local/share $HOME/.local/state
 
 # homebrew をインストール
 command -v brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# MacOSの設定
+
+## キーリピート
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+## Dock
+defaults write com.apple.dock orientation -string "left"         # Dockの位置("bottom", "left", "right")
+defaults write com.apple.dock tailesize -int 16                  # アプリアイコンのサイズ
+defaults write com.apple.dock autohide -bool true                # 自動的に隠す
+defaults write com.apple.dock autohide-time-modifer -float 0.5   # 隠す/表示のアニメーション時間
+defaults write com.apple.dock autohide-delay -float 0            # 隠れたDockが表示されるまでの時間(0で即時)
+defaults write com.apple.dock show-recents -bool false           # 最近使ったアプリを表示しない
+defaults write com.apple.dock launchanim -bool false             # アプリ起動時のアニメーションを無効
+defaults write com.apple.dock minimize-to-application -bool true # ウィンドウをアプリアイコンにしまう
+killall Dock
+
+## Finder
+defaults write com.apple.finder CreateDesktop -bool false # デスクトップにアイコンを表示しない
+killall Finder
+
+## デスクトップとステージマネージャ
+defaults write com.apple.WindowManager GloballyEnabled -bool false                  # ステージマネージャを無効
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false # 壁紙をクリックしてデスクトップを表示しない
+defaults write com.apple.WindowManager StandardHideWidgets -bool true               # デスクトップに表示しない
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true           # ステージマネージャ使用時に表示しない
+killall WindowManager
+
+# 通知センター
+defaults write com.apple.NotificationCenter WidgetsEnabled -bool false    # 通知センターに表示しない
+killall NotificationCenter
 {{- end }}
