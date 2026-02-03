@@ -1,0 +1,26 @@
+theme = Catppuccin Mocha
+
+# フォント設定
+font-family = "UDEV Gothic 35NFLG"
+font-size = 15
+
+## リガチャ(合字)を有効化
+font-feature = +calt
+font-feature = +liga
+
+# ウィンドウ設定
+window-padding-x = 15
+window-padding-y = 0
+window-padding-balance = true
+
+# クリップボード設定
+clipboard-read = allow
+clipboard-write = allow
+
+# MacOS限定の設定
+## フォントの太さが変わる
+font-thicken = true
+font-thicken-strength = 150
+
+## 左のオプションキーをAltとして扱う
+macos-option-as-alt = left
