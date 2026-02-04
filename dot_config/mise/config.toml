@@ -1,5 +1,7 @@
 [tools]
 "cargo:eza" = "latest"
+"cargo:ripgrep" = "latest"
 "cargo:sheldon" = "latest"
 "cargo:usage-cli" = "latest"
 "github:tmux/tmux-builds" = "latest"
+neovim = "stable"
