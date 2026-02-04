@@ -10,9 +10,12 @@ sudo -v
 # ZDOTDIRの設定を追加
 grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
 
-# homebrew をインストール
+# homebrew でインストール
+# chezmoi のスクリプトはホームディレクトリで実行されるのでBrewfileはフルパスで指定する
 command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+brew bundle --verbose --file=$HOME/.config/homebrew/Brewfile
+brew cleanup -s
 
 # Rust をインストール
 export RUSTUP_HOME="$HOME/.local/share/rustup"
@@ -23,17 +26,20 @@ command -v rustup > /dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh
 # mise をインストール
 export PATH="$HOME/.local/bin:$PATH"
 command -v mise > /dev/null || curl https://mise.run | sh
-
-# Rust製のツールをインストール
-brew install openssl@3  # sheldonの依存関係
-cargo install usage-cli # miseのコマンド補完に使う
-cargo install sheldon   # zshプラグインマネージャ
-cargo install eza       # Rust製のls
+mise install
 
 # 補完ファイルのダウンロード
 mkdir -p "$HOME/.local/share/zsh/completions"
-curl -o "$HOME/.local/share/zsh/completions/_sheldon" https://raw.githubusercontent.com/rossmacarthur/sheldon/refs/heads/trunk/completions/sheldon.zsh
-curl -o "$HOME/.local/share/zsh/completions/_eza" https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza
+urls=(
+  "_sheldon https://raw.githubusercontent.com/rossmacarthur/sheldon/refs/heads/trunk/completions/sheldon.zsh"
+  "_eza https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza"
+  "_git https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh"
+)
+for item in "${urls[@]}"; do
+  name="${item%% *}"
+  url="${item#* }"
+  [ -f "$HOME/.local/share/zsh/completions/$name" ] || curl -fsSL -o "$HOME/.local/share/zsh/completions/$name" "$url"
+done
 
 # MacOSの設定
 ## キーリピート

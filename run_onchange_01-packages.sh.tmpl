@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 
 {{- if eq .chezmoi.os "darwin" }}
-# chezmoi のスクリプトはホームディレクトリで実行されるのでBrewfileはフルパスで指定する
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-brew bundle --verbose --file=$HOME/.config/homebrew/Brewfile
-brew cleanup -s
 {{- end }}

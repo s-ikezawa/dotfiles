@@ -1,1 +1,4 @@
 [tools]
+"cargo:eza" = "latest"
+"cargo:sheldon" = "latest"
+"cargo:usage-cli" = "latest"
