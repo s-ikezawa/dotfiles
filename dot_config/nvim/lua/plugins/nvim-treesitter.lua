@@ -11,11 +11,13 @@ return {
     local filetypes = {
       -- a
       -- b
+      "bash",
       -- c
       -- d
       -- e
       -- f
       -- g
+      "go","gomod","gosum","gotmpl","gowork",
       -- h
       -- i
       -- j
@@ -39,6 +41,7 @@ return {
       -- y
       "yaml",
       -- z
+      "zsh",
     }
     treesitter.install(filetypes)
 
