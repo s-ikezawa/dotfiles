@@ -6,3 +6,4 @@
 "cargo:usage-cli" = "latest"
 "github:tmux/tmux-builds" = "latest"
 neovim = "stable"
+node = "latest"
