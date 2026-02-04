@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # XDG Base Directory
-mkdir -p "$HOME/.config" "$HOME/.chache" "$HOME/.local/share" "$HOME/.local/state"
+mkdir -p "$HOME/.config" "$HOME/.cache" "$HOME/.local/share" "$HOME/.local/state"
 
 {{- if eq .chezmoi.os "darwin" }}
 # 事前にパスワード入力をしておく
@@ -14,7 +14,7 @@ grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null || echo 'export ZDOTDIR="$HOME/.config
 # chezmoi のスクリプトはホームディレクトリで実行されるのでBrewfileはフルパスで指定する
 command -v brew > /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-brew bundle --verbose --file=$HOME/.config/homebrew/Brewfile
+brew bundle --verbose --file="$HOME/.config/homebrew/Brewfile"
 brew cleanup -s
 
 # Rust をインストール
@@ -28,7 +28,7 @@ export PATH="$HOME/.local/bin:$PATH"
 command -v mise > /dev/null || curl https://mise.run | sh
 mise install
 
-# 補完ファイルのダウンロード
+# zshの補完用ファイルを準備
 mkdir -p "$HOME/.local/share/zsh/completions"
 urls=(
   "_sheldon https://raw.githubusercontent.com/rossmacarthur/sheldon/refs/heads/trunk/completions/sheldon.zsh"
@@ -48,27 +48,26 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 ## Dock
 defaults write com.apple.dock orientation -string "left"         # Dockの位置("bottom", "left", "right")
-defaults write com.apple.dock tailesize -int 16                  # アプリアイコンのサイズ
+defaults write com.apple.dock tilesize -int 16                   # アプリアイコンのサイズ
 defaults write com.apple.dock autohide -bool true                # 自動的に隠す
-defaults write com.apple.dock autohide-time-modifer -float 0.5   # 隠す/表示のアニメーション時間
+defaults write com.apple.dock autohide-time-modifier -float 0.5  # 隠す/表示のアニメーション時間
 defaults write com.apple.dock autohide-delay -float 0            # 隠れたDockが表示されるまでの時間(0で即時)
 defaults write com.apple.dock show-recents -bool false           # 最近使ったアプリを表示しない
 defaults write com.apple.dock launchanim -bool false             # アプリ起動時のアニメーションを無効
 defaults write com.apple.dock minimize-to-application -bool true # ウィンドウをアプリアイコンにしまう
-killall Dock
 
 ## Finder
 defaults write com.apple.finder CreateDesktop -bool false # デスクトップにアイコンを表示しない
-killall Finder
 
 ## デスクトップとステージマネージャ
 defaults write com.apple.WindowManager GloballyEnabled -bool false                  # ステージマネージャを無効
 defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false # 壁紙をクリックしてデスクトップを表示しない
 defaults write com.apple.WindowManager StandardHideWidgets -bool true               # デスクトップに表示しない
 defaults write com.apple.WindowManager StageManagerHideWidgets -bool true           # ステージマネージャ使用時に表示しない
-killall WindowManager
 
 # 通知センター
 defaults write com.apple.NotificationCenter WidgetsEnabled -bool false    # 通知センターに表示しない
-killall NotificationCenter
+
+killall Dock Finder WindowManager NotificationCenter 2>/dev/null
+
 {{- end }}
