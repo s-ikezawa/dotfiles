@@ -4,6 +4,7 @@
 "cargo:sheldon" = "latest"
 "cargo:tree-sitter-cli" = "latest"
 "cargo:usage-cli" = "latest"
+gh = "latest"
 "github:tmux/tmux-builds" = "latest"
 neovim = "stable"
 node = "latest"
