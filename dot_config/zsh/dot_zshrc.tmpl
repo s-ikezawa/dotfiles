@@ -1,9 +1,13 @@
 {{- if eq .chezmoi.os "darwin" -}}
-# 必要なディレクトリの作成
+# 必要なディレクトリやパスの設定
 mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_DATA_HOME/zsh/completions"
+fpath=(
+  "$XDG_DATA_HOME/zsh/completions"
+  "$(brew --prefix)/share/zsh/site-functions"
+  $fpath
+)
 
 # sheldonでプラグインをロード
-fpath=("$XDG_DATA_HOME/zsh/completions" $fpath)
 eval "$(sheldon source)"
 
 # 補完
