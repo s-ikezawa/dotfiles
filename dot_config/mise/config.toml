@@ -6,5 +6,5 @@
 "cargo:usage-cli" = "latest"
 gh = "latest"
 "github:tmux/tmux-builds" = "latest"
-neovim = "stable"
+neovim = "nightly"
 node = "latest"
