@@ -29,11 +29,14 @@ command -v mise > /dev/null || curl https://mise.run | sh
 mise install
 
 # zshの補完用ファイルを準備
-mkdir -p "$HOME/.local/share/zsh/completions"
+COMP_DIR="$HOME/.local/share/zsh/completions"
+mkdir -p "$COMP_DIR"
+command -v rustup &>/dev/null && rustup completions zsh > "$COMP_DIR/_rustup"
+command -v mise &>/dev/null && mise completion zsh > "$COMP_DIR/_mise"
+command -v sheldon &>/dev/null && sheldon completions --shell zsh > "$COMP_DIR/_sheldon"
+
 urls=(
-  "_sheldon https://raw.githubusercontent.com/rossmacarthur/sheldon/refs/heads/trunk/completions/sheldon.zsh"
   "_eza https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza"
-  "_git https://raw.github.com/git/git/master/contrib/completion/git-completion.zsh"
 )
 for item in "${urls[@]}"; do
   name="${item%% *}"
