@@ -34,6 +34,7 @@ mkdir -p "$COMP_DIR"
 command -v rustup &>/dev/null && rustup completions zsh > "$COMP_DIR/_rustup"
 command -v mise &>/dev/null && mise completion zsh > "$COMP_DIR/_mise"
 command -v sheldon &>/dev/null && sheldon completions --shell zsh > "$COMP_DIR/_sheldon"
+command -v gh &>/dev/null && gh completion -s zsh > "$COMP_DIR/_gh"
 
 urls=(
   "_eza https://raw.githubusercontent.com/eza-community/eza/main/completions/zsh/_eza"
