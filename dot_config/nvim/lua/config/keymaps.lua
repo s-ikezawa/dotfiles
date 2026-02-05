@@ -1,10 +1,5 @@
--- Insert mode: jk/jj でノーマルモードに抜ける
-vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
-vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode" })
-
--- Terminal mode: jk/jj でノーマルモードに抜ける
-vim.keymap.set("t", "jk", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
-vim.keymap.set("t", "jj", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+-- jk でノーマルモードに抜ける
+vim.keymap.set({"n", "t"}, "jk", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
 -- ウィンドウ移動: Ctrl + h/j/k/l (ノーマルモード・ターミナルモード両方)
 vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Move to left window" })
