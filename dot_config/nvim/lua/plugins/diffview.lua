@@ -232,5 +232,7 @@ return {
   end,
   keys = {
     { "<leader>gd", "<cmd>DiffviewOpen Head~1<cr>", desc = "1つ前のコミットとのDiff" },
+    { "<leader>gh", "<cmd>DiffviewFileHistory<cr>", desc = "リポジトリのコミット履歴" },
+    { "<leader>gf", "<cmd>DiffviewFileHistory --follow %<cr>", desc = "ファイルのコミット履歴" },
   },
 }
