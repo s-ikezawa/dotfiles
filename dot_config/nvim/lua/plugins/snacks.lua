@@ -28,8 +28,8 @@ return {
     { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
-    { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
-    { "<leader>gD", function() Snacks.picker.git_diff({ group = true }) end, desc = "Git Diff (Files)" },
+    -- { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+    -- { "<leader>gD", function() Snacks.picker.git_diff({ group = true }) end, desc = "Git Diff (Files)" },
     { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "開いているファイルのGit Log" },
     -- gh
     { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
