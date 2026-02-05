@@ -25,13 +25,8 @@ return {
     },
     {
       "<leader>aa",
-      function() require("sidekick.cli").toggle() end,
-      desc = "Sidekickをトグル",
-    },
-    {
-      "<leader>ac",
       function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
-      desc = "SidekickでClaude Codeをトグル",
+      desc = "Sidekickをトグル",
     },
     {
       "<leader>as",
@@ -45,7 +40,7 @@ return {
       desc = "カーソルのあるクラスを選択して送信",
     },
     {
-      "<leader>af",
+      "<leader>aF",
       function() require("sidekick.cli").send({ msg = "{function}" }) end,
       desc = "カーソルのある関数を選択して送信",
     },
