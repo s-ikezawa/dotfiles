@@ -4,7 +4,8 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.mapleader = ","
 
-vim.opt.termguicolors = true
+vim.opt.termguicolors = true -- TrueColor対応
+vim.opt.mouse = ""           -- マウス操作を無効化
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
