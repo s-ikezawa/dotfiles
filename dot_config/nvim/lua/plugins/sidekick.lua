@@ -6,8 +6,13 @@ return {
     },
     cli = {
       mux = {
-        enabled = true,
-        backend = "tmux",
+        enabled = false,
+        -- backend = "tmux",
+      },
+      win = {
+        keys = {
+          prompt = false, -- <c-p> を無効化
+        },
       },
     },
   },
@@ -33,15 +38,31 @@ return {
       function() require("sidekick.cli").select({ filter = { installed = true } }) end,
       desc = "Sidekickで利用するCLIツールを選択する",
     },
+
+    {
+      "<leader>ac",
+      function() require("sidekick.cli").send({ msg = "{class}" }) end,
+      desc = "カーソルのあるクラスを選択して送信",
+    },
+    {
+      "<leader>af",
+      function() require("sidekick.cli").send({ msg = "{function}" }) end,
+      desc = "カーソルのある関数を選択して送信",
+    },
     {
       "<leader>ad",
-      function() require("sidekick.cli").close() end,
-      desc = "SidekickのCLIをデタッチ",
+      function() require("sidekick.cli").send({ msg = "{diagnostics}" }) end,
+      desc = "現在の開いているファイルの診断結果を送信",
     },
     {
       "<leader>at",
       function() require("sidekick.cli").send({ msg = "{this}" }) end,
-      desc = "Send This",
+      desc = "カーソル位置周辺のコンテキストを送信",
+    },
+    {
+      "<leader>al",
+      function() require("sidekick.cli").send({ msg = "{line}" }) end,
+      desc = "カーソルのある行を送信",
     },
     {
       "<leader>af",
