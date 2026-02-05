@@ -6,3 +6,6 @@ vim.pack.add({
 -- Colorscheme
 require("plugins.catppuccin")
 vim.cmd.colorscheme("catppuccin")
+
+-- Treesitter
+require("plugins.nvim-treesitter")
