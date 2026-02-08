@@ -23,12 +23,12 @@ require("plugins.nvim-lspconfig")
 -- AI
 require("plugins.sidekick")
 
--- Coding
-require("plugins.conform")
-
--- Go
-require("plugins.nvim-lint")
-
 -- Git
 require("plugins.gitsigns")
 require("plugins.diffview")
+
+-- Coding
+require("plugins.conform")
+require("plugins.nvim-lint")
+require("plugins.neotest")
+require("plugins.nvim-coverage")

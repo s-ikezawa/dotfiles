@@ -12,6 +12,8 @@
 gh = "latest"
 "github:tmux/tmux-builds" = "latest"
 go = "latest"
+"go:github.com/cweill/gotests/gotests" = "latest"
+"go:github.com/fatih/gomodifytags" = "latest"
 "go:golang.org/x/tools/cmd/goimports" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
 "go:mvdan.cc/gofumpt" = "latest"

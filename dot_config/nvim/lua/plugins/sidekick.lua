@@ -5,7 +5,6 @@ vim.pack.add({
   },
 })
 
----@class sidekick.Config
 local config = {
   jump = {
     jumplist = true, -- add an entry to the jumplist
@@ -30,8 +29,6 @@ local config = {
       events = { "TextChangedI", "InsertEnter" },
       esc = true, -- clear next edit suggestions when pressing <Esc>
     },
-    ---@class sidekick.diff.Opts
-    ---@field inline? "words"|"chars"|false Enable inline diffs
     diff = {
       inline = "words",
     },
@@ -39,23 +36,17 @@ local config = {
   -- Work with AI cli tools directly from within Neovim
   cli = {
     watch = true, -- notify Neovim of file changes done by AI CLI tools
-    ---@class sidekick.win.Opts
     win = {
       --- This is run when a new terminal is created, before starting it.
       --- Here you can change window options `terminal.opts`.
-      ---@param terminal sidekick.cli.Terminal
-      config = function(terminal) end,
-      wo = {}, ---@type vim.wo
-      bo = {}, ---@type vim.bo
+      config = function(_terminal) end,
+      wo = {},
+      bo = {},
       layout = "right", ---@type "float"|"left"|"bottom"|"top"|"right"
-      --- Options used when layout is "float"
-      ---@type vim.api.keyset.win_config
       float = {
         width = 0.9,
         height = 0.9,
       },
-      -- Options used when layout is "left"|"bottom"|"top"|"right"
-      ---@type vim.api.keyset.win_config
       split = {
         width = 80, -- set to 0 for default split width
         height = 20, -- set to 0 for default split height
@@ -63,12 +54,15 @@ local config = {
       --- CLI Tool Keymaps (default mode is `t`)
       ---@type table<string, sidekick.cli.Keymap|false>
       keys = {
-        buffers = { "<c-b>", "buffers", mode = "nt", desc = "open buffer picker" },
-        files = { "<c-f>", "files", mode = "nt", desc = "open file picker" },
+        buffers = false,
+        -- buffers = { "<c-b>", "buffers", mode = "n", desc = "open buffer picker" },
+        files = false,
+        -- files = { "<c-f>", "files", mode = "n", desc = "open file picker" },
         hide_n = { "q", "hide", mode = "n", desc = "hide the terminal window" },
         hide_ctrl_q = { "<c-q>", "hide", mode = "n", desc = "hide the terminal window" },
         hide_ctrl_dot = { "<c-.>", "hide", mode = "nt", desc = "hide the terminal window" },
         hide_ctrl_z = { "<c-z>", "hide", mode = "nt", desc = "hide the terminal window" },
+        prompt = false,
         -- prompt        = { "<c-p>", "prompt"    , mode = "t" , desc = "insert prompt or context" },
         stopinsert = { "<c-q>", "stopinsert", mode = "t", desc = "enter normal mode" },
         -- Navigate windows in terminal mode. Only active when:
@@ -85,8 +79,6 @@ local config = {
       --- Defaults to `vim.cmd.wincmd`. Used by the `nav_*` keymaps.
       nav = nil,
     },
-    ---@class sidekick.cli.Mux
-    ---@field backend? "tmux"|"zellij" Multiplexer backend to persist CLI sessions
     mux = {
       enabled = true,
       backend = vim.env.ZELLIJ and "zellij" or "tmux", -- default to tmux unless zellij is detected
@@ -147,8 +139,7 @@ local config = {
       class = "{class}",
     },
     -- preferred picker for selecting files
-    ---@alias sidekick.picker "snacks"|"telescope"|"fzf-lua"
-    picker = "snacks", ---@type sidekick.picker
+    picker = "snacks",
   },
   copilot = {
     -- track copilot's status with `didChangeStatus`
@@ -198,6 +189,41 @@ local keymaps = {
     mode = { "x" },
     desc = "選択している部分を送信",
   },
+  {
+    "<leader>aF",
+    function()
+      require("sidekick.cli.picker").open("files")
+    end,
+    desc = "ファイルピッカーを開いて送信",
+  },
+  {
+    "<leader>ab",
+    function()
+      require("sidekick.cli.picker").open("buffers")
+    end,
+    desc = "バッファピッカーを開いて送信",
+  },
+  {
+    "<leader>ap",
+    function()
+      require("sidekick.cli").prompt()
+    end,
+    desc = "プロンプトピッカーを開いて送信",
+  },
+  {
+    "<leader>ad",
+    function()
+      require("sidekick.cli").send({ prompt = "diagnostics" })
+    end,
+    desc = "現在のファイルのdiagnosticsを送信",
+  },
+  {
+    "<leader>aD",
+    function()
+      require("sidekick.cli").send({ prompt = "diagnostics_all" })
+    end,
+    desc = "全てのdiagnosticsを送信",
+  },
 }
 
 for _, map in ipairs(keymaps) do
@@ -218,5 +244,5 @@ for _, map in ipairs(keymaps) do
   end
 
   local mode = map.mode or "n"
-  vim.keymap.set(mode, map[1], map[2], opts)
+  vim.keymap.set(mode, map[1] --[[@as string]], map[2] --[[@as function]], opts)
 end

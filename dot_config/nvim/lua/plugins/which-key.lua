@@ -184,6 +184,7 @@ wk.add({
   { "<leader>g", group = "Git" },
   { "<leader>gh", group = "Hunks" },
   { "<leader>s", group = "Search" },
+  { "<leader>t", group = "Test" },
   { "<leader>u", group = "UI", icon = { icon = "󰙵 ", color = "cyan" } },
   { "<leader>x", group = "Diagnostics/Quickfix", icon = { icon = "󱖫 ", color = "green" } },
   { "[", group = "Prev" },

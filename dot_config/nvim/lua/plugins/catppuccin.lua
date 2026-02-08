@@ -57,7 +57,11 @@ require("catppuccin").setup({
     },
   },
   color_overrides = {},
-  custom_highlights = {},
+  custom_highlights = function(colors)
+    return {
+      WinSeparator = { fg = colors.lavender },
+    }
+  end,
   default_integrations = true,
   auto_integrations = false,
   integrations = {},

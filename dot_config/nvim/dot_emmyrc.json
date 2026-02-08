@@ -1,0 +1,17 @@
+{
+  "runtime": {
+    "version": "LuaJIT",
+    "path": [
+      "lua/?.lua",
+      "lua/?/init.lua"
+    ]
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "library": [
+      "$XDG_DATA_HOME/mise/installs/neovim/nightly/share/nvim/runtime",
+      "$XDG_DATA_HOME/nvim/site/pack/core/opt",
+      "${3rd}/luv/library"
+    ]
+  }
+}

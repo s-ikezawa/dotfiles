@@ -9,7 +9,6 @@ vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Move to rig
 
 -- ウィンドウリサイズモード
 local resize_mode_active = false
-local resize_keymaps = {}
 
 local function exit_resize_mode()
   if not resize_mode_active then
@@ -17,7 +16,7 @@ local function exit_resize_mode()
   end
   resize_mode_active = false
   for _, key in ipairs({ "h", "j", "k", "l", "=", "<Esc>", "q" }) do
-    pcall(vim.keymap.del, "n", key, { buffer = 0 })
+    pcall(vim.keymap.del, "n", key)
   end
   vim.notify("Resize mode: OFF", vim.log.levels.INFO)
 end
@@ -28,7 +27,7 @@ local function enter_resize_mode()
   end
   resize_mode_active = true
 
-  local opts = { buffer = 0, nowait = true }
+  local opts = { nowait = true }
 
   vim.keymap.set("n", "h", function()
     vim.cmd("vertical resize -2")
