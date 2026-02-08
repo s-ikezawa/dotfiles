@@ -90,11 +90,13 @@ keybinds clear-defaults=true {
     }
     scroll {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
+        bind "/" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
     }
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "n" { Search "down"; }
+        bind "N" { Search "up"; }
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "p" { Search "up"; }
         bind "w" { SearchToggleOption "Wrap"; }
@@ -199,12 +201,17 @@ keybinds clear-defaults=true {
         bind "right" { PageScrollDown; }
         bind "Ctrl b" { PageScrollUp; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "Ctrl d" { HalfPageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
         bind "d" { HalfPageScrollDown; }
         bind "Ctrl f" { PageScrollDown; }
+        bind "g" { ScrollToTop; }
+        bind "G" { ScrollToBottom; }
         bind "h" { PageScrollUp; }
         bind "j" { ScrollDown; }
         bind "k" { ScrollUp; }
         bind "l" { PageScrollDown; }
+        bind "q" { ScrollToBottom; SwitchToMode "normal"; }
         bind "Ctrl s" { SwitchToMode "normal"; }
         bind "u" { HalfPageScrollUp; }
     }
@@ -324,7 +331,7 @@ theme "catppuccin-mocha"
 //   - true (default)
 //   - false
 // 
-// mouse_mode false
+mouse_mode false
  
 // Toggle having pane frames around the panes
 // Options:
@@ -387,7 +394,7 @@ theme "catppuccin-mocha"
  
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
-// scrollback_editor "/usr/bin/vim"
+scrollback_editor "nvim"
  
 // A fixed name to always give the Zellij session.
 // Consider also setting `attach_to_session true,`
