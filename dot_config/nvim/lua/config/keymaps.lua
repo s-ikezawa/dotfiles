@@ -1,5 +1,5 @@
 -- jk でノーマルモードに抜ける
-vim.keymap.set({"n", "t"}, "jk", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+vim.keymap.set({ "n", "t" }, "jk", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
 -- ウィンドウ移動: Ctrl + h/j/k/l (ノーマルモード・ターミナルモード両方)
 vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Move to left window" })

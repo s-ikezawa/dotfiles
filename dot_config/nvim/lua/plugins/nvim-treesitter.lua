@@ -7,7 +7,7 @@ vim.pack.add({
 
 require("nvim-treesitter").setup({
   -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
-  install_dir = vim.fn.stdpath('data') .. '/site'
+  install_dir = vim.fn.stdpath("data") .. "/site",
 })
 
 local filetypes = {
@@ -24,19 +24,23 @@ local filetypes = {
   -- j
   -- k
   -- l
-  "lua", "luadoc",
+  "lua",
+  "luadoc",
   -- m
-  "markdown", "markdown_inline",
+  "markdown",
+  "markdown_inline",
   -- n
   -- o
   -- p
   -- q
   -- r
+  "regex",
   -- s
   -- t
   -- u
   -- v
-  "vim", "vimdoc",
+  "vim",
+  "vimdoc",
   -- w
   -- x
   -- y
@@ -48,13 +52,14 @@ require("nvim-treesitter").install(filetypes)
 -- Highlighting
 vim.api.nvim_create_autocmd("FileType", {
   pattern = filetypes,
-  callback = function() vim.treesitter.start() end,
+  callback = function()
+    vim.treesitter.start()
+  end,
 })
 
 -- Folds
-vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.wo[0][0].foldmethod = 'expr'
+vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.wo[0][0].foldmethod = "expr"
 
 -- Indentation
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-

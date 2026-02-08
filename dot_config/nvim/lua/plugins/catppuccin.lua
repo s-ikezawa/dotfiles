@@ -62,4 +62,3 @@ require("catppuccin").setup({
   auto_integrations = false,
   integrations = {},
 })
-
