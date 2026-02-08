@@ -26,6 +26,9 @@ require("plugins.sidekick")
 -- Coding
 require("plugins.conform")
 
+-- Go
+require("plugins.nvim-lint")
+
 -- Git
 require("plugins.gitsigns")
 require("plugins.diffview")

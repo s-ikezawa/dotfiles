@@ -1,5 +1,6 @@
 vim.lsp.enable({
   "emmylua_ls",
+  "gopls",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {

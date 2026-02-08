@@ -4,6 +4,7 @@ vim.pack.add({
 
 require("conform").setup({
   formatters_by_ft = {
+    go = { "goimports", "gofumpt", stop_after_first = true },
     lua = { "stylua" },
   },
   formatters = {},

@@ -16,9 +16,15 @@ local filetypes = {
   -- c
   "c",
   -- d
+  "diff",
   -- e
   -- f
   -- g
+  "go",
+  "gomod",
+  "gosum",
+  "gotmpl",
+  "gowork",
   -- h
   -- i
   -- j
