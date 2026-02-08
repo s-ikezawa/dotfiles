@@ -198,20 +198,6 @@ local keymaps = {
     mode = { "x" },
     desc = "選択している部分を送信",
   },
-  {
-    "<leader>gc",
-    function()
-      require("sidekick.cli").send({ name = "claude", prompt = "commit" })
-    end,
-    desc = "AI コミット (Claude Code)",
-  },
-  {
-    "<leader>gp",
-    function()
-      require("sidekick.cli").send({ name = "claude", prompt = "pr" })
-    end,
-    desc = "AI PR 作成 (Claude Code)",
-  },
 }
 
 for _, map in ipairs(keymaps) do
