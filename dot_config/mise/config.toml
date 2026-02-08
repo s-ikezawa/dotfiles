@@ -2,6 +2,7 @@
 "cargo:emmylua_ls" = "latest"
 "cargo:eza" = "latest"
 "cargo:fd-find" = "latest"
+"cargo:git-delta" = "latest"
 "cargo:ripgrep" = "latest"
 "cargo:sheldon" = "latest"
 "cargo:stylua" = "latest"
