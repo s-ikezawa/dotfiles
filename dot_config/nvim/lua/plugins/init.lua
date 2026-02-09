@@ -16,6 +16,7 @@ require("plugins.nvim-treesitter-textobjects")
 require("plugins.which-key")
 require("plugins.snacks")
 require("plugins.blink-cmp")
+require("plugins.mini-surround")
 
 -- LSP
 require("plugins.nvim-lspconfig")
