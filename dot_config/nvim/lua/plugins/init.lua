@@ -34,3 +34,6 @@ require("plugins.nvim-lint")
 require("plugins.neotest")
 require("plugins.nvim-coverage")
 require("plugins.nvim-dap")
+
+-- Markdown
+require("plugins.render-markdown")

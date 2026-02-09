@@ -26,10 +26,12 @@ local filetypes = {
   "gotmpl",
   "gowork",
   -- h
+  "html",
   -- i
   -- j
   -- k
   -- l
+  "latex",
   "lua",
   "luadoc",
   -- m
@@ -50,6 +52,7 @@ local filetypes = {
   -- w
   -- x
   -- y
+  "yaml",
   -- z
 }
 

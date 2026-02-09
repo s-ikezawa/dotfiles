@@ -13,6 +13,7 @@ local excludes = {
   "**/.yarn/releases/*",
   "**/.pnpm-store/*",
   "**/.idea/*",
+  "**/.obsidian/*",
 }
 Snacks.setup({
   bigfile = { enabled = false },
