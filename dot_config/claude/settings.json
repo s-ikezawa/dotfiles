@@ -12,7 +12,8 @@
       "Glob",
       "Grep",
       "LSP",
-      "Bash(python3 */utilities/uuidv7.py*)"
+      "Bash(python3 */utilities/uuidv7.py*)",
+      "Skill"
     ]
   }
 }
