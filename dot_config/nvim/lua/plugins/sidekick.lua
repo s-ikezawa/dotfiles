@@ -224,6 +224,13 @@ local keymaps = {
     end,
     desc = "全てのdiagnosticsを送信",
   },
+  {
+    "<leader>al",
+    function()
+      require("sidekick.cli").send({ msg = "{position}" })
+    end,
+    desc = "現在のカーソル位置を送信",
+  },
 }
 
 for _, map in ipairs(keymaps) do

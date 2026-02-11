@@ -1,5 +1,18 @@
 {
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "LSP",
+      "Bash(python3 */utilities/uuidv7.py*)"
+    ]
   }
 }

@@ -37,3 +37,4 @@ require("plugins.nvim-dap")
 
 -- Markdown
 require("plugins.render-markdown")
+require("plugins.markdown-preview")
