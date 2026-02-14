@@ -1,7 +1,4 @@
 {
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true
-  },
   "permissions": {
     "allow": [
       "WebFetch",
@@ -15,5 +12,9 @@
       "Bash(python3 */utilities/uuidv7.py*)",
       "Skill"
     ]
-  }
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "medium"
 }
