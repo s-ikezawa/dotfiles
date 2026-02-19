@@ -10,6 +10,9 @@
       "Grep",
       "LSP",
       "Bash(python3 */utilities/uuidv7.py*)",
+      "Bash(docker *)",
+      "Bash(docker compose *)",
+      "Bash(gh *)",
       "Skill"
     ]
   },

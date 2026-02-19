@@ -13,8 +13,11 @@ require("nvim-treesitter").setup({
 local filetypes = {
   -- a
   -- b
+  "bash",
   -- c
   "c",
+  "css",
+  "csv",
   -- d
   "diff",
   -- e
@@ -29,14 +32,27 @@ local filetypes = {
   "html",
   -- i
   -- j
+  "java",
+  "javadoc",
+  "javascript",
+  "jq",
+  "jsdoc",
+  "json",
+  "json5",
+  "jsonnet",
+  "jsx",
   -- k
+  "kotlin",
   -- l
   "latex",
   "lua",
   "luadoc",
+  "luap",
+  "luau",
   -- m
   "markdown",
   "markdown_inline",
+  "mermaid",
   -- n
   -- o
   -- p
@@ -44,7 +60,15 @@ local filetypes = {
   -- r
   "regex",
   -- s
+  "scss",
+  "sql",
   -- t
+  "tmux",
+  "toml",
+  "tsv",
+  "tsx",
+  "typescript",
+  "typespec",
   -- u
   -- v
   "vim",
