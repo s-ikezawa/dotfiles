@@ -26,8 +26,8 @@ install_clt() {
   rm -f "$clt_placeholder"
 }
 
-# XDGフォルダの作成
-mkdir -p "${HOME}/.config" "${HOME}/.cache" "${HOME}/.local/share" "${HOME}/.local/state"
+# XDGフォルダの作成(zshフォルダが自動で作成されないのであらかじめ作っておく)
+mkdir -p "${HOME}/.config/zsh" "${HOME}/.cache/zsh" "${HOME}/.local/share/zsh" "${HOME}/.local/state/zsh"
 
 # Macのみの処理
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -42,11 +42,16 @@ if [[ "$(uname)" == "Darwin" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
   else
-    "Homebrew already installed."
+    echo "Homebrew already installed."
   fi
 
   if [[ -f "$DOTFILES_DIR/Brewfile" ]]; then
     echo "Installing packages from Brewfile..."
     brew bundle --file="$DOTFILES_DIR/Brewfile"
+  fi
+
+  if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
+    echo "Setting ZDOTDIR..."
+    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
   fi
 fi
