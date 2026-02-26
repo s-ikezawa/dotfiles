@@ -7,6 +7,9 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
 
+# Claude Code
+export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
+
 SHELL_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 case "$(uname -s)" in
   Darwin)  [ -f "$SHELL_CONFIG/env.darwin.sh" ] && source "$SHELL_CONFIG/env.darwin.sh" ;;
