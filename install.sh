@@ -63,3 +63,24 @@ if [[ "$(uname)" == "Darwin" ]]; then
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
   fi
 fi
+
+packages=(
+  shell   # 環境変数のexportなどのzsh、bash共通のものをまとめる
+  zsh     # zshenv,zprofile,zshrcなど
+  bash    # bashrc
+  claude  # ClaudeCodeのグローバル設定
+)
+
+echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
+for pkg in "${packages[@]}"; do
+  if [ -d "$DOTFILES_DIR/$pkg" ]; then
+    echo " [$pkg] stowing..."
+    # --restow: 既存のリンクを貼り直す
+    # --no-folding フォルダは実態として作成する
+    stow -v -d "$DOTFILES_DIR" -t "$HOME" --no-folding --restow "$pkg"
+  else
+    echo " [$pkg] skipped (directory not found)"
+  fi
+done
+
+echo "Done!"
