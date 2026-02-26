@@ -50,6 +50,14 @@ if [[ "$(uname)" == "Darwin" ]]; then
     brew bundle --file="$DOTFILES_DIR/Brewfile"
   fi
 
+  if ! command -v mise &>/dev/null; then
+    echo "Installing mise..."
+    curl -fsSL https://mise.run | bash
+    export PATH="$HOME/.local/bin:$PATH"
+  else
+    echo "mise already installed."
+  fi
+
   if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
     echo "Setting ZDOTDIR..."
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
