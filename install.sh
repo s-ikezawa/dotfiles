@@ -26,6 +26,10 @@ install_clt() {
   rm -f "$clt_placeholder"
 }
 
+# XDGフォルダの作成
+mkdir -p "${HOME}/.config" "${HOME}/.cache" "${HOME}/.local/share" "${HOME}/.local/state"
+
+# Macのみの処理
 if [[ "$(uname)" == "Darwin" ]]; then
   if ! xcode-select -p &>/dev/null; then
     install_clt
