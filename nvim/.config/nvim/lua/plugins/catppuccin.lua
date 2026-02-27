@@ -69,4 +69,4 @@ require("catppuccin").setup({
 })
 
 -- setup must be called before loading
-im.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "catppuccin"
