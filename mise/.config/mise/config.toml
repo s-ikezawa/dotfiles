@@ -1,4 +1,5 @@
 [tools]
+bat = "latest"
 fd = "latest"
 fzf = "latest"
 "github:tmux/tmux-builds" = "latest"
