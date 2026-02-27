@@ -144,6 +144,7 @@ packages=(
   shell
   zsh
   bash
+  mise
   claude
   ghostty
 )
