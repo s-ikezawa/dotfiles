@@ -62,13 +62,90 @@ if [[ "$(uname)" == "Darwin" ]]; then
     echo "Setting ZDOTDIR..."
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
   fi
+
+  # ── Keyboard ──
+  echo "Setting keyboard preferences..."
+  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain InitialKeyRepeat -int 10
+  # 自動修正・自動大文字・スマート引用符/ダッシュを無効化
+  defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+  defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+  # ライブ変換を無効化
+  defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
+  # Tabで全てのコントロール間を移動
+  defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+  # ── Trackpad ──
+  echo "Setting trackpad preferences..."
+  # タップでクリック
+  defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+
+  # ── Dock ──
+  echo "Setting Dock preferences..."
+  defaults write com.apple.dock orientation -string left
+  defaults write com.apple.dock tilesize -int 36
+  defaults write com.apple.dock autohide -bool true
+  defaults write com.apple.dock minimize-to-application -bool true
+  # 最近使ったアプリを非表示
+  defaults write com.apple.dock show-recents -bool false
+  killall Dock
+
+  # ── Window Manager ──
+  echo "Setting Window Manager preferences..."
+  defaults write com.apple.WindowManager GloballyEnabled -bool false
+  defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+  defaults write com.apple.WindowManager StandardHideWidgets -bool true
+  defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
+
+  # ── Finder ──
+  echo "Setting Finder preferences..."
+  # 隠しファイルを表示
+  defaults write com.apple.finder AppleShowAllFiles -bool true
+  # 拡張子を常に表示
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  # パスバー・ステータスバーを表示
+  defaults write com.apple.finder ShowPathbar -bool true
+  defaults write com.apple.finder ShowStatusBar -bool true
+  # タイトルバーにフルパスを表示
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+  # デフォルトをリスト表示に
+  defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+  # 検索時にデフォルトでカレントフォルダを対象に
+  defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+  # 拡張子変更時の警告を無効化
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  killall Finder
+
+  # ── Screenshot ──
+  echo "Setting screenshot preferences..."
+  # スクリーンショットの保存先を~/Screenshotsに
+  mkdir -p "${HOME}/Screenshots"
+  defaults write com.apple.screencapture location -string "${HOME}/Screenshots"
+  # スクリーンショットの影を無効化
+  defaults write com.apple.screencapture disable-shadow -bool true
+
+  # ── Global ──
+  echo "Setting global preferences..."
+  # 保存ダイアログをデフォルトで展開
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+  # 印刷ダイアログをデフォルトで展開
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+  # iCloudではなくディスクにデフォルト保存
+  defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 fi
 
 packages=(
-  shell   # 環境変数のexportなどのzsh、bash共通のものをまとめる
-  zsh     # zshenv,zprofile,zshrcなど
-  bash    # bashrc
-  claude  # ClaudeCodeのグローバル設定
+  shell
+  zsh
+  bash
+  claude
+  ghostty
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
