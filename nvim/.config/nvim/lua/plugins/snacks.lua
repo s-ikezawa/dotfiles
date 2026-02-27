@@ -15,6 +15,18 @@ Snacks.setup({
       },
     },
   },
+  statuscolumn = {
+    enabled = true,
+    left = { "mark", "sign" },
+    right = { "fold", "git" },
+    folds = {
+      open = false,
+      git_hl = false,
+    },
+    git = {
+      patterns = { "GitSign", "MiniDiffSign" },
+    },
+  },
 })
 
 vim.keymap.set("n", "<leader>fe", function() Snacks.explorer() end, { desc = "ファイルエクスプローラー" })

@@ -24,6 +24,7 @@ opt.incsearch = true -- インクリメンタルサーチ
 -- 表示
 opt.termguicolors = true -- True Color を有効化
 opt.signcolumn = "yes" -- サイン列を常に表示
+opt.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]] -- snacks.nvim でステータス列を描画
 opt.cursorline = true -- カーソル行をハイライト
 opt.wrap = false -- 行を折り返さない
 opt.scrolloff = 8 -- スクロール時に上下に余白を確保
