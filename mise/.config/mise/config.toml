@@ -1,4 +1,5 @@
 [tools]
+"aqua:tree-sitter/tree-sitter" = "latest"
 bat = "latest"
 eza = "latest"
 fd = "latest"
