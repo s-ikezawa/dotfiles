@@ -2,6 +2,33 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 -- ============================================================================
+-- 最後の通常バッファを閉じたら全ウィンドウを終了
+-- ============================================================================
+
+augroup("quit_all_on_last_editor", { clear = true })
+
+autocmd("QuitPre", {
+  group = "quit_all_on_last_editor",
+  callback = function()
+    -- 閉じようとしているウィンドウを除き、通常バッファのウィンドウが残るか確認
+    local current_win = vim.api.nvim_get_current_win()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if win ~= current_win and vim.api.nvim_win_is_valid(win) then
+        local buf = vim.api.nvim_win_get_buf(win)
+        local bt = vim.bo[buf].buftype
+        -- buftype が空のウィンドウは通常のエディターバッファ
+        if bt == "" then
+          return
+        end
+      end
+    end
+    -- 通常バッファが残らないので全て閉じる
+    vim.cmd("qall")
+  end,
+  desc = "最後の通常バッファを閉じる時に補助ウィンドウも一緒に終了",
+})
+
+-- ============================================================================
 -- 外部変更の自動検知 (Claude Code などの外部ツールによる編集を反映)
 -- ============================================================================
 
