@@ -1,4 +1,5 @@
 [tools]
+fd = "latest"
 "github:tmux/tmux-builds" = "latest"
 ripgrep = "latest"
 yazi = "latest"
