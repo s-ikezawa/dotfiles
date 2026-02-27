@@ -138,7 +138,7 @@ map("n", "[q", "<Cmd>cprevious<CR>zz", { desc = "前の Quickfix 項目" })
 -- 診断 (VSCode: エラー・警告のナビゲーション)
 -- ============================================================================
 
-map("n", "]d", vim.diagnostic.goto_next, { desc = "次の診断へ" })
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "前の診断へ" })
+map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "次の診断へ" })
+map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "前の診断へ" })
 map("n", "<Leader>e", vim.diagnostic.open_float, { desc = "診断をフロート表示" })
 map("n", "<Leader>dl", vim.diagnostic.setloclist, { desc = "診断をロケーションリストに表示" })
