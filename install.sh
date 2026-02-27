@@ -50,6 +50,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
     brew bundle --file="$DOTFILES_DIR/Brewfile"
   fi
 
+  if ! command -v rustup &>/dev/null; then
+    export RUSTUP_HOME="$HOME/.local/share/rustup"
+    export CARGO_HOME="$HOME/.local/share/cargo"
+    export PATH="${CARGO_HOME}/bin:${PATH}"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  fi
+
   if ! command -v mise &>/dev/null; then
     echo "Installing mise..."
     curl -fsSL https://mise.run | bash
@@ -61,6 +68,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
   if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
     echo "Setting ZDOTDIR..."
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
+  else
+    echo "rust already installed."
   fi
 
   # ── Keyboard ──
@@ -140,6 +149,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
   defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 fi
 
+# 設定ファイルの配置
 packages=(
   shell
   zsh
@@ -161,5 +171,10 @@ for pkg in "${packages[@]}"; do
     echo " [$pkg] skipped (directory not found)"
   fi
 done
+
+# 後処理
+if [[ "$(uname)" == "Darwin" ]]; then
+  mise install
+fi
 
 echo "Done!"
