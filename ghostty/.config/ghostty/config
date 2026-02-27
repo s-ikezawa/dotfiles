@@ -1,0 +1,93 @@
+# theme
+## システムの外観(ライト/ダーク)に連動してテーマを自動切替
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+
+# font
+## フォントファミリー
+font-family = "UDEV Gothic NFLG"
+## フォントサイズ
+font-size = 16
+## セル幅(文字間隔)の調整
+adjust-cell-width = 1
+adjust-cell-height = 1
+## macOSのRetinaディスプレイでフォントを太めに描画して視認性を上げる
+font-thicken = true
+font-thicken-strength = 100
+
+# window
+## ウィンドウの余白（Claude Codeの出力が読みやすくなる）
+window-padding-x = 4
+window-padding-y = 2
+## 余白を上下左右均等に分配して中央寄せにする
+window-padding-balance = true
+## 余白の色をターミナル背景色で埋める（統一感が出る）
+window-padding-color = extend
+## 前回のウィンドウサイズ・位置を復元する
+window-save-state = always
+## 新しいタブ/ウィンドウで現在の作業ディレクトリを引き継ぐ
+window-inherit-working-directory = true
+## 新しいタブ/ウィンドウで現在のフォントサイズを引き継ぐ
+window-inherit-font-size = true
+## タイトルバーにタブを統合して縦方向のスペースを節約する
+macos-titlebar-style = tabs
+
+# scrollback
+## Claude Codeは大量のテキストを出力するためスクロールバッファを大きくする
+scrollback-limit = 100000
+
+# clipboard
+## テキスト選択時に自動でクリップボードにコピー（コード片のコピーが楽になる）
+copy-on-select = clipboard
+## クリップボード経由の貼り付け保護を無効化（コマンドの貼り付けがスムーズになる）
+clipboard-paste-protection = false
+## コピー時に末尾の空白を除去する（コードの貼り付けが綺麗になる）
+clipboard-trim-trailing-spaces = true
+
+# cursor
+## カーソルをバー表示にする（テキスト編集時に見やすい）
+cursor-style = bar
+## カーソルの点滅を無効化（視覚的なノイズを減らす）
+cursor-style-blink = false
+## タイピング中はマウスカーソルを非表示にする（出力の読み取りに集中できる）
+mouse-hide-while-typing = true
+
+# split
+## マウスホバーでスプリットのフォーカスを切り替える（分割作業が効率的になる）
+focus-follows-mouse = true
+## 非フォーカスのスプリットを薄く表示してフォーカス先を明確にする
+unfocused-split-opacity = 0.7
+
+# shell integration
+## シェル統合機能（プロンプト検知・カーソル変更・sudo連携など）を有効にする
+shell-integration = detect
+## シェル統合の個別機能を指定
+shell-integration-features = cursor,sudo,title
+
+# notification
+## OSC 9/777によるデスクトップ通知を有効化（長時間の処理完了を通知できる）
+desktop-notifications = true
+
+# quick terminal
+## グローバルホットキーでどこからでもターミナルをドロップダウン表示する
+## ※macOSではアクセシビリティの権限が必要
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+## ドロップダウンの表示位置
+quick-terminal-position = top
+## フォーカスが外れたら自動で隠す
+quick-terminal-autohide = true
+
+# misc
+## Claude Code実行中にうっかりタブ/ウィンドウを閉じるのを防ぐ
+confirm-close-surface = always
+
+# macos専用設定
+## optionをaltとして扱う
+macos-option-as-alt = true
+
+# keybind
+## デフォルトのesc:b / esc:f を解除してスプリット移動に割り当て
+keybind = alt+left=goto_split:left
+keybind = alt+right=goto_split:right
+keybind = alt+up=goto_split:top
+keybind = alt+down=goto_split:bottom
+
