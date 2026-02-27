@@ -7,5 +7,9 @@
       "Edit",
       "Write"
     ]
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
   }
 }
