@@ -147,6 +147,7 @@ packages=(
   mise
   claude
   ghostty
+  tmux
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
