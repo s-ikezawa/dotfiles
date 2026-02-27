@@ -51,10 +51,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 
   if ! command -v rustup &>/dev/null; then
+    echo "Installing Rust..."
     export RUSTUP_HOME="$HOME/.local/share/rustup"
     export CARGO_HOME="$HOME/.local/share/cargo"
     export PATH="${CARGO_HOME}/bin:${PATH}"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  else
+    echo "rust already installed."
   fi
 
   if ! command -v mise &>/dev/null; then
@@ -148,6 +151,15 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # iCloudではなくディスクにデフォルト保存
   defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 fi
+
+# Claude Codeのインストール
+if ! command -v claude &>/dev/null; then
+  echo "Installing Claude Code..."
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude Code already installed."
+fi
+
 
 # 設定ファイルの配置
 packages=(
