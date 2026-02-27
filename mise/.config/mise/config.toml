@@ -1,5 +1,6 @@
 [tools]
 bat = "latest"
+eza = "latest"
 fd = "latest"
 fzf = "latest"
 "github:tmux/tmux-builds" = "latest"
