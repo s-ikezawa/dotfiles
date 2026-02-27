@@ -172,6 +172,7 @@ packages=(
   tmux
   yazi
   bat
+  nvim
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
