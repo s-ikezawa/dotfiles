@@ -7,6 +7,15 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
 
+# Editor (nvim が無ければ vim にフォールバック)
+if command -v nvim >/dev/null 2>&1; then
+  export EDITOR="nvim"
+  export VISUAL="nvim"
+else
+  export EDITOR="vim"
+  export VISUAL="vim"
+fi
+
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
