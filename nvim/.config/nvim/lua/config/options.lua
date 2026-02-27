@@ -55,3 +55,9 @@ opt.list = true -- 不可視文字を表示
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } -- 不可視文字の表示形式
 opt.fillchars = { eob = " " } -- バッファ末尾の ~ を非表示
 opt.iskeyword:append("-") -- ハイフン付き単語を1単語として扱う
+
+-- 折り畳み
+opt.foldenable = false -- ファイルを開いた時に折り畳まない
+opt.foldmethod = "expr" -- 折り畳み方法に式を使用
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- treesitter による折り畳み
+opt.foldlevel = 99 -- 深い階層まで展開した状態にする
