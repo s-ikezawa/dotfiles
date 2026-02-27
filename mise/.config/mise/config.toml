@@ -1,2 +1,3 @@
 [tools]
 "github:tmux/tmux-builds" = "latest"
+yazi = "latest"
