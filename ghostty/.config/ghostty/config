@@ -11,7 +11,7 @@ font-size = 16
 adjust-cell-width = 1
 adjust-cell-height = 0
 ## フォントのベースラインを上方向に調整（ステータスバー等で上部の隙間を軽減）
-adjust-font-baseline = 2
+#adjust-font-baseline = 2
 ## macOSのRetinaディスプレイでフォントを太めに描画して視認性を上げる
 font-thicken = true
 font-thicken-strength = 100
