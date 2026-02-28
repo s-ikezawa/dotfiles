@@ -8,6 +8,16 @@ Snacks.setup({
   explorer = {
     enabled = true,
   },
+  lazygit = {
+    enabled = true,
+    theme = {
+      selectedLineBgColor = { bg = "CursorLine" },
+    },
+    win = {
+      width = 0,
+      height = 0,
+    },
+  },
   picker = {
     actions = {
       sidekick_send = function(...)
@@ -83,5 +93,7 @@ vim.keymap.set("n", "<Leader>fw", function() Snacks.picker.grep_word() end, { de
 -- Git
 vim.keymap.set("n", "<Leader>gb", function() Snacks.picker.git_branches() end, { desc = "ブランチ一覧" })
 vim.keymap.set("n", "<Leader>gf", function() Snacks.picker.git_log_file() end, { desc = "現在のファイルのコミットログ" })
+vim.keymap.set("n", "<Leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
 vim.keymap.set("n", "<Leader>gl", function() Snacks.picker.git_log() end, { desc = "コミットログ" })
+vim.keymap.set("n", "<Leader>gL", function() Snacks.lazygit.log() end, { desc = "Lazygit ログ (リポジトリ)" })
 vim.keymap.set("n", "<Leader>gs", function() Snacks.picker.git_status() end, { desc = "Git ステータス" })
