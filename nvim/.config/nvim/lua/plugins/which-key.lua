@@ -14,6 +14,8 @@ require("which-key").setup({
     { "<Leader>b", group = "バッファ" },
     { "<Leader>d", group = "削除 / 診断" },
     { "<Leader>f", group = "ファイル" },
+    { "<Leader>g", group = "Git" },
+    { "<Leader>l", group = "LSP" },
     { "<Leader>q", group = "Quickfix" },
     { "<Leader>t", group = "タブ" },
     { "<Leader>w", group = "ウィンドウ" },
