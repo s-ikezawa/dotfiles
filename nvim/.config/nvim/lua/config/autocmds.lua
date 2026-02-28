@@ -40,3 +40,16 @@ autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   command = "checktime",
   desc = "外部でファイルが変更された場合に自動で再読み込み",
 })
+
+-- 外部 git 操作後に Snacks Explorer の git ステータスキャッシュをリフレッシュ
+autocmd("FocusGained", {
+  group = "auto_reload",
+  callback = function()
+    local ok, Git = pcall(require, "snacks.explorer.git")
+    if ok then
+      Git.refresh(vim.fn.getcwd())
+      require("snacks.explorer.watch").refresh()
+    end
+  end,
+  desc = "外部 git 操作後に Explorer の git ステータスをリフレッシュ",
+})
