@@ -173,6 +173,7 @@ packages=(
   yazi
   bat
   nvim
+  lazygit
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
