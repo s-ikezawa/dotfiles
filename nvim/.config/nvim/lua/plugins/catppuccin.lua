@@ -65,6 +65,7 @@ require("catppuccin").setup({
     default_integrations = true,
     auto_integrations = false,
     integrations = {
+      noice = { enabled = true },
       snacks = {
         enabled = true,
         indent_scope_color = "lavender", -- catppuccin color (eg. `lavender`) Default: text
