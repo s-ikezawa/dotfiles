@@ -27,6 +27,9 @@ Snacks.setup({
     sources = {
       explorer = {
         hidden = true,
+        transform = function(item)
+          item.hidden = false
+        end,
       },
     },
   },
