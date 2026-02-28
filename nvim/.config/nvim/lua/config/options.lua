@@ -30,7 +30,7 @@ opt.wrap = false -- 行を折り返さない
 opt.scrolloff = 8 -- スクロール時に上下に余白を確保
 opt.sidescrolloff = 8 -- 横スクロール時に左右に余白を確保
 opt.showmode = false -- モード表示を無効化 (ステータスラインで表示するため)
-opt.laststatus = 3 -- グローバルステータスライン
+opt.laststatus = 0 -- ステータスラインを非表示 (incline.nvim でファイル名を表示)
 
 -- 分割
 opt.splitbelow = true -- 水平分割時に下に開く
