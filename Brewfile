@@ -1,12 +1,12 @@
-# miseにないものは仕方ないのでhomebrewで
+tap "felixkratz/formulae"
+tap "nikitabobko/tap"
 brew "git"
 brew "stow"
-
-# Applicationはhomebrewで管理する
+brew "felixkratz/formulae/borders"
 cask "1password"
 cask "1password-cli"
-cask "claude"
-cask "ghostty"
-cask "font-udev-gothic-nf"
 cask "nikitabobko/tap/aerospace"
+cask "claude"
+cask "font-udev-gothic-nf"
+cask "ghostty"
 cask "vlc"
