@@ -175,6 +175,7 @@ packages=(
   bat
   nvim
   lazygit
+  aerospace
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
