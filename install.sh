@@ -166,6 +166,7 @@ packages=(
   shell
   zsh
   bash
+  git
   mise
   claude
   ghostty

@@ -1,0 +1,118 @@
+# ── 必須設定 ──
+
+[user]
+	# 各自設定してください
+	# name = Your Name
+	# email = your@email.com
+
+[core]
+	# デフォルトエディタ
+	editor = nvim
+	# diff/log の表示に delta を使用
+	pager = delta
+	# 日本語ファイル名をエスケープせずそのまま表示
+	quotepath = true
+	# ファイル名の大文字小文字を区別
+	ignorecase = false
+	# 末尾スペース・タブ前スペースを警告
+	whitespace = trailing-space,space-before-tab
+
+[init]
+	# 新規リポジトリのデフォルトブランチ名
+	defaultBranch = main
+
+[commit]
+	# コミットメッセージ編集時に diff を表示
+	verbose = true
+
+[pull]
+	# pull 時に rebase を使用（不要なマージコミットを防ぐ）
+	rebase = true
+
+[push]
+	# push 時にリモートの同名ブランチを自動追跡
+	autoSetupRemote = true
+	# push 時にアノテーションタグも一緒に push
+	followTags = true
+	# --force-with-lease をさらに安全にする (リモート参照の検証を強化)
+	useForceIfIncludes = true
+
+[fetch]
+	# fetch 時にリモートで削除済みのブランチをローカルからも除去
+	prune = true
+	# fetch 時にリモートで削除済みのタグもローカルから除去
+	pruneTags = true
+
+# ── diff / merge ──
+
+[diff]
+	# より精度の高い diff アルゴリズム
+	algorithm = histogram
+	# ファイル移動・リネームを検出
+	renames = true
+	# サブモジュールの変更をログ形式で表示
+	submodule = log
+	# コード移動を色分け表示 (リファクタ時に追加/削除と区別)
+	colorMoved = plain
+	# diff の a/ b/ を意味のある接頭辞に (i=index, w=working dir, c=commit)
+	mnemonicPrefix = true
+
+[merge]
+	# 常にマージコミットを作成しブランチ履歴を残す
+	ff = false
+	# コンフリクト時に共通祖先 (base) も表示する 3-way 形式
+	conflictstyle = zdiff3
+
+[rebase]
+	# rebase 前に未コミットの変更を自動 stash → 完了後に復元
+	autoStash = true
+	# fixup!/squash! コミットを自動並べ替え
+	autoSquash = true
+	# rebase 時にスタックしたブランチの参照を自動更新
+	updateRefs = true
+
+[rerere]
+	# 過去のコンフリクト解決パターンを記録し自動再利用
+	enabled = true
+	# rerere 解決後に自動ステージ
+	autoupdate = true
+
+# ── delta (diff ビューア) ──
+
+[include]
+	# Catppuccin テーマ定義 (latte/frappe/macchiato/mocha)
+	path = delta/catppuccin.gitconfig
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+	# catppuccin.gitconfig で定義されたテーマを適用
+	features = catppuccin-mocha
+
+[interactive]
+	diffFilter = delta --color-only
+
+# ── エイリアス ──
+
+[alias]
+	# ブランチグラフをカラフルに表示
+	graph = log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+
+# ── おすすめ設定 ──
+
+[branch]
+	# ブランチ一覧を最終コミット日時の降順でソート
+	sort = -committerdate
+
+[tag]
+	# タグをバージョン番号順でソート
+	sort = version:refname
+
+[column]
+	# branch --list などの出力をカラム表示
+	ui = auto
+
+[help]
+	# コマンドのタイポ時に確認してから自動修正
+	autocorrect = prompt
