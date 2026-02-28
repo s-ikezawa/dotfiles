@@ -1,5 +1,6 @@
 require("plugins.snacks")
 require("plugins.catppuccin")
+require("plugins.which-key")
 require("plugins.nvim-treesitter")
 require("plugins.nvim-treesitter-textobjects")
 require("plugins.nvim-tmux-navigation")
