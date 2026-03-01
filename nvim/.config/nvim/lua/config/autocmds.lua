@@ -42,7 +42,9 @@ autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
 })
 
 -- 外部 git 操作後に Snacks Explorer の git ステータスキャッシュをリフレッシュ
-autocmd("FocusGained", {
+-- FocusGained: 外部ターミナルから戻った時
+-- TermLeave: Neovim 内のターミナルモードから離れた時 (Claude Code 等から戻る)
+autocmd({ "FocusGained", "TermLeave" }, {
   group = "auto_reload",
   callback = function()
     local ok, Git = pcall(require, "snacks.explorer.git")
