@@ -84,6 +84,14 @@ setup_claude() {
   else
     echo "Claude Code already installed."
   fi
+
+  # プラグインマーケットプレイスの登録とインストール
+  if command -v claude &>/dev/null; then
+    echo "Setting up Claude Code plugins..."
+    claude plugins marketplace add Piebald-AI/claude-code-lsps 2>/dev/null || true
+    claude plugins install vtsls@claude-code-lsps 2>/dev/null || true
+    claude plugins install gopls@claude-code-lsps 2>/dev/null || true
+  fi
 }
 
 setup_macos() {

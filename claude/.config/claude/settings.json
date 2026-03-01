@@ -13,6 +13,7 @@
     ]
   },
   "enabledPlugins": {
-    "lua-lsp@claude-plugins-official": true
+    "vtsls@claude-code-lsps": true,
+    "gopls@claude-code-lsps": true
   }
 }
