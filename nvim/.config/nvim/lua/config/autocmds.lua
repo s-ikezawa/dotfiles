@@ -41,17 +41,29 @@ autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   desc = "外部でファイルが変更された場合に自動で再読み込み",
 })
 
--- 外部 git 操作後に Snacks Explorer の git ステータスキャッシュをリフレッシュ
+-- 外部 git 操作後に Snacks Explorer の git ステータスを強制リフレッシュ
 -- FocusGained: 外部ターミナルから戻った時
 -- TermLeave: Neovim 内のターミナルモードから離れた時 (Claude Code 等から戻る)
 autocmd({ "FocusGained", "TermLeave" }, {
   group = "auto_reload",
   callback = function()
-    local ok, Git = pcall(require, "snacks.explorer.git")
-    if ok then
-      Git.refresh(vim.fn.getcwd())
-      require("snacks.explorer.watch").refresh()
-    end
+    vim.defer_fn(function()
+      -- git キャッシュを dirty にマーク
+      local ok_git, Git = pcall(require, "snacks.explorer.git")
+      if ok_git then
+        Git.refresh(vim.fn.getcwd())
+      end
+      -- explorer picker を直接 find() して強制再描画 (watch.refresh の is_dirty チェックをバイパス)
+      local ok_snacks, Snacks = pcall(require, "snacks")
+      if ok_snacks and Snacks.picker then
+        for _, picker in ipairs(Snacks.picker.get({ source = "explorer", tab = false })) do
+          if picker and not picker.closed then
+            picker.list:set_target()
+            picker:find()
+          end
+        end
+      end
+    end, 200)
   end,
-  desc = "外部 git 操作後に Explorer の git ステータスをリフレッシュ",
+  desc = "外部 git 操作後に Explorer の git ステータスを強制リフレッシュ",
 })
