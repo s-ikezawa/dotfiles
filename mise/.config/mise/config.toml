@@ -1,6 +1,7 @@
 [tools]
 "aqua:tree-sitter/tree-sitter" = "latest"
 bat = "latest"
+"cargo:sheldon" = "latest"
 delta = "latest" # git-delta
 eza = "latest"
 fd = "latest"

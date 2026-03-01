@@ -1,6 +1,8 @@
 tap "felixkratz/formulae"
 tap "nikitabobko/tap"
 brew "git"
+brew "openssl@3"
+brew "pkgconf"
 brew "stow"
 brew "felixkratz/formulae/borders"
 cask "1password"

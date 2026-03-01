@@ -22,6 +22,9 @@ setopt AUTO_CD            # ディレクトリ名だけで cd
 setopt AUTO_PUSHD         # cd 時に自動で pushd
 setopt PUSHD_IGNORE_DUPS  # pushd で重複を積まない
 
+# --- プラグイン (sheldon) ---
+eval "$(sheldon source)"
+
 # --- 補完 ---
 autoload -Uz compinit
 

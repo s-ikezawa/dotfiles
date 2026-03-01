@@ -176,6 +176,7 @@ packages=(
   nvim
   lazygit
   aerospace
+  sheldon
 )
 
 echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"

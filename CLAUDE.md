@@ -7,12 +7,16 @@ GNU stow を利用して設定ファイルを管理するリポジトリ。
 
 | フォルダ | ツール | 配置先 | 概要 |
 |---------|--------|--------|------|
+| `aerospace/` | AeroSpace | `~/.config/aerospace/` | タイル型ウィンドウマネージャ (vim風キーバインド、borders連携、VLCタイリング) |
 | `bash/` | Bash | `~/.bashrc` | シェル環境変数・エイリアス読み込み、mise/zoxide 有効化 |
 | `bat/` | bat | `~/.config/bat/` | Catppuccin Mocha テーマ設定、テーマファイル4種同梱 |
 | `claude/` | Claude Code | `~/.config/claude/` | settings.json (権限設定)、グローバル CLAUDE.md |
 | `ghostty/` | Ghostty | `~/.config/ghostty/` | ターミナルエミュレータ設定 (フォント・テーマ・キーバインド) |
+| `git/` | Git | `~/.config/git/` | グローバル設定 (delta pager、Catppuccin Mocha テーマ、エイリアス) |
+| `lazygit/` | lazygit | `~/.config/lazygit/` | Git TUI クライアント (delta pager、Catppuccin Mocha テーマ) |
 | `mise/` | mise | `~/.config/mise/` | ツールバージョン管理 (bat, eza, fd, fzf, tmux, neovim, ripgrep, yazi, zoxide) |
 | `nvim/` | Neovim | `~/.config/nvim/` | init.lua + lua/config/{options,keymaps,autocmds} + lua/plugins/init |
+| `sheldon/` | sheldon | `~/.config/sheldon/` | Zsh プラグインマネージャ (autosuggestions, syntax-highlighting, completions) |
 | `shell/` | 共通シェル設定 | `~/.config/shell/` | env.sh, env.darwin.sh (XDG/PATH), aliases.sh (bash/zsh 共通) |
 | `tmux/` | tmux | `~/.config/tmux/` | Prefix=Ctrl+s、vim風キーバインド、Catppuccin Mocha ステータスバー |
 | `yazi/` | yazi | `~/.config/yazi/` | ファイルマネージャ設定、Catppuccin Mocha テーマ、fr/git プラグイン |
