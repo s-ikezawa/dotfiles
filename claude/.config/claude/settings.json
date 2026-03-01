@@ -5,11 +5,17 @@
   },
   "permissions": {
     "allow": [
+      "Read",
+      "Glob",
+      "Grep",
       "WebSearch",
       "WebFetch",
-      "Bash(~rm *)",
+      "Bash",
       "Edit",
       "Write"
+    ],
+    "deny": [
+      "Bash(rm *)"
     ]
   },
   "enabledPlugins": {
