@@ -16,6 +16,9 @@ else
   export VISUAL="vim"
 fi
 
+# Postgresql
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
