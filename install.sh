@@ -26,17 +26,12 @@ install_clt() {
   rm -f "$clt_placeholder"
 }
 
-# XDGフォルダの作成(zshフォルダが自動で作成されないのであらかじめ作っておく)
-mkdir -p "${HOME}/.config/zsh" "${HOME}/.cache/zsh" "${HOME}/.local/share/zsh" "${HOME}/.local/state/zsh"
+setup_xdg() {
+  # XDGフォルダの作成(zshフォルダが自動で作成されないのであらかじめ作っておく)
+  mkdir -p "${HOME}/.config/zsh" "${HOME}/.cache/zsh" "${HOME}/.local/share/zsh" "${HOME}/.local/state/zsh"
+}
 
-# Macのみの処理
-if [[ "$(uname)" == "Darwin" ]]; then
-  if ! xcode-select -p &>/dev/null; then
-    install_clt
-  else
-    echo "Command Line Tools already installed."
-  fi
-
+setup_brew() {
   if ! command -v brew &>/dev/null; then
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -49,7 +44,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     echo "Installing packages from Brewfile..."
     brew bundle --file="$DOTFILES_DIR/Brewfile"
   fi
+}
 
+setup_rust() {
   if ! command -v rustup &>/dev/null; then
     echo "Installing Rust..."
     export RUSTUP_HOME="$HOME/.local/share/rustup"
@@ -57,9 +54,11 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export PATH="${CARGO_HOME}/bin:${PATH}"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   else
-    echo "rust already installed."
+    echo "Rust already installed."
   fi
+}
 
+setup_mise() {
   if ! command -v mise &>/dev/null; then
     echo "Installing mise..."
     curl -fsSL https://mise.run | bash
@@ -67,14 +66,27 @@ if [[ "$(uname)" == "Darwin" ]]; then
   else
     echo "mise already installed."
   fi
+}
 
+setup_zdotdir() {
   if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
     echo "Setting ZDOTDIR..."
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
   else
-    echo "rust already installed."
+    echo "ZDOTDIR already set."
   fi
+}
 
+setup_claude() {
+  if ! command -v claude &>/dev/null; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+  else
+    echo "Claude Code already installed."
+  fi
+}
+
+setup_macos() {
   # ── Keyboard ──
   echo "Setting keyboard preferences..."
   defaults write NSGlobalDomain KeyRepeat -int 1
@@ -150,50 +162,95 @@ if [[ "$(uname)" == "Darwin" ]]; then
   defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
   # iCloudではなくディスクにデフォルト保存
   defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-fi
+}
 
-# Claude Codeのインストール
-if ! command -v claude &>/dev/null; then
-  echo "Installing Claude Code..."
-  curl -fsSL https://claude.ai/install.sh | bash
-else
-  echo "Claude Code already installed."
-fi
+setup_stow() {
+  packages=(
+    shell
+    zsh
+    bash
+    git
+    mise
+    claude
+    ghostty
+    tmux
+    yazi
+    bat
+    nvim
+    lazygit
+    aerospace
+    sheldon
+  )
 
+  echo "Stowing dotfiles from $DOTFILES_DIR → $HOME"
+  for pkg in "${packages[@]}"; do
+    if [ -d "$DOTFILES_DIR/$pkg" ]; then
+      echo " [$pkg] stowing..."
+      # --restow: 既存のリンクを貼り直す
+      # --no-folding フォルダは実態として作成する
+      stow -v -d "$DOTFILES_DIR" -t "$HOME" --no-folding --restow "$pkg"
+    else
+      echo " [$pkg] skipped (directory not found)"
+    fi
+  done
+}
 
-# 設定ファイルの配置
-packages=(
-  shell
-  zsh
-  bash
-  git
-  mise
-  claude
-  ghostty
-  tmux
-  yazi
-  bat
-  nvim
-  lazygit
-  aerospace
-  sheldon
-)
+setup_all() {
+  setup_xdg
 
-echo "Stowing dotfiles form $DOTFILES_DIR → $HOME"
-for pkg in "${packages[@]}"; do
-  if [ -d "$DOTFILES_DIR/$pkg" ]; then
-    echo " [$pkg] stowing..."
-    # --restow: 既存のリンクを貼り直す
-    # --no-folding フォルダは実態として作成する
-    stow -v -d "$DOTFILES_DIR" -t "$HOME" --no-folding --restow "$pkg"
-  else
-    echo " [$pkg] skipped (directory not found)"
+  if [[ "$(uname)" == "Darwin" ]]; then
+    if ! xcode-select -p &>/dev/null; then
+      install_clt
+    else
+      echo "Command Line Tools already installed."
+    fi
+
+    setup_brew
+    setup_rust
+    setup_mise
+    setup_zdotdir
+    setup_macos
   fi
-done
 
-# 後処理
-if [[ "$(uname)" == "Darwin" ]]; then
-  mise install
-fi
+  setup_claude
+  setup_stow
+
+  # 後処理
+  if [[ "$(uname)" == "Darwin" ]]; then
+    mise install
+  fi
+}
+
+usage() {
+  echo "Usage: $0 [command]"
+  echo ""
+  echo "Commands:"
+  echo "  all      全ての処理を実行 (デフォルト)"
+  echo "  stow     設定ファイルのシンボリックリンクのみ作成"
+  echo "  brew     Homebrew のインストールと Brewfile の実行"
+  echo "  rust     Rust のインストール"
+  echo "  mise     mise のインストール"
+  echo "  macos    macOS の defaults 設定"
+  echo "  claude   Claude Code のインストール"
+  echo "  help     このヘルプを表示"
+}
+
+command="${1:-all}"
+
+case "$command" in
+  all)    setup_xdg; setup_all ;;
+  stow)   setup_xdg; setup_stow ;;
+  brew)   setup_brew ;;
+  rust)   setup_rust ;;
+  mise)   setup_mise ;;
+  macos)  setup_macos ;;
+  claude) setup_claude ;;
+  help)   usage ;;
+  *)
+    echo "Error: unknown command '$command'"
+    usage
+    exit 1
+    ;;
+esac
 
 echo "Done!"
