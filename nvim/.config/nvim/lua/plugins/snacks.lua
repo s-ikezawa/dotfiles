@@ -8,6 +8,9 @@ Snacks.setup({
   explorer = {
     enabled = true,
   },
+  notifier = {
+    enabled = true,
+  },
   lazygit = {
     enabled = true,
     theme = {
@@ -89,6 +92,10 @@ vim.keymap.set("n", "<Leader>fh", function() Snacks.picker.help() end, { desc = 
 vim.keymap.set("n", "<Leader>fk", function() Snacks.picker.keymaps() end, { desc = "キーマップ一覧" })
 vim.keymap.set("n", "<Leader>fr", function() Snacks.picker.recent() end, { desc = "最近開いたファイル" })
 vim.keymap.set("n", "<Leader>fw", function() Snacks.picker.grep_word() end, { desc = "カーソル下の単語を Grep" })
+
+-- 通知
+vim.keymap.set("n", "<Leader>nn", function() Snacks.picker.notifications() end, { desc = "通知履歴" })
+vim.keymap.set("n", "<Leader>nd", function() Snacks.notifier.hide() end, { desc = "通知を閉じる" })
 
 -- Git
 vim.keymap.set("n", "<Leader>gb", function() Snacks.picker.git_branches() end, { desc = "ブランチ一覧" })

@@ -16,6 +16,7 @@ require("which-key").setup({
     { "<Leader>f", group = "ファイル" },
     { "<Leader>g", group = "Git" },
     { "<Leader>l", group = "LSP" },
+    { "<Leader>n", group = "通知" },
     { "<Leader>q", group = "Quickfix" },
     { "<Leader>t", group = "タブ" },
     { "<Leader>w", group = "ウィンドウ" },
