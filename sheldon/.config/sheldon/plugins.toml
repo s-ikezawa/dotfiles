@@ -18,6 +18,15 @@ unset _zcompdump
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
 
+[plugins.fzf-tab-config]
+inline = """
+# ファイル補完時に bat でプレビュー、ディレクトリは eza でツリー表示
+zstyle ':fzf-tab:complete:*' fzf-preview \
+  'bat --style=numbers --color=always --line-range=:500 $realpath 2>/dev/null || eza --color=always $realpath 2>/dev/null'
+# 見た目を FZF_DEFAULT_OPTS に合わせる
+zstyle ':fzf-tab:*' fzf-flags --border=rounded --height=60% --layout=reverse
+"""
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 
