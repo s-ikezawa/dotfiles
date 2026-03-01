@@ -25,15 +25,11 @@ setopt PUSHD_IGNORE_DUPS  # pushd で重複を積まない
 # --- プラグイン (sheldon) ---
 eval "$(sheldon source)"
 
+# history-substring-search のキーバインド (C-p/C-n で部分一致検索)
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
 # --- 補完 ---
-autoload -Uz compinit
-
-# 補完キャッシュを XDG_CACHE_HOME に配置
-_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-[[ -d "${_zcompdump:h}" ]] || mkdir -p "${_zcompdump:h}"
-compinit -d "$_zcompdump"
-unset _zcompdump
-
 setopt COMPLETE_IN_WORD   # カーソル位置で補完
 setopt ALWAYS_TO_END      # 補完後カーソルを末尾へ移動
 

@@ -5,8 +5,24 @@ github = "zsh-users/zsh-completions"
 dir = "src"
 apply = ["fpath"]
 
+# fzf-tab は compinit の後に読み込む必要がある
+[plugins.compinit]
+inline = """
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+[[ -d "${_zcompdump:h}" ]] || mkdir -p "${_zcompdump:h}"
+compinit -d "$_zcompdump"
+unset _zcompdump
+"""
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
