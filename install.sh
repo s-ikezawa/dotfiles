@@ -189,6 +189,8 @@ setup_stow() {
     aerospace
     sheldon
     colima
+    aws
+    op
   )
 
   echo "Stowing dotfiles from $DOTFILES_DIR → $HOME"

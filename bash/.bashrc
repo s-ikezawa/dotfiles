@@ -5,4 +5,5 @@ SHELL_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 
 eval "$(mise activate bash)"
 eval "$(zoxide init bash)"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/op/plugins.sh"
 

@@ -51,3 +51,4 @@ setopt NO_BEEP               # ビープ音を無効化
 # --- 外部ツール ---
 eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/op/plugins.sh"

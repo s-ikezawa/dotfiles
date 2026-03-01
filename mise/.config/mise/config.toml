@@ -26,3 +26,7 @@ colima = "latest"
 docker-cli = "latest"
 docker-compose = "latest"
 lazydocker = "latest"
+python = "latest"
+uv = "latest"
+"pipx:aws-mfa-v2" = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
