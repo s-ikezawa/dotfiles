@@ -1,0 +1,22 @@
+# ── Claude Code ──
+**/.claude/settings.local.json
+
+# ── macOS ──
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ── エディタ / IDE ──
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# ── 環境 / シークレット ──
+.env
+.env.local
+.env.*.local
