@@ -30,7 +30,7 @@ Snacks.setup({
     win = {
       input = {
         keys = {
-          ["<a-a>"] = {
+          ["<c-y>"] = {
             "sidekick_send",
             mode = { "n", "i" },
           },
