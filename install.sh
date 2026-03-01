@@ -188,6 +188,7 @@ setup_stow() {
     lazygit
     aerospace
     sheldon
+    colima
   )
 
   echo "Stowing dotfiles from $DOTFILES_DIR → $HOME"
