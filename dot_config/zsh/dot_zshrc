@@ -40,3 +40,5 @@ compinit -d "$_zcompdump"
 source /opt/homebrew/share/zsh-abbr@6/zsh-abbr.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+eval "$(~/.local/bin/mise activate zsh)"
