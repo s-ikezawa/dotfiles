@@ -16,4 +16,11 @@ if ! command -v brew &>/dev/null; then
 else
   echo "Homebrew already installed."
 fi
+
+if ! command -v claude &>/dev/null; then
+  echo "Installing Claude Code..."
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude Code already installed."
+fi
 {{- end }}
