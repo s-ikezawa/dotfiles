@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{- if (eq .chezmoi.os "darwin") }}
+if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
+  echo "Setting ZDOTDIR..."
+  echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
+else
+  echo "ZDOTDIR already set."
+fi
+{{- end }}
