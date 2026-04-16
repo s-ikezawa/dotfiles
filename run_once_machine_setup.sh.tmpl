@@ -23,4 +23,18 @@ if ! command -v claude &>/dev/null; then
 else
   echo "Claude Code already installed."
 fi
+
+echo "Setting keyboard preferences..."
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+# 自動修正・自動大文字・スマート引用符/ダッシュを無効化
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+# ライブ変換を無効化
+defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
+# Tabで全てのコントロール間を移動
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 {{- end }}
