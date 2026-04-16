@@ -9,4 +9,11 @@ if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
 else
   echo "ZDOTDIR already set."
 fi
+
+if ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew already installed."
+fi
 {{- end }}
