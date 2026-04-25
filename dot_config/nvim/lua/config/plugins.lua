@@ -117,6 +117,19 @@ vim.pack.add({
     src = "https://github.com/folke/lazydev.nvim",
     version = vim.version.range("1.x"),
   },
+
+  -- ---------------------------------------------------------------------------
+  -- folke/which-key.nvim: prefix キー入力後に「次に押せるキー + 説明」を
+  -- ポップアップ表示するキーマップガイド
+  --   - vim.keymap.set の `desc` をそのまま辞書として活用できる
+  --   - グループ名 (例: <leader>f = find) を登録して階層を可視化
+  --   - snacks.picker の keymap 一覧にアイコンを供給する連携あり
+  --   - snacks.toggle の ON/OFF 状態をポップアップに反映する連携あり
+  -- ---------------------------------------------------------------------------
+  {
+    src = "https://github.com/folke/which-key.nvim",
+    version = vim.version.range("3.x"),
+  },
 })
 
 -- ----- 各プラグインの設定 ---------------------------------------------------
@@ -130,3 +143,5 @@ require("plugins.treesitter")
 require("plugins.sidekick")
 -- lazydev は config.lsp の vim.lsp.enable('lua_ls') より前に setup する必要がある
 require("plugins.lazydev")
+-- which-key は config.keymaps より前に setup しておくとグループ登録のラグが無い
+require("plugins.which-key")
