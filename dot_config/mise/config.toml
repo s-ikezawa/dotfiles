@@ -1,2 +1,6 @@
 [tools]
+# JavaScript / TypeScript
 node = "latest"
+
+# CLI Tools
+jq = "latest"
