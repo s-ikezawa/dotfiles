@@ -130,6 +130,18 @@ vim.pack.add({
     src = "https://github.com/folke/which-key.nvim",
     version = vim.version.range("3.x"),
   },
+
+  -- ---------------------------------------------------------------------------
+  -- MeanderingProgrammer/render-markdown.nvim: Markdown 装飾 (見出しアイコン /
+  -- テーブル罫線 / checkbox / コードブロック装飾)
+  --   - lukas-reineke/headlines.nvim の事実上の後継 (作者が推奨)
+  --   - treesitter ベース、外部依存なし
+  --   - 画像 / Mermaid のレンダリング自体は snacks.image 側で行う (役割分担)
+  -- ---------------------------------------------------------------------------
+  {
+    src = "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+    version = vim.version.range("8.x"),
+  },
 })
 
 -- ----- 各プラグインの設定 ---------------------------------------------------
@@ -145,3 +157,5 @@ require("plugins.sidekick")
 require("plugins.lazydev")
 -- which-key は config.keymaps より前に setup しておくとグループ登録のラグが無い
 require("plugins.which-key")
+-- markdown 装飾。treesitter のあとに setup される必要がある (依存)
+require("plugins.render-markdown")

@@ -8,6 +8,8 @@
 --   - bigfile   : 大きなファイルを開いた時の自動最適化 (treesitter/syntax 無効化等)
 --   - quickfile : Neovim 起動を高速化 (重いプラグインを VeryLazy にする)
 --   - picker    : Telescope 代替のファジーピッカー (files/grep/lsp/buffers ...)
+--   - image     : Markdown / Norg 等の画像 / Mermaid / LaTeX をバッファ内に
+--                 Kitty graphics protocol で表示 (Ghostty/Kitty/WezTerm が必要)
 --
 -- 他のモジュール (必要になったら enabled=true にする):
 --   - notifier  : vim.notify をリッチな UI に置き換え
@@ -33,4 +35,11 @@ require("snacks").setup({
   -- ファジーピッカー (Telescope 相当)
   -- Snacks.picker.files() / grep() / buffers() / lsp_*() などで呼び出す
   picker = { enabled = true },
+
+  -- バッファ内画像レンダリング
+  -- 外部依存: ImageMagick (`magick`) と mermaid-cli (`mmdc`)
+  -- ターミナル要件: Kitty graphics protocol 対応 (Ghostty/Kitty/WezTerm)
+  -- デフォルトで markdown 等のドキュメント内の画像 / mermaid / latex を
+  -- インライン表示してくれる (doc.enabled / doc.inline は true がデフォルト)
+  image = { enabled = true },
 })

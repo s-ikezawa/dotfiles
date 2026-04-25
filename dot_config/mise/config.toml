@@ -5,12 +5,11 @@ lua-language-server = "latest"
 # JavaScript / TypeScript
 node = "latest"
 
-
 # CLI Tools
 fd = "latest"
 neovim = "stable"
 tree-sitter = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
 tmux = "latest"
 jq = "latest"
 ripgrep = "latest"
-
