@@ -1,2 +1,7 @@
 font-family = "Guguru Sans Code Console NF"
 font-size = 16
+
+theme = Catppuccin Mocha
+
+# Shift+Enter で改行 (Claude Code などの TUI 用)
+keybind = shift+enter=text:\n
