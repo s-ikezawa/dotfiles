@@ -9,4 +9,5 @@ vim.g.maplocalleader = "\\"
 require("config.options")
 require("config.providers")
 require("config.plugins")
+require("config.lsp")
 require("config.keymaps")

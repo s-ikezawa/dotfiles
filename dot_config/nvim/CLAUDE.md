@@ -12,11 +12,14 @@
 ~/.config/nvim/
 ├── init.lua              # leader 設定 + 各 config モジュールの require のみ
 ├── nvim-pack-lock.json   # vim.pack のロックファイル (git 管理対象)
+├── lsp/                   # Neovim 0.12 ネイティブ runtime LSP 設定
+│   └── lua_ls.lua         # 各サーバ設定は `lsp/<name>.lua` に return table で書く
 └── lua/
     ├── config/
     │   ├── options.lua    # vim.o / vim.opt のグローバル設定 (キーマップは書かない)
     │   ├── providers.lua  # vim.g.loaded_*_provider の無効化
     │   ├── plugins.lua    # vim.pack.add 集約 + PackChanged フック + plugins.* require
+    │   ├── lsp.lua        # vim.lsp.enable + 診断設定 + LspAttach バッファキー
     │   └── keymaps.lua    # 全キーマップ集約 (汎用 + プラグイン用)
     └── plugins/
         ├── colorscheme.lua  # catppuccin (mocha)
@@ -39,7 +42,8 @@
 2. config.options
 3. config.providers
 4. config.plugins        ← フック定義 → vim.pack.add → plugins.* setup
-5. config.keymaps        ← プラグインがロード済みであることが前提
+5. config.lsp            ← vim.lsp.enable は plugins より後・keymaps より前
+6. config.keymaps        ← プラグインがロード済みであることが前提
 ```
 
 `config.plugins` 内での setup 呼び出し順:
@@ -58,7 +62,7 @@ LazyVim 流のカテゴリ分けを採用:
 | `<leader>f*` | find (files / buffers / recent / help / keymaps) |
 | `<leader>s*` | search (grep 系) |
 | `<leader>g*` | git (将来) |
-| `<leader>l*` | LSP (将来) |
+| `<leader>l*` | LSP (definition / format / 診断 / workspace symbol 等) |
 | `<leader>a*` | AI (sidekick.nvim) |
 | `<leader>b*` | buffer |
 | `<leader>w` / `<leader>q` / `<leader>Q` | save / close / quit-all |
@@ -301,3 +305,111 @@ vim.pack.add({ "https://github.com/some/plugin" }, { load = function() end })
 - [Refreshing your Neovim config for 0.12.0 (justinhj)](http://justinhj.github.io/2026/04/06/refreshing-your-neovim-config-for-0-12-0.html)
 - [What's New in Neovim 0.12 (Adib Hanna)](https://dotfiles.substack.com/p/whats-new-in-neovim-012)
 - [Neovim 0.12 release news (AlternativeTo)](https://alternativeto.net/news/2026/3/neovim-0-12-has-been-released-with-a-built-in-plugin-manager-major-lsp-and-ui-upgrades/)
+
+---
+
+# LSP ネイティブ設定 (Neovim 0.11+ / 0.12) 調査ノート
+
+## 前提と全体像
+
+Neovim 0.11 で `vim.lsp.config()` / `vim.lsp.enable()` API と `lsp/<name>.lua` の
+runtime 自動読み込みが追加され、**`nvim-lspconfig` プラグイン無しでネイティブに
+LSP を構成できる** ようになった。0.12 でも同じ API が継続。
+
+本リポジトリではプラグイン非依存のネイティブ方式を採用している。
+
+## 設計方針
+
+| 役割 | 場所 |
+| --- | --- |
+| サーバ別の設定 (cmd/filetypes/root_markers/settings) | `lsp/<server>.lua` (return table) |
+| 有効化・診断設定・LspAttach キーマップ | `lua/config/lsp.lua` |
+| バイナリのインストール | **mise** (brew ではない) |
+
+`lsp/<name>.lua` は `runtimepath` 上のディレクトリから自動で読まれるので、
+`vim.lsp.enable('<name>')` を呼ぶだけで設定が適用される。`vim.lsp.config()` を
+明示的に呼ぶ必要は無い (ファイル方式で十分)。
+
+## サーバ追加手順
+
+1. `lsp/<server>.lua` を作成し設定 table を `return` する
+   - `cmd` / `filetypes` / `root_markers` / `settings` を指定
+   - `root_markers` の **入れ子テーブルは同じ優先度** を意味する
+     (例: `{ ".luarc.json", ".luarc.jsonc" }` はどちらか見つかれば OK)
+2. `lua/config/lsp.lua` の `vim.lsp.enable({...})` リストに名前を追加
+3. バイナリは mise でインストール: `mise use -g <tool>@latest`
+4. ヘッドレスで attach 確認:
+   ```bash
+   nvim --headless <file> \
+     -c 'lua vim.defer_fn(function()
+       print(#vim.lsp.get_clients({ bufnr = 0 }))
+       vim.cmd("qa")
+     end, 3000)' 2>&1
+   ```
+5. 実 nvim 内では `:checkhealth vim.lsp` / `:lsp` (= `:LspInfo` 相当) で確認
+
+## Neovim 0.11+ のデフォルトキーマップ (LSP attach 時)
+
+**重要**: 以下は LSP attach で自動的に有効化されるので **再定義しない**。
+
+| キー | 動作 |
+| --- | --- |
+| `K` | `vim.lsp.buf.hover()` (`keywordprg` が default の場合のみ) |
+| `gra` | `vim.lsp.buf.code_action()` (Normal + Visual) |
+| `gri` | `vim.lsp.buf.implementation()` |
+| `grn` | `vim.lsp.buf.rename()` |
+| `grr` | `vim.lsp.buf.references()` |
+| `grt` | `vim.lsp.buf.type_definition()` |
+| `grx` | `vim.lsp.codelens.run()` |
+| `gO` | `vim.lsp.buf.document_symbol()` (バッファ内のみ) |
+| `<C-s>` (insert) | `vim.lsp.buf.signature_help()` |
+| `[d` / `]d` | 診断間移動 (`vim.diagnostic`) |
+| `gx` | `textDocument/documentLink` も処理 |
+| `gq` | `vim.lsp.formatexpr()` でフォーマット |
+| `CTRL-]` 等 | `vim.lsp.tagfunc()` で go-to-definition |
+
+omnifunc も `vim.lsp.omnifunc()` に設定されるので `<C-x><C-o>` で補完可能。
+
+`<leader>l*` 系には **重複しない補助キー** だけ追加する規約 (例: `<leader>lf`
+フォーマット、`<leader>le` 診断 float 表示、`<leader>lS` ワークスペースシンボル)。
+
+## デフォルトで有効な機能 / 自分で有効化する機能
+
+LSP attach で自動 ON:
+- 診断 (`vim.diagnostic`)
+- `workspace/didChangeWatchedFiles` (Linux 以外)
+- ドキュメントカラー
+
+明示的な ON が必要 (`:help` 参照):
+- `lsp-codelens` / `lsp-linked_editing_range` / `lsp-inlay_hint` /
+  `lsp-inline_completion`
+
+## 既知の落とし穴
+
+- **`~/.config/nvim` は git 管理外なので `.git` だけでは root_dir を検出できない**。
+  `lsp/lua_ls.lua` の `root_markers` には `init.lua` と `nvim-pack-lock.json` を
+  含めて nvim 設定ディレクトリ自体を root として認識させている
+- `vim.lsp.config()` は **マージ先**。`vim.lsp.config('*', {...})` で全サーバ共通の
+  capabilities を上書きできる
+- `lsp/` ディレクトリは **複数の runtimepath** から読まれる。プラグイン側が同名の
+  `lsp/<server>.lua` を提供している場合、`vim.lsp.config()` でローカル上書きが必要
+- `lsp/<server>.lua` のファイル名 (`.lua` 抜き) と `vim.lsp.enable()` に渡す名前は
+  一致させる必要がある (例: `lsp/lua_ls.lua` ↔ `vim.lsp.enable('lua_ls')`)
+
+## lua_ls 固有の事情
+
+- `settings.Lua.workspace.library` に `vim.env.VIMRUNTIME` と `${3rd}/luv/library`
+  を入れることで `vim` グローバルと `vim.uv` の型補完が効く
+- `diagnostics.globals = { "vim" }` を入れないと `vim` 未定義警告が出る
+- `checkThirdParty = false` で「サードパーティライブラリ検出」のダイアログを抑止
+- バイナリは mise: `mise use -g lua-language-server@latest`
+  実体は `~/.local/share/mise/installs/lua-language-server/<ver>/bin/lua-language-server`、
+  shim 経由で nvim の `vim.fn.exepath()` から見える
+
+## 参考資料
+
+- [`:help lsp-quickstart`](https://neovim.io/doc/user/lsp.html#lsp-quickstart) (本体ヘルプ)
+- [`:help lsp-defaults`](https://neovim.io/doc/user/lsp.html#lsp-defaults) (デフォルトキーマップ一覧)
+- [Native LSP in Neovim 0.12 (.dotfiles)](https://dotfiles.substack.com/p/native-lsp-in-neovim-012)
+- [neovim/nvim-lspconfig (各サーバ設定の参照実装)](https://github.com/neovim/nvim-lspconfig/tree/master/lsp)
+- [How to use new vim.lsp.config approach to load LSP on demand? (#33978)](https://github.com/neovim/neovim/discussions/33978)

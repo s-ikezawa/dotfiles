@@ -104,6 +104,19 @@ vim.pack.add({
     src = "https://github.com/folke/snacks.nvim",
     version = vim.version.range("2.x"),
   },
+
+  -- ---------------------------------------------------------------------------
+  -- folke/lazydev.nvim: Neovim 設定編集時に lua_ls の workspace.library を
+  -- 必要なときだけ動的拡張する (neodev.nvim の後継)
+  --   - 編集中バッファの require("X") を見て X のソースパスを library に追加
+  --   - library.words パターンで「特定の単語が出現したら追加」も可能
+  --     (MiniIcons / Snacks のようなプラグイン由来のグローバルを認識させる用途)
+  --   - LspAttach フックで動くので vim.lsp.enable('lua_ls') より前に setup する
+  -- ---------------------------------------------------------------------------
+  {
+    src = "https://github.com/folke/lazydev.nvim",
+    version = vim.version.range("1.x"),
+  },
 })
 
 -- ----- 各プラグインの設定 ---------------------------------------------------
@@ -115,3 +128,5 @@ require("plugins.icons")
 require("plugins.snacks")
 require("plugins.treesitter")
 require("plugins.sidekick")
+-- lazydev は config.lsp の vim.lsp.enable('lua_ls') より前に setup する必要がある
+require("plugins.lazydev")

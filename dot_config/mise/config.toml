@@ -1,6 +1,10 @@
 [tools]
+# Lua
+lua-language-server = "latest"
+
 # JavaScript / TypeScript
 node = "latest"
+
 
 # CLI Tools
 fd = "latest"

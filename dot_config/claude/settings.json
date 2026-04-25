@@ -1,4 +1,7 @@
 {
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.config/claude/statusline.sh",
@@ -6,7 +9,7 @@
   },
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
-  "permissions": {
-    "defaultMode": "auto"
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true
   }
 }
