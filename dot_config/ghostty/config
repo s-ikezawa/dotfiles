@@ -5,15 +5,3 @@ theme = Catppuccin Mocha
 
 # Shift+Enter で改行 (Claude Code などの TUI 用)
 keybind = shift+enter=text:\n
-
-# Option キーを Alt として扱う (単語単位のカーソル移動などのため)
-macos-option-as-alt = true
-
-# スクロールバッファを 100MB に拡大 (単位はバイト)
-scrollback-limit = 100000000
-
-# ウィンドウを閉じる前に確認
-confirm-close-surface = true
-
-# Cmd+` でクイックターミナルをトグル
-keybind = global:cmd+grave_accent=toggle_quick_terminal
