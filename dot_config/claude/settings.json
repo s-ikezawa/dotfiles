@@ -1,8 +1,12 @@
 {
-  "theme": "dark",
   "statusLine": {
     "type": "command",
     "command": "~/.config/claude/statusline.sh",
     "padding": 0
+  },
+  "theme": "dark",
+  "skipAutoPermissionPrompt": true,
+  "permissions": {
+    "defaultMode": "auto"
   }
 }
