@@ -3,5 +3,8 @@
 node = "latest"
 
 # CLI Tools
+neovim = "stable"
 tmux = "latest"
 jq = "latest"
+ripgrep = "latest"
+
