@@ -3,4 +3,5 @@
 node = "latest"
 
 # CLI Tools
+tmux = "latest"
 jq = "latest"
