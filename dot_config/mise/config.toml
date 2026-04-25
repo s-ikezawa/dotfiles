@@ -3,7 +3,9 @@
 node = "latest"
 
 # CLI Tools
+fd = "latest"
 neovim = "stable"
+tree-sitter = "latest"
 tmux = "latest"
 jq = "latest"
 ripgrep = "latest"
