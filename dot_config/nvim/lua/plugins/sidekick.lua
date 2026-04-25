@@ -30,9 +30,11 @@ require("sidekick").setup({
   -- CLI 統合の設定
   cli = {
     -- ターミナルマルチプレクサ統合 (tmux/zellij)
-    -- ペインを別タブにせず Neovim 内ターミナルで完結させたいので無効
+    -- tmux セッションに CLI を逃がすことで Neovim を終了しても会話状態を保持する。
+    -- create = "terminal" のままなので表示自体は引き続き Neovim 内ターミナル。
     mux = {
-      enabled = false,
+      enabled = true,
+      backend = "tmux",
     },
     -- ウィンドウ表示位置・サイズなどはデフォルト (右側のフロート/分割) を使う
   },
