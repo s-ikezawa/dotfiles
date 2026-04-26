@@ -23,3 +23,7 @@ starship = "latest"
 atuin = "latest"
 zoxide = "latest"
 fzf = "latest"
+
+# Project switcher
+"github:joshmedeski/sesh" = "latest"
+television = "latest"

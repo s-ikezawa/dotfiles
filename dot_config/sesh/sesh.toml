@@ -1,0 +1,16 @@
+# sesh はデフォルトで zoxide のフリークエンシー履歴を session source として使う。
+# ~/Projects 配下のリポジトリは一度 cd すれば自動的に候補入りする。
+
+# 頻繁に開くディレクトリは固定セッションとして登録しておくと、
+# zoxide 学習を待たずに即時アクセス可能。
+[[session]]
+name = "dotfiles"
+path = "~/.local/share/chezmoi"
+
+[[session]]
+name = "nvim config"
+path = "~/.config/nvim"
+
+[[session]]
+name = "claude config"
+path = "~/.config/claude"
