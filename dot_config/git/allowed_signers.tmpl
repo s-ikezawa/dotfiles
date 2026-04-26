@@ -1,0 +1,12 @@
+{{- /*
+git verify-commit / log --show-signature の検証用に、
+信頼する email → 公開鍵 のマッピングを記述する。
+op 未認証なら空ファイル。
+*/ -}}
+{{- if lookPath "op" -}}
+{{-   $email := output "sh" "-c" "op read 'op://SoloProprietorship/Email/email' 2>/dev/null || true" | trim -}}
+{{-   $key   := output "sh" "-c" "op read 'op://SoloProprietorship/GitHub/public key' 2>/dev/null || true" | trim -}}
+{{-   if and $email $key }}
+{{ $email }} {{ $key }}
+{{-   end }}
+{{- end }}

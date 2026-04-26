@@ -32,9 +32,6 @@
 [branch]
 	sort = -committerdate
 
-[tag]
-	sort = version:refname
-
 [column]
 	ui = auto
 
@@ -50,9 +47,6 @@
 	enabled = true
 	autoupdate = true
 
-[commit]
-	verbose = true
-
 [rebase]
 	autoStash = true
 	autoSquash = true
@@ -63,6 +57,20 @@
 [color]
 	ui = auto
 
+# コミット署名 (1Password SSH Agent 経由)
+# signingkey と gpgsign の有効化は owner ごとの includeIf ファイル側で行う
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	allowedSignersFile = ~/.config/git/allowed_signers
+[commit]
+	verbose = true
+	gpgsign = false
+[tag]
+	sort = version:refname
+	gpgsign = false
+
 # GitHub の HTTPS URL を SSH 形式に書き換え
 # ghq get や HTTPS URL コピペからのクローンでも SSH 経由になる
 [url "git@github.com:"]
@@ -71,10 +79,8 @@
 [ghq]
 	root = ~/Projects
 
-# 個人情報(メールアドレス)を main config に載せないため、
-# owner ごとに includeIf で別ファイルへ分離している。
-# 各ファイルは chezmoi テンプレート(*.tmpl)としてローカルの
-# ~/.config/chezmoi/chezmoi.toml(リポ対象外)から値を埋める。
+# 個人情報(メールアドレス・署名鍵)は main config に載せず owner ごとの
+# includeIf 側に分離。値は 1Password から chezmoi の onepasswordRead で取得する。
 [includeIf "gitdir:~/Projects/github.com/s-ikezawa/"]
 	path = config.d/personal
 [includeIf "gitdir:~/Projects/github.com/ebisol/"]

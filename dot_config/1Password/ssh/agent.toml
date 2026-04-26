@@ -1,0 +1,9 @@
+# 1Password SSH Agent: 鍵を提供する vault のリスト
+# agent.toml が存在すると 1P のデフォルト挙動 (Personal/Private のみ) が
+# 上書きされるため、必要な vault を明示する。
+
+[[ssh-keys]]
+vault = "SoloProprietorship"
+
+[[ssh-keys]]
+vault = "Personal"

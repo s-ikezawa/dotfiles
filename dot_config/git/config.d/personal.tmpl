@@ -1,12 +1,21 @@
 {{- /*
 op CLI 未インストール / 未認証の場合は空ファイルにする(エラーで apply を止めない)。
-1Password Desktop App にサインインしてから再度 `chezmoi apply` を実行すると email が反映される。
+1Password Desktop App にサインインしてから再度 `chezmoi apply` を実行すると反映される。
 */ -}}
 {{- $email := "" -}}
+{{- $signingKey := "" -}}
 {{- if lookPath "op" -}}
 {{-   $email = output "sh" "-c" "op read 'op://SoloProprietorship/Email/email' 2>/dev/null || true" | trim -}}
+{{-   $signingKey = output "sh" "-c" "op read 'op://SoloProprietorship/GitHub/public key' 2>/dev/null || true" | trim -}}
 {{- end -}}
 {{- if $email -}}
 [user]
 	email = {{ $email }}
+{{- if $signingKey }}
+	signingkey = {{ $signingKey }}
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+{{- end }}
 {{ end -}}

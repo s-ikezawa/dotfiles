@@ -1,0 +1,13 @@
+{{- /*
+1Password SSH Agent を全ホストの IdentityAgent として指定。
+- 鍵は 1P 内に保管され、ローカルに置かない
+- ssh / git push / scp すべて Touch ID 等で承認
+*/ -}}
+Host *
+	AddKeysToAgent yes
+	UseKeychain no
+{{ if eq .chezmoi.os "darwin" -}}
+	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{- else -}}
+	IdentityAgent ~/.1password/agent.sock
+{{- end }}
