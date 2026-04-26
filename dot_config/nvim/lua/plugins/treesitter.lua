@@ -30,12 +30,19 @@
 local parsers = {
   -- 設定/ドキュメント
   "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline",
+  -- 文書フォーマット (snacks.image が画像 / 数式レンダリング時に利用)
+  -- - latex : Markdown 内の LaTeX 数式ブロック
+  -- - typst : Typst 形式
+  -- norg は nvim-treesitter (archived) のレジストリに無い (nvim-neorg 側で管理)
+  -- ため snacks.image の警告は出るが現時点では追加しない
+  "latex", "typst",
   -- データフォーマット
   "json", "yaml", "toml",
   -- シェル
   "bash",
   -- Web フロントエンド
-  "html", "css", "javascript", "typescript", "tsx",
+  "html", "css", "scss", "javascript", "typescript", "tsx",
+  "svelte", "vue",
   -- バックエンド言語
   "go", "gomod", "gosum", "gowork",
   "rust",
