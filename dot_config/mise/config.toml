@@ -17,6 +17,8 @@ jujutsu = "latest"
 jq = "latest"
 ripgrep = "latest"
 ghq = "latest"
+delta = "latest"
+1password-cli = "latest"
 
 # Shell
 sheldon = "latest"

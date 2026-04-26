@@ -1,0 +1,12 @@
+{{- /*
+op CLI 未インストール / 未認証の場合は空ファイルにする(エラーで apply を止めない)。
+1Password Desktop App にサインインしてから再度 `chezmoi apply` を実行すると email が反映される。
+*/ -}}
+{{- $email := "" -}}
+{{- if lookPath "op" -}}
+{{-   $email = output "sh" "-c" "op read 'op://SoloProprietorship/Email/email' 2>/dev/null || true" | trim -}}
+{{- end -}}
+{{- if $email -}}
+[user]
+	email = {{ $email }}
+{{ end -}}

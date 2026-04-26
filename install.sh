@@ -34,5 +34,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 fi
 
+# chezmoi 経由で動く template (1Password 連携など) が mise 配下のバイナリを参照できるよう、
+# shims とローカル bin を先に PATH へ通しておく(まだディレクトリは無くても問題ない)。
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply s-ikezawa
 

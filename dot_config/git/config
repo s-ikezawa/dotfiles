@@ -1,2 +1,92 @@
+[user]
+	name = Shinichi Ikezawa
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+	syntax-theme = Catppuccin-mocha
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+	autoSetupRemote = true
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[column]
+	ui = auto
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+	colorMovedWS = allow-indentation-change
+
+[merge]
+	conflictStyle = zdiff3
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[commit]
+	verbose = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+
+[help]
+	autocorrect = prompt
+
+[color]
+	ui = auto
+
+# GitHub の HTTPS URL を SSH 形式に書き換え
+# ghq get や HTTPS URL コピペからのクローンでも SSH 経由になる
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
 [ghq]
 	root = ~/Projects
+
+# 個人情報(メールアドレス)を main config に載せないため、
+# owner ごとに includeIf で別ファイルへ分離している。
+# 各ファイルは chezmoi テンプレート(*.tmpl)としてローカルの
+# ~/.config/chezmoi/chezmoi.toml(リポ対象外)から値を埋める。
+[includeIf "gitdir:~/Projects/github.com/s-ikezawa/"]
+	path = config.d/personal
+[includeIf "gitdir:~/Projects/github.com/ebisol/"]
+	path = config.d/ebisol
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+	lg = log --oneline --graph --decorate --all
+	last = log -1 HEAD --stat
+	unstage = reset HEAD --
+	amend = commit --amend --no-edit
+	root = rev-parse --show-toplevel
