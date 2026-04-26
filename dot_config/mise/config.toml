@@ -16,6 +16,7 @@ tmux = "latest"
 jujutsu = "latest"
 jq = "latest"
 ripgrep = "latest"
+ghq = "latest"
 
 # Shell
 sheldon = "latest"
