@@ -1,0 +1,40 @@
+# History
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+
+# Key bindings
+bindkey -e
+
+# Completion
+fpath=("${XDG_DATA_HOME:-$HOME/.local/share}/zsh/site-functions" $fpath)
+autoload -Uz compinit
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Plugins (sheldon)
+sheldon_cache="${XDG_CACHE_HOME:-$HOME/.cache}/sheldon/plugins.zsh"
+sheldon_toml="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.toml"
+if [[ ! -r "$sheldon_cache" || "$sheldon_toml" -nt "$sheldon_cache" ]]; then
+  mkdir -p "${sheldon_cache:h}"
+  sheldon source > "$sheldon_cache"
+fi
+source "$sheldon_cache"
+unset sheldon_cache sheldon_toml
+
+# history-substring-search bindings (after sheldon source)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# CLI integrations
+eval "$(starship init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(zoxide init zsh --cmd cd)"
+source <(fzf --zsh)

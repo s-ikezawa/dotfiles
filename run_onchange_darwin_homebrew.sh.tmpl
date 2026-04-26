@@ -2,14 +2,19 @@
 
 set -euo pipefail
 
+# クリーンインストール直後は zshenv が未読込のため、mise の shims (mas 等) を明示的に通す
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
 if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 brew bundle --verbose --file=/dev/stdin <<EOF
-brew "chezmoi"
+# git: mise レジストリに無いため例外として Homebrew で管理(macOS CLT 同梱より新しいバージョンを使うため)
 brew "git"
-brew "mas"
+# openssl@3: sheldon の prebuilt バイナリが /opt/homebrew/opt/openssl@3 を要求するため例外
+brew "openssl@3"
+# imagemagick: mise の asdf プラグインがソースビルド中に /tmp 削除でこける(macOS で実用不可)ため例外
 brew "imagemagick"
 
 cask "1password"

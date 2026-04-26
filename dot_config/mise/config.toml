@@ -6,7 +6,9 @@ lua-language-server = "latest"
 node = "latest"
 
 # CLI Tools
+chezmoi = "latest"
 fd = "latest"
+mas = "latest"
 neovim = "stable"
 tree-sitter = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
@@ -14,3 +16,10 @@ tmux = "latest"
 jujutsu = "latest"
 jq = "latest"
 ripgrep = "latest"
+
+# Shell
+sheldon = "latest"
+starship = "latest"
+atuin = "latest"
+zoxide = "latest"
+fzf = "latest"

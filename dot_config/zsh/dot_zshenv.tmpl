@@ -5,7 +5,8 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 # PATH
-export PATH="$HOME/.local/bin:$PATH"
+# mise shims を先頭に置き、すべての zsh 起動(login/interactive 問わず)で mise 管理ツールを解決可能にする
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$HOME/.local/bin:$PATH"
 
 {{ if (eq .chezmoi.os "darwin") -}}
 # Claude Code

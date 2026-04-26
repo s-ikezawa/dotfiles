@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+
+# クリーンインストール直後は zshenv が未読込のため、mise バイナリのある ~/.local/bin を明示的に通す
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v mise &>/dev/null; then
+  echo "mise not found on PATH; bootstrap script (run_once_before_darwin.sh) should run first" >&2
+  exit 1
+fi
+
+mise install
