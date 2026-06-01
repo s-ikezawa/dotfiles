@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# XDGの基本フォルダを作成しておく
+mkdir -p ${HOME}/.config/zsh ${HOME}/.cache/zsh ${HOME}/.local/share/zsh ${HOME}/.local/state/zsh
+
+# 必要なパスを登録しておく
+export PATH="${HOME}/.local/bin:/opt/homebrew/bin:$PATH"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# ZSHの設定ファイル類をXDG形式のフォルダから読み込むように設定
+if ! grep -q 'ZDOTDIR' /etc/zshenv 2>/dev/null; then
+  echo "Setting ZDOTDIR..."
+  echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zshenv
+else
+  echo "ZDOTDIR already set."
+fi
+
+# Homebrew をインストール
+if ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew already installed."
+fi
+
+# mise をインストール
+if ! command -v mise &>/dev/null; then
+  echo "Installing mise..."
+  curl https://mise.run | sh
+else
+  echo "mise already installed."
+fi
+
+# Claude Code をインストール
+if ! command -v claude &>/dev/null; then
+  echo "Installing Claude Code..."
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude Code already installed."
+fi
+
+# Mac の設定を変更
+
+# キーリピートを爆速に
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+# 自動修正・自動大文字・スマート引用符/ダッシュを無効化
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# ライブ変換を無効化
+defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
+
+# Tabで全てのコントロール間を移動
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+################################################################################
+# Finder
+################################################################################
+defaults write com.apple.finder AppleShowAllFiles -bool true # 隠しファイルを表示
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true # すべての拡張子を表示
+killall Finder
+
+################################################################################
+# Dock
+################################################################################
+defaults write com.apple.dock tilesize -int 16 # サイズを最小に
+defaults write com.apple.dock magnification -bool false # 拡大をオフに
+defaults write com.apple.dock orientation -string left # 位置を左に
+defaults write com.apple.dock minimize-to-application -bool true # ウインドウをアプリケーションアイコンにしまう
+defaults write com.apple.dock autohide -bool true # 自動で表示・非表示をオン
+defaults write com.apple.dock show-recents -bool false # 最近使用したアプリをDockに表示をオフ
+killall Dock
+
+################################################################################
+# デスクトップとステージマネージャ
+################################################################################
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true # 項目を表示 > デスクトップをオフ
+defaults write com.apple.WindowManager HideDesktop -bool true # 項目を表示 > ステージマネージャ使用時にをオフ
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false # 壁紙をクリックしてデスクトップを表示を「ステージマネージャ使用時のみ」に
+defaults write com.apple.WindowManager GloballyEnabled -bool false # ステージマネージャをオフ
+defaults write com.apple.WindowManager AutoHide -bool true # 最近使用したアプリをステージマネージャに表示をオフ
+killall WindowManager
+
+################################################################################
+# ウィジェット
+################################################################################
+defaults write com.apple.WindowManager StandardHideWidgets -bool true # ウィジェット表示 > デスクトップにをオフ
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true # ウィジェット表示 > ステージマネージャにをオフ
+killall WindowManager

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+install_clt() {
+  local clt_placeholder="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+  touch "$clt_placeholder"
+
+  clt_pkg=$(softwareupdate -l 2>&1 \
+    | grep '^\* Label: Command Line Tools' \
+    | sed 's/^\* Label: //' \
+    | sort -r \
+    | head -n 1)
+
+  if [[ -n "$clt_pkg" ]]; then
+    echo "Installing: $clt_pkg"
+    softwareupdate -i "$clt_pkg" --agree-to-license
+    # インストール完了を確認
+    until xcode-select -p &>/dev/null; do sleep 5; done
+  else
+    echo "CLT package not found, falling back to xcode-select"
+    xcode-select --install
+    until xcode-select -p &>/dev/null; do sleep 5; done
+  fi
+
+  rm -f "$clt_placeholder"
+}
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if ! xcode-select -p &>/dev/null; then
+    install_clt
+  else
+    echo "Command Line Tools already installed."
+  fi
+fi
+
+# chezmoi 経由で動く template (1Password 連携など) が mise 配下のバイナリを参照できるよう、
+# shims とローカル bin を先に PATH へ通しておく(まだディレクトリは無くても問題ない)。
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply s-ikezawa
