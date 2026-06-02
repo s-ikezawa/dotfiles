@@ -1,3 +1,14 @@
 [tools]
 "aqua:gh" = "latest"
 "aqua:tmux/tmux-builds" = "latest"
+
+[tasks.up]
+description = "Homebrew と mise をまとめて更新"
+run = [
+  "brew update",
+  "brew upgrade",
+  "brew cleanup",
+  "mise self-update --yes",
+  "mise upgrade",
+  "mise prune --yes",
+]
