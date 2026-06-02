@@ -1,2 +1,3 @@
 [tools]
+"aqua:gh" = "latest"
 "aqua:tmux/tmux-builds" = "latest"
