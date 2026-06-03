@@ -2,6 +2,7 @@
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:gh" = "latest"
 "aqua:neovim/neovim" = "latest"
+"aqua:rossmacarthur/sheldon" = "latest"
 "aqua:sharkdp/bat" = "latest"
 "aqua:sharkdp/fd" = "latest"
 "aqua:tmux/tmux-builds" = "latest"
