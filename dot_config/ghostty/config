@@ -1,2 +1,5 @@
+# Font
 font-family = Moralerspace Argon HWJPDOC
 font-size = 18
+
+theme = Catppuccin Mocha
