@@ -51,3 +51,19 @@ local function applyMyLayout()
 end
 
 hs.hotkey.bind({"ctrl", "alt"}, "l", applyMyLayout)
+
+-- フォーカス中のウィンドウを画面の1/3幅にリサイズ（左 / 中央 / 右）
+-- Ctrl+Alt+1 = 左1/3, Ctrl+Alt+2 = 中央1/3, Ctrl+Alt+3 = 右1/3
+local function moveToThird(index)
+  local win = hs.window.focusedWindow()
+  if not win then
+    hs.alert.show("対象のウィンドウがありません")
+    return
+  end
+  -- そのウィンドウがある画面の作業領域（メニューバー等を除いた領域）を基準にする
+  win:moveToUnit(hs.geometry.rect((index - 1) / 3, 0, 1/3, 1.0))
+end
+
+hs.hotkey.bind({"ctrl", "alt"}, "1", function() moveToThird(1) end)
+hs.hotkey.bind({"ctrl", "alt"}, "2", function() moveToThird(2) end)
+hs.hotkey.bind({"ctrl", "alt"}, "3", function() moveToThird(3) end)
