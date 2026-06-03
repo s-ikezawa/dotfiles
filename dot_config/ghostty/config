@@ -3,3 +3,6 @@ font-family = Moralerspace Argon HWJPDOC
 font-size = 18
 
 theme = Catppuccin Mocha
+
+# Claude Code: shift+enter で改行（送信と区別するため LF を送る）
+keybind = shift+enter=text:\n
