@@ -8,6 +8,7 @@
 "aqua:sharkdp/bat" = "latest"
 "aqua:sharkdp/fd" = "latest"
 "aqua:tmux/tmux-builds" = "latest"
+"aqua:tree-sitter/tree-sitter" = "latest"
 
 [tasks.up]
 description = "Homebrew と mise をまとめて更新"
