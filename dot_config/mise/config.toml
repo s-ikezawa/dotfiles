@@ -10,6 +10,9 @@
 "aqua:tmux/tmux-builds" = "latest"
 "aqua:tree-sitter/tree-sitter" = "latest"
 node = "latest"
+"aqua:LuaLS/lua-language-server" = "latest"
+java = "temurin-26"
+kotlin = { version = "2.4", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 
 [tasks.up]
 description = "Homebrew と mise をまとめて更新"
