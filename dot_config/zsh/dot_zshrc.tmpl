@@ -1,19 +1,14 @@
 # =============================================================
-# 1. プラグイン読み込み / fpath 設定(compinit より前で実行する)
-#    - sheldon は fpath への追加とプラグインの source を行う
+# 1. プラグイン読み込み(sheldon)
+#    plugins.toml 内で「fpath 追加 → compinit → source 系」の
+#    順序を管理している(fast-syntax-highlighting を最後に source)
 # =============================================================
 eval "$(sheldon source)"
 
 # =============================================================
-# 2. 補完システムの初期化
-# =============================================================
-autoload -Uz compinit
-compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-
-# =============================================================
-# 3. ツール初期化(eval 系はここに追加していく / compinit より後)
-#    - compdef・precmd・プロンプトを使うツールは compinit 後が必須
-#    - 例: zoxide / atuin / fzf / starship など
+# 2. ツール初期化(eval 系はここに追加していく / compinit より後)
+#    - compdef・precmd・プロンプトを使うツールはここに置く
+#    - 例: atuin / fzf / starship など
 # =============================================================
 eval "$(~/.local/bin/mise activate zsh)"
 eval "$(zoxide init --cmd cd zsh)"

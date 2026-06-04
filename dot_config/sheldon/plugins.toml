@@ -2,9 +2,17 @@ shell = "zsh"
 
 [plugins]
 
-# 追加の補完定義(zsh-users/zsh-completions)
-# src/ 配下の _* ファイルを fpath に追加して compinit に拾わせる
+# 追加の補完定義: src/ を fpath に追加するのみ(source はしない)
+# compinit より前に評価される必要がある
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 dir = "src"
 apply = ["fpath"]
+
+# 補完システムの初期化: fpath 追加後・source 系プラグインより前に実行
+[plugins.compinit]
+inline = 'autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"'
+
+# シンタックスハイライト: ZLE ウィジェットをラップするため必ず最後に source する
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
