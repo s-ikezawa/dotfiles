@@ -1,6 +1,7 @@
 [tools]
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:gh" = "latest"
+"aqua:junegunn/fzf" = "latest"
 "aqua:neovim/neovim" = "latest"
 "aqua:rossmacarthur/sheldon" = "latest"
 "aqua:sharkdp/bat" = "latest"
