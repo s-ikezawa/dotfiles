@@ -1,0 +1,10 @@
+shell = "zsh"
+
+[plugins]
+
+# 追加の補完定義(zsh-users/zsh-completions)
+# src/ 配下の _* ファイルを fpath に追加して compinit に拾わせる
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+dir = "src"
+apply = ["fpath"]
