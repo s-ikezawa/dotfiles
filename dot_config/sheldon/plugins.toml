@@ -13,6 +13,10 @@ apply = ["fpath"]
 [plugins.compinit]
 inline = 'autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"'
 
+# 入力補完サジェスト: fast-syntax-highlighting より前に source する
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
 # シンタックスハイライト: ZLE ウィジェットをラップするため必ず最後に source する
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
