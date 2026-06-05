@@ -7,8 +7,9 @@
     "command": "~/.config/claude/scripts/statusline.sh",
     "padding": 0
   },
-  "theme": "dark",
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true
-  }
+  },
+  "theme": "dark",
+  "skipWorkflowUsageWarning": true
 }

@@ -14,6 +14,9 @@ node = "latest"
 java = "temurin-25"
 kotlin = { version = "2.4", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 "aqua:x-motemen/ghq" = "latest"
+python = "latest"
+uv = "latest"
+"pipx:trafilatura" = "latest"
 
 [tasks.up]
 description = "Homebrew と mise をまとめて更新"
@@ -25,3 +28,8 @@ run = [
   "mise upgrade",
   "mise prune --yes",
 ]
+
+[settings]
+
+[settings.pipx]
+uvx = true
