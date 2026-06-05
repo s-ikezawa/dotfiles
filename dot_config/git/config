@@ -1,2 +1,10 @@
 [ghq]
   root = ~/Projects
+
+# 個人用 (~/Projects/github.com/s-ikezawa/ 配下)
+[includeIf "gitdir:~/Projects/github.com/s-ikezawa/"]
+  path = ~/.config/git/config-personal
+
+# 仕事用 (~/Projects/github.com/ebisol/ 配下)
+[includeIf "gitdir:~/Projects/github.com/ebisol/"]
+  path = ~/.config/git/config-ebisol
