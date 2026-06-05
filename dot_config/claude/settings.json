@@ -2,10 +2,13 @@
   "env": {
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
   },
-  "theme": "dark",
   "statusLine": {
     "type": "command",
     "command": "~/.config/claude/scripts/statusline.sh",
     "padding": 0
+  },
+  "theme": "dark",
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true
   }
 }
