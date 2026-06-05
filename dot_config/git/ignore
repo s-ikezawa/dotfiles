@@ -1,0 +1,5 @@
+# グローバル gitignore (core.excludesFile の既定: ~/.config/git/ignore)
+
+# git identity の生成ファイル(op inject で展開、PII入り)。
+# ~/.config 等を dotfiles として追跡する際に誤コミットを防ぐ。
+config.d/

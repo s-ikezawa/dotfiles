@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# 1Password のテンプレートから git identity 設定ファイルを生成する。
-# 各 *.tpl 内の {{ op://... }} 参照を実値に展開して同名(拡張子なし)で出力。
+# templates/*.tpl 内の {{ op://... }} 参照を 1Password の実値に展開し、
+# config.d/<name> として出力する。config.d/ は .gitignore 済み。
 set -euo pipefail
 
 cd "$(dirname "$0")"
@@ -10,9 +10,12 @@ if ! command -v op >/dev/null 2>&1; then
   exit 1
 fi
 
-for tpl in *.tpl; do
+mkdir -p config.d
+
+for tpl in templates/*.tpl; do
   [ -e "$tpl" ] || continue
-  out="${tpl%.tpl}"
+  name="$(basename "${tpl%.tpl}")"
+  out="config.d/$name"
   op inject -f -i "$tpl" -o "$out"
   chmod 600 "$out"
   echo "generated: $out"
