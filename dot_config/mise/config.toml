@@ -22,7 +22,7 @@ uv = "latest"
 description = "Homebrew と mise をまとめて更新"
 run = [
   "brew update",
-  "brew upgrade",
+  "brew upgrade --cask --greedy",
   "brew cleanup",
   "mise self-update --yes",
   "mise upgrade",
