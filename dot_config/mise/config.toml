@@ -17,6 +17,19 @@ kotlin = { version = "2.4", asset_pattern = "kotlin-compiler-*.zip", bin_path = 
 python = "latest"
 uv = "latest"
 "pipx:trafilatura" = "latest"
+"aqua:terraform" = "latest"
+"aqua:docker/cli" = "latest"
+"aqua:docker/compose" = { version = "latest", postinstall = 'mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins" && ln -sf "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-compose" "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-compose"' }
+"aqua:abiosoft/colima" = "latest"
+go = "latest"
+"aqua:lima-vm/lima" = "latest"
+"aqua:aws/aws-cli" = "latest"
+
+[env]
+# docker CLI 設定を XDG 準拠（~/.config/docker）にする。compose プラグインも配下に置く。
+DOCKER_CONFIG = "{{ env.XDG_CONFIG_HOME }}/docker"
+# colima のソケットを直接指定（DOCKER_CONFIG 移設で docker context が見えない問題を回避）。
+DOCKER_HOST = "unix://{{ env.XDG_CONFIG_HOME }}/colima/default/docker.sock"
 
 [tasks.up]
 description = "Homebrew と mise をまとめて更新"
