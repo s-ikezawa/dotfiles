@@ -4,6 +4,7 @@ set -euo pipefail
 
 # クリーンインストール直後は zshenv が未読込のため、mise の shims (mas 等) を明示的に通す
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
