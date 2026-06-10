@@ -25,6 +25,8 @@ go = "latest"
 "aqua:lima-vm/lima" = "latest"
 "aqua:aws/aws-cli" = "latest"
 "aqua:FiloSottile/mkcert" = "latest"
+"npm:@playwright/cli" = "latest"
+"go:golang.org/x/tools/gopls" = "latest"
 
 [env]
 # docker CLI 設定を XDG 準拠（~/.config/docker）にする。compose プラグインも配下に置く。
