@@ -1,0 +1,14 @@
+{
+  "env": {
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+  },
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.config/claude/scripts/statusline.sh",
+    "padding": 0
+  },
+  "theme": "dark-ansi"
+}
