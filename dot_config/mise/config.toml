@@ -3,6 +3,7 @@ go = "latest"
 node = "latest"
 pnpm = "latest"
 python = "latest"
+tmux = "latest"
 uv = "latest"
 
 [settings.go]
