@@ -1,0 +1,40 @@
+# Colima default テンプレート（新規 VM/プロファイル作成時に適用される）
+# docs: https://colima.run/docs/configuration
+# 設定の優先順位: defaults < このテンプレート < プロファイル(~/.colima/default/colima.yaml) < CLI フラグ
+#
+# 重要:
+#  - vmType / arch / runtime / mountType は VM 作成時に固定され、後から変更できない。
+#    変えたい場合は `colima delete` してから `colima start` で作り直すこと。
+#  - プロファイル設定(~/.colima/default/colima.yaml)を手で先に作っても初回 start で
+#    上書きされる(abiosoft/colima#985)。確実に効かせるにはこのテンプレートに書く。
+
+# リソース（ローカルの Postgres/Flyway/LocalStack 検証には十分なサイズ）
+cpu: 4
+memory: 4   # GiB
+disk: 60    # GiB
+
+arch: host      # Apple Silicon では aarch64
+runtime: docker
+
+# Apple Virtualization.framework。QEMU 不要(macOS 13+ / Apple Silicon)。
+vmType: vz
+# マウント方式。本件で「ホストが見えない」真因は mountType ではなく下の mounts 未設定
+# (#1533 回帰)だった。home を明示マウントすれば virtiofs でも正常に見える&高速。
+# 変更には VM 再作成(`colima delete && colima start`)が必要。
+mountType: virtiofs
+
+# Rosetta(x86_64 エミュレーション)。既定 off。
+# このリポジトリで使う postgres:17 / flyway:alpine / localstack はいずれも arm64 ネイティブ。
+# amd64 専用イメージを動かす必要が出たら true にする(`softwareupdate --install-rosetta` が必要)。
+rosetta: false
+
+# colima 0.10.x の回帰(abiosoft/colima#1533): `mounts:` 未指定だと生成設定が `mounts: null` に
+# なり、home の自動マウント条件(空判定→nil判定に変更)が成立せず、VM 内にホストが一切
+# マウントされない。home を明示マウントして回避する(これがないと bind mount が全て空になる)。
+mounts:
+  - location: "~"
+    writable: true
+
+# コンテナのみ利用。k8s クラスタは不要。
+kubernetes:
+  enabled: false

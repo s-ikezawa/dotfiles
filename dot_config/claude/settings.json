@@ -10,5 +10,6 @@
     "command": "~/.config/claude/scripts/statusline.sh",
     "padding": 0
   },
-  "theme": "dark-ansi"
+  "theme": "dark-ansi",
+  "effortLevel": "xhigh"
 }

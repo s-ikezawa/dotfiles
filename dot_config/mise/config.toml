@@ -2,11 +2,22 @@
 "aqua:peteretelej/tree" = "latest"
 aws-cli = { version = "latest", symlink_bins = "true" }
 bat = "latest"
+colima = "latest"
+docker-cli = "latest"
+# aqua の compose バイナリは `docker-cli-plugin-docker-compose` という名前で入り、PATH 上に
+# `docker-compose` が現れないため `docker compose`(スペース) が動かない。インストール毎に
+# Docker CLI プラグインディレクトリへ symlink を張り直して `docker compose` を有効化する。
+# 注意: mise の shim を指すと docker のプラグイン呼び出しで argv が崩れ `docker compose up` が
+# 壊れる。必ず実バイナリ($MISE_TOOL_INSTALL_PATH 配下)を指すこと。
+# プラグイン先は DOCKER_CONFIG(XDG: ~/.config/docker)準拠。postinstall に DOCKER_CONFIG が
+# 伝播しない場合でも fallback で同じ XDG パスを指すようにしている。
+docker-compose = { version = "latest", postinstall = 'mkdir -p "${DOCKER_CONFIG:-$HOME/.config/docker}/cli-plugins" && ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-compose" "${DOCKER_CONFIG:-$HOME/.config/docker}/cli-plugins/docker-compose"' }
 fd = "latest"
 fzf = "latest"
 gh = "latest"
 ghq = "latest"
 go = "latest"
+lima = "latest"
 node = "latest"
 pnpm = "latest"
 python = "latest"
