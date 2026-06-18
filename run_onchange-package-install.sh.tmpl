@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ if eq .chezmoi.os "darwin"}}
+if ! command -v brew &>/dev/null; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+brew bundle --verbose --file=/dev/stdin <<EOF
+brew "git"
+brew "chezmoi"
+brew "mas"
+brew "openssl@3"
+
+cask "1password"
+cask "1password-cli"
+cask "ghostty"
+cask "google-chrome"
+cask "firefox"
+cask "obsidian"
+cask "karabiner-elements"
+cask "the-unarchiver"
+
+mas "Xcode", id:497799835
+EOF
+{{ end }}
