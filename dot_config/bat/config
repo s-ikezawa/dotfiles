@@ -1,0 +1,14 @@
+# bat 設定ファイル(~/.config/bat/config)
+# `bat --list-themes` で確認できるテーマを指定
+# Catppuccin Mocha: テーマファイルを ~/.config/bat/themes に置き
+# `bat cache --build` でキャッシュ生成済み
+--theme="Catppuccin Mocha"
+
+# 行番号と Git の変更マーカーを表示
+--style="numbers,changes,header"
+
+# tab を 2 スペースで表示
+--tabs=2
+
+# 1 画面に収まる場合はページャを使わない
+--paging=auto

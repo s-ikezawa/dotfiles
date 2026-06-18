@@ -22,3 +22,71 @@ if [[ "$(uname)" == "Darwin" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
   eval "$(~/.local/bin/mise activate zsh)"
 fi
+
+# zoxide(ディレクトリ履歴ジャンプ。z <部分名> で移動し、訪問先を学習)
+#   tmux の prefix+f ファイルピッカー(--zoxide モード)の候補もここで貯まる
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
+
+# =============================================================
+# fzf / ripgrep / bat の連携
+# =============================================================
+if (( $+commands[fzf] )); then
+  # ファイル一覧の生成。fd があれば優先(高速で .gitignore も尊重)、無ければ rg
+  if (( $+commands[fd] )); then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    # Alt-C 用にディレクトリのみを列挙
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+  elif (( $+commands[rg] )); then
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
+
+  # 共通の見た目・操作。? でプレビュー表示/非表示を切り替え
+  export FZF_DEFAULT_OPTS='
+    --height=80% --layout=reverse --border --info=inline
+    --bind "?:toggle-preview"
+    --bind "ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"'
+
+  # Ctrl-T(ファイル選択)は bat でプレビュー
+  if (( $+commands[bat] )); then
+    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:300 {}'"
+  fi
+
+  # Alt-C(ディレクトリ移動)は ls でプレビュー
+  export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
+
+  # キーバインド(Ctrl-T / Ctrl-R / Alt-C)+ 補完を有効化(fzf 0.48+ の方式)
+  source <(fzf --zsh)
+fi
+
+# ripgrep でコード検索 → fzf で絞り込み → bat プレビュー → $EDITOR で開く
+# 使い方: frg [検索語]   引数なしでも起動でき、入力に応じて随時再検索する
+frg() {
+  (( $+commands[rg] && $+commands[fzf] )) || { echo "frg: rg と fzf が必要です" >&2; return 1; }
+  local rg_cmd="rg --column --line-number --no-heading --color=always --smart-case"
+  local preview='bat --color=always --style=numbers --highlight-line {2} {1}'
+  local selected
+  selected=$(
+    FZF_DEFAULT_COMMAND="$rg_cmd -- ${(q)1}" \
+    fzf --ansi --disabled --query="${1:-}" \
+        --bind "change:reload:$rg_cmd -- {q} || true" \
+        --delimiter : \
+        --preview "$preview" \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
+  ) || return
+  local file=${selected%%:*}
+  local line=${${(s.:.)selected}[2]}
+  [[ -n "$file" ]] && ${EDITOR:-vi} "+${line}" "$file"
+}
+
+# =============================================================
+# bat(cat の上位互換)
+# =============================================================
+if (( $+commands[bat] )); then
+  alias cat='bat --paging=never'        # 素の cat は \cat で呼べる
+  export MANPAGER="sh -c 'col -bx | bat --language=man --plain'"
+  export MANROFFOPT='-c'
+fi
