@@ -1,0 +1,14 @@
+[tools]
+go = "latest"
+node = "latest"
+pnpm = "latest"
+python = "latest"
+uv = "latest"
+
+[settings.go]
+set_gobin = false
+
+[settings.pipx]
+# pipx バックエンドのツールを pipx ではなく uv(uvx) で導入・実行する（既定 true）
+uvx = true
+

@@ -19,5 +19,6 @@ setopt HIST_EXPIRE_DUPS_FIRST  # 上限超過時はまず重複から削除
 # ツールの初期化
 # =============================================================
 if [[ "$(uname)" == "Darwin" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
   eval "$(~/.local/bin/mise activate zsh)"
 fi

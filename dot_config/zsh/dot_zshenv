@@ -10,5 +10,14 @@ export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:${PATH}"
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
+# Golang
+export GOPATH="${XDG_DATA_HOME}/go"
+export GOBIN="${GOPATH}/bin"
+export PATH="${GOBIN}:${PATH}"
+
+# pnpm
+export PNPM_HOME="${XDG_DATA_HOME}/pnpm"
+export PATH="${PNPM_HOME}/bin:${PATH}"
+
 # PATH
 export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
