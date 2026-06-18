@@ -14,4 +14,4 @@ font-thicken
 #===============================================================================
 # OptionキーをAltキーとして認識させる
 # true=両方、left=左側だけ、right=右側だけ、false=Optionのまま
-macos-option-as-alt = "left"
+macos-option-as-alt = left
