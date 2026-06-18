@@ -1,0 +1,27 @@
+[user]
+	name = Shinichi Ikezawa
+	email = shinichi@ikezawa.tech
+
+[ghq]
+	root = ~/Projects
+
+[init]
+	defaultBranch = main
+
+[core]
+	# XDG 準拠: グローバル ignore / attributes も ~/.config 配下に置く
+	excludesfile = ~/.config/git/ignore
+	attributesfile = ~/.config/git/attributes
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
+
+[color]
+	ui = auto
