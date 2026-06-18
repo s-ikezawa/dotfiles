@@ -1,0 +1,23 @@
+# =============================================================
+#  履歴設定(XDG 準拠 / macOS の /etc/zshrc の既定を上書きする)
+# =============================================================
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+HISTSIZE=100000          # メモリ上に保持する件数
+SAVEHIST=100000          # ファイルに保存する件数
+
+setopt EXTENDED_HISTORY        # 実行時刻と所要時間を併せて記録
+setopt SHARE_HISTORY           # 複数セッション間で履歴を即時共有(追記も含む)
+setopt HIST_IGNORE_ALL_DUPS    # 同一コマンドは古い方を削除して重複させない
+setopt HIST_IGNORE_SPACE       # 先頭が空白のコマンドは記録しない
+setopt HIST_REDUCE_BLANKS      # 余分な空白を除去して記録
+setopt HIST_VERIFY             # 履歴展開(!! 等)は実行前に一度確認
+setopt HIST_FIND_NO_DUPS       # 履歴検索で重複候補を飛ばす
+setopt HIST_SAVE_NO_DUPS       # ファイル保存時に重複を除く
+setopt HIST_EXPIRE_DUPS_FIRST  # 上限超過時はまず重複から削除
+
+# =============================================================
+# ツールの初期化
+# =============================================================
+if [[ "$(uname)" == "Darwin" ]]; then
+  eval "$(~/.local/bin/mise activate zsh)"
+fi
