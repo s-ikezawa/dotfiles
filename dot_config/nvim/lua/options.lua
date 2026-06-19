@@ -34,10 +34,21 @@ opt.wrap = false          -- 長い行を折り返さずに表示する
 opt.scrolloff = 8         -- カーソルの上下に最低 8 行のスペースを確保する
 opt.sidescrolloff = 8     -- カーソルの左右に最低 8 桁のスペースを確保する
 opt.showmode = false      -- モード表示（-- INSERT -- など）を非表示にする（ステータスラインに任せる）
-opt.cmdheight = 1         -- コマンドラインの高さを 1 行にする
+-- コマンドライン行は最終的に非表示(0)にする（cmdline/メッセージは noice.nvim が描画）。
+-- ただし起動直後から 0 にすると、modes.nvim が mode ハイライト更新のため
+-- vim.schedule で呼ぶ空の nvim_echo が hit-enter プロンプト（"Press any key to continue"）
+-- を誘発する（Neovim 既知の挙動: cmdheight=0 × scheduled nvim_echo, neovim#22875）。
+-- 起動シーケンス完了後に 0 へ落とすことで、起動時 echo を cmdheight=1 の状態で消化させる。
+opt.cmdheight = 1
+vim.api.nvim_create_autocmd("UIEnter", {
+  once = true,
+  callback = function()
+    vim.defer_fn(function() vim.o.cmdheight = 0 end, 200)
+  end,
+})
 opt.pumheight = 10        -- 補完ポップアップに表示する最大項目数
-opt.laststatus = 3        -- ステータスラインをグローバルに 1 つだけ表示する
-opt.showtabline = 2       -- タブラインを常に表示する
+opt.laststatus = 0        -- ステータスラインを非表示にする（ファイル名は incline.nvim が各ウィンドウ右上にフロート表示）
+opt.showtabline = 0       -- タブラインを表示しない
 opt.list = true           -- 不可視文字（タブ・行末スペースなど）を表示する
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } -- 不可視文字の表示方法を指定する
 

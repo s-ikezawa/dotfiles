@@ -8,10 +8,13 @@ if ! command -v brew &>/dev/null; then
 fi
 
 brew bundle --verbose --file=/dev/stdin <<EOF
+tap "JetBrains/utils", trusted: true
+
 brew "git"
 brew "chezmoi"
 brew "mas"
 brew "openssl@3"
+brew "jetbrains/utils/kotlin-lsp"
 
 cask "1password"
 cask "1password-cli"
@@ -28,4 +31,11 @@ cask "font-plemol-jp-nf"
 
 mas "Xcode", id:497799835
 EOF
+
+# kotlin-lsp は署名・notarize 済み(JetBrains Developer ID)だが、CLI バイナリ
+# (.app ではない)のため quarantine 属性が付くと Gatekeeper に起動を弾かれる。
+# インストール先の quarantine を剥がして、kt ファイルを開いたときに起動できるようにする。
+if brew list --formula kotlin-lsp &>/dev/null; then
+  xattr -dr com.apple.quarantine "$(brew --cellar kotlin-lsp)" 2>/dev/null || true
+fi
 {{ end }}

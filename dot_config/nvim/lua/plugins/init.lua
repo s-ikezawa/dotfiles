@@ -31,6 +31,12 @@ vim.pack.add({
   { src = "https://github.com/lewis6991/gitsigns.nvim" },                      -- 行単位の変更サイン / hunk 取捨選択
   { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },    -- Markdown のバッファ内インラインレンダリング
   { src = "https://github.com/folke/snacks.nvim" },                            -- image モジュールで mermaid/画像を実描画
+  { src = "https://github.com/b0o/incline.nvim" },                             -- 各ウィンドウ右上にファイル名をフロート表示（ステータスライン代替）
+  { src = "https://github.com/mvllow/modes.nvim" },                            -- モード（挿入/ビジュアル等）に応じて cursorline/行番号を色付け
+  { src = "https://github.com/MunifTanjim/nui.nvim" },                         -- noice.nvim 依存の UI コンポーネント
+  { src = "https://github.com/rcarriga/nvim-notify" },                         -- noice.nvim の通知(notify)ビュー用バックエンド
+  { src = "https://github.com/folke/noice.nvim" },                            -- cmdline/メッセージ/通知を置き換える UI（cmdheight=0 用）
+  { src = "https://github.com/WilliamHsieh/overlook.nvim" },                   -- 定義等をスタック可能なフロートでその場プレビュー（コードジャンプ補助）
 })
 
 -- ----------------------------------------------------------------------------
@@ -45,3 +51,7 @@ require("plugins.diffview")
 require("plugins.gitsigns")
 require("plugins.render-markdown")
 require("plugins.snacks")
+require("plugins.incline")
+require("plugins.modes")
+require("plugins.noice")
+require("plugins.overlook")
