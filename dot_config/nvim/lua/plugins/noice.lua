@@ -28,6 +28,7 @@ require("noice").setup({
     bottom_search = true,         -- / 検索は画面下のクラシックなコマンドラインで表示
     command_palette = true,       -- : コマンドと候補を画面中央寄りにまとめて表示
     long_message_to_split = true, -- 長いメッセージは分割ウィンドウに送る
+    lsp_doc_border = true,        -- K のホバー / signature help のドキュメントに border=rounded を付ける
   },
 })
 

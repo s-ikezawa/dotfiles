@@ -49,6 +49,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
 opt.pumheight = 10        -- 補完ポップアップに表示する最大項目数
 opt.laststatus = 0        -- ステータスラインを非表示にする（ファイル名は incline.nvim が各ウィンドウ右上にフロート表示）
 opt.showtabline = 0       -- タブラインを表示しない
+opt.winborder = "rounded" -- フロート（LSP ホバー/署名/診断など）の既定 border。noice 不在/無効時のネイティブ描画に適用（noice 有効時は noice 側指定が優先）
 opt.list = true           -- 不可視文字（タブ・行末スペースなど）を表示する
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } -- 不可視文字の表示方法を指定する
 
