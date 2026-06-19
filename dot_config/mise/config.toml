@@ -38,6 +38,14 @@ tmux = "latest"
 zoxide = "latest"
 tree-sitter = "latest"
 
+# Docker(colima): Testcontainers(JVM) は docker CLI の context を読まず、既定で /var/run/docker.sock を探す。
+# colima は socket をそこに置かないため DOCKER_HOST で明示する。docker CLI は context で動くので本来不要だが、
+# colima を唯一の provider として使う前提なので env で全ツール(TC含む)に行き渡らせる。
+# override は Ryuk(後始末コンテナ)が VM 内 socket をマウントするためのパス。colima VM 内では /var/run/docker.sock。
+[env]
+DOCKER_HOST = "unix://{{env.HOME}}/.config/colima/default/docker.sock"
+TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock"
+
 [settings.go]
 set_gobin = false
 
