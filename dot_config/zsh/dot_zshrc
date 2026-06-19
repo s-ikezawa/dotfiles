@@ -16,6 +16,16 @@ setopt HIST_SAVE_NO_DUPS       # ファイル保存時に重複を除く
 setopt HIST_EXPIRE_DUPS_FIRST  # 上限超過時はまず重複から削除
 
 # =============================================================
+# リソース上限(同時オープンファイル数)
+# =============================================================
+# macOS の既定は 256 と低く、ファイルウォッチャや並列ビルド
+# (例: Neovim の tree-sitter パーサー一括インストール)で
+# "too many open files"(EMFILE) を起こすため引き上げる。
+# 10240 は広く使われる値で、本機の per-process 上限
+# (kern.maxfilesperproc = 61440)の範囲内。
+ulimit -n 10240
+
+# =============================================================
 # ツールの初期化
 # =============================================================
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -90,3 +100,4 @@ if (( $+commands[bat] )); then
   export MANPAGER="sh -c 'col -bx | bat --language=man --plain'"
   export MANROFFOPT='-c'
 fi
+

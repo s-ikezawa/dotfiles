@@ -36,6 +36,7 @@ neovim = "latest"
 ripgrep = "latest"
 tmux = "latest"
 zoxide = "latest"
+tree-sitter = "latest"
 
 [settings.go]
 set_gobin = false
