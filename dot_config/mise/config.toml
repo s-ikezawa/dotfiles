@@ -28,6 +28,8 @@ lima = "latest"
 aws-cli = { version = "latest", symlink_bins = "true" }
 "aqua:peteretelej/tree" = "latest"
 bat = "latest"
+# delta: git の差分を見やすく表示するページャ(AI が生成した変更のレビュー用)。git/config から呼び出す。
+delta = "latest"
 fd = "latest"
 fzf = "latest"
 ripgrep = "latest"

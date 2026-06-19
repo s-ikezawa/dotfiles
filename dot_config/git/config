@@ -12,6 +12,8 @@
 	# XDG 準拠: グローバル ignore / attributes も ~/.config 配下に置く
 	excludesfile = ~/.config/git/ignore
 	attributesfile = ~/.config/git/attributes
+	# diff / show / log -p のページャに delta を使う(AI 生成変更のレビュー用)
+	pager = delta
 
 [pull]
 	rebase = false
@@ -25,3 +27,19 @@
 
 [color]
 	ui = auto
+
+[interactive]
+	# `git add -p` 等の対話差分も delta で着色(色付けのみ・操作はそのまま)
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true            # n / N で差分の塊(ファイル)間をジャンプ
+	line-numbers = true        # 行番号を表示
+	side-by-side = false       # 縦表示(横並びにせずターミナル幅を節約)
+	syntax-theme = Catppuccin Mocha   # bat 用にビルド済みのテーマを共用
+
+[merge]
+	conflictstyle = zdiff3     # コンフリクト表示を見やすく(delta が綺麗に描画)
+
+[diff]
+	colorMoved = default       # 移動した行を別色で表示
