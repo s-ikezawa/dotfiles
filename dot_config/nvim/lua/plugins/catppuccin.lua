@@ -14,6 +14,7 @@ require("catppuccin").setup({
   integrations = {             -- 連携プラグインのハイライトを有効化する
     treesitter = true,         -- nvim-treesitter
     native_lsp = { enabled = true }, -- 標準 LSP
+    render_markdown = true,    -- render-markdown.nvim（見出し/コードブロック等の配色）
   },
 })
 

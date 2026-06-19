@@ -29,6 +29,8 @@ vim.pack.add({
   { src = "https://github.com/dmtrKovalenko/fff.nvim" },                       -- 高速ファイルピッカー（要 Rust ビルド）
   { src = "https://github.com/sindrets/diffview.nvim" },                       -- 変更ファイル一覧 + 差分レビュー
   { src = "https://github.com/lewis6991/gitsigns.nvim" },                      -- 行単位の変更サイン / hunk 取捨選択
+  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },    -- Markdown のバッファ内インラインレンダリング
+  { src = "https://github.com/folke/snacks.nvim" },                            -- image モジュールで mermaid/画像を実描画
 })
 
 -- ----------------------------------------------------------------------------
@@ -41,3 +43,5 @@ require("plugins.tree-sitter-manager")
 require("plugins.fff")
 require("plugins.diffview")
 require("plugins.gitsigns")
+require("plugins.render-markdown")
+require("plugins.snacks")

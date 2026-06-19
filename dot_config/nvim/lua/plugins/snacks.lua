@@ -1,0 +1,41 @@
+-- ============================================================================
+-- snacks.nvim（image モジュール）- mermaid / 画像をバッファ内に実描画する
+-- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
+-- ============================================================================
+-- 端末 Ghostty（Kitty Graphics Protocol）+ tmux allow-passthrough=on で動作する。
+-- mermaid は mmdc（mermaid-cli, mise 管理）が PNG 化し、それを Ghostty に転送して表示する。
+-- mmdc は内部で puppeteer 経由で Chrome を起動するため、既存の Google Chrome を使わせる
+-- （Chromium の重複ダウンロード約 300MB を回避）。
+
+-- snacks が起動する mmdc サブプロセスはこの環境変数を継承する。
+-- パスは /Applications 固定なので、存在確認のうえ直接指定する（Playwright 方式と違い rev 番号で揺れない）。
+local chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+if vim.uv.fs_stat(chrome) then
+  vim.env.PUPPETEER_EXECUTABLE_PATH = chrome
+end
+
+-- tmux の内側だと $TERM=screen になり、snacks は「下の端末が Ghostty」だと判別できない。
+-- その結果 Ghostty の supported/placeholders=true が適用されず kitty graphics 非対応扱いになり、
+-- インライン描画ができず崩れた float（ポップアップ）に落ちる。
+-- SNACKS_GHOSTTY=1 で Ghostty 検出を強制し、unicode プレースホルダ方式のインライン描画を有効にする。
+vim.env.SNACKS_GHOSTTY = "1"
+
+require("snacks").setup({
+  image = {
+    -- 端末応答破壊の原因だった tmux `extended-keys always` を off にし、Shift+Enter を
+    -- Ghostty の keybind に移したため再有効化する（snacks #2332 の回避策が効くようになる）。
+    enabled = true,
+    doc = {
+      enabled = true, -- markdown 等ドキュメント内の画像 / mermaid 図を描画する
+      inline = true,  -- バッファ内にインライン表示する
+      float = true,   -- インライン不可時はフロートにフォールバックする
+      -- mermaid のソースコードを隠して図だけ見せる（数式も既定で隠す）
+      conceal = function(lang, type)
+        return type == "math" or lang == "mermaid"
+      end,
+    },
+    -- LaTeX 数式の描画は無効化（tectonic / ImageMagick 未導入。render-markdown 側でも無効化済み）
+    math = { enabled = false },
+    -- mermaid 変換は snacks 既定の convert.mermaid（mmdc 呼び出し）をそのまま使う
+  },
+})

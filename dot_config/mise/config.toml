@@ -32,11 +32,14 @@ bat = "latest"
 delta = "latest"
 fd = "latest"
 fzf = "latest"
-neovim = "latest"
 ripgrep = "latest"
 tmux = "latest"
 zoxide = "latest"
 tree-sitter = "latest"
+
+# Editor & Requirements
+neovim = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
 
 # Docker(colima): Testcontainers(JVM) は docker CLI の context を読まず、既定で /var/run/docker.sock を探す。
 # colima は socket をそこに置かないため DOCKER_HOST で明示する。docker CLI は context で動くので本来不要だが、
