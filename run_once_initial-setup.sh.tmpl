@@ -33,6 +33,7 @@ fi
 if ! command -v mise &>/dev/null; then
   echo "Installing mise..."
   curl https://mise.run | sh
+  ~/.local/bin/mise install
 else
   echo "mise already installed."
 fi
