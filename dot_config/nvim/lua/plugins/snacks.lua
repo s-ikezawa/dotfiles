@@ -1,6 +1,7 @@
 -- ============================================================================
--- snacks.nvim（image モジュール）- mermaid / 画像をバッファ内に実描画する
+-- snacks.nvim（image / explorer モジュール）
 -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
 -- ============================================================================
 -- 端末 Ghostty（Kitty Graphics Protocol）+ tmux allow-passthrough=on で動作する。
 -- mermaid は mmdc（mermaid-cli, mise 管理）が PNG 化し、それを Ghostty に転送して表示する。
@@ -21,6 +22,21 @@ end
 vim.env.SNACKS_GHOSTTY = "1"
 
 require("snacks").setup({
+  -- --------------------------------------------------------------------------
+  -- explorer（snacks.picker ベースのサイドバー型ファイルツリー）
+  -- AI の変更レビュー用途なので、生成物や設定ファイルも含め全ファイルを見たい。
+  -- 既定では隠しファイルと gitignore 対象が隠れるため、両方とも表示に倒す。
+  -- 起動後も list 上で H（hidden 切替）/ I（ignored 切替）でトグルできる。
+  -- --------------------------------------------------------------------------
+  explorer = { enabled = true }, -- :Explorer / Snacks.explorer() を有効化（netrw も置換）
+  picker = {
+    sources = {
+      explorer = {
+        hidden = true,  -- ドットファイル等の隠しファイルも表示する
+        ignored = true, -- .gitignore で無視されるファイルも表示する
+      },
+    },
+  },
   image = {
     -- 端末応答破壊の原因だった tmux `extended-keys always` を off にし、Shift+Enter を
     -- Ghostty の keybind に移したため再有効化する（snacks #2332 の回避策が効くようになる）。
@@ -39,3 +55,10 @@ require("snacks").setup({
     -- mermaid 変換は snacks 既定の convert.mermaid（mmdc 呼び出し）をそのまま使う
   },
 })
+
+-- ----------------------------------------------------------------------------
+-- キーマップ（リーダーは "," なので ,e で起動）
+-- ----------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>e", function()
+  Snacks.explorer() -- ファイルエクスプローラーを開く（開いていればフォーカス）
+end, { desc = "Snacks: ファイルエクスプローラー" })
