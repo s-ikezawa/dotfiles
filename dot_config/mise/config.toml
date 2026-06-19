@@ -33,3 +33,13 @@ set_gobin = false
 # pipx バックエンドのツールを pipx ではなく uv(uvx) で導入・実行する（既定 true）
 uvx = true
 
+[tasks.up]
+description = "Homebrew と mise をまとめて更新"
+run = [
+  "brew update",
+  "brew upgrade --cask --greedy --yes",
+  "brew cleanup",
+  "mise self-update --yes",
+  "mise upgrade",
+  "mise prune --yes",
+]
