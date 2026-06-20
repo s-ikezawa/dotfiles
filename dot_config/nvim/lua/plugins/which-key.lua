@@ -20,4 +20,5 @@ wk.add({
   { "<leader>g", group = "Git" },                  -- ,gf
   { "<leader>n", group = "Noice" },                -- ,nh ,nl ,nd
   { "<leader>p", group = "Overlook (peek)" },      -- ,pd ,pp ,pf ,pu ,pc ,ps ,pv ,pt
+  { "<leader>u", group = "Toggle (UI)" },          -- ,uh (inlay hints)
 })

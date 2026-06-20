@@ -69,3 +69,10 @@ require("snacks").setup({
 vim.keymap.set("n", "<leader>e", function()
   Snacks.explorer() -- ファイルエクスプローラーを開く（開いていればフォーカス）
 end, { desc = "Snacks: ファイルエクスプローラー" })
+
+-- ----------------------------------------------------------------------------
+-- トグル類（Snacks.toggle）。:map は which-key 連携・通知付きで登録される
+-- ----------------------------------------------------------------------------
+-- inlay hints の ON/OFF（内部で vim.lsp.inlay_hint.enable）。初期状態は
+-- lua/lsp.lua の LspAttach で ON。,uh は一時的に OFF/ON を切り替える用途。
+Snacks.toggle.inlay_hints():map("<leader>uh")
