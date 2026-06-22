@@ -1,0 +1,22 @@
+# =============================================================
+# sheldon — zsh プラグイン宣言ファイル
+# =============================================================
+# 取得/更新: `sheldon lock --update`   読み込み: .zshrc で `eval "$(sheldon source)"`
+# プラグイン本体は $XDG_DATA_HOME/sheldon 配下に clone される(XDG 準拠)。
+#
+# 読み込み順序 = この記載順。fzf-tab の要件に従って並べている:
+#   1) fzf-tab               … compinit の後・widget をラップする系より「前」に読む(必須)
+#   2) zsh-autosuggestions   … 履歴からのインライン候補
+#   3) zsh-syntax-highlighting … 他の ZLE widget 定義より「後」(=最後)に読む必要がある
+# .zshrc では compinit / fzf 初期化を済ませた後に source するため、順序が保たれる。
+
+shell = "zsh"
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"

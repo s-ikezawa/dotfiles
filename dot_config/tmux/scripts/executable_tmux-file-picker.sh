@@ -11,9 +11,9 @@ _select_zoxide_dir() {
   fi
 
   local zoxide_preview_cmd='ls -ap --color=always {}'
-  if command -v tree >/dev/null 2>&1; then
-    # Use tree for a richer preview if available
-    zoxide_preview_cmd='tree -C {} | head -n 30'
+  if command -v eza >/dev/null 2>&1; then
+    # Use eza for a richer tree preview if available
+    zoxide_preview_cmd='eza --tree --level=2 --color=always --icons=always {} | head -n 30'
   fi
 
   # Use fzf to select directories from zoxide's list.
@@ -177,8 +177,8 @@ main() {
     # Directory selection mode
     fd_flags="${TMUX_FILE_PICKER_FD_FLAGS:--H --follow --type d --exclude .git}"
 
-    if command -v tree >/dev/null 2>&1; then
-      preview_cmd='tree -C {} | head -n 30'
+    if command -v eza >/dev/null 2>&1; then
+      preview_cmd='eza --tree --level=2 --color=always --icons=always {} | head -n 30'
     else
       preview_cmd='ls -ap --color=always {}'
     fi
@@ -187,11 +187,11 @@ main() {
     fd_flags="${TMUX_FILE_PICKER_FD_FLAGS:--H --follow --type f --type d --exclude .git --exclude .DS_Store}"
 
     if command -v bat >/dev/null 2>&1; then
-      preview_cmd='[[ -d {} ]] && tree -C {} | head -n 30 || bat --style=numbers --color=always {}'
+      preview_cmd='[[ -d {} ]] && eza --tree --level=2 --color=always --icons=always {} | head -n 30 || bat --style=numbers --color=always {}'
     elif command -v batcat >/dev/null 2>&1; then
-      preview_cmd='[[ -d {} ]] && tree -C {} | head -n 30 || batcat --style=numbers --color=always {}'
+      preview_cmd='[[ -d {} ]] && eza --tree --level=2 --color=always --icons=always {} | head -n 30 || batcat --style=numbers --color=always {}'
     else
-      preview_cmd='[[ -d {} ]] && tree -C {} | head -n 30 || cat {}'
+      preview_cmd='[[ -d {} ]] && eza --tree --level=2 --color=always --icons=always {} | head -n 30 || cat {}'
     fi
 
     # Grep mode toggle (C-s to switch between file search and content grep)

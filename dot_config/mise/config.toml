@@ -26,7 +26,6 @@ lima = "latest"
 
 # CLI & TUI ツール
 aws-cli = { version = "latest", symlink_bins = "true" }
-"aqua:peteretelej/tree" = "latest"
 bat = "latest"
 # delta: git の差分を見やすく表示するページャ(AI が生成した変更のレビュー用)。git/config から呼び出す。
 delta = "latest"
@@ -36,6 +35,10 @@ ripgrep = "latest"
 tmux = "latest"
 zoxide = "latest"
 tree-sitter = "latest"
+# シェル体験の強化(zsh)
+eza = "latest"      # ls 上位互換(アイコン/git/ツリー)。.zshrc で ls/ll/la/tree にエイリアス
+starship = "latest" # シェルプロンプト(git/言語バージョン/実行時間)。.zshrc で eval init
+sheldon = "latest"  # zsh プラグインマネージャ。autosuggestions/syntax-highlighting/fzf-tab を ~/.config/sheldon/plugins.toml で宣言管理
 
 # Editor & Requirements
 neovim = "latest"
@@ -57,7 +60,7 @@ set_gobin = false
 uvx = true
 
 [tasks.up]
-description = "Homebrew と mise をまとめて更新"
+description = "Homebrew・mise・zsh プラグイン(sheldon)をまとめて更新"
 run = [
   "brew update",
   "brew upgrade --cask --greedy --yes",
@@ -65,4 +68,5 @@ run = [
   "mise self-update --yes",
   "mise upgrade",
   "mise prune --yes",
+  "sheldon lock --update", # zsh プラグイン(plugins.toml)も最新化
 ]
