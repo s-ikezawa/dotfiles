@@ -38,6 +38,7 @@ vim.pack.add({
   { src = "https://github.com/folke/noice.nvim" },                            -- cmdline/メッセージ/通知を置き換える UI（cmdheight=0 用）
   { src = "https://github.com/WilliamHsieh/overlook.nvim" },                   -- 定義等をスタック可能なフロートでその場プレビュー（コードジャンプ補助）
   { src = "https://github.com/folke/which-key.nvim" },                         -- キーバインドの discoverability（プレフィックス押下で候補をポップアップ）
+  { src = "https://github.com/mrjones2014/smart-splits.nvim" },                -- nvim ウィンドウ ⇆ tmux ペインを M-hjkl でシームレス移動 / リサイズ
 })
 
 -- ----------------------------------------------------------------------------
@@ -57,3 +58,4 @@ require("plugins.modes")
 require("plugins.noice")
 require("plugins.overlook")
 require("plugins.which-key")
+require("plugins.smart-splits")
