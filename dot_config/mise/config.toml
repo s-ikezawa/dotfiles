@@ -23,6 +23,7 @@ docker-cli = "latest"
 docker-compose = { version = "latest", postinstall = 'mkdir -p "${DOCKER_CONFIG:-$HOME/.config/docker}/cli-plugins" && ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-compose" "${DOCKER_CONFIG:-$HOME/.config/docker}/cli-plugins/docker-compose"' }
 colima = "latest"
 lima = "latest"
+lazydocker = "latest"
 
 # CLI & TUI ツール
 aws-cli = { version = "latest", symlink_bins = "true" }
