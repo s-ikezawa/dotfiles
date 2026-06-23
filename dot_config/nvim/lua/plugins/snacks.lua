@@ -76,3 +76,64 @@ end, { desc = "Snacks: ファイルエクスプローラー" })
 -- inlay hints の ON/OFF（内部で vim.lsp.inlay_hint.enable）。初期状態は
 -- lua/lsp.lua の LspAttach で ON。,uh は一時的に OFF/ON を切り替える用途。
 Snacks.toggle.inlay_hints():map("<leader>uh")
+
+-- explorer の git sign を外部 git 操作後に確実に再描画させる workaround。
+-- snacks 本体には 2 つの取りこぼしがあり、両方を補正する必要がある:
+--   (1) .git/index の uv.fs_event 監視を外部ツール (CLI / Claude Code 等) からの
+--       commit で取りこぼし、git status cache (TTL 15 分) が更新されない。
+--   (2) snacks/explorer/git.lua の M._update が node.status / node.ignored は
+--       walk クリアするが node.dir_status をクリアしないため、過去に untracked
+--       だった directory に "??" が tree node に残り続ける。さらに renderer は
+--       "子の status が無ければ親の dir_status を継承する" (source/explorer.lua:235)
+--       仕様なので、stale な dir_status は子 node の sign 表示にも波及する。
+--
+-- (2) の対処:
+--   _update をラップして、status/ignored の同期クリア walk と同じタイミングで
+--   dir_status も全クリアし、その後 original が現在の results から再設定する。
+--   ただし original の戻り値 (changed) は { status, ignored } の差分しか見ない
+--   ため、dir_status だけ変わった場合に on_update が発火しない。これを補うため
+--   dir_status を含めた追加 snapshot で差分判定し、必要なら changed=true を返す。
+--   こうしておけば fs_event 経由で _update が呼ばれた時も再描画が走る。
+local Git = require("snacks.explorer.git")
+local Tree = require("snacks.explorer.tree")
+if not Git._update_dir_status_patched then
+  local original_update = Git._update
+  Git._update = function(cwd, results)
+    local node = Tree:find(cwd)
+    if not node then
+      return original_update(cwd, results)
+    end
+    local pre = Tree:snapshot(node, { "dir_status" })
+    Tree:walk(node, function(n) n.dir_status = nil end, { all = true })
+    local changed = original_update(cwd, results)
+    if not changed then
+      changed = Tree:changed(node, pre)
+    end
+    return changed
+  end
+  Git._update_dir_status_patched = true
+end
+
+-- (1) の対処: FocusGained 等で explorer_update アクションを叩く。`u` 押下と同等で、
+-- 内部的に Tree:refresh → Git.refresh (cache 無効化) → picker:find → Git.update
+-- → _update (パッチ済み) → on_update → 再描画 という確実な経路を通る。
+--
+-- alt-tab 連打などで FocusGained が短時間に複数回発火すると picker:find と
+-- 非同期 git fetch が交錯し、中間状態の Tree から items を組まれて signs が
+-- 一瞬消えたように見えることがある。最後のイベントから 200ms 静まってから
+-- 1 回だけ refresh が走るよう、共有タイマーで debounce する。
+-- 200ms の遅延は .git/index.lock の write 完了を待つ目的も兼ねる。
+local refresh_timer = assert((vim.uv or vim.loop).new_timer()) -- 非 nil を保証 (型警告対策)
+local function schedule_refresh()
+  refresh_timer:stop()
+  refresh_timer:start(200, 0, vim.schedule_wrap(function()
+    for _, picker in ipairs(Snacks.picker.get({ source = "explorer" })) do
+      picker:action("explorer_update")
+    end
+  end))
+end
+
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = vim.api.nvim_create_augroup("snacks_explorer_git_refresh", { clear = true }),
+  callback = schedule_refresh,
+})
