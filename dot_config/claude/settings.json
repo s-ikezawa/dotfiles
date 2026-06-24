@@ -10,6 +10,16 @@
     "command": "~/.config/claude/scripts/statusline.sh",
     "padding": 0
   },
+  "extraKnownMarketplaces": {
+    "hashicorp": {
+      "source": {
+        "source": "github",
+        "repo": "hashicorp/agent-skills"
+      }
+    }
+  },
+  "effortLevel": "xhigh",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
-  "effortLevel": "xhigh"
+  "tui": "fullscreen"
 }
