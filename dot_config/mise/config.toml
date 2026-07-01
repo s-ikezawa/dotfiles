@@ -64,7 +64,7 @@ uvx = true
 description = "Homebrew・mise・zsh プラグイン(sheldon)をまとめて更新"
 run = [
   "brew update",
-  "brew upgrade --cask --greedy --yes",
+  "brew upgrade --greedy --yes", # formula と cask の両方を更新(--greedy で自動更新持ちの cask も対象)
   "brew cleanup",
   "mise self-update --yes",
   "mise upgrade",
