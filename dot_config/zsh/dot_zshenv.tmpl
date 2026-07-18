@@ -7,6 +7,10 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 # mise
 export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:${PATH}"
 
+{{ if eq .chezmoi.os "darwin" -}}
+# PostgreSQL CLI Client (libpq)
+export PATH="/opt/homebrew/opt/libpq/bin:${PATH}"
+{{ end }}
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
