@@ -1,6 +1,7 @@
 brew "chezmoi" # Manage your dotfiles across multiple diverse machines, securely
-brew "mas" # Mac App Store command-line interface
 brew "openssl@3" # Cryptography and SSL/TLS Toolkit
+brew "libpq" # Postgres C API library
+brew "mas" # Mac App Store command-line interface
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
 cask "claude" # Anthropic's official Claude AI desktop app
