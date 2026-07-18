@@ -13,6 +13,7 @@ cask "google-chrome" # Web browser
 cask "google-drive" # Client for the Google Drive storage service
 cask "karabiner-elements" # Keyboard customiser
 cask "obsidian" # Knowledge base that works on top of a local folder of plain text Markdown files
+cask "slack" # Team communication and collaboration software
 cask "snapzy" # Native screenshots, recording, annotation, and editing from the menu bar
 cask "the-unarchiver" # Unpacks archive files
 mas "Xcode", id: 497799835
