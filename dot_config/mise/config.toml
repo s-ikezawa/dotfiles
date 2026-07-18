@@ -17,6 +17,9 @@ uv = "latest"
 "github:ogulcancelik/herdr" = "latest"
 "github:modem-dev/hunk" = "latest"
 
+# Other CLI Tools
+"aqua:aws/aws-cli" = "latest"
+
 [settings.pipx]
 # pipx バックエンドのツールを pipx ではなく uv(uvx) で導入・実行する
 uvx = true
