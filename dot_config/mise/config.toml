@@ -1,0 +1,35 @@
+[tools]
+# Javascript系
+node = "latest"
+pnpm = "latest"
+
+# Python系
+python = "latest"
+uv = "latest"
+
+# git系
+"github:cli/cli" = "latest"
+
+# shell拡張
+"github:rossmacarthur/sheldon" = "latest"
+
+# Terminal拡張
+"github:ogulcancelik/herdr" = "latest"
+"github:modem-dev/hunk" = "latest"
+
+[settings.pipx]
+# pipx バックエンドのツールを pipx ではなく uv(uvx) で導入・実行する
+uvx = true
+
+[tasks.up]
+description = "Homebrew・mise・zsh プラグイン(sheldon)をまとめて更新"
+env = { MISE_GITHUB_TOKEN = "{{ exec(command='gh auth token 2>/dev/null || true') | trim }}" }
+run = [
+  "brew update",
+  "brew upgrade --greedy --yes", # formula と cask の両方を更新(--greedy で自動更新持ちの cask も対象)
+  "brew cleanup",
+  "mise self-update --yes",
+  "mise upgrade",
+  "mise prune --yes",
+  "sheldon lock --update", # zsh プラグイン(plugins.toml)も最新化
+]
