@@ -160,6 +160,17 @@ command = "{{ .chezmoi.homeDir }}/.config/herdr/lazygit-popup.sh"
 width = "90%"
 height = "90%"
 
+# yazi を AI ペインの作業ディレクトリで開く。
+# AI へ送るのは yazi 側のキーマップ("@")に割り当ててあり、この popup は
+# 単に yazi を起動するだけ。--chooser-file を使うと Enter が「選んで閉じる」に
+# 固定され、yazi 本来の「Enter でファイルを開く」が潰れるため使っていない。
+[[keys.command]]
+key = "prefix+alt+f"
+type = "popup"
+command = "{{ .chezmoi.homeDir }}/.config/herdr/yazi-popup.sh"
+width = "90%"
+height = "90%"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

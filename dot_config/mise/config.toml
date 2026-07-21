@@ -20,6 +20,7 @@ uv = "latest"
 # Terminal拡張
 "github:ogulcancelik/herdr" = "latest"
 "github:modem-dev/hunk" = "latest"
+"aqua:sxyazi/yazi" = "latest"
 
 # Docker
 "aqua:docker/cli" = "latest"
