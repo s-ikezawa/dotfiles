@@ -9,6 +9,7 @@ uv = "latest"
 
 # git系
 "github:cli/cli" = "latest"
+"aqua:x-motemen/ghq" = "latest"
 
 # shell拡張
 "github:rossmacarthur/sheldon" = "latest"
