@@ -38,6 +38,8 @@ ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-compose" \
 # lima も必須(欠けると colima list が exit status 1 で落ちる)。
 "aqua:lima-vm/lima" = "latest"
 "aqua:abiosoft/colima" = "latest"
+# コンテナ/イメージ/ログを一覧する TUI。Docker Desktop の GUI 部分の代替。
+"aqua:jesseduffield/lazydocker" = "latest"
 
 # Other CLI Tools
 "aqua:aws/aws-cli" = "latest"
