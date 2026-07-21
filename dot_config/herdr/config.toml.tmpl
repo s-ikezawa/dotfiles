@@ -150,6 +150,16 @@ command = "zsh -c lazydocker"
 width = "90%"
 height = "90%"
 
+# lazygit。フォーカス中のペインのディレクトリで開く必要があるため、
+# lazydocker のように直接起動せずラッパースクリプトを挟んでいる
+# (popup の cwd が何になるかは herdr の仕様として保証されていない)。
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "{{ .chezmoi.homeDir }}/.config/herdr/lazygit-popup.sh"
+width = "90%"
+height = "90%"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
