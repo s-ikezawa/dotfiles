@@ -14,7 +14,12 @@ shell = "zsh"
 
 [plugins]
 
-# For example:
-#
-# [plugins.base16]
-# github = "chriskempson/base16-shell"
+# 履歴からインラインで候補をサジェストする(灰色表示 / → または End で確定)
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+# コマンドラインを入力中にシンタックスハイライトする。
+# 他プラグインが定義したウィジェットを自身でラップする都合上、
+# 必ず最後に読み込むこと(このファイルの末尾に置く)。
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
