@@ -20,6 +20,7 @@ uv = "latest"
 
 # Other CLI Tools
 "aqua:aws/aws-cli" = "latest"
+"vfox:jdx/vfox-eza" = "latest"
 
 [settings.pipx]
 # pipx バックエンドのツールを pipx ではなく uv(uvx) で導入・実行する
