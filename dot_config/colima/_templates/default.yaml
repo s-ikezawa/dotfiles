@@ -1,0 +1,41 @@
+# =============================================================
+#  colima 新規インスタンスのテンプレート
+# =============================================================
+#  `colima start` で新しく作られる VM に適用される既定値。
+#  ここに書かなかった項目は colima 内蔵の既定値が使われる。
+#  完全版(全項目のコメント付き)は `colima template` で確認できる。
+#
+#  注意: 作成済みの VM には反映されない。変更を反映するには
+#  `colima delete` してから `colima start` し直す必要がある。
+
+# --- リソース配分 -------------------------------------------
+# このマシンは Apple M3 / 8 コア / 16 GB。
+# 既定(CPU 2 / メモリ 2GiB)ではビルドで詰まるため引き上げるが、
+# ホスト側の余力を残すため半分程度に留める。
+cpu: 4
+memory: 4
+
+# ディスクは疎(sparse)確保で、実使用分しか消費しない。
+# 作成後は拡大しかできないため、既定の 100 GiB のままにしておく。
+disk: 100
+
+# --- 仮想化方式 ---------------------------------------------
+# `colima template` が生成する雛形は vmType: qemu / mountType: sshfs だが、
+# これは全プラットフォーム共通の既定値で、macOS における CLI の既定
+# (vz / virtiofs)とは異なる。雛形のまま置くと Apple Silicon で
+# 遅い qemu に落ちるため、明示的に指定する。
+#
+# vz     = Apple Virtualization framework。M シリーズでは qemu より高速。
+# rosetta = amd64 イメージを Rosetta で実行する(vz + Apple Silicon が前提)。
+#           指定しないと amd64 専用イメージが動かない、または極端に遅くなる。
+vmType: vz
+rosetta: true
+mountType: virtiofs
+
+# --- コンテナランタイム -------------------------------------
+# docker / containerd / incus から選択。docker CLI を使うため docker。
+runtime: docker
+
+# Kubernetes は使うときに `colima start --kubernetes` で有効化する。
+kubernetes:
+  enabled: false

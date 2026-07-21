@@ -13,5 +13,19 @@ export PATH="/opt/homebrew/opt/libpq/bin:${PATH}"
 
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
+
+# Docker
+# 既定は ~/.docker。CLI プラグイン(docker compose)の探索先も
+# $DOCKER_CONFIG/cli-plugins になるため、mise の postinstall が張る
+# symlink の位置とここの値は必ず一致させること。
+export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/docker"
+
+# Lima
+# 既定は ~/.lima。VM イメージと実行時の状態を持つので config ではなく data 側へ。
+# colima も自分の VM をここに作る(colima 0.3.0 以降は LIMA_HOME を尊重する)。
+export LIMA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/lima"
+
+# colima 自体は環境変数を設定しない。既定で $XDG_CONFIG_HOME/colima を使うため。
+# ただし ~/.colima が存在すると XDG を無視してそちらを使う仕様なので作らないこと。
 {{ end }}
 

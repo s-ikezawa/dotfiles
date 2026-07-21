@@ -20,6 +20,25 @@ uv = "latest"
 "github:ogulcancelik/herdr" = "latest"
 "github:modem-dev/hunk" = "latest"
 
+# Docker
+"aqua:docker/cli" = "latest"
+# aqua の compose は docker-cli-plugin-docker-compose という名前で入るため、
+# そのままでは docker が CLI プラグインとして認識せず `docker compose` が使えない。
+# postinstall で $DOCKER_CONFIG/cli-plugins/ に symlink を張って解決する。
+# インストール・更新のたびに再実行されるので、リンク先は常に最新版を指す。
+"aqua:docker/compose" = {
+  version = "latest",
+  postinstall = '''
+mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins" &&
+ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-compose" \
+        "${XDG_CONFIG_HOME:-$HOME/.config}/docker/cli-plugins/docker-compose"
+'''
+}
+# colima はコンテナの実行基盤(VM)。VM の管理には limactl を PATH から呼ぶため
+# lima も必須(欠けると colima list が exit status 1 で落ちる)。
+"aqua:lima-vm/lima" = "latest"
+"aqua:abiosoft/colima" = "latest"
+
 # Other CLI Tools
 "aqua:aws/aws-cli" = "latest"
 "vfox:jdx/vfox-eza" = "latest"
