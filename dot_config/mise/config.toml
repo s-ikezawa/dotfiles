@@ -13,6 +13,7 @@ uv = "latest"
 
 # shell拡張
 "github:rossmacarthur/sheldon" = "latest"
+"aqua:junegunn/fzf" = "latest"
 "aqua:starship/starship" = "latest"
 
 # Terminal拡張
