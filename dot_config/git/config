@@ -1,0 +1,47 @@
+# =============================================================
+#  Git 設定(XDG 準拠 / ~/.config/git/config)
+# =============================================================
+#  ユーザー識別情報(user.name / user.email)はここには置かない。
+#  リポジトリごとに .git/config で設定し、仕事用と個人用を取り違えないようにする。
+#
+#  なお macOS の Apple Git は Xcode 同梱の
+#  /Applications/Xcode.app/Contents/Developer/usr/share/git-core/gitconfig で
+#  credential.helper = osxkeychain と init.defaultBranch = main を設定している。
+#  Homebrew 版 git などに乗り換えるとそれらは効かなくなる点に注意。
+
+[init]
+	# Xcode 同梱の設定と重複するが、git の実体が変わっても main を維持するため明示する。
+	defaultBranch = main
+
+[core]
+	# 既定では非 ASCII のファイル名が "\346\227\245..." とエスケープされる。
+	# 日本語のファイル名をそのまま読めるようにする。
+	quotepath = false
+
+[push]
+	# 新規ブランチの初回 push で --set-upstream を打たなくて済む。
+	autoSetupRemote = true
+
+[fetch]
+	# リモートで削除済みのブランチの追跡参照を自動的に掃除する。
+	prune = true
+
+[pull]
+	# 履歴が分岐しているとき、git pull が黙ってマージコミットを作るのを防ぐ。
+	# 早送りできない場合はエラーになるので、そこで --rebase / --no-rebase を
+	# 明示的に選ぶ。merge と rebase のどちらかに寄せる設定ではなく、
+	# 「暗黙に決めさせない」ための設定。
+	ff = only
+
+[diff]
+	# 既定の myers より、移動や整形を伴う変更で読みやすい差分になる。
+	algorithm = histogram
+
+[merge]
+	# コンフリクト時に「共通の祖先」も表示する 3-way 形式。
+	# 双方が何を変えたのか判断できるため、解決を誤りにくい。
+	conflictstyle = zdiff3
+
+[commit]
+	# コミットメッセージ編集時に、コミット対象の差分をエディタ下部に表示する。
+	verbose = true
