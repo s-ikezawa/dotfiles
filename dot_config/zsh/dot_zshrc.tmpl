@@ -55,3 +55,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     eval "$(sheldon source)"
   fi
 fi
+
+# プロンプト(starship)。設定は $XDG_CONFIG_HOME/starship.toml。
+# zsh のウィジェットを書き換えるプラグイン(sheldon 経由)より後に初期化する。
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi
