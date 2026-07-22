@@ -27,5 +27,18 @@ export LIMA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/lima"
 
 # colima 自体は環境変数を設定しない。既定で $XDG_CONFIG_HOME/colima を使うため。
 # ただし ~/.colima が存在すると XDG を無視してそちらを使う仕様なので作らないこと。
+
+# docker CLI は docker context 経由で colima を見つけられるが、**context を解釈しないツール**がある。
+# 代表が Testcontainers(Java)で、DOCKER_HOST が無いと
+# "Could not find a valid Docker environment" で落ち、Gradle の統合テストが全滅する。
+# socket が実在するときだけ設定する(colima 未導入/停止中の別マシンでは何もしない)。
+#
+# TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE は Ryuk コンテナへ socket を bind mount するときの
+# **VM 内パス**を指定するもの。ホスト側のパス($XDG_CONFIG_HOME/colima/...)は lima VM 内に
+# 存在しないため、これが無いと Ryuk が起動できない。VM 内では /var/run/docker.sock。
+if [ -S "${XDG_CONFIG_HOME:-$HOME/.config}/colima/default/docker.sock" ]; then
+  export DOCKER_HOST="unix://${XDG_CONFIG_HOME:-$HOME/.config}/colima/default/docker.sock"
+  export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE="/var/run/docker.sock"
+fi
 {{ end }}
 
