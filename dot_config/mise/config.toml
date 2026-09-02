@@ -49,6 +49,22 @@ eza = "latest"
 # Ctrl-R / Ctrl-T のキーバインドは .zshrc の `fzf --zsh` で読み込む。
 fzf = "latest"
 
+# 検索。ripgrep(rg) は grep、fd は find の代替で、どちらも .gitignore を既定で尊重する。
+# fd は fzf の裏でも効く（.zshrc の FZF_DEFAULT_COMMAND）。既定の find のままだと
+# Ctrl-T が node_modules や .git まで舐めて実用にならない。
+ripgrep = "latest"
+fd = "latest"
+
+# JSON。gh / docker / colima の出力を扱うのに要る。
+jq = "latest"
+
+# cd 履歴へのジャンプ（z <部分文字列>）。.zshrc で init する。
+# zi は候補選択に fzf を使うので、fzf とセットで効く。
+zoxide = "latest"
+
+# 色付き cat。fzf のプレビュー（.zshrc の FZF_CTRL_T_OPTS）に使う。
+bat = "latest"
+
 # コンテナ。Docker Desktop は使わず、colima が lima 上に建てた VM の中で
 # docker daemon を動かし、ホストからは docker CLI だけで喋る。
 #

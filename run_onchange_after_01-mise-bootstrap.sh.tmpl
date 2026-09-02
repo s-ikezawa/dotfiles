@@ -8,6 +8,22 @@ export PATH="${HOME}/.local/bin:${PATH}"
 
 command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
 
+# リポジトリ内のソース設定を mise の探索対象から外す。
+#
+# mise はカレントから親を遡って mise/config.toml を探すため、chezmoi のソースにある
+# dot_config/mise/config.toml（配置前のこのリポジトリ自身のファイル）をプロジェクト
+# 設定として拾う。postinstall や tasks を含む設定には trust が要るので untrusted
+# エラーになり、**リポジトリ内に cd している間 mise の shim が軒並み落ちる**
+# (rg / fd / eza / docker …)。
+#
+# 下の mise install より前に置くこと。mise install は「実行対象の設定を自動で trust
+# する」ので、順序が逆だとソース側の設定が trust されて二重に読まれる。
+# 設定ファイルの settings.ignored_config_paths でも同じことを狙えるが、
+# 設定の読み込み順の都合で効かなかった（環境変数 MISE_IGNORED_CONFIG_PATHS なら効く）。
+# 記録先は ~/.local/state/mise/ignored-configs で、冪等に何度でも実行してよい。
+log "mise trust --ignore (chezmoi のソース設定)"
+mise trust --ignore "{{ .chezmoi.sourceDir }}/dot_config/mise/config.toml" >/dev/null
+
 # [tools] の言語ランタイム・CLI
 log "mise install"
 mise install

@@ -22,6 +22,11 @@ export SHELL_SESSIONS_DISABLE=1
 # less はディレクトリを掘らないので、.zshrc 側で mkdir している。
 export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 
+# bat の配色。ターミナル（Ghostty）と揃えて Catppuccin Mocha にしている。
+# bat は 8 色の ANSI ではなく自前のテーマを持つので、ここで明示しないと追従しない。
+# 使えるテーマ名は `bat --list-themes` で確認できる。
+export BAT_THEME="Catppuccin Mocha"
+
 # ---------------------------------------------------------------------------
 # コンテナ（colima / docker）
 #

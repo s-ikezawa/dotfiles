@@ -169,7 +169,30 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --oneline --color=always $realp
 # fzf も ^I を fzf-completion に奪うが、読み込み時に既存の ^I バインドを
 # fzf_default_completion として控え、`**` トリガが無いときはそちらへ委譲する。
 # fzf-tab を先に読んであるので、素の Tab は fzf-tab、`**`+Tab は fzf のパス補完になる。
+#
+# 候補の列挙を find から fd に差し替える。fzf の既定は find なので、
+# そのままだと Ctrl-T が node_modules や .git まで舐めて使いものにならない。
+# fd は .gitignore を既定で尊重する。--hidden はドットファイルも対象にする指定で、
+# .git だけは明示的に外す（中を見たいことはまず無いため）。
+#
+# FZF_* を .zshenv ではなくここに置いているのは、Ctrl-T / Alt-C 用の設定と
+# 同じ場所に並べたほうが読めるため。fzf を使うのは対話シェルだけでもある。
+if (( $+commands[fd] )); then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
+fi
+# Ctrl-T の候補をプレビューする。--style=numbers で行番号だけ付ける。
+(( $+commands[bat] )) && \
+  export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=numbers {}"'
+
 (( $+commands[fzf] )) && eval "$(fzf --zsh)"
+
+# cd 履歴へのジャンプ（z <部分文字列> / zi で候補選択）。補完を compdef で
+# 登録するので compinit の後に置く。zi の候補選択には fzf が使われる。
+# cd 自体は置き換えない（--cmd cd を付けていない）ので、既存の auto_cd や
+# ../- はそのまま効く。
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # 履歴からインラインで候補をサジェストする（灰色表示 / → または End で確定）。
 [[ -r "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&

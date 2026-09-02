@@ -128,6 +128,7 @@ fpath に share/zsh-completions を足す   ← compinit より前
 compinit
 fzf-tab                                 ← compinit の後。補完ウィジェットを置き換える
 fzf --zsh                               ← ウィジェットを定義する側。包む側より先
+zoxide init                             ← compdef を使うので compinit の後
 zsh-autosuggestions                     ← 既存ウィジェットをラップする
 zsh-syntax-highlighting                 ← 他プラグインのウィジェットも包むので必ず最後
 ```
@@ -144,6 +145,9 @@ fzf-tab を先に読んでいるので、素の Tab は fzf-tab、`**`+Tab は f
   できなくなるため `menu no` にしてある
 - fzf は zsh プラグインではなくバイナリなので mise の `[tools]`。
   キーバインドは `fzf --zsh`（0.48 以降は本体が吐く）
+- fzf の候補列挙は `FZF_DEFAULT_COMMAND` で `fd` に差し替えてある。既定の `find` だと
+  `node_modules` や `.git` まで舐める。`FZF_*` を `.zshenv` ではなく `.zshrc` に
+  置いているのは、Ctrl-T / Alt-C の設定と並べて読めるようにするため
 - 各 `source` は `[[ -r … ]]` で守る。`mise bootstrap` 前のマシンでも
   `.zshrc` が壊れないようにするため
 
@@ -282,6 +286,13 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
 - macOS 専用の処理は `{{ if eq .chezmoi.os "darwin" }}` で囲む
 - `killall` は対象プロセスが居ないと 1 を返す。`set -e` 下では
   `killall X 2>/dev/null || true` にしないとスクリプトが落ちる
+- **リポジトリ内では mise の shim が落ちうる。** mise は親を遡って `mise/config.toml`
+  を探すため、ソースの `dot_config/mise/config.toml` をプロジェクト設定として拾い、
+  trust が要る内容（postinstall / tasks）なので untrusted エラーで `rg` / `fd` /
+  `eza` / `docker` などが軒並み失敗する。`run_onchange_after_01-mise-bootstrap.sh` の
+  先頭で `mise trust --ignore` している。**`mise install` より前**に置くこと
+  （install は対象の設定を自動で trust するため）。
+  `settings.ignored_config_paths` は設定ファイル経由では効かなかった
 - `curl | sh` は必ず `-fsSL` を付ける（`-f` が無いと HTTP エラー本文が sh に流れる）
 - **Homebrew の installer は `NONINTERACTIVE=1` のとき `sudo -n`(パスワードを聞かない)で
   権限を確認する。** 認証情報がキャッシュされていないと、管理者であっても

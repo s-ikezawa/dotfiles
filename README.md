@@ -58,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 | before | `run_once_before_04-claude-code.sh.tmpl` | Claude Code |
 | before | `run_once_before_05-rosetta.sh.tmpl` | Rosetta 2（Apple Silicon のみ・sudo が要る） |
 | 適用 | `dot_*` / `private_*` / `executable_*` | 設定ファイルを `$HOME` に配置（個別のファイルは列挙しない） |
-| after | `run_onchange_after_01-mise-bootstrap.sh.tmpl` | `mise install` + `mise bootstrap packages apply` + `mise bootstrap macos defaults apply` |
+| after | `run_onchange_after_01-mise-bootstrap.sh.tmpl` | `mise trust --ignore`（ソース設定の除外）+ `mise install` + `mise bootstrap packages apply` + `mise bootstrap macos defaults apply` |
 
 before で入れたバイナリの上に設定ファイルが配置され、その設定を読んで after が走る、
 という 3 段構え。設定ファイルは増えてもこの順序は変わらないので個別には並べない。
