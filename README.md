@@ -59,17 +59,33 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 | 適用 | `dot_zshenv` → `~/.zshenv` | `ZDOTDIR` を `~/.config/zsh` に向ける |
 | 適用 | `dot_config/zsh/dot_zshenv` → `~/.config/zsh/.zshenv` | XDG / 環境変数 / PATH の定義 |
 | 適用 | `dot_config/zsh/dot_zprofile` → `~/.config/zsh/.zprofile` | path_helper 後に PATH の並び順を確定 |
-| after | `run_onchange_after_01-macos-defaults.sh.tmpl` | `defaults write` による macOS 設定（キーボード / Finder / Dock / ステージマネージャ） |
+| 適用 | `dot_config/mise/config.toml` → `~/.config/mise/config.toml` | mise の宣言（tools / packages / macOS defaults） |
+| after | `run_onchange_after_01-mise-bootstrap.sh.tmpl` | `mise install` + `mise bootstrap packages apply` + `mise bootstrap macos defaults apply` |
 
-**after フェーズは macOS 設定のみ。** 追加予定:
+after フェーズは `mise bootstrap` の 1 本のみ。パッケージも macOS 設定も
+`~/.config/mise/config.toml` に宣言として集約してあるので、増えてもスクリプトは増えない。
 
-| 予定 | 内容 |
-|---|---|
-| `run_onchange_after_02-...` | `brew bundle`（formula / cask / mas） |
-| `run_onchange_after_03-...` | `mise install`（言語ランタイム・CLI 一式） |
+### mise と chezmoi の分担
 
-そのため**現時点ではパッケージ・ツールは何も入らない**。Homebrew / mise / Claude Code の
-バイナリだけが入った状態になる。
+**パッケージ導入と macOS 設定は mise、設定ファイルの配置は chezmoi。**
+
+| | 担当 | 実体 |
+|---|---|---|
+| 言語ランタイム・CLI | mise | `[tools]` |
+| formula / cask / mas | mise | `[bootstrap.packages]` |
+| `defaults write` | mise | `[bootstrap.macos.defaults]` |
+| 設定ファイルの配置 | chezmoi | `dot_*` |
+| 環境構築スクリプト | chezmoi | `run_*` |
+
+`mise bootstrap` は dotfiles 配置の機能（`[dotfiles]`）も持っているが**使わない**。
+テンプレートが無く、`.chezmoi.os` での OS 分岐や `private_` / `executable_` の属性、
+`run_once_` が書けないため。Linux でも同じ dotfiles を使う以上、配置は chezmoi が勝つ。
+
+Brewfile は使わない。mise の `brew` / `brew-cask` は Homebrew を呼ばず、
+Homebrew API から直接取得して `/opt/homebrew` に展開する再実装なので、
+**Homebrew 未インストールでも動く**。ただし `brew services` が未実装、
+cask の対応 artifact が限定的、といった制約がある（下の「注意点」を参照）。
+Homebrew 本体は逃げ道として残してある。
 
 設定ファイルも zsh の `.zshenv` / `.zprofile` だけ。`.zshrc` や nvim / git / tmux などは
 必要になった時点で追加していく。
@@ -197,8 +213,16 @@ chezmoi apply
 
 - **macOS の設定は再ログインで反映される**ものがある（キーリピート、Tab でのコントロール移動、
   ライブ変換の無効化など）。Finder / Dock / ステージマネージャは `killall` で即時反映される
-- **`mas "Xcode"` は App Store にサインイン済みであること**が前提。未サインインだと
-  `brew bundle` が失敗する
+- **`mas:` は App Store にサインイン済みであること**が前提。`mas` CLI も別途必要
+- **mise の brew は Homebrew の再実装**。次が効かないので注意:
+  `brew services` は未実装 / cask は app bundle・binary・font・単純な pkg のみ /
+  `packages import` は formula 専用（cask は手書き）/ `packages prune` も cask は限定的 /
+  app bundle の差し替えで **TCC 権限が失効しうる**
+- **`[bootstrap.macos.defaults]` の値は int / bool / string / float のみ。**
+  array / dict / date / data は警告付きでスキップされる。
+  `defaults -currentHost` と sudo が要るシステムドメインも非対応
+- **mise はアプリを kill しない。** Finder / Dock の反映は
+  `[bootstrap.hooks.post-defaults]` の `killall` で自前でやっている
 - `defaults write com.apple.finder` などは、実行元ターミナルに**フルディスクアクセス**が
   無いと静かに無視されることがある
 - zsh の設定は 3 ファイル構成。

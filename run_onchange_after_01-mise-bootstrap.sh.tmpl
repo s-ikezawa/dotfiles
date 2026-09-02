@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+# config.toml のハッシュを埋め込んで、設定を変えたときだけ再実行させる。
+# mise config sha256: {{ include "dot_config/mise/config.toml" | sha256sum }}
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
+
+# [tools] の言語ランタイム・CLI
+log "mise install"
+mise install
+
+# [bootstrap.packages] のホストパッケージ。os キーで OS ごとに絞られる。
+log "mise bootstrap packages apply"
+mise bootstrap packages apply --yes
+
+{{ if eq .chezmoi.os "darwin" -}}
+# [bootstrap.macos.defaults] と post-defaults フック(killall)
+log "mise bootstrap macos defaults apply"
+mise bootstrap macos defaults apply --yes
+
+log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
+{{ end -}}
