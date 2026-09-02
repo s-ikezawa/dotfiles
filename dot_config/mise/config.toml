@@ -58,6 +58,12 @@ fd = "latest"
 # JSON。gh / docker / colima の出力を扱うのに要る。
 jq = "latest"
 
+# AWS CLI v2。認証は IAM Identity Center（`aws sso login`）で行い、アクセスキーは
+# 置かない。プロファイルの実体は ~/.aws/config で、chezmoi では管理しない
+# （SSO の開始 URL・アカウント ID・ロール名は勤務先が分かる情報で、このリポジトリは
+# public のため）。作るのは `aws configure sso`。
+awscli = "latest"
+
 # 秘密情報の検出。git の pre-commit フック（dot_config/git/hooks/pre-commit）から
 # 呼んでいる。このリポジトリが public で、メールアドレスや組織名を dot_* に
 # 書かない運用をしているため、人間の注意力ではなく機械で止める。

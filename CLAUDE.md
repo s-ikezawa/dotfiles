@@ -324,6 +324,12 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
   先頭で `mise trust --ignore` している。**`mise install` より前**に置くこと
   （install は対象の設定を自動で trust するため）。
   `settings.ignored_config_paths` は設定ファイル経由では効かなかった
+- **AWS CLI の設定は `~/.aws` のまま。** このリポジトリは XDG に寄せる方針だが、
+  ここは例外。`AWS_CONFIG_FILE` で移せても、SDK や terraform のように環境変数を
+  継がずに `~/.aws/config` を直接読む経路があり、設定が二重化するため。
+  プロファイル（SSO の開始 URL・アカウント ID・ロール名）は勤務先が分かる情報なので
+  **リポジトリでは管理しない**。各マシンで `aws configure sso` を実行して作り、
+  認証は `aws sso login`。アクセスキーは置かない
 - `curl | sh` は必ず `-fsSL` を付ける（`-f` が無いと HTTP エラー本文が sh に流れる）
 - **Homebrew の installer は `NONINTERACTIVE=1` のとき `sudo -n`(パスワードを聞かない)で
   権限を確認する。** 認証情報がキャッシュされていないと、管理者であっても

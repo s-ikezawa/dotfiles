@@ -74,6 +74,14 @@ zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 小文字入力で大文字にもマッチ
 zstyle ':completion:*' group-name ''                # 種類ごとに候補をまとめる
 zstyle ':completion:*:descriptions' format '%F{yellow}%B%d%b%f'
+# AWS CLI v2 は zsh 用の補完関数を持たず、bash 互換の completer を呼ぶ方式。
+# bashcompinit を読んでから complete -C で登録する（compinit の後であること）。
+# aws_completer は mise の shim として PATH に居るので絶対パスは書かない。
+if (( $+commands[aws_completer] )); then
+  autoload -Uz bashcompinit && bashcompinit
+  complete -C aws_completer aws
+fi
+
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh/zcompcache"
 
