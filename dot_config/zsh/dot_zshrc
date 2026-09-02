@@ -94,6 +94,11 @@ alias ll='ls -lh'
 alias la='ls -lha'
 alias grep='grep --color=auto'
 
+# tree は macOS に入っていないので eza で代用する（実体は mise の [tools]）。
+# ls / ll / la は GNU 版のまま。eza に寄せると --color 以外のフラグも
+# 別物になるので、今は tree だけを置き換えている。
+alias tree='eza --tree'
+
 # ---------------------------------------------------------------------------
 # プロンプト
 #
