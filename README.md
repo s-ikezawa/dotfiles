@@ -56,6 +56,7 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 | before | `run_once_before_02-homebrew.sh.tmpl` | Homebrew 本体 |
 | before | `run_once_before_03-mise.sh.tmpl` | mise 本体 |
 | before | `run_once_before_04-claude-code.sh.tmpl` | Claude Code |
+| before | `run_once_before_05-rosetta.sh.tmpl` | Rosetta 2（Apple Silicon のみ・sudo が要る） |
 | 適用 | `dot_*` / `private_*` / `executable_*` | 設定ファイルを `$HOME` に配置（個別のファイルは列挙しない） |
 | after | `run_onchange_after_01-mise-bootstrap.sh.tmpl` | `mise install` + `mise bootstrap packages apply` + `mise bootstrap macos defaults apply` |
 
@@ -206,8 +207,9 @@ CPU とメモリはホストの半分を上限として `sysctl` の値から算
 - **ホストの `/tmp` は VM の `/tmp` に化ける。** `/private/tmp`（`realpath` 済みの表記）
   を使うこと
 - コンテナ内で非 root ユーザー（devcontainer の uid 1000）でも書き込める
-- amd64 のイメージは Rosetta2 が入っていれば速く、無ければ qemu で遅く動く。
-  入れるなら `sudo softwareupdate --install-rosetta --agree-to-license` を一度だけ
+- amd64 のイメージは Rosetta 2 が入っていれば速く、無ければ qemu で遅く動く
+  （実測で 2 倍以上の差）。導入は `run_once_before_05-rosetta.sh` が自動でやるが、
+  **sudo の認証を 1 度求められる**。VM を作った後に入れた場合は `colima restart` が要る
 - VM の設定を変えたときは `colima delete` → `colima start` で作り直す。
   テンプレートは**初回起動時にしか読まれない**（詳細は `CLAUDE.md`）
 

@@ -217,13 +217,21 @@ Docker Desktop は使わない。colima が lima 上に建てた VM の中で do
 
 ### amd64 イメージ
 
-`rosetta: true` にしてあるが、Rosetta2 が入っていないと起動時に警告が出て
-qemu の binfmt に落ちる（遅いが動く。`--platform linux/amd64` で `uname -m` が
-`x86_64` になることは確認済み）。速くするには一度だけ次を実行して `colima restart`。
+`rosetta: true` にしてある。Rosetta 2 本体は `run_once_before_05-rosetta.sh` が
+`softwareupdate --install-rosetta --agree-to-license` で入れる（`softwareupdate` は
+root が要るので、02-homebrew と同じく先に `sudo -v` で認証する）。
 
-```sh
-sudo softwareupdate --install-rosetta --agree-to-license
-```
+mise の postinstall ではなく before フェーズのスクリプトにしているのは、
+mise が管理するパッケージではないこと、postinstall は colima を上げ直すたびに
+走ること、after フェーズで sudo を求めると `mise install` のログに埋もれること、
+の 3 点による。
+
+Rosetta が無くても qemu の binfmt に落ちて動く（`--platform linux/amd64` で
+`uname -m` が `x86_64` になる）が、実測で 2 倍以上遅い。
+
+**VM は作成・起動時に Rosetta を掴む。** 後から入れたときは `colima restart` するまで
+qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rosetta` が
+現れるかで判別できる）。
 
 ## 秘密情報とマシン固有の値
 
