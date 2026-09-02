@@ -70,6 +70,13 @@ PATH を足すときはこの関数を編集する。`typeset -U path` で重複
 - `killall` は対象プロセスが居ないと 1 を返す。`set -e` 下では
   `killall X 2>/dev/null || true` にしないとスクリプトが落ちる
 - `curl | sh` は必ず `-fsSL` を付ける（`-f` が無いと HTTP エラー本文が sh に流れる）
+- **Homebrew の installer は `NONINTERACTIVE=1` のとき `sudo -n`(パスワードを聞かない)で
+  権限を確認する。** 認証情報がキャッシュされていないと、管理者であっても
+  `Need sudo access on macOS ...` で即 abort する。事前に `sudo -v` で認証しておくこと
+- `defaults write` は**ユーザードメイン（`NSGlobalDomain` / `com.apple.finder` /
+  `com.apple.dock` / `com.apple.WindowManager` など）なら sudo 不要**。
+  実体は `~/Library/Preferences/*.plist` でユーザー所有。
+  sudo が要るのは `/Library/Preferences/` 配下や `nvram` / `systemsetup` / `scutil --set` など
 
 ## 変更後の確認
 

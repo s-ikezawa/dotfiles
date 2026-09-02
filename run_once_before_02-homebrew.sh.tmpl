@@ -5,8 +5,31 @@
 if load_brew; then
   skip "Homebrew はインストール済み ($(command -v brew))"
 else
+  # Homebrew の installer は NONINTERACTIVE=1 のとき `sudo -n`(パスワードを聞かない)で
+  # 権限を確認するため、認証情報がキャッシュされていないと管理者であっても
+  #   Need sudo access on macOS (e.g. the user ... needs to be an Administrator)!
+  # で即 abort する。そこで先に一度だけ認証しておく。
+  # sudo はパスワードを stdin ではなく /dev/tty から読むので、
+  # install.sh を `curl | bash` で流していて stdin がパイプでも入力できる。
+  if ! sudo -n true 2>/dev/null; then
+    log "sudo の認証（Homebrew のインストールに必要）"
+    if ! sudo -v; then
+      echo "sudo の認証に失敗しました。管理者アカウントで実行してください。" >&2
+      exit 1
+    fi
+  fi
+
+  # インストールには数分かかる。その間に sudo のタイムアウト(既定 5 分)で
+  # 認証が切れないよう、スクリプトが終わるまで延長し続ける。
+  # 入出力を切り離しているのは、この裏プロセス(と子の sleep)が chezmoi の
+  # 出力パイプを掴んだままになり、スクリプト終了後も待たされるのを防ぐため。
+  while kill -0 "$$" 2>/dev/null && sudo -n true 2>/dev/null; do sleep 30; done \
+    </dev/null >/dev/null 2>&1 &
+  sudo_keepalive_pid=$!
+  # 先に子(sleep)を落としてから親を落とす。逆にすると子が孤児になって残る。
+  trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}" 2>/dev/null; true' EXIT
+
   log "Homebrew をインストール"
-  # NONINTERACTIVE=1 で Enter 待ちを回避する（無人実行のため）。
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   load_brew || { echo "brew を PATH に載せられませんでした" >&2; exit 1; }
