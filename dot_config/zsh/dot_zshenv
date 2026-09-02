@@ -4,8 +4,23 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
+# ロケール。/etc/zprofile は LANG が空のときだけ C.UTF-8 を入れるが、それは
+# ログインシェルのみ。ここで設定しておかないと非ログインシェルが LANG 無しになり、
+# 日本語ファイル名やマルチバイト入力が壊れることがある。
+# GNU ツールのメッセージを英語のままにしたいので ja_JP ではなく en_US を使う。
+export LANG=en_US.UTF-8
+
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
+
+# Terminal.app 用のセッション復元（~/.config/zsh/.zsh_sessions にセッションごとの
+# ヒストリを溜める）を止める。/etc/zshrc から /etc/zshrc_Apple_Terminal が
+# .zshrc より先に読まれるので、.zshrc ではなくここで設定する必要がある。
+export SHELL_SESSIONS_DISABLE=1
+
+# less のヒストリ。放っておくと ~/.lesshst を作る（git のページャ経由でも作られる）。
+# less はディレクトリを掘らないので、.zshrc 側で mkdir している。
+export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 
 # Homebrew(brew shellenv はサブプロセスを起こすので既定パスを直接指定する)
 export HOMEBREW_PREFIX=/opt/homebrew

@@ -1,0 +1,113 @@
+# 対話シェルでのみ読まれる。環境変数と PATH は .zshenv 側。
+#
+#   /etc/zshenv → ~/.zshenv → /etc/zprofile → ~/.zprofile → /etc/zshrc → ~/.zshrc
+#
+# macOS の /etc/zshrc は ~/.zshrc の直前に読まれ、HISTFILE / HISTSIZE / SAVEHIST /
+# PS1 / BEEP / ↑↓ のキーバインドを問答無用で設定する。以下の上書きはそれが前提。
+
+# zsh が書き出すファイルの置き場。run_once_before_01-xdg-dirs.sh でも作っているが、
+# ここが無いとヒストリが黙って捨てられるので .zshrc 単体でも成立させておく。
+# [[ ]] は組み込みなので、既にあれば fork は発生しない。
+[[ -d "${XDG_STATE_HOME}/zsh" ]] || mkdir -p "${XDG_STATE_HOME}/zsh"
+[[ -d "${XDG_CACHE_HOME}/zsh" ]] || mkdir -p "${XDG_CACHE_HOME}/zsh"
+[[ -d "${LESSHISTFILE:h}" ]] || mkdir -p "${LESSHISTFILE:h}"
+
+# ---------------------------------------------------------------------------
+# ヒストリ
+#
+# /etc/zshrc が HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history を設定するため、
+# XDG に寄せるには明示的な上書きが必須（放っておくと ~/.config/zsh/.zsh_history）。
+# cache ではなく state に置くのは、消えても壊れないが消えてほしくはないため。
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
+HISTSIZE=100000   # メモリ上に保持する数
+SAVEHIST=100000   # ファイルに保存する数
+
+setopt extended_history         # 実行時刻と所要時間も記録する
+setopt inc_append_history_time  # シェル終了時ではなくコマンドごとに追記する
+                                # （複数ウインドウの履歴を即座に混ぜたいなら share_history）
+setopt hist_ignore_dups         # 直前と同じコマンドは記録しない
+setopt hist_ignore_space        # 空白で始めたコマンドは記録しない
+setopt hist_reduce_blanks       # 余分な空白を詰めて記録する
+setopt hist_find_no_dups        # 検索時に同じ候補を続けて出さない
+setopt hist_verify              # !! などのヒストリ展開を即実行せず一度行に出す
+setopt hist_no_store            # history コマンド自体は記録しない
+
+# ---------------------------------------------------------------------------
+# シェルの挙動
+setopt auto_cd                # ディレクトリ名だけで cd する（.. や - も効く）
+setopt auto_pushd             # cd を自動で pushd し、cd -<Tab> で戻れる
+setopt pushd_ignore_dups
+setopt pushd_silent           # pushd/popd でスタックを表示しない
+DIRSTACKSIZE=20
+
+setopt extended_glob          # ^ ~ # をグロブで使う（(N) や (.mh-24) もこれ）
+setopt interactive_comments   # 対話シェルでも # 以降をコメント扱いにする
+setopt no_beep                # /etc/zshrc の setopt BEEP を打ち消す
+setopt no_flow_control        # ^S/^Q のフロー制御を切って ^S を使えるようにする
+
+# ---------------------------------------------------------------------------
+# 補完
+#
+# Homebrew が入れる補完関数は compinit より前に fpath へ足す必要がある。
+# fpath は .zshenv で typeset -U 済みなので重複しても消える。
+fpath=("${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
+
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
+# 生成から 24 時間以内なら -C で fpath の再検証を省いて起動を速くする。
+# (#qN.mh-24) = グロブ修飾子。N:該当なしでもエラーにしない mh-24:24時間以内に更新
+if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
+  compinit -C -d "$_zcompdump"
+else
+  compinit -d "$_zcompdump"
+fi
+unset _zcompdump
+
+zstyle ':completion:*' menu select                  # 候補を矢印キーで選ぶ
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 小文字入力で大文字にもマッチ
+zstyle ':completion:*' group-name ''                # 種類ごとに候補をまとめる
+zstyle ':completion:*:descriptions' format '%F{yellow}%B%d%b%f'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh/zcompcache"
+
+# ---------------------------------------------------------------------------
+# キーバインド
+bindkey -e   # emacs キーバインド（EDITOR に依存させない）
+
+# ↑↓ を「入力済みの文字に前方一致するヒストリ検索」にする。
+# /etc/zshrc が terminfo 経由で up-line-or-search を割り当てているのを上書きする。
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search    # ↑（ノーマルモード）
+bindkey '^[OA' up-line-or-beginning-search    # ↑（アプリケーションモード）
+bindkey '^[[B' down-line-or-beginning-search  # ↓
+bindkey '^[OB' down-line-or-beginning-search
+
+# ---------------------------------------------------------------------------
+# エイリアス
+#
+# --color=auto は BSD 版（macOS 標準）・GNU 版（coreutils）どちらの ls も解する。
+# PATH の gnubin が効いていれば GNU 版が使われる。
+alias ls='ls --color=auto'
+alias ll='ls -lh'
+alias la='ls -lha'
+alias grep='grep --color=auto'
+
+# ---------------------------------------------------------------------------
+# プロンプト
+#
+# /etc/zshrc の PS1="%n@%m %1~ %# " を上書きする。
+# vcs_info は precmd ごとに git を呼ぶが、check-for-changes（変更の有無 %u%c）は
+# 大きなリポジトリで目に見えて遅くなるので有効にしていない。
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' %F{magenta}%b%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{magenta}%b%f|%F{red}%a%f'
+_precmd_vcs_info() { vcs_info; }
+precmd_functions+=(_precmd_vcs_info)
+
+setopt prompt_subst  # ${vcs_info_msg_0_} をプロンプト描画のたびに展開する
+# 1 行目にパスと git ブランチ、2 行目に入力欄。直前が異常終了なら % が赤くなる。
+PROMPT='%F{cyan}%~%f${vcs_info_msg_0_}
+%(?.%F{green}.%F{red})%#%f '

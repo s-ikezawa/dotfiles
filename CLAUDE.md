@@ -97,6 +97,23 @@ run_onchange_after_01-brew-bundle.sh →  ターゲット名 01-brew-bundle.sh
 実体は `.zshenv` の `_zsh_setup_path()` 1 箇所。`.zprofile` はそれを呼び直すだけ。
 PATH を足すときはこの関数を編集する。`typeset -U path` で重複は自動的に消える。
 
+## zsh の対話設定
+
+`/etc/zshrc` は `~/.zshrc` の**直前**に読まれ、`HISTFILE` / `HISTSIZE` / `SAVEHIST` /
+`PS1` / `BEEP` / ↑↓ のキーバインドを設定してくる。これらを変えるには `.zshrc` での
+明示的な上書きが要る（消す手段は無い）。
+
+zsh が書き出すものは XDG に寄せてある。追加するときも同じ方針で。
+
+| | 置き場 | 決めているもの |
+|---|---|---|
+| ヒストリ | `$XDG_STATE_HOME/zsh/history` | `.zshrc` の `HISTFILE` |
+| compdump / compcache | `$XDG_CACHE_HOME/zsh/` | `compinit -d` と `cache-path` zstyle |
+| less のヒストリ | `$XDG_STATE_HOME/less/history` | `.zshenv` の `LESSHISTFILE` |
+
+ディレクトリは `run_once_before_01-xdg-dirs.sh` と `.zshrc` 冒頭のガード付き `mkdir` の
+二重で用意している。`run_once_` は初回しか走らないので、`.zshrc` 側を消さないこと。
+
 ## 前提
 
 **Apple Silicon の macOS のみを対象とする。** Intel Mac（`/usr/local` の Homebrew）への

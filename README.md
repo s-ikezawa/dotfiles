@@ -88,7 +88,7 @@ Homebrew API から直接取得して `/opt/homebrew` に展開する再実装�
 cask の対応 artifact が限定的、といった制約がある（下の「注意点」を参照）。
 Homebrew 本体は逃げ道として残してある。
 
-設定ファイルも zsh の `.zshenv` / `.zprofile` だけ。`.zshrc` や nvim / git / tmux などは
+設定ファイルも zsh の `.zshenv` / `.zprofile` / `.zshrc` だけ。nvim / git / tmux などは
 必要になった時点で追加していく。
 
 **フェーズの使い分け**:
@@ -251,15 +251,35 @@ chezmoi apply
   `[bootstrap.hooks.post-defaults]` の `killall` で自前でやっている
 - `defaults write com.apple.finder` などは、実行元ターミナルに**フルディスクアクセス**が
   無いと静かに無視されることがある
-- zsh の設定は 3 ファイル構成。
+- zsh の設定は 4 ファイル構成。
 
   | ファイル | 役割 |
   |---|---|
   | `dot_zshenv` → `~/.zshenv` | `ZDOTDIR` を設定し、本体を `source` するだけのブートストラップ |
   | `dot_config/zsh/dot_zshenv` → `~/.config/zsh/.zshenv` | 環境変数と PATH。**全てのシェル**で読まれる |
   | `dot_config/zsh/dot_zprofile` → `~/.config/zsh/.zprofile` | PATH の並び順を確定。**ログインシェルのみ** |
+  | `dot_config/zsh/dot_zshrc` → `~/.config/zsh/.zshrc` | ヒストリ・補完・キーバインド・プロンプト。**対話シェルのみ** |
 
   zsh は `.zshenv` を 1 度しか読まないため、`~/.zshenv` の `source` が無いと本体が読まれない
+- **`/etc/zshrc` は `~/.zshrc` の直前に読まれ、`HISTFILE` / `HISTSIZE` / `SAVEHIST` /
+  `PS1` / `BEEP` / ↑↓ のキーバインドを設定してくる。** つまり黙っていると
+  ヒストリは `$ZDOTDIR/.zsh_history`（= `~/.config/zsh/.zsh_history`）に 1000 行だけ残る。
+  変えたいものは `.zshrc` で明示的に上書きすること（`setopt no_beep` もこれが理由）
+- **zsh が書き出すファイルは XDG に寄せてある。**
+
+  | | 置き場 |
+  |---|---|
+  | コマンドヒストリ | `$XDG_STATE_HOME/zsh/history` |
+  | 補完のキャッシュ | `$XDG_CACHE_HOME/zsh/zcompdump`、`$XDG_CACHE_HOME/zsh/zcompcache` |
+  | less のヒストリ | `$XDG_STATE_HOME/less/history`（`LESSHISTFILE`。既定は `~/.lesshst`）|
+
+  ディレクトリは `run_once_before_01-xdg-dirs.sh` が掘るが、`.zshrc` 冒頭にも
+  ガード付きの `mkdir` がある。無いとヒストリが黙って捨てられるため
+- `compinit` は 24 時間以内に `zcompdump` を作っていれば `-C` で `fpath` の再検証を飛ばす。
+  補完関数を追加したのに補完が出ないときは `rm $XDG_CACHE_HOME/zsh/zcompdump` して開き直す
+- **`LANG` は `.zshenv` で `en_US.UTF-8` に固定している。** `/etc/zprofile` は `LANG` が
+  空のときだけ `C.UTF-8` を入れるが、それはログインシェルのみ。
+  非ログインシェルが `LANG` 無しになるとマルチバイトの扱いが壊れる
 - **PATH を `.zshenv` と `.zprofile` の両方で組んでいる理由**:
   macOS の `/etc/zprofile` は `path_helper` を実行して `/etc/paths` と `/etc/paths.d/*` から
   PATH を作り直し、**`.zshenv` で先頭に置いたパスを末尾へ回してしまう**。
