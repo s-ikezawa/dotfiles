@@ -125,7 +125,7 @@ dot_config/git/config.tmpl 等
 
 値の解決は二段構え。
 
-1. `op`（1Password CLI）があれば `op://Private/git-identity/…` から読む
+1. `op`（1Password CLI）があれば `op://MainVault/git-identity/…` から読む
 2. 取れなければ対話プロンプトで聞く（`promptStringOnce`）
 
 **新品の Mac では必ず 2 が走る。** `.chezmoi.toml.tmpl` は `chezmoi init` の最初に
@@ -145,10 +145,11 @@ chezmoi init \
   --promptString '会社用 gitdir（末尾に / を付ける）=~/Projects/github.com/<org>/'
 ```
 
-1Password 側に置く項目（vault: Private、item: `git-identity`）:
+1Password 側に置く項目（vault: `MainVault`、item: `git-identity`）:
 
 | フィールド | 中身 |
 |---|---|
+| `name` | コミット時の名前（無ければテンプレート内の既定値） |
 | `personal-email` | 個人用のコミットアドレス |
 | `work-email` | 会社用のコミットアドレス（不要なら作らない） |
 | `work-gitdir` | 会社用 identity を使う gitdir（例 `~/Projects/github.com/<org>/`）|

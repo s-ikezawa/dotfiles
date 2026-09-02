@@ -14,8 +14,17 @@
 # chezmoi init 全体を落とさないため（output は非 0 終了でテンプレートを失敗させる）。
 # 空が返ればプロンプトにフォールバックする。
 
-{{ $item := "op://Private/git-identity" -}}
+{{ $item := "op://MainVault/git-identity" -}}
 {{- $hasOp := ne (lookPath "op") "" -}}
+
+{{/* コミット時の名前。公開情報なのでプロンプトは用意せず、金庫に無ければ既定値。 */}}
+{{- $name := "" -}}
+{{- if $hasOp -}}
+{{-   $name = output "sh" "-c" (printf "op read '%s/name' 2>/dev/null || true" $item) | trim -}}
+{{- end -}}
+{{- if eq $name "" -}}
+{{-   $name = "Shinichi Ikezawa" -}}
+{{- end -}}
 
 {{/* 個人用のコミットアドレス */}}
 {{- $personalEmail := "" -}}
@@ -61,6 +70,7 @@
 {{- end -}}
 
 [data.git]
+name = {{ $name | quote }}
 personalEmail = {{ $personalEmail | quote }}
 workEmail = {{ $workEmail | quote }}
 workGitdir = {{ $workGitdir | quote }}
