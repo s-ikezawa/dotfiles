@@ -17,6 +17,23 @@ log "mise bootstrap packages apply"
 mise bootstrap packages apply --yes
 
 {{ if eq .chezmoi.os "darwin" -}}
+# zsh の compinit は、fpath に入れたディレクトリとその親が group 書き込み可だと
+# 「insecure directories」として検出し、[ynq] を対話で聞いてくる。
+# Homebrew の /opt/homebrew/share は既定で 775(admin 書き込み可)なので、
+# .zshrc が share/zsh-completions を fpath に足した時点で該当する。
+# 単一ユーザーの Mac に実害は無いが、新品のマシンで最初にシェルを開いた瞬間に
+# プロンプトが出るのは避けたいので group の w を落とす。
+# share/zsh/site-functions は親が share/zsh(755)なので元から引っかからない。
+if [[ -d /opt/homebrew/share ]]; then
+  log "chmod g-w /opt/homebrew/share (compinit の insecure directories 対策)"
+  chmod g-w /opt/homebrew/share
+fi
+
+# compinit のダンプを捨てて次のシェル起動で作り直させる。
+# .zshrc は 24 時間以内のダンプなら -C で fpath を再検証しないため、
+# 消さないと今入れた formula の補完が最大 1 日出てこない。
+rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+
 # [bootstrap.macos.defaults] と post-defaults フック(killall)
 log "mise bootstrap macos defaults apply"
 mise bootstrap macos defaults apply --yes

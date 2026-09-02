@@ -48,9 +48,14 @@ setopt no_flow_control        # ^S/^Q のフロー制御を切って ^S を使�
 # ---------------------------------------------------------------------------
 # 補完
 #
-# Homebrew が入れる補完関数は compinit より前に fpath へ足す必要がある。
+# 補完関数は compinit より前に fpath へ足す必要がある。site-functions は各 formula が
+# 置く分、zsh-completions は zsh 本体に同梱されない補完定義集（別ディレクトリ）。
 # fpath は .zshenv で typeset -U 済みなので重複しても消える。
-fpath=("${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
+fpath=(
+  "${HOMEBREW_PREFIX}/share/zsh/site-functions"
+  "${HOMEBREW_PREFIX}/share/zsh-completions"
+  $fpath
+)
 
 autoload -Uz compinit
 _zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
@@ -63,7 +68,9 @@ else
 fi
 unset _zcompdump
 
-zstyle ':completion:*' menu select                  # 候補を矢印キーで選ぶ
+# 候補選択は fzf-tab に任せるので zsh 本体のメニューは出さない。
+# menu select のままだと fzf-tab が候補を横取りできず、両方が二重に効く。
+zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 小文字入力で大文字にもマッチ
 zstyle ':completion:*' group-name ''                # 種類ごとに候補をまとめる
 zstyle ':completion:*:descriptions' format '%F{yellow}%B%d%b%f'
@@ -116,3 +123,46 @@ setopt prompt_subst  # ${vcs_info_msg_0_} をプロンプト描画のたびに�
 # 1 行目にパスと git ブランチ、2 行目に入力欄。直前が異常終了なら % が赤くなる。
 PROMPT='%F{cyan}%~%f${vcs_info_msg_0_}
 %(?.%F{green}.%F{red})%#%f '
+
+# ---------------------------------------------------------------------------
+# プラグイン
+#
+# 実体は mise の [bootstrap.packages]（brew: の formula）で入れている。
+# プラグインマネージャは使わない。読み込み順に次の制約があり、
+# 1 箇所に並べたほうが追えるため。
+#
+#   1. zsh-completions      fpath に足すだけ。compinit より前（上の補完節で済ませている）
+#   2. fzf-tab              compinit の後。補完ウィジェットを置き換えるため
+#   3. fzf                  ウィジェットを定義する側なので、包む側より先に読む
+#   4. zsh-autosuggestions  既存ウィジェットをラップする
+#   5. zsh-syntax-highlighting  同上。他プラグインのウィジェットも包むので必ず最後
+#
+# この節をプロンプト節より後に置いているのは、5 を確実にファイル末尾にするため。
+# プロンプト（vcs_info）は precmd フックだけでウィジェットを作らないので順序に絡まない。
+#
+# 未導入のマシン（mise bootstrap 前）でも .zshrc が壊れないよう -r で守る。
+
+# 補完候補を fzf の絞り込みで選ぶ。上の `menu no` とセット。
+[[ -r "${HOMEBREW_PREFIX}/share/fzf-tab/fzf-tab.zsh" ]] &&
+  source "${HOMEBREW_PREFIX}/share/fzf-tab/fzf-tab.zsh"
+zstyle ':fzf-tab:*' switch-group '<' '>'   # 候補グループを < > で切り替える
+# cd の候補をプレビューする。$realpath は fzf-tab が候補ごとに渡す変数（zsh の
+# 同名パラメータではない）ので、展開させずシングルクォートで渡すこと。
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --oneline --color=always $realpath'
+
+# Ctrl-R 履歴検索 / Ctrl-T ファイル選択 / Alt-C ディレクトリ移動。
+# fzf 0.48 以降は本体が `--zsh` でキーバインドを吐くので、配布物の
+# shell/key-bindings.zsh を探して読む必要は無い（mise で入れた fzf には同梱されない）。
+#
+# fzf も ^I を fzf-completion に奪うが、読み込み時に既存の ^I バインドを
+# fzf_default_completion として控え、`**` トリガが無いときはそちらへ委譲する。
+# fzf-tab を先に読んであるので、素の Tab は fzf-tab、`**`+Tab は fzf のパス補完になる。
+(( $+commands[fzf] )) && eval "$(fzf --zsh)"
+
+# 履歴からインラインで候補をサジェストする（灰色表示 / → または End で確定）。
+[[ -r "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
+  source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# 入力中のコマンドラインをシンタックスハイライトする（存在しないコマンドは赤）。
+[[ -r "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+  source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

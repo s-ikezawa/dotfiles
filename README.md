@@ -341,7 +341,17 @@ chezmoi apply
   ディレクトリは `run_once_before_01-xdg-dirs.sh` が掘るが、`.zshrc` 冒頭にも
   ガード付きの `mkdir` がある。無いとヒストリが黙って捨てられるため
 - `compinit` は 24 時間以内に `zcompdump` を作っていれば `-C` で `fpath` の再検証を飛ばす。
-  補完関数を追加したのに補完が出ないときは `rm $XDG_CACHE_HOME/zsh/zcompdump` して開き直す
+  パッケージを入れ直したときは `run_onchange_after_01-mise-bootstrap.sh` がダンプを消すが、
+  それ以外で補完が出ないときは `rm $XDG_CACHE_HOME/zsh/zcompdump` して開き直す
+- **zsh プラグインはプラグインマネージャを使わず、mise の `[bootstrap.packages]` に
+  `brew:` の formula として並べている**（`zsh-completions` / `zsh-autosuggestions` /
+  `zsh-syntax-highlighting` / `fzf-tab`。4 つとも依存ゼロ）。`.zshrc` から直接 `source` する。
+  読み込み順に強い制約があり（`fpath` → `compinit` → fzf-tab → autosuggestions →
+  syntax-highlighting）、`zsh-syntax-highlighting` は必ず最後。詳細は `CLAUDE.md` の
+  「zsh プラグイン」を参照
+- `fpath` に `/opt/homebrew/share/zsh-completions` を足すと、親の `/opt/homebrew/share`
+  が 775 なので `compinit` が insecure directories として `[ynq]` を聞いてくる。
+  bootstrap スクリプトの `chmod g-w /opt/homebrew/share` で回避している
 - **`LANG` は `.zshenv` で `en_US.UTF-8` に固定している。** `/etc/zprofile` は `LANG` が
   空のときだけ `C.UTF-8` を入れるが、それはログインシェルのみ。
   非ログインシェルが `LANG` 無しになるとマルチバイトの扱いが壊れる

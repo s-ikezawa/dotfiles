@@ -43,6 +43,12 @@ herdr = "latest"
 # 対象にもなる。代わりに zsh 補完は付かない（tarball にはバイナリしか入っていない）。
 eza = "latest"
 
+# あいまい検索。zsh プラグインの fzf-tab（補完メニューを fzf で選ぶ）が
+# この実体を要求する。プラグインは [bootstrap.packages]、バイナリはここという分担
+# （バイナリ 1 つで済み、バージョンを固定できるため）。
+# Ctrl-R / Ctrl-T のキーバインドは .zshrc の `fzf --zsh` で読み込む。
+fzf = "latest"
+
 # まとめて更新するタスク。`mise run up`
 # パッケージは mise 管理なので brew upgrade は要らない
 # (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。
@@ -78,6 +84,20 @@ run = [
 # 素の "PlemolJP NF" は含まれない（PlemolJP Console NF / PlemolJP35 Console NF）。
 "brew-cask:ghostty" = { os = "macos" }
 "brew-cask:font-plemol-jp-nf" = { os = "macos" }
+
+# zsh プラグイン。4 つとも依存ゼロの bottle で、言語処理系は連れてこない。
+# プラグインマネージャ（sheldon 等）は置かない。読み込み順に強い制約があり
+# （fpath 追加 → compinit → fzf-tab → autosuggestions → syntax-highlighting）、
+# マネージャを挟むとその順序が設定ファイルに分散するため、.zshrc で直接 source する。
+# 更新は [tasks.up] の `mise bootstrap packages upgrade` が拾う。
+#
+# sheldon を使わないもう 1 つの理由: 配布バイナリが Homebrew の openssl@3 に
+# 動的リンクしていて単体では起動せず、formula で入れると openssl@3 / libgit2 /
+# libssh2 / llhttp / ca-certificates が付いてくる。
+"brew:zsh-completions" = { os = "macos" }
+"brew:zsh-autosuggestions" = { os = "macos" }
+"brew:zsh-syntax-highlighting" = { os = "macos" }
+"brew:fzf-tab" = { os = "macos" }
 
 ################################################################################
 # macOS 設定

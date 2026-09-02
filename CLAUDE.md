@@ -109,6 +109,56 @@ zsh が書き出すものは XDG に寄せてある。追加するときも同�
 ディレクトリは `run_once_before_01-xdg-dirs.sh` と `.zshrc` 冒頭のガード付き `mkdir` の
 二重で用意している。`run_once_` は初回しか走らないので、`.zshrc` 側を消さないこと。
 
+## zsh プラグイン
+
+プラグインマネージャは**使わない**。実体は mise の `[bootstrap.packages]` の
+`brew:` formula（`zsh-completions` / `zsh-autosuggestions` /
+`zsh-syntax-highlighting` / `fzf-tab`。4 つとも依存ゼロの bottle）で、
+`.zshrc` から直接 `source` する。
+
+sheldon を使っていない理由は 2 つ。配布バイナリが Homebrew の `openssl@3` に
+動的リンクしていて単体では起動しない（formula で入れると `libgit2` / `libssh2` も
+付いてくる）こと、そして読み込み順の制約が強く、順序を 1 ファイルに並べたほうが
+追いやすいこと。
+
+### 読み込み順（崩すと壊れる）
+
+```
+fpath に share/zsh-completions を足す   ← compinit より前
+compinit
+fzf-tab                                 ← compinit の後。補完ウィジェットを置き換える
+fzf --zsh                               ← ウィジェットを定義する側。包む側より先
+zsh-autosuggestions                     ← 既存ウィジェットをラップする
+zsh-syntax-highlighting                 ← 他プラグインのウィジェットも包むので必ず最後
+```
+
+`fzf --zsh` は `^I` を `fzf-completion` に奪うが、読み込み時点の `^I` バインドを
+`fzf_default_completion` として控え、`**` トリガが無いときはそこへ委譲する。
+fzf-tab を先に読んでいるので、素の Tab は fzf-tab、`**`+Tab は fzf のパス補完になる。
+
+`zsh-syntax-highlighting` を確実に最後にするため、プラグイン節は
+**プロンプト節より後（ファイル末尾）**に置いている。`bindkey` と
+`zle -N`（↑↓ の検索ウィジェット）は、ラップされる側なのでプラグインより前に置く。
+
+- **`zstyle ':completion:*' menu select` は使えない。** fzf-tab が候補を横取り
+  できなくなるため `menu no` にしてある
+- fzf は zsh プラグインではなくバイナリなので mise の `[tools]`。
+  キーバインドは `fzf --zsh`（0.48 以降は本体が吐く）
+- 各 `source` は `[[ -r … ]]` で守る。`mise bootstrap` 前のマシンでも
+  `.zshrc` が壊れないようにするため
+
+### compinit の insecure directories
+
+`fpath` に入れたディレクトリ**とその親**が group 書き込み可だと、`compinit` は
+`[ynq]` を対話で聞いてくる。Homebrew の `/opt/homebrew/share` は既定で 775 なので、
+`share/zsh-completions` を `fpath` に足した時点で該当する
+（`share/zsh/site-functions` は親が `share/zsh`(755) なので元から無関係）。
+
+`run_onchange_after_01-mise-bootstrap.sh` で `chmod g-w /opt/homebrew/share` して回避
+している。`compinit -u`（検査ごと省略）には**しない**。同スクリプトは
+`zcompdump` も消す。`.zshrc` が 24 時間以内のダンプを `-C` で使い回すため、
+消さないと入れたばかりの補完が最大 1 日出てこない。
+
 ## 秘密情報とマシン固有の値
 
 **このリポジトリは public。** メールアドレス・勤務先のオーガニゼーション名・
