@@ -10,3 +10,17 @@ theme = Catppuccin Mocha
 # 全角を狭くしたい場合は "PlemolJP35 Console NF" に変える。
 font-family = PlemolJP Console NF
 font-size = 14
+
+# Option キーを Alt として扱う。
+# 既定はキーボードレイアウト依存で、true になるのは U.S. Standard と
+# U.S. International のときだけ。このマシンは ABC レイアウトなので false に落ち、
+# Option+文字が ∫ のような Unicode 文字になって Alt が端末に届かない。
+#
+# これが無いと Alt-C（fzf のディレクトリ移動）と、emacs キーバインドの
+# alt-b / alt-f（単語移動）・alt-.（直前の引数を挿入）が使えない。
+#
+# 引き換えに Option を使った Unicode 入力ができなくなる。片方だけ残したいときは
+# left か right を指定する（指定した側だけが Alt になる）。
+# なお Option 単独で印字可能な文字にならない組み合わせ（alt+ctrl+a など）は、
+# この設定に関係なく元から Alt として扱われる。
+macos-option-as-alt = true
