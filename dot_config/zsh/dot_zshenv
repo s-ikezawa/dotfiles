@@ -1,0 +1,39 @@
+# XDG Base Directory
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Claude Code
+export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
+
+# Homebrew(brew shellenv はサブプロセスを起こすので既定パスを直接指定する)
+export HOMEBREW_PREFIX=/opt/homebrew
+
+# ---------------------------------------------------------------------------
+# PATH
+#
+# path は $PATH と連動する配列。-U を付けると重複が自動で除去される(先勝ち)。
+typeset -U path fpath
+
+# macOS の /etc/zprofile は path_helper を実行して PATH を /etc/paths から組み直し、
+# ここで先頭に置いたパスを末尾へ回してしまう。ログインシェルでは ~/.zprofile が
+# path_helper の後に読まれるので、そこからこの関数を呼び直して順序を戻す。
+# .zshenv と .zprofile で定義が二重にならないよう関数にまとめている。
+#
+# .zshenv 側でも PATH を組むのは、スクリプトなど非ログイン・非対話シェルでも
+# GNU 版コマンドや mise のツールを使えるようにするため。
+_zsh_setup_path() {
+  path=(
+    "$HOME/.local/bin"
+    "$HOME/bin"
+    "${XDG_DATA_HOME}/mise/shims"
+    # GNU 版コマンド(coreutils / gnu-sed / grep / findutils など)を BSD 版より優先する。
+    # gnubin には g 接頭辞なしの名前(ls, sed, grep ...)で入る。(N) は該当なしでもエラーにしない。
+    $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)
+    "$HOMEBREW_PREFIX/bin"
+    "$HOMEBREW_PREFIX/sbin"
+    $path
+  )
+}
+_zsh_setup_path

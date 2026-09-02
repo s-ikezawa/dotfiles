@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+
+if load_brew; then
+  skip "Homebrew はインストール済み ($(command -v brew))"
+else
+  log "Homebrew をインストール"
+  # NONINTERACTIVE=1 で Enter 待ちを回避する（無人実行のため）。
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  load_brew || { echo "brew を PATH に載せられませんでした" >&2; exit 1; }
+  log "Homebrew: $(brew --version | head -n1)"
+fi
+{{ end -}}
