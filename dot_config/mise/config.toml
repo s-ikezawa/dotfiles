@@ -9,6 +9,17 @@
 [tools]
 gh = "latest"
 
+# まとめて更新するタスク。`mise run up`
+# パッケージは mise 管理なので brew upgrade は要らない
+# (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。
+[tasks.up]
+description = "mise 本体・ツール・パッケージをまとめて更新する"
+run = [
+  "mise self-update --yes",
+  "mise upgrade --yes",
+  "mise bootstrap packages upgrade",
+]
+
 # ホストに入れるパッケージ。`os` で OS を絞れるので Linux と同居できる。
 #   brew:      formula
 #   brew-cask: cask（macOS のみ）

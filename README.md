@@ -180,10 +180,35 @@ chezmoi cd                          # ソースディレクトリへ移動（git
 chezmoi update                      # git pull してから apply
 ```
 
-パッケージ・ツールの更新はまとめて mise タスクにしてある。
+パッケージ・ツールの更新はまとめて mise タスク（`[tasks.up]`）にしてある。
 
 ```sh
-mise run up   # brew update/upgrade/cleanup + mise self-update/upgrade/prune + sheldon lock --update
+mise run up   # mise self-update + mise upgrade + mise bootstrap packages upgrade
+```
+
+パッケージは mise 管理なので `brew upgrade` は要らない。
+
+パッケージの追加・削除は `config.toml` を直接編集するか、mise に書かせる。
+
+```sh
+mise bootstrap packages use -g "brew:ripgrep"        # 追加して即インストール
+mise bootstrap packages status                       # 宣言と実機の差分
+mise bootstrap packages prune --dry-run              # 宣言から消えたものを確認
+mise bootstrap packages import -g --dry-run          # 既存の formula を吸い出す（cask は非対応）
+```
+
+`config.toml` を編集したら `chezmoi apply`。sha256 が変わるので
+`run_onchange_after_01-mise-bootstrap.sh` が再実行される。
+
+### リモートを SSH に切り替える
+
+`install.sh` の `chezmoi init` は **HTTPS でクローンする**（新しいマシンにはまだ
+SSH 鍵が無いため、これは避けられない）。そのままだと `git push` できないので、
+1Password と SSH 鍵を用意したあとに切り替える。
+
+```sh
+chezmoi cd
+git remote set-url origin git@github.com:s-ikezawa/dotfiles.git
 ```
 
 ### `run_once_` をもう一度走らせたい
