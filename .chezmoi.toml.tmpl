@@ -1,0 +1,66 @@
+# chezmoi init のときだけ評価され、~/.config/chezmoi/chezmoi.toml を生成する。
+# ここで解決した値は [data] に落ち、以後すべてのテンプレートから .git.* で読める。
+#
+# このリポジトリは public なので、メールアドレスと勤務先のディレクトリ名は
+# 絶対にここへ直書きしない。値の在り処は 1Password か、生成された
+# ~/.config/chezmoi/chezmoi.toml（ローカルのみ）だけ。
+#
+# 取得は「op があれば 1Password、無ければ対話で入力」の二段構え。
+# 新品の Mac では op も 1Password アプリのサインインも未了なので、初回は必ず
+# プロンプト側が走る。2 台目以降や値を変えたときは chezmoi init をやり直せば
+# 金庫の内容で上書きされる。
+#
+# op read を sh 経由の `|| true` で包んでいるのは、未サインインや項目名の変更で
+# chezmoi init 全体を落とさないため（output は非 0 終了でテンプレートを失敗させる）。
+# 空が返ればプロンプトにフォールバックする。
+
+{{ $item := "op://Private/git-identity" -}}
+{{- $hasOp := ne (lookPath "op") "" -}}
+
+{{/* 個人用のコミットアドレス */}}
+{{- $personalEmail := "" -}}
+{{- if $hasOp -}}
+{{-   $personalEmail = output "sh" "-c" (printf "op read '%s/personal-email' 2>/dev/null || true" $item) | trim -}}
+{{- end -}}
+{{- if eq $personalEmail "" -}}
+{{-   $personalEmail = promptStringOnce . "git.personalEmail" "個人用のメールアドレス" -}}
+{{- end -}}
+
+{{/* 会社用のコミットアドレス。空にすれば会社用の identity を配置しない */}}
+{{- $workEmail := "" -}}
+{{- if $hasOp -}}
+{{-   $workEmail = output "sh" "-c" (printf "op read '%s/work-email' 2>/dev/null || true" $item) | trim -}}
+{{- end -}}
+{{- if eq $workEmail "" -}}
+{{-   $workEmail = promptStringOnce . "git.workEmail" "会社用のメールアドレス（不要なら空）" -}}
+{{- end -}}
+
+{{/* 会社用 identity に切り替える gitdir。ghq のレイアウトに合わせる。
+     例: ~/ghq/github.com/<org>/ 配下 or ~/ghq/<GHE のホスト名>/ 配下。
+     末尾のスラッシュは必須（無いとそのディレクトリ自体にしかマッチしない）。 */}}
+{{- $workGitdir := "" -}}
+{{- if ne $workEmail "" -}}
+{{-   if $hasOp -}}
+{{-     $workGitdir = output "sh" "-c" (printf "op read '%s/work-gitdir' 2>/dev/null || true" $item) | trim -}}
+{{-   end -}}
+{{-   if eq $workGitdir "" -}}
+{{-     $workGitdir = promptStringOnce . "git.workGitdir" "会社用 gitdir（末尾に / を付ける）" "~/Projects/github.com/" -}}
+{{-   end -}}
+{{- /* git は ~/ ./ / のいずれでも始まらないパターンに、複数階層にマッチする
+       ワイルドカードを自動で前置する。つまり Projects/foo/ と書くと「どこにあっても」
+       引っかかる緩い条件になるので、ホーム相対に正規化する。末尾のスラッシュも
+       同様に補う（無いとそのディレクトリ自体にしか効かない）。
+       ※ この注釈内にスラッシュ付きのアスタリスクを書くとテンプレートの
+          コメントがそこで閉じてしまうので書けない。 */ -}}
+{{-   if not (or (hasPrefix "~/" $workGitdir) (hasPrefix "/" $workGitdir) (hasPrefix "./" $workGitdir)) -}}
+{{-     $workGitdir = printf "~/%s" $workGitdir -}}
+{{-   end -}}
+{{-   if not (hasSuffix "/" $workGitdir) -}}
+{{-     $workGitdir = printf "%s/" $workGitdir -}}
+{{-   end -}}
+{{- end -}}
+
+[data.git]
+personalEmail = {{ $personalEmail | quote }}
+workEmail = {{ $workEmail | quote }}
+workGitdir = {{ $workGitdir | quote }}

@@ -88,8 +88,10 @@ Homebrew API から直接取得して `/opt/homebrew` に展開する再実装�
 cask の対応 artifact が限定的、といった制約がある（下の「注意点」を参照）。
 Homebrew 本体は逃げ道として残してある。
 
-設定ファイルも zsh の `.zshenv` / `.zprofile` / `.zshrc` だけ。nvim / git / tmux などは
-必要になった時点で追加していく。
+設定ファイルは zsh と git だけ。nvim / tmux などは必要になった時点で追加していく。
+
+マシン固有の値（コミット用のメールアドレスなど）は `dot_*` ではなく
+**chezmoi の data** に置く。詳細は下の「秘密情報とマシン固有の値」を参照。
 
 **フェーズの使い分け**:
 
@@ -106,6 +108,68 @@ Homebrew 本体は逃げ道として残してある。
 > その場合は原因を潰してから `chezmoi apply` をやり直すこと。
 
 ---
+
+## 秘密情報とマシン固有の値
+
+**このリポジトリは public。** コミット用のメールアドレスや勤務先のオーガニゼーション名は
+`dot_*` に直書きせず、`.chezmoi.toml.tmpl` 経由で
+`~/.config/chezmoi/chezmoi.toml`（リポジトリ外）に置く。
+
+```
+.chezmoi.toml.tmpl        リポジトリに入る。「どこから値を取るか」だけが書いてある
+        ↓ chezmoi init
+~/.config/chezmoi/chezmoi.toml   ローカルのみ。ここに実際のアドレスが入る
+        ↓ .git.personalEmail / .git.workEmail / .git.workGitdir として参照
+dot_config/git/config.tmpl 等
+```
+
+値の解決は二段構え。
+
+1. `op`（1Password CLI）があれば `op://Private/git-identity/…` から読む
+2. 取れなければ対話プロンプトで聞く（`promptStringOnce`）
+
+**新品の Mac では必ず 2 が走る。** `.chezmoi.toml.tmpl` は `chezmoi init` の最初に
+評価されるので、`op` はまだ入っていないし、そもそも 1Password アプリのサインインも
+済んでいないため。初回だけアドレスを手で入れれば、あとは自動で埋まる。
+2 台目以降や値を変えたいときは `chezmoi init` をやり直せば金庫の内容で上書きされる。
+
+> `.chezmoi.toml.tmpl` は `chezmoi apply` では評価されない。`chezmoi init` 専用。
+
+プロンプトには TTY が要る。TTY の無い環境（CI や、端末を持たないラッパー越しの実行）では
+`--promptString` で先に答えを渡す。キーは**プロンプトの文字列そのもの**。
+
+```sh
+chezmoi init \
+  --promptString '個人用のメールアドレス=you@example.com' \
+  --promptString '会社用のメールアドレス（不要なら空）=you@corp.example' \
+  --promptString '会社用 gitdir（末尾に / を付ける）=~/Projects/github.com/<org>/'
+```
+
+1Password 側に置く項目（vault: Private、item: `git-identity`）:
+
+| フィールド | 中身 |
+|---|---|
+| `personal-email` | 個人用のコミットアドレス |
+| `work-email` | 会社用のコミットアドレス（不要なら作らない） |
+| `work-gitdir` | 会社用 identity を使う gitdir（例 `~/Projects/github.com/<org>/`）|
+
+## git の identity
+
+`~/.config/git/config`（XDG）を chezmoi が生成する。`~/.gitconfig` は作らない。
+
+既定は個人用。会社用は `includeIf "gitdir:…"` で切り替わる。判定は ghq のレイアウト
+（`~/Projects/<host>/<org>/<repo>`）に依存していて、`ghq get` で取る限り置き場所は勝手に
+決まるので、識別が崩れない。
+
+```
+~/.config/git/config        既定 = 個人用。chezmoi 管理
+        ├─ includeIf gitdir:~/Projects/github.com/<org>/ → config.work  会社用。chezmoi 管理
+        └─ include  config.local                                   マシン固有。管理外
+```
+
+> ⚠️ `~/.gitconfig` が無いため、**`git config --global` はこの chezmoi 管理ファイルに
+> 書き込む**。直接書くと次の `chezmoi apply` で巻き戻る。設定変更は
+> `chezmoi edit ~/.config/git/config`、このマシン限りの設定は `config.local` へ。
 
 ## ファイル命名規則
 

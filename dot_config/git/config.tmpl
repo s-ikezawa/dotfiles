@@ -1,0 +1,77 @@
+{{- if not (hasKey . "git") -}}
+{{-   fail "chezmoi init を実行して identity（メールアドレス）を設定してください" -}}
+{{- end -}}
+# ~/.config/git/config（XDG）。git は ~/.gitconfig とここの両方を読み、
+# 両方あると ~/.gitconfig が後勝ちになる。~/.gitconfig は作らない方針。
+#
+# 注意: ~/.gitconfig が無いと `git config --global` の書き込み先もこのファイルになる。
+# ここは chezmoi 管理下なので、直接書くと次の apply で巻き戻る。設定を変えるときは
+# `chezmoi edit ~/.config/git/config`、このマシン限りなら config.local（末尾で include）へ。
+#
+# メールアドレスは chezmoi の data から埋める（実体は ~/.config/chezmoi/chezmoi.toml）。
+# このリポジトリは public なので、アドレスそのものはここに書かない。
+
+[user]
+	name = Shinichi Ikezawa
+	email = {{ .git.personalEmail }}
+
+[init]
+	defaultBranch = main
+
+[core]
+	# 除外ファイルは既定で $XDG_CONFIG_HOME/git/ignore が読まれるので指定不要
+	editor = vim
+
+[commit]
+	verbose = true               # コミットメッセージの編集画面に diff を出す
+
+[push]
+	autoSetupRemote = true       # 初回 push で -u を書かなくて済む
+	followTags = true            # 注釈付きタグも一緒に push する
+
+[pull]
+	ff = only                    # fast-forward できないときは黙って merge せず止まる
+
+[fetch]
+	prune = true                 # リモートで消えたブランチの追跡 ref を掃除する
+	pruneTags = true
+
+[rebase]
+	autoStash = true             # 未コミットの変更を自動で stash して戻す
+	autosquash = true            # fixup!/squash! を自動で並べ替える
+	updateRefs = true            # スタックしたブランチをまとめて追従させる
+
+[merge]
+	conflictStyle = zdiff3       # コンフリクト表示に共通の祖先を含める
+
+[diff]
+	algorithm = histogram
+	colorMoved = zebra           # 移動しただけの行を別の色で見せる
+
+[rerere]
+	enabled = true               # 一度解決したコンフリクトを記録して再利用する
+	autoupdate = true
+
+[branch]
+	sort = -committerdate        # git branch を最終コミット順に並べる
+
+[tag]
+	sort = version:refname       # v1.10 が v1.9 より後に来るようにする
+
+[column]
+	ui = auto
+
+[ghq]
+	# ghq get はここに <host>/<org>/<repo> の形で並べる。
+	# 会社用 identity の判定（下の includeIf）もこのレイアウト前提。
+	root = ~/Projects
+{{ if ne .git.workEmail "" }}
+# 会社用の identity。ghq のディレクトリで判定する。gitdir は末尾のスラッシュが必須で、
+# 付けないとそのディレクトリ自体にしかマッチしない。パスと中身は data 由来なので
+# 勤務先が分かる文字列はこのリポジトリに残らない。
+[includeIf "gitdir:{{ .git.workGitdir }}"]
+	path = config.work
+{{ end }}
+# このマシン限りの設定。chezmoi も git も管理しない。無ければ黙って無視される。
+[include]
+	path = config.local

@@ -21,6 +21,7 @@ after を追加するときは、下の連番ルールを必ず守ること。
 | `defaults write` | mise | `[bootstrap.macos.defaults]` |
 | 設定ファイルの配置 | **chezmoi** | `dot_*` |
 | 環境構築スクリプト | **chezmoi** | `run_*` |
+| マシン固有の値・秘密 | **chezmoi の data** | `.chezmoi.toml.tmpl` |
 
 **`mise` の `[dotfiles]` は使わない。** テンプレート機能が無く、`.chezmoi.os` による
 OS 分岐・`private_` / `executable_` の属性・`run_once_` が書けないため。
@@ -113,6 +114,41 @@ zsh が書き出すものは XDG に寄せてある。追加するときも同�
 
 ディレクトリは `run_once_before_01-xdg-dirs.sh` と `.zshrc` 冒頭のガード付き `mkdir` の
 二重で用意している。`run_once_` は初回しか走らないので、`.zshrc` 側を消さないこと。
+
+## 秘密情報とマシン固有の値
+
+**このリポジトリは public。** メールアドレス・勤務先のオーガニゼーション名・
+ホスト名など、書いた瞬間に公開されるものを `dot_*` に直書きしないこと。
+
+置き場は `.chezmoi.toml.tmpl` → `~/.config/chezmoi/chezmoi.toml`（リポジトリ外）。
+値の解決は「`op` があれば 1Password、無ければ対話プロンプト」の二段構え。
+
+```
+{{ if lookPath "op" }} … op read … {{ end }}   ← 空ならプロンプトへフォールバック
+```
+
+- **`.chezmoi.toml.tmpl` が評価されるのは `chezmoi init` のときだけ。**
+  `chezmoi apply` では評価されない。値を変えたいときは `chezmoi init` をやり直す
+- **`run_once_before_` より前に評価される。** つまり `op` は常に「まだ入っていない」。
+  新品の Mac では 1Password アプリのサインインも未了なので、初回は必ず
+  プロンプト側が走る。これは避けられないので、フォールバックを消さないこと
+- `op read` は `sh -c '… || true'` で包む。`output` は非 0 終了でテンプレート全体を
+  落とすため、未サインインや項目名変更で `chezmoi init` が死ぬのを防ぐ
+- `lookPath` は見つからないとき**エラーにせず空文字**を返す（分岐に使ってよい）
+
+## git
+
+- 設定は `~/.config/git/config`（XDG）。**`~/.gitconfig` は作らない。**
+  両方あると `~/.gitconfig` が後勝ちになる
+- `~/.gitconfig` が無いと **`git config --global` の書き込み先が
+  chezmoi 管理下の `~/.config/git/config` になる。** 直接書くと次の apply で
+  巻き戻るので、`chezmoi edit` かマシン固有の `config.local` を使うこと
+- identity は個人用が既定で、会社用は `includeIf "gitdir:…"` で切り替える。
+  判定に使うパスは ghq のレイアウト（`~/Projects/<host>/<org>/<repo>`）前提。
+  パスもアドレスも data 由来なので、勤務先が分かる文字列はリポジトリに残らない
+- `gitdir:` の**末尾のスラッシュは必須**。無いとそのディレクトリ自体にしか効かない
+- `dot_config/git/config.work.tmpl` は会社用アドレスが空だと**何も出力しない**。
+  chezmoi は出力が空のテンプレートをファイルとして作らない（`empty_` 属性が無い場合）
 
 ## 前提
 

@@ -1,0 +1,6 @@
+{{- if ne .git.workEmail "" -}}
+# 会社用の identity。~/.config/git/config の includeIf から読まれる。
+# アドレスは chezmoi の data 由来（実体は ~/.config/chezmoi/chezmoi.toml）。
+[user]
+	email = {{ .git.workEmail }}
+{{ end -}}

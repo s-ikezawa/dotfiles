@@ -9,6 +9,18 @@
 [tools]
 gh = "latest"
 
+# リポジトリの取得先を ~/ghq/<host>/<org>/<repo> に強制する。
+# git の includeIf がこのレイアウトを前提に会社用 identity を切り替えるので、
+# 「どこに clone したか」で identity が決まる状態を作るための土台でもある。
+ghq = "latest"
+
+# 1Password CLI。chezmoi init がコミット用メールアドレスを金庫から読むのに使う
+# （dotfiles は public なのでアドレスをリポジトリに置かない）。
+# 使うのは chezmoi init のときだけで、通常の chezmoi apply では呼ばれない。
+# 金庫の解錠にはデスクトップアプリとの連携が要る。連携が効かない場合は
+# [bootstrap.packages] の "brew-cask:1password-cli" に寄せること。
+"1password-cli" = "latest"
+
 # ターミナルマルチプレクサ。設定は chezmoi 側の dot_config/herdr/config.toml。
 # mise の registry 名で書く（実体は aqua:herdrdev/herdr）。
 # github:<owner>/<repo> を直書きするとリポジトリ移管で壊れる

@@ -1,0 +1,12 @@
+# 全リポジトリ共通の除外。git が既定で $XDG_CONFIG_HOME/git/ignore を読む。
+# プロジェクト固有のものはここではなく各リポジトリの .gitignore に書くこと。
+
+# macOS が勝手に作るもの
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# エディタの一時ファイル
+*.swp
+*~
