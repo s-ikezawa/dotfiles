@@ -9,6 +9,13 @@
 [tools]
 gh = "latest"
 
+# ターミナルマルチプレクサ。設定は chezmoi 側の dot_config/herdr/config.toml。
+# mise の registry 名で書く（実体は aqua:herdrdev/herdr）。
+# github:<owner>/<repo> を直書きするとリポジトリ移管で壊れる
+# （実際 ogulcancelik/herdr → herdrdev/herdr に移管済み）。
+# Homebrew にも formula はあるが、バージョンを固定できないので [tools] を使う。
+herdr = "latest"
+
 # まとめて更新するタスク。`mise run up`
 # パッケージは mise 管理なので brew upgrade は要らない
 # (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。
