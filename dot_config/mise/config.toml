@@ -29,6 +29,12 @@ run = [
 [bootstrap.packages]
 "brew-cask:1password" = { os = "macos" }
 
+# karabiner-elements は app bundle ではなく pkg + DriverKit システム拡張。
+# インストールに sudo が要り、システム設定での手動承認も必要。
+# uninstall 側は sudo スクリプト・launchctl だらけなので packages prune で
+# きれいに消えることは期待しないこと。
+"brew-cask:karabiner-elements" = { os = "macos" }
+
 ################################################################################
 # macOS 設定
 #
