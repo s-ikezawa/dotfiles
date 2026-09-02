@@ -4,9 +4,8 @@ chezmoi で管理する dotfiles リポジトリ。詳細は `README.md` を参�
 
 ## 現在の状態
 
-**`before` フェーズのみ。** `after` フェーズのスクリプト（`brew bundle` / `mise install` /
-macOS 設定）はまだ無い。まず before だけで新しいマシンに適用して動作を確認し、
-そのあと順次追加していく方針。
+`before` フェーズ 4 本 + `after` フェーズ 1 本（`run_onchange_after_01-macos-defaults.sh.tmpl`）。
+`brew bundle` / `mise install` はまだ無く、`02` 以降に順次追加していく方針。
 
 after を追加するときは、下の連番ルールを必ず守ること。
 

@@ -59,15 +59,14 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 | 適用 | `dot_zshenv` → `~/.zshenv` | `ZDOTDIR` を `~/.config/zsh` に向ける |
 | 適用 | `dot_config/zsh/dot_zshenv` → `~/.config/zsh/.zshenv` | XDG / 環境変数 / PATH の定義 |
 | 適用 | `dot_config/zsh/dot_zprofile` → `~/.config/zsh/.zprofile` | path_helper 後に PATH の並び順を確定 |
+| after | `run_onchange_after_01-macos-defaults.sh.tmpl` | `defaults write` による macOS 設定（キーボード / Finder / Dock / ステージマネージャ） |
 
-**after フェーズのスクリプトはまだ無い。** まずは before だけで新しいマシンに適用し、
-動作を確認してから順次追加していく。追加予定:
+**after フェーズは macOS 設定のみ。** 追加予定:
 
 | 予定 | 内容 |
 |---|---|
-| `run_onchange_after_01-...` | `brew bundle`（formula / cask / mas） |
-| `run_onchange_after_02-...` | `mise install`（言語ランタイム・CLI 一式） |
-| `run_onchange_after_03-...` | `defaults write` による macOS 設定 |
+| `run_onchange_after_02-...` | `brew bundle`（formula / cask / mas） |
+| `run_onchange_after_03-...` | `mise install`（言語ランタイム・CLI 一式） |
 
 そのため**現時点ではパッケージ・ツールは何も入らない**。Homebrew / mise / Claude Code の
 バイナリだけが入った状態になる。
@@ -135,8 +134,8 @@ run_onchange_after_01-brew-bundle.sh →  ターゲット名 01-brew-bundle.sh
 
 | | 採番 |
 |---|---|
-| `run_once_before_01` 〜 `04` | 環境構築（バイナリ導入）。現在はこちらのみ |
-| `run_onchange_after_01` 〜 | 設定の適用（何度でも冪等に走る）。今後追加する |
+| `run_once_before_01` 〜 `04` | 環境構築（バイナリ導入） |
+| `run_onchange_after_01` 〜 | 設定の適用（何度でも冪等に走る） |
 
 ### `run_onchange_` を外部ファイルの変更に連動させる
 

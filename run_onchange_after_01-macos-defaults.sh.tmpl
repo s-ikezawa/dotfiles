@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+
+# macOS の各種設定。ここで扱うのは全てユーザードメイン
+# (NSGlobalDomain / com.apple.finder / com.apple.dock / com.apple.WindowManager など)
+# なので sudo は不要。実体は ~/Library/Preferences/*.plist。
+#
+# キーリピートや Tab 移動、ライブ変換の無効化は再ログインで反映される。
+# Finder / Dock / ステージマネージャは末尾の killall で即時反映する。
+
+log "キーボードと入力"
+# キーリピートを最速に(KeyRepeat は「間隔」、InitialKeyRepeat は「リピート開始まで」)
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+# 自動修正・自動大文字・スマート引用符/ダッシュ/ピリオドを無効化
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+# 日本語入力のライブ変換を無効化
+defaults write com.apple.inputmethod.Kotoeri JIMPrefLiveConversionKey -bool false
+# Tab で全てのコントロール間を移動
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+log "Finder"
+defaults write com.apple.finder AppleShowAllFiles -bool true       # 隠しファイルを表示
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true    # すべての拡張子を表示
+
+log "Dock"
+defaults write com.apple.dock tilesize -int 16                     # サイズを最小に
+defaults write com.apple.dock magnification -bool false            # 拡大をオフ
+defaults write com.apple.dock orientation -string left             # 位置を左に
+defaults write com.apple.dock minimize-to-application -bool true   # ウインドウをアプリケーションアイコンにしまう
+defaults write com.apple.dock autohide -bool true                  # 自動で表示・非表示をオン
+defaults write com.apple.dock show-recents -bool false             # 最近使用したアプリを表示しない
+
+log "デスクトップ・ステージマネージャ・ウィジェット"
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true       # 項目を表示 > デスクトップをオフ
+defaults write com.apple.WindowManager HideDesktop -bool true                    # 項目を表示 > ステージマネージャ使用時にをオフ
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false  # 壁紙クリックでのデスクトップ表示を「ステージマネージャ使用時のみ」に
+defaults write com.apple.WindowManager GloballyEnabled -bool false               # ステージマネージャをオフ
+defaults write com.apple.WindowManager AutoHide -bool true                       # 最近使用したアプリをステージマネージャに表示しない
+defaults write com.apple.WindowManager StandardHideWidgets -bool true            # ウィジェット表示 > デスクトップにをオフ
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true        # ウィジェット表示 > ステージマネージャにをオフ
+
+# killall は対象プロセスが居ないと 1 を返すため、set -e 下では握り潰す
+log "Finder / Dock / WindowManager を再起動"
+for app in Finder Dock WindowManager; do
+  killall "${app}" 2>/dev/null || true
+done
+
+log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
+
+{{ end -}}
