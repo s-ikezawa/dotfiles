@@ -1,5 +1,11 @@
 # Ghostty の設定。項目の一覧は `ghostty +show-config --default --docs` で出せる。
 
+# 配色。ターミナルの ANSI パレットがここで決まるので、これが全体の基準になる。
+# zsh のプロンプトや ls の色は %F{cyan} のような ANSI 指定なので、
+# 個別に設定しなくてもこのパレットに乗る。
+# 名前は `ghostty +list-themes` の表記どおりに書く（catppuccin-mocha は無効）。
+theme = Catppuccin Mocha
+
 # font-plemol-jp-nf が入れるのは Console 系のみ。
 # 全角を狭くしたい場合は "PlemolJP35 Console NF" に変える。
 font-family = PlemolJP Console NF

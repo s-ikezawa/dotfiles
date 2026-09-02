@@ -16,6 +16,9 @@ onboarding = false   # 変更: 初回のオンボーディングは出さない
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
+# herdr の "catppuccin" は Mocha。既定の [theme.custom] の例が #1e1e2e / #181825 /
+# #f5c2e7 と Mocha のパレットで書かれていることから分かる（catppuccin-mocha という
+# 名前は受け付けない）。明るい方は catppuccin-latte。
 name = "catppuccin"   # 変更
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.

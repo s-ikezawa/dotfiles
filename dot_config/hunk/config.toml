@@ -1,0 +1,6 @@
+# hunk の設定。項目の一覧は https://github.com/modem-dev/hunk の README を参照。
+# リポジトリ単位で上書きしたい場合は そのリポジトリの .hunk/config.toml に書く。
+
+# 配色。ターミナル（Ghostty）と herdr に合わせて Catppuccin Mocha に統一する。
+# theme は最上位のキーで、"auto" にすると端末の明暗に追従する。
+theme = "catppuccin-mocha"
