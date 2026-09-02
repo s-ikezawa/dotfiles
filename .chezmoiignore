@@ -1,3 +1,7 @@
 CLAUDE.md
 install.sh
 README.md
+{{ if ne .chezmoi.os "darwin" }}
+# colima は macOS 前提（リソース値を sysctl から取っている）
+.config/colima
+{{ end }}

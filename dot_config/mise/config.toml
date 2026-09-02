@@ -49,6 +49,29 @@ eza = "latest"
 # Ctrl-R / Ctrl-T のキーバインドは .zshrc の `fzf --zsh` で読み込む。
 fzf = "latest"
 
+# コンテナ。Docker Desktop は使わず、colima が lima 上に建てた VM の中で
+# docker daemon を動かし、ホストからは docker CLI だけで喋る。
+#
+#   lima            VM を作る土台。colima は limactl を PATH から呼ぶので単体で要る
+#   colima          その上に docker daemon を用意し、docker context を張るところまでやる
+#   docker-cli      docker コマンド本体。daemon は VM の中なので CLI だけでよい
+#   docker-compose  CLI プラグイン。docker 本体とは別配布
+#
+# VM の設定は chezmoi 側の dot_config/colima/_templates/default.yaml。
+lima = "latest"
+colima = "latest"
+docker-cli = "latest"
+
+# compose は単体バイナリなので、docker が CLI プラグインとして探す場所
+# （$DOCKER_CONFIG/cli-plugins）へ symlink する。$DOCKER_CONFIG は .zshenv で
+# XDG 配下に寄せてある。symlink にするのは mise がバージョンを入れ替えても
+# 参照先が installs 配下のまま追随するため。
+docker-compose = { version = "latest", postinstall = """
+mkdir -p "${DOCKER_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/docker}/cli-plugins" &&
+ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-compose" \
+        "${DOCKER_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/docker}/cli-plugins/docker-compose"
+""" }
+
 # まとめて更新するタスク。`mise run up`
 # パッケージは mise 管理なので brew upgrade は要らない
 # (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。

@@ -22,6 +22,32 @@ export SHELL_SESSIONS_DISABLE=1
 # less はディレクトリを掘らないので、.zshrc 側で mkdir している。
 export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 
+# ---------------------------------------------------------------------------
+# コンテナ（colima / docker）
+#
+# docker CLI の設定・認証情報・context の置き場。既定は ~/.docker。
+# CLI プラグインの探索先も $DOCKER_CONFIG/cli-plugins になるので、mise の
+# docker-compose の postinstall（config.toml）が張る symlink 先と揃えてある。
+#
+# **colima を起動する前に効いている必要がある。** colima は起動のたびに
+# docker context を作って active にするが、書き込み先はこの変数で決まる。
+# 未設定のまま起動すると ~/.docker 側に context ができ、後から XDG に寄せた
+# 瞬間に context を見失う。
+export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/docker"
+
+# LIMA_HOME は**設定しない**。colima は自分の VM を $COLIMA_HOME/_lima に作るが、
+# 環境に LIMA_HOME があるとそちらを見に行き、`colima is not running` になる
+# （XDG に寄せようとして踏んだ。lima を単体で使うようになったら考え直す）。
+
+# colima 自身に置き場を変える環境変数は無い。~/.colima があればそちらを、
+# 無ければ XDG 配下（~/.config/colima）を使う。**~/.colima を作らないこと。**
+# 実際の場所は `colima template --print` で確認できる。
+
+# DOCKER_HOST も設定しない。docker CLI は colima が張る context から socket を
+# 見つけられるし、DOCKER_HOST があると context より優先されて
+# `docker context ls` が警告を出す。context を読まないツール（Testcontainers など）
+# を使うようになったら、そのときに socket の存在を見て足す。
+
 # Homebrew(brew shellenv はサブプロセスを起こすので既定パスを直接指定する)
 export HOMEBREW_PREFIX=/opt/homebrew
 

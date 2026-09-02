@@ -1,0 +1,68 @@
+# colima が新しく作る VM の既定値。置き場は `colima template --print` が返すパス
+# （~/.colima が無ければ XDG 配下の ~/.config/colima/_templates/default.yaml）。
+#
+# 注意: 作成済みの VM には反映されない。入れ直すには colima delete → colima start。
+# 全項目のコメント付き雛形は `colima template --editor cat` で読める。
+
+# --- リソース ---------------------------------------------------------------
+# ホストの半分を上限として渡す（値は sysctl から chezmoi が展開する）。
+# vz はメモリを先に確保せず、ゲストが使った分だけホストから取る。
+cpu: {{ div (output "sysctl" "-n" "hw.ncpu" | trim | atoi) 2 }}
+memory: {{ div (output "sysctl" "-n" "hw.memsize" | trim | atoi) 2147483648 }}
+
+# 疎確保なので、実際に使った分しかホストのディスクを消費しない。
+# 作成後は拡大しかできないため、既定の 100 GiB のままにしておく。
+disk: 100
+
+# --- 仮想化 -----------------------------------------------------------------
+# `colima template` が吐く雛形は vmType: qemu / mountType: sshfs だが、これは
+# 全プラットフォーム共通の表示で、macOS における CLI の既定（vz / virtiofs）とは違う。
+# 雛形のまま置くと Apple Silicon で遅い qemu に落ちるので明示する。
+# mountType は VM 作成後に変更できない（colima 自身が雛形にそう書いている）。
+vmType: vz
+mountType: virtiofs
+
+# amd64 のイメージしか無いときに Rosetta で動かす（vz + Apple Silicon が前提）。
+# devcontainer のベースイメージには arm64 が用意されていないものがまだある。
+rosetta: true
+
+# --- マウント ---------------------------------------------------------------
+# 既定は「$HOME を writable で 1 つだけ」。mounts を書くとその既定は消え、ここに
+# 並べたものが全てになる（追加ではない）。Docker Desktop が /Users /private
+# /var/folders /tmp をまとめて共有するのとは前提が違う。
+#
+# VM から見えないホストパスを bind mount しても**エラーにならず空ディレクトリが
+# 生える**ので、「コンテナの中に何も無い」という気づきにくい壊れ方をする。
+#
+# VM 内のマウント先は location と同じパスになる。docker はホスト側が渡してきた
+# 文字列をそのまま VM 内のパスとして解決するので、ツールが渡す表記に合わせること。
+# $TMPDIR は /var/folders/… 表記、realpath を通すと /private/var/folders/… 表記。
+#
+# /tmp は書かない。VM 内の /tmp は lima が provision に使うので、ホスト側で
+# 覆うと VM が壊れる。realpath 済みの /private/tmp 側だけ通す。
+#
+# location に裸の `~` は書けない。YAML では `~` は null なので location が空になり、
+# `overlapping mounts not supported: '' overlaps '/var/folders/'` で起動に失敗する
+# （colima のドキュメントの例が `~/secrets` なのは後続があって文字列になるため）。
+# 引用符で囲む手もあるが、colima が書き戻す形式に合わせて絶対パスを展開しておく。
+mounts:
+  # ソースコード。devcontainer の workspace の bind mount はここで解決される。
+  - location: {{ .chezmoi.homeDir }}
+    writable: true
+  # macOS の $TMPDIR。一時ディレクトリを bind mount するツール向け。
+  - location: /var/folders
+    writable: true
+  # realpath("/tmp")。/tmp 直下に作った一時ファイルを渡してくるツール向け。
+  - location: /private/tmp
+    writable: true
+
+# ホスト側のファイル変更を inotify としてゲストへ伝播する。experimental なので
+# 既定の false のまま。コンテナ内のホットリロードが効かないときに試す。
+mountInotify: false
+
+# --- ランタイム -------------------------------------------------------------
+runtime: docker
+
+# 使うときに `colima start --kubernetes` で有効化する。
+kubernetes:
+  enabled: false

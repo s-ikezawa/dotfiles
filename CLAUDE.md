@@ -159,6 +159,72 @@ fzf-tab を先に読んでいるので、素の Tab は fzf-tab、`**`+Tab は f
 `zcompdump` も消す。`.zshrc` が 24 時間以内のダンプを `-C` で使い回すため、
 消さないと入れたばかりの補完が最大 1 日出てこない。
 
+## コンテナ（colima / docker）
+
+Docker Desktop は使わない。colima が lima 上に建てた VM の中で docker daemon を
+動かし、ホストからは docker CLI だけで喋る。
+
+| | 実体 |
+|---|---|
+| lima / colima / docker-cli / docker-compose | mise の `[tools]` |
+| VM の設定 | chezmoi の `dot_config/colima/_templates/default.yaml.tmpl` |
+| `DOCKER_CONFIG` | `.zshenv`（`$XDG_CONFIG_HOME/docker`） |
+
+起動は手動（`colima start`）。常駐させていない。
+
+### テンプレートが効くのは初回だけ
+
+`_templates/default.yaml` は**新規インスタンスの雛形**で、初回の
+`colima start` で `~/.config/colima/default/colima.yaml` に写される。以後はそちらが
+優先され、テンプレートを直しても反映されない。**起動に失敗した試行でも写される**ので、
+設定を間違えたまま起動すると、直した後も古い値で失敗し続ける。
+
+作り直すには `colima delete` してから `colima start`。既存 VM の値を変えたいだけなら
+`~/.config/colima/default/colima.yaml` を直接編集する（chezmoi 管理外）。
+`mountType` と `runtime` と `arch` は VM 作成後に変更できない。
+
+### マウント（devcontainer が壊れる主因）
+
+- **`mounts` を書くと既定は消える。** colima の既定は「`$HOME` を writable で 1 つ」
+  だけで、`mounts` に書いたものが全てになる（追加ではない）。Docker Desktop が
+  `/Users` `/private` `/var/folders` `/tmp` をまとめて共有するのとは前提が違う
+- **VM から見えないホストパスを bind mount してもエラーにならない。** 空ディレクトリが
+  生えるだけなので、「コンテナの中に何も無い」という気づきにくい壊れ方をする
+- **ホストの `/tmp` は VM の `/tmp`。** `/tmp` は lima が使うのでマウントしてはいけない。
+  `realpath` 済みの `/private/tmp` を通してある（`docker run -v /tmp/x:/x` は VM 側の
+  `/tmp` を見る、と実測で確認した）
+- **`location: ~` は書けない。** YAML では `~` は null なので location が空になり、
+  `overlapping mounts not supported: '' overlaps ...` で起動に失敗する。
+  chezmoi に絶対パスを展開させている
+- 現在通してあるのは `$HOME`（ソースコード）、`/var/folders`（macOS の `$TMPDIR`）、
+  `/private/tmp` の 3 つ。VM 内でも同じパスにマウントされる
+- コンテナ内のファイル所有者は `0:0` に見え、**非 root（devcontainer が使う uid 1000）
+  でも書ける**（実測）。ホスト側の uid を合わせる小細工は要らない
+
+### 環境変数
+
+- **`DOCKER_CONFIG` は `colima start` より前に効いている必要がある。** colima は起動の
+  たびに docker context を作って active にするが、書き込み先はこの変数で決まる。
+  未設定のまま起動すると `~/.docker` 側に context ができ、後から XDG に寄せた瞬間に
+  context を見失う
+- **`LIMA_HOME` を export してはいけない。** colima は自分の VM を `$COLIMA_HOME/_lima`
+  に作るが、環境に `LIMA_HOME` があるとそちらを見に行き `colima is not running` になる
+- **`~/.colima` を作らないこと。** 存在すると XDG 配下ではなくそちらが使われる
+  （場所は `colima template --print` で確認できる）
+- `DOCKER_HOST` は設定していない。docker CLI は context から socket を見つけるし、
+  設定すると context より優先されて `docker context ls` が警告を出す。context を
+  読まないツール（Testcontainers など）を使うときに、socket の存在を見て足す
+
+### amd64 イメージ
+
+`rosetta: true` にしてあるが、Rosetta2 が入っていないと起動時に警告が出て
+qemu の binfmt に落ちる（遅いが動く。`--platform linux/amd64` で `uname -m` が
+`x86_64` になることは確認済み）。速くするには一度だけ次を実行して `colima restart`。
+
+```sh
+sudo softwareupdate --install-rosetta --agree-to-license
+```
+
 ## 秘密情報とマシン固有の値
 
 **このリポジトリは public。** メールアドレス・勤務先のオーガニゼーション名・

@@ -88,7 +88,8 @@ Homebrew API から直接取得して `/opt/homebrew` に展開する再実装�
 cask の対応 artifact が限定的、といった制約がある（下の「注意点」を参照）。
 Homebrew 本体は逃げ道として残してある。
 
-設定ファイルは zsh と git だけ。nvim / tmux などは必要になった時点で追加していく。
+設定ファイルは zsh・git・ターミナル周り（ghostty / herdr / hunk）と colima だけ。
+nvim などは必要になった時点で追加していく。
 
 マシン固有の値（コミット用のメールアドレスなど）は `dot_*` ではなく
 **chezmoi の data** に置く。詳細は下の「秘密情報とマシン固有の値」を参照。
@@ -171,6 +172,44 @@ chezmoi init \
 > ⚠️ `~/.gitconfig` が無いため、**`git config --global` はこの chezmoi 管理ファイルに
 > 書き込む**。直接書くと次の `chezmoi apply` で巻き戻る。設定変更は
 > `chezmoi edit ~/.config/git/config`、このマシン限りの設定は `config.local` へ。
+
+## コンテナ（colima / docker）
+
+Docker Desktop の代わりに colima を使う。lima が建てた VM の中で docker daemon が
+動き、ホストには docker CLI だけを置く。
+
+| | 置き場 |
+|---|---|
+| `lima` / `colima` / `docker-cli` / `docker-compose` | mise の `[tools]` |
+| VM の設定（CPU・メモリ・マウント） | `dot_config/colima/_templates/default.yaml.tmpl` |
+| `DOCKER_CONFIG` | `dot_config/zsh/dot_zshenv`（`~/.config/docker`） |
+
+`docker-compose` は単体バイナリなので、mise の `postinstall` が
+`$DOCKER_CONFIG/cli-plugins/docker-compose` へ symlink を張って `docker compose`
+として使えるようにしている。
+
+```sh
+colima start     # VM の起動（常駐させていないので手動）
+colima status
+colima stop
+```
+
+CPU とメモリはホストの半分を上限として `sysctl` の値から算出している
+（16 GiB / 8 コアのマシンなら 8 GiB / 4 コア）。vz はメモリを先に確保せず、
+ゲストが使った分だけホストから取る。
+
+### devcontainer で踏みやすいところ
+
+- **VM に見えていないホストパスを bind mount しても、エラーにならず空ディレクトリに
+  なる。** マウントしているのは `$HOME`、`/var/folders`（`$TMPDIR`）、`/private/tmp` の
+  3 つだけ。`mounts` に書いたものが全てで、既定への追加ではない
+- **ホストの `/tmp` は VM の `/tmp` に化ける。** `/private/tmp`（`realpath` 済みの表記）
+  を使うこと
+- コンテナ内で非 root ユーザー（devcontainer の uid 1000）でも書き込める
+- amd64 のイメージは Rosetta2 が入っていれば速く、無ければ qemu で遅く動く。
+  入れるなら `sudo softwareupdate --install-rosetta --agree-to-license` を一度だけ
+- VM の設定を変えたときは `colima delete` → `colima start` で作り直す。
+  テンプレートは**初回起動時にしか読まれない**（詳細は `CLAUDE.md`）
 
 ## ファイル命名規則
 
