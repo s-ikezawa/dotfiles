@@ -35,6 +35,10 @@ run = [
 # きれいに消えることは期待しないこと。
 "brew-cask:karabiner-elements" = { os = "macos" }
 
+# 開発時の動作確認用ブラウザ
+"brew-cask:google-chrome" = { os = "macos" }
+"brew-cask:firefox" = { os = "macos" }
+
 ################################################################################
 # macOS 設定
 #
