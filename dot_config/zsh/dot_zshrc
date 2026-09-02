@@ -188,6 +188,36 @@ fi
 
 (( $+commands[fzf] )) && eval "$(fzf --zsh)"
 
+# Ctrl-G: rg で「中身」を全文検索し、選んだファイルのパスをコマンドラインに挿す。
+# Ctrl-T（fzf + fd）がファイル名を探すのに対し、こちらは中身を探す担当。
+#
+# fzf 側の絞り込みは無効化し（--disabled）、入力が変わるたびに rg を回し直す
+# （change:reload）。fzf に全行を食わせて絞るのではなく、検索そのものを rg に
+# やらせる形。{q} は fzf が現在の入力をクォートして埋めてくれる。
+# sleep 0.1 は 1 文字ごとに rg を起動しないための間引き（fzf 公式の例と同じ）。
+#
+# 既定の ^G は send-break（zle の中断）。中断は ^C が残るので潰している。
+if (( $+commands[rg] && $+commands[fzf] && $+commands[bat] )); then
+  _fzf_rg_widget() {
+    local rg_cmd='rg --line-number --no-heading --color=always --smart-case --hidden --glob "!.git" -- {q} || true'
+    local selected
+    # 初期表示は空にする（空パターンの rg は全行に当たって重いため）。
+    selected=$(FZF_DEFAULT_COMMAND=true fzf \
+      --ansi --disabled --delimiter : \
+      --bind "change:reload:sleep 0.1; ${rg_cmd}" \
+      --preview 'bat --color=always --style=numbers --highlight-line {2} -- {1}' \
+      --preview-window 'right,60%,+{2}+3/3' \
+      | cut -d: -f1)
+    if [[ -n $selected ]]; then
+      # 行番号はプレビューで見えるので、挿すのはそのまま他のコマンドに渡せるパスだけ。
+      LBUFFER+="${selected} "
+    fi
+    zle reset-prompt
+  }
+  zle -N _fzf_rg_widget
+  bindkey '^G' _fzf_rg_widget
+fi
+
 # cd 履歴へのジャンプ（z <部分文字列> / zi で候補選択）。補完を compdef で
 # 登録するので compinit の後に置く。zi の候補選択には fzf が使われる。
 # cd 自体は置き換えない（--cmd cd を付けていない）ので、既存の auto_cd や

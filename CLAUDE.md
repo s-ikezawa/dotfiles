@@ -148,6 +148,11 @@ fzf-tab を先に読んでいるので、素の Tab は fzf-tab、`**`+Tab は f
 - fzf の候補列挙は `FZF_DEFAULT_COMMAND` で `fd` に差し替えてある。既定の `find` だと
   `node_modules` や `.git` まで舐める。`FZF_*` を `.zshenv` ではなく `.zshrc` に
   置いているのは、Ctrl-T / Alt-C の設定と並べて読めるようにするため
+- 検索は 2 系統ある。**Ctrl-T が「ファイル名」（fzf + fd）、Ctrl-G が「中身」
+  （fzf + rg）**。Ctrl-G は fzf 側の絞り込みを `--disabled` で切り、入力のたびに
+  `change:reload` で rg を回し直す。fzf に全行を食わせるのではなく、検索そのものを
+  rg にやらせる形（fzf 公式の ripgrep 連携と同じ組み方）。`^G` の既定は
+  `send-break` だが、中断は `^C` が残るので潰している
 - 各 `source` は `[[ -r … ]]` で守る。`mise bootstrap` 前のマシンでも
   `.zshrc` が壊れないようにするため
 
