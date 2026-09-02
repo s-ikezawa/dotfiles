@@ -21,6 +21,11 @@
 [core]
 	# 除外ファイルは既定で $XDG_CONFIG_HOME/git/ignore が読まれるので指定不要
 	editor = vim
+	# フックを chezmoi 管理下の 1 箇所にまとめる（pre-commit で betterleaks を回す）。
+	# 全リポジトリに効く代わりに、各リポジトリの .git/hooks は読まれなくなる。
+	# リポジトリ側で core.hooksPath を設定するツール（husky など）はローカル設定が
+	# 優先されるので邪魔しない。~ は git が展開する（--path で確認済み）。
+	hooksPath = ~/.config/git/hooks
 
 [commit]
 	verbose = true               # コミットメッセージの編集画面に diff を出す

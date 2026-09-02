@@ -270,12 +270,38 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
 - `~/.gitconfig` が無いと **`git config --global` の書き込み先が
   chezmoi 管理下の `~/.config/git/config` になる。** 直接書くと次の apply で
   巻き戻るので、`chezmoi edit` かマシン固有の `config.local` を使うこと
+- **フックは `core.hooksPath` で `~/.config/git/hooks` に集約している。** chezmoi が配る
+  `pre-commit` が betterleaks（gitleaks の作者が作り直したもの）でステージ済みの差分を
+  見る。public リポジトリに秘密を入れない運用を機械で担保するのが目的で、
+  エージェントにコミットさせる場合も同じように効く。
+  代償として**各リポジトリの `.git/hooks` は読まれなくなる**（リポジトリ側で
+  `core.hooksPath` を設定するツール、たとえば husky はローカル設定が勝つので影響しない）。
+  誤検出は該当行の `betterleaks:allow` コメントか `.betterleaksignore` で抑える
 - identity は個人用が既定で、会社用は `includeIf "gitdir:…"` で切り替える。
   判定に使うパスは ghq のレイアウト（`~/Projects/<host>/<org>/<repo>`）前提。
   パスもアドレスも data 由来なので、勤務先が分かる文字列はリポジトリに残らない
 - `gitdir:` の**末尾のスラッシュは必須**。無いとそのディレクトリ自体にしか効かない
 - `dot_config/git/config.work.tmpl` は会社用アドレスが空だと**何も出力しない**。
   chezmoi は出力が空のテンプレートをファイルとして作らない（`empty_` 属性が無い場合）
+
+## Claude Code
+
+設定は `dot_config/claude/settings.json.tmpl` → `~/.config/claude/settings.json`。
+置き場が `~/.claude` ではなく XDG なのは `.zshenv` の `CLAUDE_CONFIG_DIR` による。
+
+- **`settings.json` は chezmoi 管理下。** `/permissions` などから書き換えると次の
+  `chezmoi apply` で巻き戻る。変更は `chezmoi edit` で行う（git config と同じ罠）
+- `permissions` は `defaultMode: auto` を邪魔しない範囲に留めてある。allow は書かず、
+  `deny` は秘密の読み出し（`.env` 系と `~/.ssh`）だけ。auto でも触らせないための最低限
+- `additionalDirectories` に `~/.config` を入れてある。chezmoi のソースで作業しながら
+  **配置先**を読む場面が常にあるため。パスは絶対パスで展開している
+  （`~` が解釈されるか確認できなかったため）
+- `env` の `BASH_DEFAULT_TIMEOUT_MS` / `BASH_MAX_TIMEOUT_MS` は、VM の起動や bottle の
+  ダウンロードが既定の 2 分に収まらないので伸ばしてある
+- グローバルの `~/.config/claude/CLAUDE.md` は**毎セッション読み込まれる**ので、
+  無いと困る指示だけを置く。見出しや「ここには何を書く」といった人間向けの説明は
+  書かない（読むのはモデルで、そのぶんコンテキストを食う）。
+  リポジトリ固有の事情はそれぞれの CLAUDE.md へ
 
 ## 前提
 

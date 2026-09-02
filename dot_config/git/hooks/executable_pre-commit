@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# git の pre-commit フック。core.hooksPath 経由で全リポジトリに効く。
+#
+# ステージした差分に秘密らしき文字列が無いかを betterleaks で見る。dotfiles が
+# public で、メールアドレスや組織名を dot_* に置かない運用をしているため、
+# 人間の注意力ではなく機械で止める。エージェントにコミットさせる場面でも同じ。
+#
+# 実体は mise の [tools]。gitleaks ではなく、その作者が作り直した betterleaks を使う。
+set -euo pipefail
+
+# GUI の git クライアントなど PATH の細い環境から呼ばれても shim を見つけられるように。
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
+
+# 未導入のマシン（mise bootstrap 前など）ではコミットを止めない。
+command -v betterleaks >/dev/null 2>&1 || exit 0
+
+# --staged  ステージ済みの差分だけを見る
+# --redact  検出した値そのものを出力しない（端末の履歴やログに秘密を残さないため）
+# -v        どのファイルのどの行がどのルールに当たったかを出す。無いと件数しか出ない
+# -l warn   通常のコミットでは何も出さない（検出時だけ喋る）
+if ! betterleaks git --staged --redact --no-banner -v -l warn; then
+  printf '\033[1;31mFAIL\033[0m betterleaks が秘密らしき文字列を検出したのでコミットを中止しました。\n' >&2
+  printf '  誤検出なら該当行に betterleaks:allow のコメントを書くか、\n' >&2
+  printf '  どうしても通すときだけ git commit --no-verify を使うこと。\n' >&2
+  exit 1
+fi

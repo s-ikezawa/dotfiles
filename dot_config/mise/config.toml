@@ -58,6 +58,12 @@ fd = "latest"
 # JSON。gh / docker / colima の出力を扱うのに要る。
 jq = "latest"
 
+# 秘密情報の検出。git の pre-commit フック（dot_config/git/hooks/pre-commit）から
+# 呼んでいる。このリポジトリが public で、メールアドレスや組織名を dot_* に
+# 書かない運用をしているため、人間の注意力ではなく機械で止める。
+# gitleaks ではなく、その作者が作り直した betterleaks を使う。
+betterleaks = "latest"
+
 # cd 履歴へのジャンプ（z <部分文字列>）。.zshrc で init する。
 # zi は候補選択に fzf を使うので、fzf とセットで効く。
 zoxide = "latest"

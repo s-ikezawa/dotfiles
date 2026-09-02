@@ -174,6 +174,18 @@ chezmoi init \
 > 書き込む**。直接書くと次の `chezmoi apply` で巻き戻る。設定変更は
 > `chezmoi edit ~/.config/git/config`、このマシン限りの設定は `config.local` へ。
 
+## git のフック
+
+`core.hooksPath` を `~/.config/git/hooks` に向け、chezmoi が `pre-commit` を配っている。
+ステージ済みの差分を **betterleaks**（gitleaks の作者が作り直したもの）で走査し、秘密
+らしき文字列があればコミットを止める。dotfiles が public なので、機械的なゲートを 1 枚
+置いている。
+
+- 全リポジトリに効く代わりに、各リポジトリの `.git/hooks` は読まれなくなる
+- 誤検出は該当行に `betterleaks:allow` を書くか `.betterleaksignore` で抑える。
+  どうしても通すときだけ `git commit --no-verify`
+- betterleaks が未導入のマシンでは何もせずコミットを通す
+
 ## コンテナ（colima / docker）
 
 Docker Desktop の代わりに colima を使う。lima が建てた VM の中で docker daemon が

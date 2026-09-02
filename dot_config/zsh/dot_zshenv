@@ -10,6 +10,10 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 # GNU ツールのメッセージを英語のままにしたいので ja_JP ではなく en_US を使う。
 export LANG=en_US.UTF-8
 
+# エディタ。git は core.editor で別に指定しているので、ここが効くのは
+# chezmoi edit / less / コマンドラインの ^X^E など git 以外。
+export EDITOR=vim
+
 # Claude Code
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
