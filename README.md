@@ -56,14 +56,15 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
 | before | `run_once_before_02-homebrew.sh.tmpl` | Homebrew 本体 |
 | before | `run_once_before_03-mise.sh.tmpl` | mise 本体 |
 | before | `run_once_before_04-claude-code.sh.tmpl` | Claude Code |
-| 適用 | `dot_zshenv` → `~/.zshenv` | `ZDOTDIR` を `~/.config/zsh` に向ける |
-| 適用 | `dot_config/zsh/dot_zshenv` → `~/.config/zsh/.zshenv` | XDG / 環境変数 / PATH の定義 |
-| 適用 | `dot_config/zsh/dot_zprofile` → `~/.config/zsh/.zprofile` | path_helper 後に PATH の並び順を確定 |
-| 適用 | `dot_config/mise/config.toml` → `~/.config/mise/config.toml` | mise の宣言（tools / packages / macOS defaults） |
+| 適用 | `dot_*` / `private_*` / `executable_*` | 設定ファイルを `$HOME` に配置（個別のファイルは列挙しない） |
 | after | `run_onchange_after_01-mise-bootstrap.sh.tmpl` | `mise install` + `mise bootstrap packages apply` + `mise bootstrap macos defaults apply` |
 
-after フェーズは `mise bootstrap` の 1 本のみ。パッケージも macOS 設定も
-`~/.config/mise/config.toml` に宣言として集約してあるので、増えてもスクリプトは増えない。
+before で入れたバイナリの上に設定ファイルが配置され、その設定を読んで after が走る、
+という 3 段構え。設定ファイルは増えてもこの順序は変わらないので個別には並べない。
+
+after フェーズは `mise bootstrap` の 1 本のみ。これが読む `~/.config/mise/config.toml` は
+フェーズ 2 で配置されるため、after にしか置けない。パッケージも macOS 設定も
+この 1 ファイルに宣言として集約してあるので、増えてもスクリプトは増えない。
 
 ### mise と chezmoi の分担
 
