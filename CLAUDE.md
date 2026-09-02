@@ -2,12 +2,6 @@
 
 chezmoi で管理する dotfiles リポジトリ。詳細は `README.md` を参照。
 
-## 現在の状態
-
-`before` フェーズ 4 本 + `after` フェーズ 1 本（`run_onchange_after_01-mise-bootstrap.sh.tmpl`）。
-
-after を追加するときは、下の連番ルールを必ず守ること。
-
 ## 役割分担（重要）
 
 **パッケージ導入と macOS 設定は mise、設定ファイルの配置は chezmoi。**
