@@ -5,5 +5,8 @@
     "padding": 0
   },
   "theme": "dark",
-  "tui": "fullscreen"
+  "tui": "fullscreen",
+  "permissions": {
+    "defaultMode": "auto"
+  }
 }
