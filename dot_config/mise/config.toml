@@ -9,10 +9,17 @@
 [tools]
 gh = "latest"
 
-# リポジトリの取得先を ~/ghq/<host>/<org>/<repo> に強制する。
-# git の includeIf がこのレイアウトを前提に会社用 identity を切り替えるので、
-# 「どこに clone したか」で identity が決まる状態を作るための土台でもある。
+# リポジトリの取得先を ~/Projects/<host>/<org>/<repo> に強制する（root は git の
+# ghq.root で指定）。git の includeIf がこのレイアウトを前提に会社用 identity を
+# 切り替えるので、「どこに clone したか」で identity が決まる状態を作る土台でもある。
 ghq = "latest"
+
+# エージェントが書いた差分をレビューするためのターミナル diff ビューア。
+# 実体は aqua:modem-dev/hunk。設定を置くなら ~/.config/hunk/config.toml で、
+# 既に XDG 準拠なので chezmoi 側の追加は要らない（必要になるまで置かない）。
+# `hunk update` は mise が置いたバイナリを直接差し替えるので使わないこと。
+# 更新は `mise run up` に任せる。
+hunk = "latest"
 
 # 1Password CLI。chezmoi init がコミット用メールアドレスを金庫から読むのに使う
 # （dotfiles は public なのでアドレスをリポジトリに置かない）。
