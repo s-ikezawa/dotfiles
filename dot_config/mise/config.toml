@@ -39,6 +39,12 @@ run = [
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:firefox" = { os = "macos" }
 
+# ターミナルと、そこで使うフォント。
+# font-plemol-jp-nf に入っているのは Console 系 2 ファミリのみで、
+# 素の "PlemolJP NF" は含まれない（PlemolJP Console NF / PlemolJP35 Console NF）。
+"brew-cask:ghostty" = { os = "macos" }
+"brew-cask:font-plemol-jp-nf" = { os = "macos" }
+
 ################################################################################
 # macOS 設定
 #

@@ -1,0 +1,6 @@
+# Ghostty の設定。項目の一覧は `ghostty +show-config --default --docs` で出せる。
+
+# font-plemol-jp-nf が入れるのは Console 系のみ。
+# 全角を狭くしたい場合は "PlemolJP35 Console NF" に変える。
+font-family = PlemolJP Console NF
+font-size = 14
