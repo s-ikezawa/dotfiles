@@ -104,7 +104,19 @@ alias grep='grep --color=auto'
 # tree は macOS に入っていないので eza で代用する（実体は mise の [tools]）。
 # ls / ll / la は GNU 版のまま。eza に寄せると --color 以外のフラグも
 # 別物になるので、今は tree だけを置き換えている。
-alias tree='eza --tree'
+#
+# alias ではなく関数なのは、eza 0.23.5 が「パス引数が無く、かつ出力先が端末でない」
+# とき、終了コード 0 のまま何も出力しないため（eza-community/eza#1568、未修正）。
+# `tree | head` が黙って空になるので、パスらしき引数が無ければ . を補う。
+# 素の eza を使いたいときは `command eza`（関数は \tree では回避できない）。
+tree() {
+  local a
+  for a in "$@"; do
+    # 実在するパスを指す引数が既にあるなら補う必要は無い
+    [[ $a != -* && -e $a ]] && { command eza --tree "$@"; return }
+  done
+  command eza --tree "$@" .
+}
 
 # ---------------------------------------------------------------------------
 # プロンプト
