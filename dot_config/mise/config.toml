@@ -136,6 +136,15 @@ run = [
 "brew-cask:ghostty" = { os = "macos" }
 "brew-cask:font-plemol-jp-nf" = { os = "macos" }
 
+# ノートアプリ。cask の実体は dmg + app bundle なので mise の cask 対応で足りる。
+# ノートと設定（vault 内の .obsidian）は vault と不可分なので chezmoi では管理しない。
+# app に加えて /opt/homebrew/bin/obsidian（app bundle 内の obsidian-cli への symlink）も
+# 張られる（実測）。この CLI は起動中の Obsidian に喋る前提で、単体では動かない。
+# auto_updates = true なので更新はアプリ自身が行う。Homebrew の `brew upgrade` は
+# その種の cask を既定で飛ばす（--greedy が要る）ので、
+# `mise bootstrap packages upgrade` でもバージョンが動かないことがある。
+"brew-cask:obsidian" = { os = "macos" }
+
 # zsh プラグイン。4 つとも依存ゼロの bottle で、言語処理系は連れてこない。
 # プラグインマネージャ（sheldon 等）は置かない。読み込み順に強い制約があり
 # （fpath 追加 → compinit → fzf-tab → autosuggestions → syntax-highlighting）、
