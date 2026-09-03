@@ -1,22 +1,29 @@
 {
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "BASH_MAX_TIMEOUT_MS": "900000"
+  },
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(~/.ssh/**)"
+    ],
+    "defaultMode": "auto",
+    "additionalDirectories": [
+      "{{ .chezmoi.homeDir }}/.config"
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.config/claude/scripts/statusline.sh",
     "padding": 0
   },
-  "theme": "dark",
   "tui": "fullscreen",
-  "permissions": {
-    "defaultMode": "auto",
-    "additionalDirectories": ["{{ .chezmoi.homeDir }}/.config"],
-    "deny": [
-      "Read(**/.env)",
-      "Read(**/.env.*)",
-      "Read(~/.ssh/**)"
-    ]
-  },
-  "env": {
-    "BASH_DEFAULT_TIMEOUT_MS": "300000",
-    "BASH_MAX_TIMEOUT_MS": "900000"
+  "theme": "dark",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "xhigh"
+    }
   }
 }
