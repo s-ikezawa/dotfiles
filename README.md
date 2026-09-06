@@ -353,6 +353,46 @@ chezmoi apply
 
 ---
 
+## 自作コマンド（`~/.local/bin`）
+
+`dot_local/bin/` に置いたものが `~/.local/bin` へ配る。PATH は
+`dot_config/zsh/dot_zshenv` の `_zsh_setup_path()` が通し、ディレクトリは
+`run_once_before_01-xdg-dirs.sh` が作るので、追加の配線は要らない。
+実行ビットは `executable_` 属性で付ける。
+
+### `pr-diff-lines`
+
+差分に GitHub のインラインコメント用の行番号を振って表示する。依存は `gh` と `jq`
+（どちらも mise の `[tools]`）。
+
+```sh
+pr-diff-lines              # 現在のブランチの PR
+pr-diff-lines 123          # PR #123
+pr-diff-lines -R o/r 123   # 別リポジトリの PR
+pr-diff-lines --local      # ローカルの git diff（以降は git diff の引数）
+```
+
+```
+=== f.txt
+          @@ -1,7 +1,6 @@
+R1         a
+L2        -b
+R2        +B2
+R3         c
+R4        +ADDED
+```
+
+行頭の `R<n>` / `L<n>` がそのまま API の `side` と `line` になる
+（`R` = `RIGHT`、`L` = `LEFT`）。PR モードでは head SHA と、そのまま貼れる
+`gh api` の雛形も併せて出す。
+
+インラインコメントは **PR の head SHA での行番号** かつ **ハンクの中** でないと
+422 で弾かれる。作業ツリーのファイルを読んで行番号を数えると両方を外しうるので、
+差分そのものから採る。ハンク外の行は出力に現れないため、コメントできない行を
+指す事故が構造的に起きない。
+
+---
+
 ## 注意点
 
 - **macOS の設定は再ログインで反映される**ものがある（キーリピート、Tab でのコントロール移動、

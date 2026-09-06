@@ -283,6 +283,9 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
 - `gitdir:` の**末尾のスラッシュは必須**。無いとそのディレクトリ自体にしか効かない
 - `dot_config/git/config.work.tmpl` は会社用アドレスが空だと**何も出力しない**。
   chezmoi は出力が空のテンプレートをファイルとして作らない（`empty_` 属性が無い場合）
+- **PR にインラインコメントを付けるときは `pr-diff-lines` を使う。** 差分に
+  `R<n>` / `L<n>`（`side` と `line`）を振って出すので、作業ツリーから行番号を
+  数え直さない。head SHA と `gh api` の雛形も出る。詳細は `README.md`
 
 ## Claude Code
 
@@ -302,6 +305,9 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
   無いと困る指示だけを置く。見出しや「ここには何を書く」といった人間向けの説明は
   書かない（読むのはモデルで、そのぶんコンテキストを食う）。
   リポジトリ固有の事情はそれぞれの CLAUDE.md へ
+- `env` の `CLAUDE_CODE_THRIFTY_SONIC` は auto mode の bash-first steer を消すための
+  **非公開フラグ**。切らないと `rg` / `fd` が使われず、Read 系フックとサブディレクトリの
+  `CLAUDE.md` も発火しない。経緯と確認方法は `dot_config/claude/README.md`
 
 ## 前提
 

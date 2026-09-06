@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# 差分に GitHub のインラインコメント用の行番号を振って表示する。
+#
+#   pr-diff-lines              現在のブランチの PR
+#   pr-diff-lines 123          PR #123
+#   pr-diff-lines -R o/r 123   別リポジトリの PR
+#   pr-diff-lines --local ...  ローカルの git diff（以降は git diff の引数）
+#
+# 行頭の R<n> / L<n> が、そのまま API の side と line になる。
+#   R = side: RIGHT（追加行・文脈行）
+#   L = side: LEFT （削除行）
+# ハンクに含まれない行は出力されないので、コメントできない行を指す事故が起きない。
+
+set -euo pipefail
+
+usage() { awk 'NR>1 && /^#/ { sub(/^# ?/, ""); print; next } NR>1 { exit }' "$0"; exit "${1:-0}"; }
+
+repo=""
+mode="pr"
+pr=""
+args=()
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h | --help) usage ;;
+    -R | --repo)
+      [ $# -ge 2 ] || { echo "pr-diff-lines: -R には値が要る" >&2; exit 2; }
+      repo="$2"
+      shift 2
+      ;;
+    --local)
+      mode="local"
+      shift
+      args=("$@")
+      break
+      ;;
+    --)
+      shift
+      args=("$@")
+      break
+      ;;
+    -*)
+      printf 'pr-diff-lines: 不明なオプション: %s\n' "$1" >&2
+      usage 2
+      ;;
+    *)
+      pr="$1"
+      shift
+      ;;
+  esac
+done
+
+# unified diff を読み、左右の絶対行番号を振って出す。
+annotate() {
+  awk '
+    /^diff --git / {
+      path = $0; sub(/^.* b\//, "", path)
+      printf "\n=== %s\n", path
+      next
+    }
+    /^(index |old mode |new mode |new file |deleted file |similarity |rename |copy |--- |\+\+\+ )/ { next }
+    /^Binary files/ { print "          (binary)"; next }
+    /^@@/ {
+      split($0, h, " ")
+      l = h[2]; r = h[3]
+      sub(/^-/, "", l); sub(/^\+/, "", r)
+      sub(/,.*/, "", l); sub(/,.*/, "", r)
+      left = l + 0; right = r + 0
+      printf "%-9s %s\n", "", $0
+      next
+    }
+    /^\\/ { next }
+    /^\+/ { printf "R%-8d %s\n", right, $0; right++; next }
+    /^-/  { printf "L%-8d %s\n", left,  $0; left++;  next }
+    /^ /  { printf "R%-8d %s\n", right, $0; left++; right++; next }
+    /^$/  { printf "R%-8d\n",    right;     left++; right++; next }
+          { printf "%-9s %s\n", "", $0 }
+  '
+}
+
+if [ "$mode" = "local" ]; then
+  echo "# ローカルの作業ツリー。PR に投げるときの commit_id は PR の head SHA を使うこと"
+  git diff ${args[@]+"${args[@]}"} | annotate
+  exit 0
+fi
+
+gh_args=()
+[ -n "$repo" ] && gh_args+=(-R "$repo")
+
+view=$(gh pr view ${pr:+"$pr"} ${gh_args[@]+"${gh_args[@]}"} --json number,headRefOid,url)
+num=$(printf '%s' "$view" | jq -r '.number')
+sha=$(printf '%s' "$view" | jq -r '.headRefOid')
+slug=$(printf '%s' "$view" | jq -r '.url | capture("github\\.com/(?<s>[^/]+/[^/]+)/pull/") | .s')
+
+printf '# repo: %s\n# pr:   #%s\n# head: %s\n' "$slug" "$num" "$sha"
+
+gh pr diff "$num" ${gh_args[@]+"${gh_args[@]}"} | annotate
+
+cat <<EOF
+
+# --- インラインコメントの投げ方 ---------------------------------------------
+# gh api repos/$slug/pulls/$num/comments \\
+#   -f commit_id=$sha \\
+#   -f path=<上の === のパス> \\
+#   -F line=<R または L の数字> \\
+#   -f side=<RIGHT|LEFT> \\
+#   -f body='...'
+#
+# 複数行に付けるなら -F start_line=<開始行> -f start_side=<RIGHT|LEFT> を足す。
+# レビューとしてまとめて出すなら POST .../pulls/$num/reviews の comments[] に
+# 同じ path / line / side を並べる。
+EOF
