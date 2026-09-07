@@ -42,7 +42,7 @@ CASES = [
     ("git diff --stat HEAD", "allow", "注入・手順1"),
     ("git diff --staged", "allow", "手順1"),
     ("git log --oneline -20", "allow", "注入"),
-    ("git log -3 --format=<<<T%n%s%n%n%b%nT>>>", "allow", "手順2"),
+    ("git log -3 --format=%s%n%n%b%n---", "allow", "手順2"),
     ("git branch --show-current", "allow", "手順4"),
     ("git config --get commit.template", "allow", "手順2"),
     ("git add -- vault/note.md", "allow", "手順6の基本形"),
