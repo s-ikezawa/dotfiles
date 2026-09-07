@@ -79,7 +79,7 @@ ls -a "$(git rev-parse --show-toplevel)" | grep -iE 'commitlint|gitmessage|contr
 Why は差分の外にしかない。次の順で探す。
 
 1. この会話でユーザーが述べた目的、報告した不具合、貼り付けたエラー文言
-2. 補足指示（上の `$ARGUMENTS`）
+2. 冒頭の「ユーザーからの補足」（Skill 呼び出し時の引数）
 3. コード中の issue 番号・TODO、失敗していたテストの内容
 4. ブランチ名（`git symbolic-ref --short HEAD`）に含まれる issue 番号やキーワード
 
