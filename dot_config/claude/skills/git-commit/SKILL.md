@@ -4,8 +4,8 @@ description: Writes a commit message that states both what changed and why, foll
 when_to_use: 'Trigger phrases: コミットして / コミットメッセージを書いて / 変更をコミット / コミットに分けて / commit this / write a commit message / stage and commit / split into atomic commits'
 argument-hint: [背景・意図・issue 番号など（任意）]
 shell: bash
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git rev-parse:*), Bash(git branch --show-current), Bash(git config --get:*), Bash(git add --:*), Bash(git add -N --:*), Bash(git commit -F -:*)
-disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git add -A*), Bash(git add --all*), Bash(git add .*), Bash(git add -f*), Bash(git add --f*), Bash(git push:*), Bash(git reset:*), Bash(git rebase:*)
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch --show-current), Bash(git config --get:*), Bash(git add --:*), Bash(git commit -F -), Bash(git commit -F - --trailer:*)
+disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -f*), Bash(git add --f*)
 ---
 
 # コミットを書いて実行する
@@ -182,6 +182,8 @@ MSG
 - `--no-verify` を使わない。フックが失敗したら原因を直して再実行する。フックがファイルを
   整形した場合は、その結果を確認してから add し直してコミットする。
 - `--amend` `rebase` `reset` `push` はこの手順では行わない。
+- frontmatter の `disallowed-tools` は**次のユーザーメッセージで失効する**。手順の途中で確認を
+  挟めばそこで切れるので、上の禁止は機構に頼らず散文としても守る。
 
 完了後に `git status --short` と `git log -1 --stat` を確認し、意図した内容だけが入ったか
 検証する。ユーザーには件名と、残っている未コミットの変更を報告する。
