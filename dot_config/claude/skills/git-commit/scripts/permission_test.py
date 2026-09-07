@@ -63,8 +63,13 @@ CASES = [
     ("git add .", "deny", "全部ステージ"),
     ("git add . src", "deny", "全部ステージ"),
     ("git add -- .", "deny", "全部ステージ（-- 付き）"),
+    ("git add --  .", "deny", "二重空白。wildcard は正規化されるので exact と違い止まる"),
+    ("git add -- . src/a.ts", "deny", "末尾 ` *` の特例でパスを続けても止まる"),
     ("git add -- ./", "deny", "全部ステージ（./ 綴り）"),
+    ("git add -- ./ src/a.ts", "deny", "./ にパスを続けた形"),
     ("git add -- :/", "deny", "全部ステージ（:/ 綴り）"),
+    ("git add -A -- src/a.ts", "deny", "-A はパス付きでも止まる"),
+    ("git commit --amend -F -", "deny", "フラグの前置順が変わっても止まる"),
     ("git add -f secret.env", "deny", "gitignore の強制追加"),
     ("git add --force secret.env", "deny", "gitignore の強制追加"),
     # allow に載せず、通常の承認に落としたいもの
@@ -77,9 +82,11 @@ CASES = [
     ("git rebase -i main", "ask", "守備範囲外"),
     ("git add foo.md", "ask", "-- を省いた形は承認に落とす"),
     ("git add .github/x.md", "ask", "dot 始まりのパスを deny で巻き込まない"),
+    ("git add -- .github/x.md", "allow", "-- 付きの dot 始まりパスは手順6が実際に打つ形"),
     # 塞げていないと分かっている穴。閉じたらここが失敗して気づける
     ("git add -- '*'", "allow", "既知の穴: 前置一致は綴りを網羅できない"),
-    ("git add --  .", "allow", "既知の穴: exact deny は空白正規化されないので二重空白が抜ける"),
+    ("git add -- ':(top)'", "allow", "既知の穴: pathspec マジックは数え上げられない"),
+    ("git add -- ../", "allow", "既知の穴: 親ディレクトリ指定"),
 ]
 
 
