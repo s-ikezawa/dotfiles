@@ -197,7 +197,7 @@ MSG
 - `--amend` `rebase` `reset` `push` はこの手順では行わない。
 - frontmatter の `allowed-tools` と `disallowed-tools` は**どちらも次のユーザーメッセージで
   失効する**。この手順は 3・4・6 でユーザーに確認を挟むので、**確認をまたいだ後は権限設定が
-  何も効いていない**。frontmatter の権限は 1 ターン目だけの保険とみなし、上の禁止は機構に
+  何も効いていない**。frontmatter の権限は発動したターンだけの保険とみなし、上の禁止は機構に
   頼らず散文としても守る。恒久的に効かせたい禁止は settings.json の `permissions.deny` に置く。
 - `allowed-tools` の `Bash(git add --:*)` は前置一致なので、全部入り指定の綴りを deny で
   数え上げても網羅はできない（`git add -- '*'`、空白を二重にした `git add --  .` など）。
