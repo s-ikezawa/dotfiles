@@ -5,7 +5,7 @@ when_to_use: 'Trigger phrases: コミットして / コミットメッセージ�
 argument-hint: [背景・意図・issue 番号など（任意）]
 shell: bash
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch --show-current), Bash(git config --get:*), Bash(git add --:*), Bash(git commit -F -)
-disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -- ./*), Bash(git add -- :/*), Bash(git add -f*), Bash(git add --f*)
+disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -- ./ *), Bash(git add -- :/ *), Bash(git add -f*), Bash(git add --f*)
 ---
 
 # コミットを書いて実行する

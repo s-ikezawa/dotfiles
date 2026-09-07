@@ -48,6 +48,8 @@ CASES = [
     ("git add -- vault/note.md", "allow", "手順6の基本形"),
     ("git add -- 'vault/日本語 ノート.md'", "allow", "空白と日本語を含むパス"),
     ("git add -- src/a.ts src/b.ts", "allow", "複数パス"),
+    ("git add -- ./src/parser.ts", "allow", "./ 始まりの相対パスを巻き込まない"),
+    ("git add -- :/src/parser.ts", "allow", ":/ 始まりの絶対パス指定を巻き込まない"),
     ("git commit -F -", "allow", "heredoc は照合前に剥がされる"),
     # 本文が禁じているもの。機構でも止まってほしい
     ("git commit -F - --amend", "deny", "既存コミットの書き換え"),
