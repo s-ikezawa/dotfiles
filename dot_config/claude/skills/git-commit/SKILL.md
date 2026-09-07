@@ -5,7 +5,7 @@ when_to_use: 'Trigger phrases: コミットして / コミットメッセージ�
 argument-hint: [背景・意図・issue 番号など（任意）]
 shell: bash
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch --show-current), Bash(git config --get:*), Bash(git add --:*), Bash(git commit -F -)
-disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -f*), Bash(git add --f*)
+disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -- ./*), Bash(git add -- :/*), Bash(git add --  *), Bash(git add -f*), Bash(git add --f*)
 ---
 
 # コミットを書いて実行する
@@ -186,10 +186,13 @@ MSG
 - `--no-verify` を使わない。フックが失敗したら原因を直して再実行する。フックがファイルを
   整形した場合は、その結果を確認してから add し直してコミットする。
 - `--amend` `rebase` `reset` `push` はこの手順では行わない。
-- frontmatter の `disallowed-tools` は**次のユーザーメッセージで失効する**。手順の途中で確認を
-  挟めばそこで切れるので、上の禁止は機構に頼らず散文としても守る。
-- `allowed-tools` の `Bash(git add --:*)` は前置一致なので、`git add -- .` 以外の全部入り指定
-  （`git add -- ./` など）は機構では止まらない。**残っている穴として認識したうえで散文で守る。**
+- frontmatter の `allowed-tools` と `disallowed-tools` は**どちらも次のユーザーメッセージで
+  失効する**。この手順は 3・4・6 でユーザーに確認を挟むので、**確認をまたいだ後は権限設定が
+  何も効いていない**。frontmatter の権限は 1 ターン目だけの保険とみなし、上の禁止は機構に
+  頼らず散文としても守る。恒久的に効かせたい禁止は settings.json の `permissions.deny` に置く。
+- `allowed-tools` の `Bash(git add --:*)` は前置一致なので、全部入り指定の綴りを deny で
+  数え上げても網羅はできない（`git add -- '*'` など）。**残っている穴として認識したうえで
+  散文で守る。**
 
 完了後に `git status --short` と `git log -1 --stat` を確認し、意図した内容だけが入ったか
 検証する。ユーザーには件名と、残っている未コミットの変更を報告する。
