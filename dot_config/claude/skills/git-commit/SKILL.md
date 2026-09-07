@@ -5,7 +5,7 @@ when_to_use: 'Trigger phrases: コミットして / コミットメッセージ�
 argument-hint: [背景・意図・issue 番号など（任意）]
 shell: bash
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch --show-current), Bash(git config --get:*), Bash(git add --:*), Bash(git commit -F -)
-disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -- ./*), Bash(git add -- :/*), Bash(git add --  *), Bash(git add -f*), Bash(git add --f*)
+disallowed-tools: Bash(git commit *--am*), Bash(git commit *--no-veri*), Bash(git commit *--allow-empty*), Bash(git commit *--all*), Bash(git add -A*), Bash(git add --all*), Bash(git add -u*), Bash(git add --update*), Bash(git add .), Bash(git add . *), Bash(git add -- .), Bash(git add -- ./*), Bash(git add -- :/*), Bash(git add -f*), Bash(git add --f*)
 ---
 
 # コミットを書いて実行する
@@ -199,8 +199,11 @@ MSG
   何も効いていない**。frontmatter の権限は 1 ターン目だけの保険とみなし、上の禁止は機構に
   頼らず散文としても守る。恒久的に効かせたい禁止は settings.json の `permissions.deny` に置く。
 - `allowed-tools` の `Bash(git add --:*)` は前置一致なので、全部入り指定の綴りを deny で
-  数え上げても網羅はできない（`git add -- '*'` など）。**残っている穴として認識したうえで
-  散文で守る。**
+  数え上げても網羅はできない（`git add -- '*'`、空白を二重にした `git add --  .` など）。
+  **残っている穴として認識したうえで散文で守る。**
+
+権限ルールを変更したら `scripts/permission_test.py` を実行する。期待値表と照合規則の
+再実装が入っていて、`git add -- <path>` を巻き込むような綴りの事故を検出する。
 
 完了後に `git status --short` と `git log -1 --stat` を確認し、意図した内容だけが入ったか
 検証する。ユーザーには件名と、残っている未コミットの変更を報告する。
