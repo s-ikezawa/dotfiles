@@ -270,13 +270,20 @@ qemu のままになる（`colima ssh -- ls /proc/sys/fs/binfmt_misc/` に `rose
 - `~/.gitconfig` が無いと **`git config --global` の書き込み先が
   chezmoi 管理下の `~/.config/git/config` になる。** 直接書くと次の apply で
   巻き戻るので、`chezmoi edit` かマシン固有の `config.local` を使うこと
-- **フックは `core.hooksPath` で `~/.config/git/hooks` に集約している。** chezmoi が配る
-  `pre-commit` が betterleaks（gitleaks の作者が作り直したもの）でステージ済みの差分を
-  見る。public リポジトリに秘密を入れない運用を機械で担保するのが目的で、
-  エージェントにコミットさせる場合も同じように効く。
-  代償として**各リポジトリの `.git/hooks` は読まれなくなる**（リポジトリ側で
-  `core.hooksPath` を設定するツール、たとえば husky はローカル設定が勝つので影響しない）。
+- **フックは `core.hooksPath` で `~/.config/git/hooks` に集約している。** 実体は
+  `hook-dispatch` 1 本で、フック名からの symlink 経由で呼ばれる（`$0` の basename で
+  自分がどのフックかを知る）。`pre-commit` では betterleaks（gitleaks の作者が作り直した
+  もの）がステージ済みの差分を見る。public リポジトリに秘密を入れない運用を機械で
+  担保するのが目的で、エージェントにコミットさせる場合も同じように効く。
   誤検出は該当行の `betterleaks:allow` コメントか `.betterleaksignore` で抑える
+- **`core.hooksPath` を設定すると各リポジトリの `.git/hooks` は読まれなくなる。** git に
+  フックを連鎖させる仕組みは無いので、`hook-dispatch` が `.git/hooks/<フック名>` を
+  自分で呼び直している。これを外すと git-lfs（post-checkout / post-merge / post-commit /
+  pre-push）や pre-commit フレームワーク・lefthook が**エラーも出さずに効かなくなる**。
+  委譲先の解決に **`git rev-parse --git-path hooks` は使えない**（`core.hooksPath` を
+  反映してこのディレクトリ自身が返る）。`--path-format=absolute --git-common-dir` から
+  組み立てること。リポジトリ側で `core.hooksPath` を設定するツール（husky など）は
+  ローカル設定が勝つので、そこでは dispatch ごと呼ばれない = betterleaks も走らない
 - identity は個人用が既定で、会社用は `includeIf "gitdir:…"` で切り替える。
   判定に使うパスは ghq のレイアウト（`~/Projects/<host>/<org>/<repo>`）前提。
   パスもアドレスも data 由来なので、勤務先が分かる文字列はリポジトリに残らない

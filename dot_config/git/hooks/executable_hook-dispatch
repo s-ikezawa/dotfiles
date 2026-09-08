@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# 全リポジトリ共通の git フック。core.hooksPath 経由で呼ばれる実体。
+#
+# core.hooksPath を設定すると、各リポジトリの .git/hooks は「読まれなくなる」。
+# git にフックを連鎖させる仕組みは無いので、ここで自前で委譲する。委譲しないと
+# git-lfs（post-checkout / post-merge / post-commit / pre-push）や pre-commit
+# フレームワーク・lefthook が、エラーも出さずに効かなくなる。
+#
+# フック名ごとにこのファイルへの symlink を置いてある（pre-commit → hook-dispatch）。
+# git は symlink のパスでフックを起動するので、$0 の basename がフック名になる。
+# 通したいフックが増えたら symlink_<フック名> を足すだけでよい。
+set -euo pipefail
+
+hook=${0##*/}
+
+# GUI の git クライアントなど PATH の細い環境から呼ばれても shim を見つけられるように。
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
+
+# リポジトリ側のフック。`git rev-parse --git-path hooks` は core.hooksPath を反映して
+# このディレクトリ自身を返すので使えない。--git-common-dir から組み立てる
+# （worktree から呼ばれても本体の .git を指す）。
+repo_hook="$(git rev-parse --path-format=absolute --git-common-dir)/hooks/$hook"
+
+# 引数と stdin はそのまま渡す（pre-push / post-rewrite は stdin で対象を受け取る）。
+# -ef は同一ファイルかの判定。.git/hooks 側がこのスクリプトへの symlink だったときに
+# 無限に呼び合うのを避けるためだけに見ている。
+if [ -x "$repo_hook" ] && ! [ "$repo_hook" -ef "$0" ]; then
+  "$repo_hook" "$@" || exit $?
+fi
+
+[ "$hook" = pre-commit ] || exit 0
+
+# ここから下は pre-commit のときだけ。
+#
+# ステージした差分に秘密らしき文字列が無いかを betterleaks で見る。dotfiles が public で、
+# メールアドレスや組織名を dot_* に置かない運用をしているため、人間の注意力ではなく
+# 機械で止める。エージェントにコミットさせる場面でも同じ。
+# リポジトリ側のフックを先に走らせてあるので、整形して stage し直すフックが居ても
+# 実際にコミットされる内容を見ることになる。
+#
+# 実体は mise の [tools]。gitleaks ではなく、その作者が作り直した betterleaks を使う。
+
+# 未導入のマシン（mise bootstrap 前など）ではコミットを止めない。
+command -v betterleaks >/dev/null 2>&1 || exit 0
+
+# --staged  ステージ済みの差分だけを見る
+# --redact  検出した値そのものを出力しない（端末の履歴やログに秘密を残さないため）
+# -v        どのファイルのどの行がどのルールに当たったかを出す。無いと件数しか出ない
+# -l warn   通常のコミットでは何も出さない（検出時だけ喋る）
+if ! betterleaks git --staged --redact --no-banner -v -l warn; then
+  printf '\033[1;31mFAIL\033[0m betterleaks が秘密らしき文字列を検出したのでコミットを中止しました。\n' >&2
+  printf '  誤検出なら該当行に betterleaks:allow のコメントを書くか、\n' >&2
+  printf '  どうしても通すときだけ git commit --no-verify を使うこと。\n' >&2
+  exit 1
+fi

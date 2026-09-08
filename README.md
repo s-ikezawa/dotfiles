@@ -176,15 +176,25 @@ chezmoi init \
 
 ## git のフック
 
-`core.hooksPath` を `~/.config/git/hooks` に向け、chezmoi が `pre-commit` を配っている。
-ステージ済みの差分を **betterleaks**（gitleaks の作者が作り直したもの）で走査し、秘密
-らしき文字列があればコミットを止める。dotfiles が public なので、機械的なゲートを 1 枚
-置いている。
+`core.hooksPath` を `~/.config/git/hooks` に向け、chezmoi が `hook-dispatch` と、
+フック名からそこへの symlink を配っている。`pre-commit` ではステージ済みの差分を
+**betterleaks**（gitleaks の作者が作り直したもの）で走査し、秘密らしき文字列があれば
+コミットを止める。dotfiles が public なので、機械的なゲートを 1 枚置いている。
 
-- 全リポジトリに効く代わりに、各リポジトリの `.git/hooks` は読まれなくなる
+`core.hooksPath` を設定すると各リポジトリの `.git/hooks` は読まれなくなるため、
+`hook-dispatch` が `.git/hooks/<フック名>` を自分で呼び直す。委譲しないと git-lfs や
+pre-commit フレームワーク・lefthook が、エラーも出さずに効かなくなる。
+
+- 委譲を通してあるのは `pre-commit` / `pre-merge-commit` / `prepare-commit-msg` /
+  `commit-msg` / `post-commit` / `post-checkout` / `post-merge` / `post-rewrite` /
+  `pre-push` / `pre-rebase`。増やすときは `symlink_<フック名>` を足す
+- `pre-commit` はリポジトリ側 → betterleaks の順。整形して stage し直すフックが居ても
+  実際にコミットされる内容を見る
 - 誤検出は該当行に `betterleaks:allow` を書くか `.betterleaksignore` で抑える。
   どうしても通すときだけ `git commit --no-verify`
 - betterleaks が未導入のマシンでは何もせずコミットを通す
+- リポジトリ側で `core.hooksPath` を設定するツール（husky など）はローカル設定が勝つので、
+  そこでは betterleaks も走らない
 
 ## コンテナ（colima / docker）
 

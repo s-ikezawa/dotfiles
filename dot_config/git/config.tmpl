@@ -22,7 +22,8 @@
 	# 除外ファイルは既定で $XDG_CONFIG_HOME/git/ignore が読まれるので指定不要
 	editor = vim
 	# フックを chezmoi 管理下の 1 箇所にまとめる（pre-commit で betterleaks を回す）。
-	# 全リポジトリに効く代わりに、各リポジトリの .git/hooks は読まれなくなる。
+	# ここを向けると各リポジトリの .git/hooks は読まれなくなるので、hook-dispatch が
+	# 自前で委譲している（git-lfs や pre-commit フレームワークを壊さないため）。
 	# リポジトリ側で core.hooksPath を設定するツール（husky など）はローカル設定が
 	# 優先されるので邪魔しない。~ は git が展開する（--path で確認済み）。
 	hooksPath = ~/.config/git/hooks
