@@ -77,6 +77,14 @@ zoxide = "latest"
 # 色付き cat。fzf のプレビュー（.zshrc の FZF_CTRL_T_OPTS）に使う。
 bat = "latest"
 
+# エディタ。mise registry の neovim は vfox:mise-plugins/vfox-neovim に解決され、
+# 公式リリースの nvim-macos-arm64.tar.gz を取ってくる。中身は LuaJIT ごと同梱で、
+# 動的リンク先は macOS のシステムライブラリだけ（otool -L で確認）。
+# Homebrew の formula は luajit / lpeg / luv / tree-sitter / unibilium / utf8proc /
+# libuv / gettext を依存に連れてくるので [tools] を使う。
+# 設定は chezmoi 側の dot_config/nvim/。
+neovim = "latest"
+
 # コンテナ。Docker Desktop は使わず、colima が lima 上に建てた VM の中で
 # docker daemon を動かし、ホストからは docker CLI だけで喋る。
 #
