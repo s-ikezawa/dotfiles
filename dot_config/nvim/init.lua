@@ -15,3 +15,5 @@ require("configs.options")
 require("configs.providers")
 require("configs.keymaps")
 require("configs.autocmds")
+
+require("plugins.catppuccin")
