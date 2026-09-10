@@ -1,6 +1,11 @@
 CLAUDE.md
 install.sh
 README.md
+
+# vim.pack の lockfile。nvim が ~/.config/nvim/ の中に自分で書き、更新のたびに
+# 書き換える。chezmoi で管理すると apply のたびに巻き戻るので管理対象から外す
+# （ここに書いておくと chezmoi add でディレクトリごと拾ったときも入らない）。
+.config/nvim/nvim-pack-lock.json
 {{ if ne .chezmoi.os "darwin" }}
 # colima は macOS 前提（リソース値を sysctl から取っている）
 .config/colima
