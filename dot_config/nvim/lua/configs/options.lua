@@ -42,6 +42,17 @@ opt.smartcase = true
 opt.splitright = true
 opt.splitbelow = true
 
+-- フローティングウィンドウの枠。既定は "" で枠なし。
+--
+-- 入れた動機は LSP の hover（K）で、枠が無いと本文がどこまでか分かりにくい。
+-- ただし 'winborder' はフロート全体の既定なので、hover だけでなく signature help
+-- （挿入モードの CTRL-S）、診断のフロート、vim.ui.select のようなものにも同じ枠が付く。
+-- fidget の通知ウィンドウは自前で border = "none" を持っているので影響しない（実測）。
+--
+-- "rounded" は "single" の角を丸めたもの（╭ など）。他に bold / double / single /
+-- solid / shadow があり、8 文字を並べて自分で作ることもできる（:help 'winborder'）。
+opt.winborder = "rounded"
+
 -- アンドゥ履歴をファイルに残し、閉じた後も遡れるようにする。
 -- 置き場は既定の ~/.local/state/nvim/undo で、Neovim が自動で作る。
 opt.undofile = true
