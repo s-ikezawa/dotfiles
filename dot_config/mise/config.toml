@@ -85,6 +85,20 @@ bat = "latest"
 # 設定は chezmoi 側の dot_config/nvim/。
 neovim = "latest"
 
+# tree-sitter CLI。nvim が同梱するパーサは c / lua / markdown / markdown_inline /
+# query / vim / vimdoc の 7 つだけ（0.12.5 で実測）で、他の言語は自前でビルドする
+# ことになる。パーサは 'runtimepath' 配下の parser/<lang>.* から読まれる。
+# mise registry の tree-sitter は aqua:tree-sitter/tree-sitter に解決され、
+# 公式リリースの tree-sitter-macos-arm64 を取ってくる。動的リンク先は macOS の
+# システムライブラリだけで、言語処理系は連れてこない（otool -L で確認）。
+#
+# ただし CLI 自身が外のコマンドを呼ぶ。
+#   - `tree-sitter build` は cc を呼ぶ。Xcode Command Line Tools が要る
+#   - `tree-sitter generate` は grammar.js を node プロセスで評価する。
+#     node はグローバルの [tools] に無いので、配布物が src/parser.c を
+#     同梱していて build だけで済むことを前提にする
+tree-sitter = "latest"
+
 # コンテナ。Docker Desktop は使わず、colima が lima 上に建てた VM の中で
 # docker daemon を動かし、ホストからは docker CLI だけで喋る。
 #
