@@ -17,3 +17,4 @@ require("configs.keymaps")
 require("configs.autocmds")
 
 require("plugins.catppuccin")
+require("plugins.tree-sitter-manager")
