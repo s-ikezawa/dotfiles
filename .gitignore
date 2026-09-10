@@ -1,0 +1,5 @@
+# kotlin-lsp（正確にはそれが走らせる Gradle）が dot_config/nvim/samples/kotlin に
+# 作るキャッシュ。配置先の生成物だが、一度このソースツリー側にも生えた
+# （LSP を起動し直しても再現せず、出所は特定できていない）。追跡する意味は無いので
+# どこに現れても弾く。chezmoi 側は .chezmoiignore で配置対象から外している。
+.gradle/

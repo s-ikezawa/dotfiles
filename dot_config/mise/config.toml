@@ -122,6 +122,45 @@ ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-compose" \
         "${DOCKER_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/docker}/cli-plugins/docker-compose"
 """ }
 
+# Kotlin の language server。JetBrains 公式（Kotlin/kotlin-lsp）で、実体は
+# IntelliJ IDEA と IntelliJ の Kotlin プラグインの実装。README の言う通り Alpha。
+# JBR を同梱しているので JDK は要らない（配布物 356MiB の大半がそれ）。
+# もう一方の実装 fwcd/kotlin-language-server は brew formula の依存に
+# openjdk@21 を持つので採らない。nvim 側の設定は dot_config/nvim/lsp/kotlin_lsp.lua。
+#
+# ここだけテーブルで書いているのは TOML の都合。[tools] の途中に
+# [tools."http:…"] を挟むと、それ以降のキーが全部そのテーブルに入ってしまうため、
+# [tools] の末尾に置いている。
+#
+# registry には無い（あるのは kotlin 本体と ktlint）ので http バックエンドで
+# CDN から直接取る。Homebrew の cask（brew-cask:kotlin-lsp）もあるが使わない。
+# 理由は 2 つ:
+#
+#   - **ビルドに有効期限がある。** 土台が IntelliJ Platform の EAP ビルドなので、
+#     30 日ほど経つと "This build of intellij-server has expired." を stderr に出して
+#     即終了する（Kotlin/kotlin-lsp の issue #217 / #270 / #271。メンテナ曰く
+#     "a limitation imposed by shared code in the IntelliJ Platform"）。
+#     cask の livecheck は GitHub リリースを見ているが、JetBrains は VS Code
+#     Marketplace 側を先に更新するので、リリースが遅れると cask は期限切れの
+#     ビルドを指したまま動かなくなる。2026-09-10 時点の cask 版 262.9593.0 が
+#     まさにその状態で、nvim から起動して実測した
+#   - cask が PATH に張るのは非推奨の kotlin-lsp.sh で、起動のたびに
+#     deprecation 警告を stderr に出す。http バックエンドなら
+#     bin/intellij-server を直接叩ける
+#
+# **バージョンは手で上げる。** 期限が切れて LSP が起動しなくなったら、
+# https://github.com/Kotlin/kotlin-lsp/releases で新しいビルド番号を確認して
+# version と checksum を差し替える（`mise upgrade` では上がらない）。
+# checksum は同じ CDN の <ファイル名>.sha256 にある。
+# 拡張子は .sit だが中身は zip なので format で明示する。
+# bin_path のディレクトリにある実行ファイルが PATH に載る（intellij-server と warmup.py）。
+[tools."http:kotlin-lsp"]
+version = "263.4421.0"
+url = "https://download-cdn.jetbrains.com/language-server/kotlin-server/{{ version }}/kotlin-server-{{ version }}-aarch64.sit"
+checksum = "sha256:ee1465de41e4310998a414932d5b0131e2159a717b3189dfdb51ffaa32c0f268"
+format = "zip"
+bin_path = "kotlin-server-{{ version }}/bin"
+
 # まとめて更新するタスク。`mise run up`
 # パッケージは mise 管理なので brew upgrade は要らない
 # (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。

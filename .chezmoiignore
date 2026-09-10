@@ -6,6 +6,13 @@ README.md
 # 書き換える。chezmoi で管理すると apply のたびに巻き戻るので管理対象から外す
 # （ここに書いておくと chezmoi add でディレクトリごと拾ったときも入らない）。
 .config/nvim/nvim-pack-lock.json
+
+# kotlin-lsp が samples/kotlin を開くと、そこで自前の Gradle を走らせて
+# .gradle/<バージョン>/ にロックとハッシュのキャッシュを作る。配置先の生成物なので
+# 管理しない。一度 chezmoi のソース側にも同じものが生えた（LSP を起動し直しても
+# 再現せず、出所は特定できていない）ので、紛れ込んでも配置先へ撒かないよう
+# ここにも書いておく。git 側は .gitignore で弾く。
+.config/nvim/samples/kotlin/.gradle
 {{ if ne .chezmoi.os "darwin" }}
 # colima は macOS 前提（リソース値を sysctl から取っている）
 .config/colima
