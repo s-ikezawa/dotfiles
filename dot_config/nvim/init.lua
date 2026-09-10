@@ -23,3 +23,4 @@ require("configs.lsp")
 
 require("plugins.catppuccin")
 require("plugins.tree-sitter-manager")
+require("plugins.fidget")
