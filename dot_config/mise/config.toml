@@ -77,6 +77,19 @@ zoxide = "latest"
 # 色付き cat。fzf のプレビュー（.zshrc の FZF_CTRL_T_OPTS）に使う。
 bat = "latest"
 
+# markdown をブラウザで読むビューア。`mo docs/` でディレクトリごと開け、
+# 保存すると live-reload が効く。GFM の表・Mermaid・KaTeX・GitHub Alerts を描く。
+# 引数を渡さず stdin が端末でなければ標準入力から読む（`cat notes.md | mo`）。
+# ADR や調べものの markdown を、素の bat ではなく描画された形で読むために入れる。
+#
+# registry に無いので backend を直接書く。ubi:k1LoW/mo でも入るが、aqua を選んだ。
+# aqua-registry の pkgs/k1LoW/mo が checksums.txt を sha256 で照合する定義を
+# 持っていて、取得物の検証が付いてくるため。
+# 上流は Homebrew tap（k1LoW/tap/mo）を案内しているが、[tools] ならバージョンを
+# 固定でき `mise run up` の対象にもなるので使わない。
+# 設定ファイルは持たないので chezmoi 側に置くものは無い。
+"aqua:k1LoW/mo" = "latest"
+
 # エディタ。mise registry の neovim は vfox:mise-plugins/vfox-neovim に解決され、
 # 公式リリースの nvim-macos-arm64.tar.gz を取ってくる。中身は LuaJIT ごと同梱で、
 # 動的リンク先は macOS のシステムライブラリだけ（otool -L で確認）。
@@ -196,6 +209,11 @@ run = [
 # 素の "PlemolJP NF" は含まれない（PlemolJP Console NF / PlemolJP35 Console NF）。
 "brew-cask:ghostty" = { os = "macos" }
 "brew-cask:font-plemol-jp-nf" = { os = "macos" }
+
+# Claude のデスクトップアプリ。Claude Code だけなら要らないが、
+# Claude in Chrome（ブラウザを操作させる拡張）がこのアプリを前提にしている。
+# 拡張を入れるには先にこれが要る。
+"brew-cask:claude" = { os = "macos" }
 
 # ノートアプリ。cask の実体は dmg + app bundle なので mise の cask 対応で足りる。
 # ノートと設定（vault 内の .obsidian）は vault と不可分なので chezmoi では管理しない。
