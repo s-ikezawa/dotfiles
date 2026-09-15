@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+# config.toml のハッシュを埋め込んで、設定を変えたときだけ再実行させる。
+# mise config sha256: {{ include "dot_config/mise/config.toml" | sha256sum }}
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
+
+# リポジトリ内のソース設定を mise の探索対象から外す。
+#
+# mise はカレントから親を遡って mise/config.toml を探すため、chezmoi のソースにある
+# dot_config/mise/config.toml（配置前のこのリポジトリ自身のファイル）をプロジェクト
+# 設定として拾う。postinstall や tasks を含む設定には trust が要るので untrusted
+# エラーになり、**リポジトリ内に cd している間 mise の shim が軒並み落ちる**
+# (rg / fd / eza / docker …)。
+#
+# 下の mise install より前に置くこと。mise install は「実行対象の設定を自動で trust
+# する」ので、順序が逆だとソース側の設定が trust されて二重に読まれる。
+# 設定ファイルの settings.ignored_config_paths でも同じことを狙えるが、
+# 設定の読み込み順の都合で効かなかった（環境変数 MISE_IGNORED_CONFIG_PATHS なら効く）。
+# 記録先は ~/.local/state/mise/ignored-configs で、冪等に何度でも実行してよい。
+log "mise trust --ignore (chezmoi のソース設定)"
+mise trust --ignore "{{ .chezmoi.sourceDir }}/dot_config/mise/config.toml" >/dev/null
+
+# [tools] の言語ランタイム・CLI
+log "mise install"
+mise install
+
+# [bootstrap.packages] のホストパッケージ。os キーで OS ごとに絞られる。
+log "mise bootstrap packages apply"
+mise bootstrap packages apply --yes
+
+{{ if eq .chezmoi.os "darwin" -}}
+# zsh の compinit は、fpath に入れたディレクトリとその親が group 書き込み可だと
+# 「insecure directories」として検出し、[ynq] を対話で聞いてくる。
+# Homebrew の /opt/homebrew/share は既定で 775(admin 書き込み可)なので、
+# .zshrc が share/zsh-completions を fpath に足した時点で該当する。
+# 単一ユーザーの Mac に実害は無いが、新品のマシンで最初にシェルを開いた瞬間に
+# プロンプトが出るのは避けたいので group の w を落とす。
+# share/zsh/site-functions は親が share/zsh(755)なので元から引っかからない。
+if [[ -d /opt/homebrew/share ]]; then
+  log "chmod g-w /opt/homebrew/share (compinit の insecure directories 対策)"
+  chmod g-w /opt/homebrew/share
+fi
+
+# compinit のダンプを捨てて次のシェル起動で作り直させる。
+# .zshrc は 24 時間以内のダンプなら -C で fpath を再検証しないため、
+# 消さないと今入れた formula の補完が最大 1 日出てこない。
+rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+
+# [bootstrap.macos.defaults] と post-defaults フック(killall)
+log "mise bootstrap macos defaults apply"
+mise bootstrap macos defaults apply --yes
+
+log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
+{{ end -}}
