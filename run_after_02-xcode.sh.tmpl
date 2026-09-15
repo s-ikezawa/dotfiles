@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "xcode.sh" }}
+
+# 01 で Xcode が入った直後のセットアップを、git を使う 03-macos-defaults より前に済ませる。
+#
+# run_onchange_ ではなく毎回走る run_after_ にしているのは、App Store の自動アップデートなど
+# chezmoi の外で Xcode が入った・更新された場合も、次の chezmoi apply で拾うため。
+# 済んでいれば sudo は呼ばない。
+setup_xcode
+{{ end -}}

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 {{ template "lib.sh" }}
+{{ template "xcode.sh" }}
 
 # config.toml のハッシュを埋め込んで、設定を変えたときだけ再実行させる。
 # mise config sha256: {{ include "dot_config/mise/config.toml" | sha256sum }}
@@ -29,6 +30,33 @@ log "mise install"
 mise install
 
 # [bootstrap.packages] のホストパッケージ。os キーで OS ごとに絞られる。
+{{ if eq .chezmoi.os "darwin" -}}
+# packages apply は開始時に変更履歴の git リポジトリを開くので、Xcode が入っていてライセンス
+# 未同意だと何もせずに落ちる(App Store で Xcode が更新された後など)。先に済ませておく。
+# 今回の apply で Xcode が入る場合は、直後の 02-xcode がセットアップする。
+setup_xcode
+
+# mas(App Store アプリ)は root でないとき自分で sudo を呼び直す(mas 7)。mise は mas の
+# 出力を取り込むので、途中でパスワードを聞かれても何の入力か分からない。そこで入れる
+# App Store アプリがあるときだけ、02-homebrew と同じく先に認証して延長し続ける。
+# 他のマネージャ(brew-cask など)を処理している間に既定タイムアウト(5 分)を超えうるため
+# keepalive も置く。
+# dry-run は入れるものがあると `mas install <id>…` を標準出力に出し、無ければ何も出さない。
+if [[ -n "$(mise bootstrap packages apply --dry-run --manager mas 2>/dev/null)" ]]; then
+  if ! sudo -n true 2>/dev/null; then
+    log "sudo の認証（App Store アプリのインストールに必要）"
+    if ! sudo -v; then
+      echo "sudo の認証に失敗しました。管理者アカウントで実行してください。" >&2
+      exit 1
+    fi
+  fi
+  # 入出力を切り離す理由と、trap で子→親の順に落とす理由は 02-homebrew を参照。
+  while kill -0 "$$" 2>/dev/null && sudo -n true 2>/dev/null; do sleep 30; done \
+    </dev/null >/dev/null 2>&1 &
+  sudo_keepalive_pid=$!
+  trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}" 2>/dev/null; true' EXIT
+fi
+{{ end -}}
 log "mise bootstrap packages apply"
 mise bootstrap packages apply --yes
 
@@ -37,10 +65,4 @@ mise bootstrap packages apply --yes
 # .zshrc は 24 時間以内のダンプなら -C で fpath を再検証しないため、
 # 消さないと今入れた formula の補完が最大 1 日出てこない。
 rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-
-# [bootstrap.macos.defaults] と post-defaults フック(killall)
-log "mise bootstrap macos defaults apply"
-mise bootstrap macos defaults apply --yes
-
-log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
 {{ end -}}

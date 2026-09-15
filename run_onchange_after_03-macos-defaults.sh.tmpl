@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+
+# config.toml のハッシュを埋め込んで、設定を変えたときだけ再実行させる。
+# mise config sha256: {{ include "dot_config/mise/config.toml" | sha256sum }}
+
+# 01-mise-bootstrap から分けて、02-xcode の後に置いている。
+#
+# defaults apply は変更履歴の git リポジトリ(~/.local/state/mise/history/repo.git)を開く。
+# xcode-select を明示していない状態で Xcode.app が入ると /usr/bin/git は Xcode 側を使う
+# ようになり、ライセンスに同意するまで exit 69 で落ちる。01 で Xcode が入った直後に
+# ここを走らせると失敗するので、同意(02-xcode)より後に置く。
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
+
+# [bootstrap.macos.defaults] と post-defaults フック(killall)
+log "mise bootstrap macos defaults apply"
+mise bootstrap macos defaults apply --yes
+
+log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
+{{ end -}}

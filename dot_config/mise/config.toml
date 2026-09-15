@@ -1,5 +1,6 @@
 # mise のグローバル設定。chezmoi が ~/.config/mise/config.toml として配置し、
-# after フェーズの run_onchange_after_01-mise-bootstrap.sh が適用する。
+# after フェーズの run_onchange_after_01-mise-bootstrap.sh(ツール・パッケージ)と
+# run_onchange_after_03-macos-defaults.sh(macOS 設定)が適用する。
 #
 # 役割分担:
 #   - パッケージ導入と macOS 設定 → mise（このファイル）
@@ -17,6 +18,9 @@ run = [
 ]
 
 [tools]
+# [bootstrap.packages] の mas: が使う。mise install が packages apply より先に走るので、
+# brew:mas と違って同じ実行の中で必ず先に揃う。
+mas = { version = "latest", os = ["macos"] }
 
 [bootstrap.packages]
 "brew-cask:1password" = { os = "macos" }
@@ -29,6 +33,12 @@ run = [
 "brew-cask:obsidian" = { os = "macos" }
 
 "brew:chezmoi" = { os = "macos" }
+
+# Mac App Store。キーは ADAM ID(App Store の URL の id 以降の数字)。
+# App Store へのサインインは手動で済ませておく。
+# インストール後のライセンス同意などは .chezmoitemplates/xcode.sh の setup_xcode が行う
+# (01-mise-bootstrap と 02-xcode から呼ぶ)。
+"mas:497799835" = { os = "macos" }              # Xcode
 
 ################################################################################
 # macOS 設定
