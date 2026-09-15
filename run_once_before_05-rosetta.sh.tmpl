@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+
+# Rosetta 2。amd64 しか無いコンテナイメージ（devcontainer のベースにまだある）を
+# colima の VM で速く動かすために入れる。無くても binfmt の qemu に落ちて動くが、
+# 実測で 2 倍以上遅い。
+#
+# colima 側は dot_config/colima/_templates/default.yaml の rosetta: true で
+# 有効化済み。ただし**VM は作成・起動時に Rosetta を掴む**ので、後から入れた
+# 場合は colima restart が要る。ここ(before フェーズ)で入れておけば、
+# 初回の colima start には間に合う。
+if [[ "$(uname -m)" != "arm64" ]]; then
+  skip "Rosetta は Apple Silicon 専用"
+elif arch -x86_64 /usr/bin/true 2>/dev/null; then
+  skip "Rosetta はインストール済み"
+else
+  # softwareupdate は root を要求する。02-homebrew と同じく先に認証しておく。
+  # sudo はパスワードを stdin ではなく /dev/tty から読むので、install.sh を
+  # `curl | bash` で流していて stdin がパイプでも入力できる。
+  # インストールは 1 分程度で終わり sudo の既定タイムアウト(5 分)に収まるため、
+  # 02-homebrew のような keepalive は置いていない。
+  if ! sudo -n true 2>/dev/null; then
+    log "sudo の認証（Rosetta のインストールに必要）"
+    if ! sudo -v; then
+      echo "sudo の認証に失敗しました。管理者アカウントで実行してください。" >&2
+      exit 1
+    fi
+  fi
+
+  # --agree-to-license はライセンスに同意して非対話で進めるためのもの。
+  # これが無いと対話プロンプトで止まる。
+  log "Rosetta 2 をインストール"
+  sudo softwareupdate --install-rosetta --agree-to-license
+  arch -x86_64 /usr/bin/true 2>/dev/null || {
+    echo "Rosetta のインストール後も x86_64 バイナリを実行できません" >&2
+    exit 1
+  }
+fi
+{{ end -}}
