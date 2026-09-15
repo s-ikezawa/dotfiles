@@ -22,6 +22,24 @@ run = [
 # brew:mas と違って同じ実行の中で必ず先に揃う。
 mas = { version = "latest", os = ["macos"] }
 
+# JDK。JAVA_HOME 環境変数は mise activate(.zshrc)が設定する。
+# postinstall で ~/Library/Java/JavaVirtualMachines にリンクを張り、/usr/libexec/java_home・
+# /usr/bin/java・Gradle のツールチェーン自動検出(mise は検出対象外)からも見えるようにする。
+#   - /Library/Java/JavaVirtualMachines は root 所有で sudo が要るので、ユーザー側に置く。
+#   - Contents/Info.plist を持たない配布版は java_home に登録できないので何もしない。
+#   - mise にはアンインストール時のフックがないため、リンク先が消えたリンクは次のインストール時に
+#     掃除する(残っている間も java_home は無視する)。
+#   - postinstall はインストール時にしか走らない。既に入っている版は mise install --force java で張る。
+java = { version = "temurin-26", postinstall = '''
+jvm_dir="$HOME/Library/Java/JavaVirtualMachines"
+[ -f "$MISE_TOOL_INSTALL_PATH/Contents/Info.plist" ] || exit 0
+mkdir -p "$jvm_dir"
+for link in "$jvm_dir"/mise-*.jdk; do
+  [ -L "$link" ] && [ ! -e "$link" ] && rm "$link"
+done
+ln -sfn "$MISE_TOOL_INSTALL_PATH" "$jvm_dir/mise-${MISE_TOOL_INSTALL_PATH##*/}.jdk"
+''' }
+
 [bootstrap.packages]
 "brew-cask:1password" = { os = "macos" }
 "brew-cask:1password-cli" = { os = "macos" }
