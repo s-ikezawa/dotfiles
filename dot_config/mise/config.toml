@@ -28,6 +28,8 @@ run = [
 "brew-cask:claude" = { os = "macos" }
 "brew-cask:obsidian" = { os = "macos" }
 
+"brew:chezmoi" = { os = "macos" }
+
 ################################################################################
 # macOS 設定
 #
