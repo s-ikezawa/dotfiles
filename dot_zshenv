@@ -1,0 +1,10 @@
+# ZDOTDIR ブートストラップ。
+#
+# zsh は ZDOTDIR 未設定のとき ~/.zshenv を読む。ここで ZDOTDIR を設定すると、
+# 以降の .zprofile / .zshrc / .zlogin は $ZDOTDIR から読まれる。
+# ただし .zshenv 自体はもう読み直されないため、本体を明示的に source する。
+#
+# ※ /etc/zshenv に sudo で書く方式もあるが、無人実行できず、macOS の
+#    アップデートで消えることがあるためこちらを採用している。
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+[ -f "$ZDOTDIR/.zshenv" ] && . "$ZDOTDIR/.zshenv"
