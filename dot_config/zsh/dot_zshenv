@@ -20,6 +20,21 @@ export HOMEBREW_PREFIX=/opt/homebrew
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
 # ---------------------------------------------------------------------------
+# Android
+# ---------------------------------------------------------------------------
+# 既定では SDK が ~/Library/Android/sdk、SDK ツールのユーザーデータ(Android CLI の本体・
+# AVD・リポジトリのキャッシュ・debug.keystore)が ~/.android に分かれるので、XDG_DATA_HOME の
+# 下の 1 か所にまとめる。SDK はデータなので ~/.local/bin ではなく ~/.local/share に置く。
+# adb の鍵(adbkey)と Gradle の analytics.settings は ANDROID_USER_HOME を見ずに ~/.android へ書く。
+export ANDROID_USER_HOME="${XDG_DATA_HOME}/android"
+export ANDROID_HOME="${ANDROID_USER_HOME}/sdk"
+# 公式ドキュメント上は ANDROID_USER_HOME が既定値だが、emulator 37.1.11 は AVD を
+# $ANDROID_AVD_HOME → $ANDROID_SDK_HOME/avd → ~/.android/avd の順にしか探さない。
+# android emulator create は $ANDROID_USER_HOME/avd に作るので、明示しないと起動できない。
+# ANDROID_AVD_HOME の既定値は $ANDROID_EMULATOR_HOME/avd なので、これ 1 つで揃う。
+export ANDROID_EMULATOR_HOME="${ANDROID_USER_HOME}"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
@@ -41,6 +56,9 @@ _zsh_setup_path() {
     $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)
     "$HOMEBREW_PREFIX/bin"
     "$HOMEBREW_PREFIX/sbin"
+    # adb など。SDK パッケージを入れる前は存在しないが、PATH にあっても害はない。
+    "$ANDROID_HOME/platform-tools"
+    "$ANDROID_HOME/emulator"
     $path
   )
 }
