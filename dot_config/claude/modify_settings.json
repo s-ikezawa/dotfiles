@@ -1,0 +1,14 @@
+#!/bin/bash
+# Claude Code は settings.json を自分で書き換える (theme, model など)。
+# ファイル丸ごとは管理せず、ここで指定したキーだけを既存の内容にマージする。
+set -euo pipefail
+
+current=$(cat)
+[ -n "$current" ] || current='{}'
+
+printf '%s\n' "$current" | /usr/bin/jq '
+  .statusLine = {
+    type: "command",
+    command: "~/.config/claude/scripts/statusline.sh"
+  }
+'
