@@ -43,8 +43,8 @@ setopt no_flow_control        # ^S/^Q のフロー制御を切って ^S を使�
 # ---------------------------------------------------------------------------
 # 補完
 # ---------------------------------------------------------------------------
-# 補完関数は compinit より前に fpath へ足す必要がある。site-functions は各 formula が
-# 置く分、zsh-completions は zsh 本体に同梱されない補完定義集（別ディレクトリ）。
+# 補完関数は compinit より前に fpath へ足す必要がある。site-functions には各 formula が
+# 置いた補完定義が入る。
 # fpath は .zshenv で typeset -U 済みなので重複しても消える。
 fpath=(
   "${HOMEBREW_PREFIX}/share/zsh/site-functions"
