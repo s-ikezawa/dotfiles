@@ -72,3 +72,12 @@ alias ll='ls -lh'
 alias la='ls -lha'
 alias grep='grep --color=auto'
 
+# ---------------------------------------------------------------------------
+# mise
+# ---------------------------------------------------------------------------
+# .zshenv で PATH に入れた shims は非対話シェル（スクリプトなど）向け。対話シェルでは
+# activate でプロンプトごとに mise hook-env を走らせ、ツールの bin を PATH に直接積み、
+# ツールが設定する環境変数（java の JAVA_HOME など）や [env] も反映する。
+# shims と activate の併用は mise が想定している構成。
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
+
