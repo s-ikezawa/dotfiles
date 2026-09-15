@@ -39,8 +39,9 @@ curl -fsSL https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/install.sh 
   └─────────────────────────────────────────────────────────────┘
 ```
 
-各フェーズ内では **ファイル名のアルファベット順**に実行される。だから
-`00-` `10-` `20-` … と数字を振って順序を固定している。
+各フェーズ内では **ターゲット名（`run_` `once_` `onchange_` `before_` `after_` を外した名前）の
+アルファベット順**に実行される。だから `01-` `02-` … と数字を振って順序を固定している。
+`run_onchange_after_01-…` と `run_after_02-…` のように種類が違っても 01 → 02 の順になる。
 
 > **before / after を付けないと？**
 > `run_once_foo.sh` のように付けない場合、before でも after でもなく
