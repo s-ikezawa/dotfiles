@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+if command -v mise >/dev/null 2>&1; then
+  skip "mise はインストール済み ($(mise --version))"
+else
+  log "mise をインストール"
+  # -f: HTTP エラー時に本文を sh へ流し込まない / -L: リダイレクト追従
+  curl -fsSL https://mise.run | sh
+  command -v mise >/dev/null 2>&1 || { echo "mise が PATH 上に見つかりません" >&2; exit 1; }
+  log "mise: $(mise --version)"
+fi
