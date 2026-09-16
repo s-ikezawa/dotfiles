@@ -11,4 +11,9 @@ printf '%s\n' "$current" | /usr/bin/jq '
     type: "command",
     command: "~/.config/claude/scripts/statusline.sh"
   }
+  # auto mode の "Bash 優先" ステアを無効化する。
+  # これが有効だとファイル読み込みが cat/grep になり、サブディレクトリの
+  # CLAUDE.md や .claude/rules (paths スコープ) が発火しない。
+  # Read/Edit/Write を使わせるために内部フラグ thrifty_sonic を明示的に切る。
+  | .env.CLAUDE_CODE_THRIFTY_SONIC = "0"
 '
