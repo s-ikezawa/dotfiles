@@ -5,6 +5,10 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+# XDG の仕様には無いが、ユーザーの実行ファイル置き場として広く使われている変数。
+# uv が `uv tool install` のリンク先に使う。未設定でも $XDG_DATA_HOME/../bin に落ちて
+# 同じ場所になるが、PATH に入れている場所と一致させて明示しておく。
+export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
 export LANG=en_US.UTF-8
 export SHELL_SESSIONS_DISABLE=1
 export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
@@ -55,6 +59,16 @@ export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME}/npm/init.js"   # npm init の�
 
 # node の REPL 履歴。既定は ~/.node_repl_history。
 export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/repl_history"
+
+# ---------------------------------------------------------------------------
+# uv
+# ---------------------------------------------------------------------------
+# uv は XDG_* をそのまま見るので、環境変数の設定は要らない(uv 0.12.14 で確認)。
+#   ツール      $XDG_DATA_HOME/uv/tools     (uv tool install)
+#   コマンド    $XDG_BIN_HOME               (= ~/.local/bin。PATH 済み)
+#   Python 本体 $XDG_DATA_HOME/uv/python    (uv python install / 必要なときの自動取得)
+#   キャッシュ  $XDG_CACHE_HOME/uv
+#   設定        $XDG_CONFIG_HOME/uv/uv.toml
 
 # ---------------------------------------------------------------------------
 # PATH
