@@ -57,8 +57,10 @@ if [[ -n "$(mise bootstrap packages apply --dry-run --manager mas 2>/dev/null)" 
   trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}" 2>/dev/null; true' EXIT
 fi
 {{ end -}}
-log "mise bootstrap packages apply"
-mise bootstrap packages apply --yes
+# `mise bootstrap packages apply` ではなく `--only packages` を使う。
+# サブコマンド形式だと [bootstrap.hooks.post-packages] が呼ばれない(--dry-run で確認)。
+log "mise bootstrap --only packages"
+mise bootstrap --only packages --yes
 
 {{ if eq .chezmoi.os "darwin" -}}
 # compinit のダンプを捨てて次のシェル起動で作り直させる。

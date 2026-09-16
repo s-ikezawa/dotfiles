@@ -76,6 +76,15 @@ xcodegen = { version = "latest", os = ["macos"] }
 # LG は行間を font に埋め込んだ版で、行間を設定できる Ghostty では使わない。
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
 
+# Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 343 MB・展開後 1.1 GB。
+# 配布物は JetBrains の CDN にしかなく(GitHub リリースのアセットは 0 個)、mise のレジストリにも
+# 無いので ubi/aqua では入れられない。Homebrew には既定の tap の cask と JetBrains/utils の
+# formula があり、同じアーカイブ(sha256 一致)なので tap 追加の要らない cask を使う。
+# cask が kotlin-lsp.sh を $HOMEBREW_PREFIX/bin/kotlin-lsp に張る。
+# この .sh は deprecated で、起動のたび stderr に警告を出す。中身は bin/intellij-server を
+# exec するだけなので、エディタからは bin/intellij-server を直接指してもよい。
+"brew-cask:kotlin-lsp" = { os = "macos" }
+
 "brew:chezmoi" = { os = "macos" }
 
 # Mac App Store。キーは ADAM ID(App Store の URL の id 以降の数字)。
@@ -83,6 +92,16 @@ xcodegen = { version = "latest", os = ["macos"] }
 # インストール後のライセンス同意などは .chezmoitemplates/xcode.sh の setup_xcode が行う
 # (01-mise-bootstrap と 02-xcode から呼ぶ)。
 "mas:497799835" = { os = "macos" }              # Xcode
+
+# kotlin-lsp の Gatekeeper 対策。
+# 同梱バイナリは JetBrains の Developer ID 署名はあるが notarize されていない
+# (spctl -a -t open が source=Unnotarized Developer ID で reject する)。com.apple.quarantine が
+# 付いていると「"intellij-server" を開けません / Apple はマルウェアが含まれていないことを
+# 確認できません」が出る(Kotlin/kotlin-lsp#194)。
+# mise の brew-cask は quarantine を付けないので通常は何も起きないが、手で
+# `brew install --cask` した場合などに備えて毎回剥がしておく。付いていなくても成功する。
+[bootstrap.hooks.post-packages]
+run = "xattr -dr com.apple.quarantine /opt/homebrew/Caskroom/kotlin-lsp 2>/dev/null || true"
 
 ################################################################################
 # macOS 設定
