@@ -17,8 +17,11 @@ export PATH="${HOME}/.local/bin:${PATH}"
 command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
 
 # [bootstrap.macos.defaults] と post-defaults フック(killall)
-log "mise bootstrap macos defaults apply"
-mise bootstrap macos defaults apply --yes
+#
+# `mise bootstrap macos defaults apply` ではなく `--only macos-defaults` を使う。
+# サブコマンド形式だとフックが呼ばれず、killall が走らない(--dry-run で確認)。
+log "mise bootstrap --only macos-defaults"
+mise bootstrap --only macos-defaults --yes
 
 log "一部の設定(キーリピート・Tab 移動・ライブ変換)は再ログインで反映される"
 {{ end -}}
