@@ -40,6 +40,11 @@ done
 ln -sfn "$MISE_TOOL_INSTALL_PATH" "$jvm_dir/mise-${MISE_TOOL_INSTALL_PATH##*/}.jdk"
 ''' }
 
+# Gradle。ユーザーホーム(依存キャッシュ・ラッパーが落とす Gradle 本体・
+# 自動取得した JDK)は既定が ~/.gradle なので、GRADLE_USER_HOME で XDG の下へ移している
+# (.zshenv)。ラッパー(gradlew)も同じ環境変数を見るので、両方まとめて移る。
+gradle = "latest"
+
 # Android CLI(android コマンド)。入るのはランチャーで、初回実行時に本体を
 # $ANDROID_USER_HOME/bin/android-cli へダウンロードする(ANDROID_USER_HOME / ANDROID_HOME は .zshenv)。
 android-cli = "latest"

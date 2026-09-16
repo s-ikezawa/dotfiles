@@ -24,6 +24,15 @@ export HOMEBREW_PREFIX=/opt/homebrew
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
 # ---------------------------------------------------------------------------
+# Gradle
+# ---------------------------------------------------------------------------
+# 既定の ~/.gradle には依存キャッシュ・ラッパーが落とす Gradle 本体・ツールチェーンの
+# 自動取得で入る JDK が全部入り、数 GB になる。キャッシュだけではなく gradle.properties や
+# init.d も同じ場所なので、cache ではなく data 側に置く(Android SDK と同じ考え方)。
+# gradle コマンドも gradlew もこの環境変数を見る。
+export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
+
+# ---------------------------------------------------------------------------
 # Android
 # ---------------------------------------------------------------------------
 # 既定では SDK が ~/Library/Android/sdk、SDK ツールのユーザーデータ(Android CLI の本体・
