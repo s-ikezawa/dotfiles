@@ -1,0 +1,54 @@
+# Ghostty の設定。chezmoi が ~/.config/ghostty/config.ghostty として配置する。
+# アプリ本体は mise bootstrap の brew-cask:ghostty が入れる。
+#
+#   - ファイル名は 1.2 以降の config.ghostty（旧名 config も読まれるが新しい方に合わせる）
+#   - 設定項目と既定値の一覧 : `ghostty +show-config --default --docs`
+#   - 文法チェック           : `ghostty +validate-config`
+#   - 設定の再読み込み       : Cmd+Shift+,（アプリ再起動は不要）
+
+# ---------------------------------------------------------------------------
+# 配色
+# ---------------------------------------------------------------------------
+# 同梱テーマを名前で指定する（一覧は `ghostty +list-themes`）。名前は themes/ の
+# ファイル名と完全一致で、catppuccin-mocha のような表記では見つからない。
+# macOS の外観に追従させたいなら `theme = light:Catppuccin Latte,dark:Catppuccin Mocha`。
+theme = Catppuccin Mocha
+
+# ---------------------------------------------------------------------------
+# フォント
+# ---------------------------------------------------------------------------
+# UDEV Gothic NF。BIZ UDゴシック + JetBrains Mono に Nerd Fonts のアイコンを
+# 合成した等幅フォントで、半角:全角 = 1:2。フォント本体は mise bootstrap の
+# brew-cask:font-udev-gothic-nf が ~/Library/Fonts に入れる。
+#   - 名前は `ghostty +list-fonts` が出すファミリ名と一致させる。
+#   - Bold / Italic は同じファミリから選ばれるので font-family だけでよい。
+#   - 半角:全角を 3:5 にしたいなら "UDEV Gothic 35NF"。行間込みの NFLG 版は、
+#     行間を adjust-cell-height で足せる Ghostty では使わない。
+font-family = UDEV Gothic NF
+
+# font-size の既定は 13。
+
+# ---------------------------------------------------------------------------
+# 見た目
+# ---------------------------------------------------------------------------
+# ウインドウの縁に文字が貼り付かないよう余白を足す（既定は上下左右とも 2）。
+window-padding-x = 8
+window-padding-y = 4
+
+# 入力を始めたらマウスポインタを隠す。
+mouse-hide-while-typing = true
+
+# ---------------------------------------------------------------------------
+# macOS 固有
+# ---------------------------------------------------------------------------
+# 左 Option だけを Alt として扱う。zsh の Alt+B / Alt+F などの単語移動が効くようになり、
+# 右 Option は macOS 本来の文字入力（Option+¥ で \ など）に残る。
+# 未指定だとキーボードレイアウト依存（U.S. 系だけ true）で挙動が変わるため明示する。
+macos-option-as-alt = left
+
+# 終了時にウインドウ構成を必ず保存し、次回起動で復元する
+# （既定の default は「システム終了ダイアログでの選択任せ」）。
+window-save-state = always
+
+# 更新は brew-cask（= `mise run up`）に任せるので、アプリ内の自動更新は止める。
+auto-update = off

@@ -54,6 +54,11 @@ android-cli = "latest"
 "brew-cask:claude" = { os = "macos" }
 "brew-cask:obsidian" = { os = "macos" }
 
+# フォント。Nerd Font 版の UDEV Gothic(BIZ UDゴシック + JetBrains Mono)。
+# 半角:全角 = 1:2 の NF / NFLG と、3:5 の 35NF / 35NFLG が一緒に入る。
+# LG は行間を font に埋め込んだ版で、行間を設定できる Ghostty では使わない。
+"brew-cask:font-udev-gothic-nf" = { os = "macos" }
+
 "brew:chezmoi" = { os = "macos" }
 
 # Mac App Store。キーは ADAM ID(App Store の URL の id 以降の数字)。
