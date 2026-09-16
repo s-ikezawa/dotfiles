@@ -61,6 +61,11 @@ pnpm = "latest"
 # --cache-path はスペックごとのファイルパスなので放置している)。
 xcodegen = { version = "latest", os = ["macos"] }
 
+# Python。素の macOS には Xcode CLT の python3(3.9.6)しか無いので入れる。
+# pip のキャッシュは XDG_CACHE_HOME、--user の入り先は ~/.local に落ちるため追加の
+# 環境変数は要らない(REPL 履歴だけ .zshenv で移している)。
+python = "latest"
+
 # uv。Python のパッケージ・プロジェクト・Python 本体を扱う単体バイナリ(Rust 製)で、
 # 動かすのに Python は要らない。`uv tool install` の入り先などは uv 自身が XDG_* を
 # 見るので、環境変数の設定は要らない(詳細は .zshenv)。

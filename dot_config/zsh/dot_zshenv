@@ -61,8 +61,18 @@ export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME}/npm/init.js"   # npm init の�
 export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/repl_history"
 
 # ---------------------------------------------------------------------------
-# uv
+# Python / uv
 # ---------------------------------------------------------------------------
+# python3 の REPL 履歴。既定は ~/.python_history。3.13 以降は PYTHON_HISTORY で移せる
+# (site.gethistoryfile がこの環境変数を見る)。ディレクトリは誰も掘らないので
+# run_once_before_01-xdg-dirs.sh で先に作っておく。
+export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history"
+
+# pip は追加の設定が要らない(3.14.7 で確認)。
+#   キャッシュ  $XDG_CACHE_HOME/pip     (XDG_CACHE_HOME 未設定なら ~/Library/Caches/pip)
+#   設定        ~/.config/pip/pip.conf  (XDG_CONFIG_HOME ではなく固定だが同じ場所)
+#   --user      ~/.local                (コマンドは ~/.local/bin で PATH 済み)
+
 # uv は XDG_* をそのまま見るので、環境変数の設定は要らない(uv 0.12.14 で確認)。
 #   ツール      $XDG_DATA_HOME/uv/tools     (uv tool install)
 #   コマンド    $XDG_BIN_HOME               (= ~/.local/bin。PATH 済み)
