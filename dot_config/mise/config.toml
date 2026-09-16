@@ -76,6 +76,15 @@ python = "latest"
 # 見るので、環境変数の設定は要らない(詳細は .zshenv)。
 uv = "latest"
 
+# GitHub CLI。設定・状態・拡張の置き場は gh 自身が XDG_* を見るので環境変数は要らない
+# (2.100.0 で確認。config は $XDG_CONFIG_HOME/gh、state は $XDG_STATE_HOME/gh、
+#  拡張は $XDG_DATA_HOME/gh)。
+#
+# `gh auth login` しておくと mise も GitHub のトークンとして拾う(hosts.yml を直接読む)。
+# 未認証だと GitHub API は 60 回/時で、`latest` を解決するツールが多いこの構成では
+# 上限に当たることがあるので、入れたら認証しておくとよい。
+gh = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
