@@ -76,6 +76,43 @@ python = "latest"
 # 見るので、環境変数の設定は要らない(詳細は .zshenv)。
 uv = "latest"
 
+# Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
+#
+# 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
+# CDN へリンクしているだけ)。そのため ubi/aqua も、mise のレジストリも使えない。
+# Homebrew には cask と JetBrains 公式 tap の formula があるが、
+#   - cask が $HOMEBREW_PREFIX/bin に張るのは deprecated な kotlin-lsp.sh で、起動のたび
+#     stderr に警告を出す。実体の bin/intellij-server への安定パスも無い。
+#   - tap の formula は intellij-server を直接張るが、tap が Homebrew の JSON API
+#     メタデータを公開しておらず、mise が formula の Ruby 定義を評価しにいった先で
+#     depends_on :macos を formula 名と解釈して失敗する(mise 2026.9.9)。
+# よって http バックエンドで CDN から直接入れる。bin/intellij-server がそのまま shim になる。
+#
+# .sit は拡張子こそ StuffIt だが中身は zip(先頭が PK\x03\x04)なので format で明示する。
+# アーカイブのルートは kotlin-server-<version>/ の 1 階層なので strip_components = 1。
+# bin_path を指定すると strip_components の自動判定が効かなくなるため、両方を明示する。
+# 完全性は CDN が並べて置いている .sha256 で毎回検証する(checksum_url)。
+#
+# バージョンは GitHub のリリース一覧から拾う。タグが kotlin-lsp/vN.N.N 形式で `v` 剥がしだけでは
+# 足りないので version_regex を使い、API が新しい順に返すため version_order で semver 順にする。
+#
+# 同梱バイナリは JetBrains の Developer ID 署名はあるが notarize されていない
+# (spctl -a -t open が source=Unnotarized Developer ID で reject する)ため、
+# com.apple.quarantine が付くと Gatekeeper に弾かれる(Kotlin/kotlin-lsp#194)。
+# mise の http バックエンドは quarantine を付けないので、対策は要らない。
+[tools."http:kotlin-lsp"]
+version = "latest"
+os = ["macos"]
+version_list_url = "https://api.github.com/repos/Kotlin/kotlin-lsp/releases"
+version_regex = 'kotlin-lsp/v(\d+\.\d+\.\d+)'
+version_order = "semver"
+strip_components = 1
+bin_path = "bin"
+
+[tools."http:kotlin-lsp".platforms]
+macos-arm64 = { url = "https://download.jetbrains.com/language-server/kotlin-server/{{version}}/kotlin-server-{{version}}-aarch64.sit", checksum_url = "https://download.jetbrains.com/language-server/kotlin-server/{{version}}/kotlin-server-{{version}}-aarch64.sit.sha256", format = "zip" }
+macos-x64 = { url = "https://download.jetbrains.com/language-server/kotlin-server/{{version}}/kotlin-server-{{version}}.sit", checksum_url = "https://download.jetbrains.com/language-server/kotlin-server/{{version}}/kotlin-server-{{version}}.sit.sha256", format = "zip" }
+
 [bootstrap.packages]
 "brew-cask:1password" = { os = "macos" }
 "brew-cask:1password-cli" = { os = "macos" }
@@ -91,15 +128,6 @@ uv = "latest"
 # LG は行間を font に埋め込んだ版で、行間を設定できる Ghostty では使わない。
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
 
-# Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 343 MB・展開後 1.1 GB。
-# 配布物は JetBrains の CDN にしかなく(GitHub リリースのアセットは 0 個)、mise のレジストリにも
-# 無いので ubi/aqua では入れられない。Homebrew には既定の tap の cask と JetBrains/utils の
-# formula があり、同じアーカイブ(sha256 一致)なので tap 追加の要らない cask を使う。
-# cask が kotlin-lsp.sh を $HOMEBREW_PREFIX/bin/kotlin-lsp に張る。
-# この .sh は deprecated で、起動のたび stderr に警告を出す。中身は bin/intellij-server を
-# exec するだけなので、エディタからは bin/intellij-server を直接指してもよい。
-"brew-cask:kotlin-lsp" = { os = "macos" }
-
 "brew:chezmoi" = { os = "macos" }
 
 # xcode-build-server。.xcodeproj/.xcworkspace と sourcekit-lsp の橋渡しをする
@@ -114,16 +142,6 @@ uv = "latest"
 # インストール後のライセンス同意などは .chezmoitemplates/xcode.sh の setup_xcode が行う
 # (01-mise-bootstrap と 02-xcode から呼ぶ)。
 "mas:497799835" = { os = "macos" }              # Xcode
-
-# kotlin-lsp の Gatekeeper 対策。
-# 同梱バイナリは JetBrains の Developer ID 署名はあるが notarize されていない
-# (spctl -a -t open が source=Unnotarized Developer ID で reject する)。com.apple.quarantine が
-# 付いていると「"intellij-server" を開けません / Apple はマルウェアが含まれていないことを
-# 確認できません」が出る(Kotlin/kotlin-lsp#194)。
-# mise の brew-cask は quarantine を付けないので通常は何も起きないが、手で
-# `brew install --cask` した場合などに備えて毎回剥がしておく。付いていなくても成功する。
-[bootstrap.hooks.post-packages]
-run = "xattr -dr com.apple.quarantine /opt/homebrew/Caskroom/kotlin-lsp 2>/dev/null || true"
 
 ################################################################################
 # macOS 設定
