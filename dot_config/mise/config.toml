@@ -54,6 +54,13 @@ node = "latest"
 # PATH を通すのは .zshenv(通っていないと pnpm add -g がエラーになる)。
 pnpm = "latest"
 
+# XcodeGen。project.yml から .xcodeproj を生成する。
+# 配布物は macOS 向けの zip だけなので mas と同じく os で絞る。
+# バイナリと一緒に入る share/(ビルド設定のプリセット)も必要で、aqua 版はそれごと展開される。
+# キャッシュは --use-cache を付けたときだけ ~/.xcodegen/cache に書く(移す環境変数は無く、
+# --cache-path はスペックごとのファイルパスなので放置している)。
+xcodegen = { version = "latest", os = ["macos"] }
+
 [bootstrap.packages]
 "brew-cask:1password" = { os = "macos" }
 "brew-cask:1password-cli" = { os = "macos" }
