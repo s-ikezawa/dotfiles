@@ -6,6 +6,22 @@
 #   - パッケージ導入と macOS 設定 → mise（このファイル）
 #   - 設定ファイルの配置        → chezmoi（テンプレートが必要なため）
 
+# GitHub API のトークン。未認証だと 60 回/時で、`latest` を解決するツールが多いこの構成では
+# 上限に当たる(kotlin-lsp の version_list_url など)。
+#
+# mise は gh の hosts.yml を直接読む経路も持っているが、gh は macOS では既定でトークンを
+# Keychain に入れて hosts.yml には書かないので、それでは拾えない。gh を呼んで取り出す。
+# 認証は `gh auth login` で済ませておく(未認証・gh 未導入なら取得に失敗して未認証扱いに
+# 戻るだけで、壊れはしない)。
+#
+# 単に `gh auth token` と書くと動かない。mise は credential_command を自分の shims を
+# 外した PATH で実行するため、mise で入れた gh が見つからない
+# (debug ログに "mise-credential-helper: gh: command not found" が出る)。
+# `mise exec` を挟むと実体の bin が PATH に載って解決できる。exec 自体は GitHub API を
+# 叩かないので、ここから再帰することもない。
+[settings.github]
+credential_command = "mise exec gh -- gh auth token"
+
 # まとめて更新するタスク。`mise run up`
 # パッケージは mise 管理なので brew upgrade は要らない
 # (Homebrew 本体は brew services 用の逃げ道として残してあるだけ)。
@@ -80,9 +96,7 @@ uv = "latest"
 # (2.100.0 で確認。config は $XDG_CONFIG_HOME/gh、state は $XDG_STATE_HOME/gh、
 #  拡張は $XDG_DATA_HOME/gh)。
 #
-# `gh auth login` しておくと mise も GitHub のトークンとして拾う(hosts.yml を直接読む)。
-# 未認証だと GitHub API は 60 回/時で、`latest` を解決するツールが多いこの構成では
-# 上限に当たることがあるので、入れたら認証しておくとよい。
+# `gh auth login` しておくと mise も GitHub のトークンとして使う(上の [settings.github])。
 gh = "latest"
 
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
