@@ -87,6 +87,13 @@ xcodegen = { version = "latest", os = ["macos"] }
 
 "brew:chezmoi" = { os = "macos" }
 
+# xcode-build-server。.xcodeproj/.xcworkspace と sourcekit-lsp の橋渡しをする
+# Build Server Protocol の実装。プロジェクト直下に buildServer.json を作ると、
+# sourcekit-lsp(Xcode 同梱)が Xcode のビルド設定を使って解析できるようになる。
+# mise のレジストリに無く、GitHub リリースにもアセットが無い(中身は Python スクリプト)ので
+# Homebrew の formula を使う。formula は shebang を書き換えて PATH の python3 を使わせる。
+"brew:xcode-build-server" = { os = "macos" }
+
 # Mac App Store。キーは ADAM ID(App Store の URL の id 以降の数字)。
 # App Store へのサインインは手動で済ませておく。
 # インストール後のライセンス同意などは .chezmoitemplates/xcode.sh の setup_xcode が行う
