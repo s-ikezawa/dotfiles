@@ -35,6 +35,28 @@ export ANDROID_HOME="${ANDROID_USER_HOME}/sdk"
 export ANDROID_EMULATOR_HOME="${ANDROID_USER_HOME}"
 
 # ---------------------------------------------------------------------------
+# Node / npm / pnpm
+# ---------------------------------------------------------------------------
+# npm は環境変数 NPM_CONFIG_<KEY>(= .npmrc の <key>)を設定として読む。
+# 既定ではグローバルの入り先(prefix)が node の実体の中(mise の installs/node/<version>)に
+# なるため、node を上げるたびにグローバルパッケージを入れ直すことになる。
+# あわせて ~/.npmrc と ~/.npm(キャッシュ)も XDG の下へ移す。ディレクトリは npm が自分で掘る。
+export NPM_CONFIG_PREFIX="${XDG_DATA_HOME}/npm"                  # npm i -g の入り先。コマンドは $NPM_CONFIG_PREFIX/bin
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"                  # 実行ログ(_logs)もこの下
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"      # 既定は ~/.npmrc
+export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME}/npm/init.js"   # npm init の雛形。既定は ~/.npm-init.js
+
+# pnpm は XDG_* が設定されていれば macOS でも ~/Library ではなくその下を使うので、
+# 環境変数は要らず PATH を通すだけでよい(pnpm 12.4.1 で確認)。
+#   グローバル  $XDG_DATA_HOME/pnpm/bin, $XDG_DATA_HOME/pnpm/global
+#   ストア      $XDG_DATA_HOME/pnpm/store
+#   キャッシュ  $XDG_CACHE_HOME/pnpm
+# PNPM_HOME を設定するとそこが直接グローバルの bin になり、store などと同じ階層に混ざるので設定しない。
+
+# node の REPL 履歴。既定は ~/.node_repl_history。
+export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/repl_history"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
@@ -51,6 +73,11 @@ _zsh_setup_path() {
     "$HOME/.local/bin"
     "$HOME/bin"
     "${XDG_DATA_HOME}/mise/shims"
+    # npm i -g / pnpm add -g で入れたコマンド。mise の shims より後ろに置いて、
+    # mise が管理しているツールを上書きしないようにする。
+    # pnpm はグローバルの bin が PATH に無いと pnpm add -g 自体をエラーにする。
+    "${XDG_DATA_HOME}/npm/bin"
+    "${XDG_DATA_HOME}/pnpm/bin"
     # GNU 版コマンド(coreutils / gnu-sed / grep / findutils など)を BSD 版より優先する。
     # gnubin には g 接頭辞なしの名前(ls, sed, grep ...)で入る。(N) は該当なしでもエラーにしない。
     $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)
