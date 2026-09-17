@@ -42,15 +42,30 @@ name = "catppuccin"
 [keys]
 # prefix を tmux / screen 風に ctrl+a にする（既定は ctrl+b）。
 #
-# 代償として ctrl+a はペインの中へ届かなくなる。herdr には tmux の send-prefix
-# （prefix を 2 回押して本来のキーを送る）に当たるアクションが無いため
-# （0.9.0 の `herdr --default-config` と config reference のキー一覧で確認）、
-# 次のものは prefix に奪われる:
-#   - zsh（emacs キーバインド）の ^A = beginning-of-line
-#   - Claude Code の入力欄の行頭移動
-#   - Neovim の normal モードの ctrl+a = 数値のインクリメント
-# 気になったら prefix を ctrl+alt+a や f12 のような衝突しないキーへ移す。
+# ctrl+a 自体をペインへ送りたいときは 2 回押す（tmux の send-prefix と同じ）。
+# prefix モード中にもう一度 prefix キーが来たら、モードを戻したうえでそのキーを
+# フォーカス中のペインへ転送する実装になっている（v0.9.1 の
+# src/client/shell/input.rs。issue #34 で入り、PR #2825 が「prefix+<prefix キー> に
+# 設定されたアクションがあればそちらを先に見る」形へ拡張した）。
+# ドキュメントには書かれていないので、動かなくなったらまずここを疑う。
+#
+# つまり zsh（emacs キーバインド）の行頭移動は ctrl+a ctrl+a、Claude Code の行頭移動と
+# Neovim normal の ctrl+a（インクリメント）も同じく 2 回押しになる。
+# 裏を返すと prefix+ctrl+a にアクションを割り当てるとこの逃げ道が消えるので、割り当てない。
 prefix = "ctrl+a"
+
+# 分割は tmux でよく使われる記号に合わせる。区切り線の見た目と同じ向きになる。
+#   prefix+|  → 左右に並べる（herdr の呼び名は split_vertical）
+#   prefix+-  → 上下に積む  （herdr の呼び名は split_horizontal。既定と同じだが対で明示する）
+#
+# "|" は名前付きトークン（minus, comma, plus …）には無いが、パーサが 1 文字の記号を
+# そのまま KeyCode::Char として受けるので通る。shift を書く必要も無い。Ghostty のように
+# kitty キーボードプロトコルで shift 付きの "\" として届く場合も、herdr が
+# shifted codepoint を見て一致させる（v0.9.1 の src/config/keybinds.rs）。
+#
+# 既定の prefix+v も残す。配列で書くと 1 つのアクションに複数のキーを割り当てられる。
+split_vertical = ["prefix+|", "prefix+v"]
+split_horizontal = "prefix+minus"
 
 # ---------------------------------------------------------------------------
 # worktree
