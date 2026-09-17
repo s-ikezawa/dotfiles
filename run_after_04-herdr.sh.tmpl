@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+command -v mise >/dev/null 2>&1 || { echo "mise が見つかりません (before 03 が失敗している)" >&2; exit 1; }
+
+# Claude Code の設定ディレクトリ。.zshenv と同じ値をここでも組む。
+# chezmoi のスクリプトは chezmoi を呼んだシェルの環境変数を引き継ぐだけなので、
+# install.sh からの初回実行では .zshenv がまだ読まれていない。未設定だと herdr は
+# 既定の ~/.claude を見にいってしまう。
+export CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}"
+
+# herdr と Claude Code の連携フック。$CLAUDE_CONFIG_DIR/hooks/herdr-agent-state.sh を置き、
+# settings.json に SessionStart のエントリを足す。これでペインの Claude Code のセッションが
+# herdr に伝わり、サーバ再起動後に会話ごと復元できる(resume_agents_on_restore が既定で有効)。
+# 状態表示(working / blocked / done)だけなら連携が無くても画面の検出で出る。
+#
+# settings.json は modify_settings.json がキー単位のマージで扱うので、herdr が足した
+# hooks は chezmoi apply でも消えない。
+#
+# 入れる窓口が CLI しか無いため、02-xcode と同じく毎回走らせる。冪等で、2 回続けて
+# 実行しても settings.json は 1 バイトも変わらない(連携 v9 で確認)。
+log "herdr: Claude Code 連携のフックを入れる"
+mise exec herdr -- herdr integration install claude
+
+# 動いているサーバに config.toml を読み直させる(サーバが居なければ何もしない)。
+# 起動時にしか読まない設定は、クライアントを繋ぎ直すまで反映されない。
+mise exec herdr -- herdr server reload-config >/dev/null 2>&1 || true

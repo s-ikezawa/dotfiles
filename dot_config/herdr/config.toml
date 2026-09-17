@@ -1,0 +1,96 @@
+# herdr の設定。chezmoi が ~/.config/herdr/config.toml として配置する。
+# 本体は mise が入れる（~/.config/mise/config.toml の [tools] herdr）。
+#
+#   - 既定値つきの全文 : `herdr --default-config`
+#   - 全キーの説明     : https://herdr.dev/docs/config-reference/
+#   - 文法チェック     : `herdr config check`
+#   - 再読み込み       : `herdr server reload-config`（prefix+shift+r）。
+#                        起動時にしか読まないものはクライアントの再接続が要る。
+#
+# herdr 自身もこのファイルを書き換える（設定画面での変更、オンボーディングの完了、
+# `herdr config reset-keys`）。書き込みは該当行だけを差し替える実装なのでコメントは
+# 残るが、次の chezmoi apply でソース側の内容に戻る。設定はこちらに書くこと。
+#
+# 設定の置き場は ~/.config/herdr に固定で、XDG_CONFIG_HOME は見ない
+# （変えるなら HERDR_CONFIG_PATH）。ログ（herdr.log / herdr-client.log /
+# herdr-server.log）も同じディレクトリに置かれる。
+
+# 初回起動のオンボーディングを出さない。
+# 未設定・true だと初回にウィザードが開き、「続ける」で herdr がこのファイルの先頭へ
+# onboarding = false を書き足す。設定はここで済ませるので先に落としておく。
+onboarding = false
+
+# ---------------------------------------------------------------------------
+# 配色
+# ---------------------------------------------------------------------------
+[theme]
+# Ghostty・Neovim と同じ Catppuccin Mocha。組み込みの "catppuccin" が Mocha
+# （ソースの canonical_theme_name が "catppuccin-mocha" をこの名前に正規化する。
+#  Latte は別名の "catppuccin-latte"）。
+#
+# 既定値も "catppuccin" なので実際の見た目は変わらないが、他の設定と揃えている
+# という意図を残すために明示する。
+#
+# ライト/ダークの追従（auto_switch）は使わない。Ghostty 側を Mocha 固定にしていて
+# 切り替える先が無いため。ターミナルの ANSI 配色をそのまま使う "terminal" もあるが、
+# その場合 UI の色までターミナル任せになるので選ばない。
+name = "catppuccin"
+
+# ---------------------------------------------------------------------------
+# キー
+# ---------------------------------------------------------------------------
+[keys]
+# prefix を tmux / screen 風に ctrl+a にする（既定は ctrl+b）。
+#
+# 代償として ctrl+a はペインの中へ届かなくなる。herdr には tmux の send-prefix
+# （prefix を 2 回押して本来のキーを送る）に当たるアクションが無いため
+# （0.9.0 の `herdr --default-config` と config reference のキー一覧で確認）、
+# 次のものは prefix に奪われる:
+#   - zsh（emacs キーバインド）の ^A = beginning-of-line
+#   - Claude Code の入力欄の行頭移動
+#   - Neovim の normal モードの ctrl+a = 数値のインクリメント
+# 気になったら prefix を ctrl+alt+a や f12 のような衝突しないキーへ移す。
+prefix = "ctrl+a"
+
+# ---------------------------------------------------------------------------
+# worktree
+# ---------------------------------------------------------------------------
+[worktrees]
+# サイドバーの New worktree が作る git worktree の置き場。
+# 既定は ~/.herdr/worktrees で $HOME にドットディレクトリが増えるため、コードを
+# 置いている ~/Projects の下へ移す。checkout は <directory>/<リポジトリ名>/<ブランチ名>。
+# ghq 風に並べている ~/Projects/github.com/... とは混ざらないよう別の階層にする。
+directory = "~/Projects/herdr-worktrees"
+
+# ---------------------------------------------------------------------------
+# 通知
+# ---------------------------------------------------------------------------
+[ui.toast]
+# バックグラウンドのエージェントが終わった・入力待ちになったときの通知。既定は off。
+#
+# terminal は外側のターミナルに OSC 9 を書いて通知を任せる方式
+# （v0.9.1 の src/terminal_notify.rs。Ghostty は TERM_PROGRAM=ghostty か
+#  TERM=xterm-ghostty で検出される）。Ghostty は OSC 9 / OSC 777 のデスクトップ通知に
+# 対応していて desktop-notifications は既定で true なので、そのままバナーが出る
+# （macOS ではウインドウが非フォーカスのときだけ）。
+#
+# system（OS の通知サービスを直接叩く）は macOS では terminal-notifier が無いと
+# osascript にフォールバックし、通知センターに「スクリプトエディタ」として出るので選ばない。
+# herdr は herdr 自身のトースト表示で、herdr を見ていないと気付けない。
+delivery = "terminal"
+
+# ---------------------------------------------------------------------------
+# 日本語入力（どちらも experimental 扱いの設定）
+# ---------------------------------------------------------------------------
+[experimental]
+# prefix モードの間だけ入力ソースを ASCII 側へ切り替える。日本語入力を on にしたまま
+# prefix を押してもコマンドが通るようになり、抜けると元の入力ソースに戻る（macOS / Windows のみ）。
+switch_ascii_input_source_in_prefix = true
+
+# カーソルを自前で描くエージェント TUI のペインで、外側のターミナルにカーソル位置を見せる。
+# これが無いと macOS の変換候補ウィンドウがペインのカーソルを追わない。
+#
+# 対象を claude に絞るのは、カーソルを隠すだけで自前描画しないアプリ（nvim の normal
+# モードなど）でハードウェアカーソルが余分に見えるのを避けるため。
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude"]
