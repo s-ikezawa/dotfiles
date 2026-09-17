@@ -115,6 +115,16 @@ gh = "latest"
 # $XDG_STATE_HOME/nvim, $XDG_CACHE_HOME/nvim)。
 "aqua:neovim/neovim" = "latest"
 
+# ripgrep(rg)。.gitignore を尊重して再帰的に検索する grep。
+#
+# 短縮名のまま書けるのは、レジストリの先頭が aqua:BurntSushi/ripgrep で、そこに
+# チェックサム(sha256)の定義もあるため(`mise tool ripgrep` の Security 欄で確認)。
+# neovim のようにバックエンドを明示する必要はない。
+#
+# 設定ファイルの場所は環境変数で与えるしかない(rg は既定の設定ファイルを読まず、
+# $RIPGREP_CONFIG_PATH が指すファイルだけを読む)。今は設定を置いていないので設定しない。
+ripgrep = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
