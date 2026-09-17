@@ -99,6 +99,22 @@ uv = "latest"
 # `gh auth login` しておくと mise も GitHub のトークンとして使う(上の [settings.github])。
 gh = "latest"
 
+# Neovim。公式リリースの macOS 向け tarball(nvim-macos-arm64.tar.gz)を展開して
+# bin/nvim が shim になる。
+#
+# バックエンドを明示するのは、短縮名 `neovim` が vfox:mise-plugins/vfox-neovim に
+# 解決されるため(`mise registry neovim` の並びが vfox → aqua で、先頭が採られる)。
+# vfox は第三者の Lua プラグインを取得してローカルで実行する経路(mise のドキュメントも
+# 「プラグインのコードはツール本体と同じく信頼が要る」と書いている)なので、mise 本体に
+# スナップショットが同梱される aqua を使う。入るバイナリはどちらも同じ tarball。
+# なお 0.11.2 より後のリリースは upstream が shasum を配っていないため、
+# どちらのバックエンドでもチェックサム検証は行われない(0.12.5 のアセットで確認)。
+#
+# 設定・データ・状態・キャッシュの置き場は nvim 自身が XDG の既定と同じ場所を使うので
+# 環境変数は要らない(0.12.5 で確認。$XDG_CONFIG_HOME/nvim, $XDG_DATA_HOME/nvim,
+# $XDG_STATE_HOME/nvim, $XDG_CACHE_HOME/nvim)。
+"aqua:neovim/neovim" = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
