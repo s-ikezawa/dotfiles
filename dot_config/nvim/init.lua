@@ -6,3 +6,4 @@
 -- require("configs.xxx") は runtimepath 配下の lua/configs/xxx.lua を読む。
 -- 読み込む順に依存があるものが出てきたら、この並びで調整する。
 require("configs.provider")
+require("configs.options")
