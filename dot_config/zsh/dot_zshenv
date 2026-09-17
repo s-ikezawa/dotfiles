@@ -90,19 +90,6 @@ export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history"
 #   設定        $XDG_CONFIG_HOME/uv/uv.toml
 
 # ---------------------------------------------------------------------------
-# Neovim
-# ---------------------------------------------------------------------------
-# 既定のエディタ。git(GIT_EDITOR → core.editor → VISUAL → EDITOR の順に見る)や
-# less の v など、両方を見るツールは VISUAL を優先して EDITOR に落ちるので、
-# 片方だけだと参照するツールによって割れる。両方に同じものを入れておく。
-#
-# 置き場の環境変数は要らない。nvim は XDG の既定と同じ場所を自分で使う
-# (設定 ~/.config/nvim、データ ~/.local/share/nvim、状態 ~/.local/state/nvim、
-#  キャッシュ ~/.cache/nvim。0.12.5 で確認)。
-export EDITOR=nvim
-export VISUAL=nvim
-
-# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
@@ -136,3 +123,25 @@ _zsh_setup_path() {
   )
 }
 _zsh_setup_path
+
+# ---------------------------------------------------------------------------
+# エディタ
+# ---------------------------------------------------------------------------
+# nvim があれば nvim、無ければ macOS 同梱の vim(/usr/bin/vim。9.1)を使う。
+#
+# PATH を組んだ後に置くこと。$commands は PATH から作られるハッシュなので、mise の shims を
+# PATH に入れる前だと nvim を見つけられない。zsh/parameter は既定で読まれるため、
+# 非対話シェル(スクリプト)でも判定できる。
+#
+# EDITOR と VISUAL の両方に入れるのは、git(GIT_EDITOR → core.editor → VISUAL → EDITOR)の
+# ように両方を見るツールがあり、片方だけだと参照するツールによって割れるため。
+#
+# nvim の置き場を指定する環境変数は要らない。XDG の既定と同じ場所を自分で使う
+# (設定 ~/.config/nvim、データ ~/.local/share/nvim、状態 ~/.local/state/nvim、
+#  キャッシュ ~/.cache/nvim。0.12.5 で確認)。
+if (( $+commands[nvim] )); then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+export VISUAL="$EDITOR"

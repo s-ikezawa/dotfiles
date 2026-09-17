@@ -72,6 +72,12 @@ alias ll='ls -lh'
 alias la='ls -lha'
 alias grep='grep --color=auto'
 
+# vim で nvim を起動する。nvim が無いときはエイリアスを定義しないので、macOS 同梱の
+# /usr/bin/vim(9.1)がそのまま動く。
+# $commands は PATH 上のコマンドのハッシュ。.zshenv が mise の shims を PATH に入れているので、
+# mise activate(このファイルの末尾)より前のここでも判定できる。
+(( $+commands[nvim] )) && alias vim='nvim'
+
 # ---------------------------------------------------------------------------
 # mise
 # ---------------------------------------------------------------------------
