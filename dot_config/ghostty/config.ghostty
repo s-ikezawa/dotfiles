@@ -9,10 +9,19 @@
 # ---------------------------------------------------------------------------
 # 配色
 # ---------------------------------------------------------------------------
-# 同梱テーマを名前で指定する（一覧は `ghostty +list-themes`）。名前は themes/ の
-# ファイル名と完全一致で、catppuccin-mocha のような表記では見つからない。
-# macOS の外観に追従させたいなら `theme = light:Catppuccin Latte,dark:Catppuccin Mocha`。
-theme = Catppuccin Mocha
+# テーマは名前で指定する。Ghostty は $XDG_CONFIG_HOME/ghostty/themes を先に、
+# 次にアプリ同梱の themes/ を探し、名前はファイル名と完全一致で引く
+# （同梱テーマの一覧は `ghostty +list-themes`）。
+#
+# 同梱の "Catppuccin Mocha" ではなく、Catppuccin 公式（catppuccin/ghostty、MIT）の
+# テーマを themes/catppuccin-mocha として置いて使う。同梱版は明るい色（ANSI 9〜14）を
+# 独自に変えており、Neovim 側の catppuccin（明るい色にも通常色と同じ値を使う）と
+# 食い違うため。例えば bright blue は同梱が #74a8fc、公式が #89b4fa。
+# selection-background（#585b70 / #353749）と cursor-text も違う。
+#
+# macOS の外観に追従させたいなら `theme = light:catppuccin-latte,dark:catppuccin-mocha`
+# （latte 側も themes/ に置く必要がある）。
+theme = catppuccin-mocha
 
 # ---------------------------------------------------------------------------
 # フォント

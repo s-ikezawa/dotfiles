@@ -19,6 +19,13 @@ vim.pack.add({
   },
 })
 
--- フレーバーごとにカラースキームが用意されているので、require("catppuccin").setup() を
--- 呼ばずに colorscheme だけで決められる。設定を足したくなったら setup() をこの上に置く。
+-- term_colors は :terminal の ANSI 色(g:terminal_color_0..15)を catppuccin の色にする。
+-- 既定の false だと Neovim 既定のパレットのままで、Ghostty 側（公式テーマ）の配色と
+-- 食い違う。setup() は colorscheme より前に呼ぶ必要がある。
+require("catppuccin").setup({
+  term_colors = true,
+})
+
+-- フレーバーごとにカラースキームが用意されているので、flavour は setup ではなく
+-- colorscheme の名前で決める。
 vim.cmd.colorscheme("catppuccin-mocha")
