@@ -143,6 +143,26 @@ tree-sitter = "latest"
 # (`mise tool fzf` の Security 欄が checksum (sha256))。
 fzf = "latest"
 
+# herdr。コーディングエージェント(claude / codex / cursor …)を並べて動かすための
+# ターミナルマルチプレクサ。端末を持つのはバックグラウンドのサーバなので、クライアントを
+# 閉じても SSH が切れても走らせたエージェントは止まらない。サーバはクライアントが必要に
+# なったときに自分で起こすため、常駐サービスとして登録する必要はない
+# (Homebrew の formula には brew services 用の plist が付くが、mise で入れる分には不要)。
+#
+# 短縮名のままレジストリ先頭の aqua:herdrdev/herdr に解決される
+# (次点は github:herdrdev/herdr で、入るのは同じリリースの生バイナリ)。
+# upstream がチェックサムも attestation も配っていないため検証は行われない
+# (`mise tool herdr` の Security 欄が [none]。v0.9.1 のアセットで確認)。
+#
+# 設定は ~/.config/herdr/config.toml で、XDG_CONFIG_HOME ではなくこのパスが固定
+# (環境変数で変えるなら HERDR_CONFIG_PATH)。この環境では XDG_CONFIG_HOME が同じ場所を
+# 指しているので設定は要らない。ログも同じディレクトリに置かれる。
+#
+# 自己更新の `herdr update` は使わない。実体は mise の installs/herdr/ の下にあり
+# (`herdr status client` の binary 欄で確認)、そこを書き換えると mise の把握と食い違う。
+# 更新は他のツールと同じく `mise run up` で行う。
+herdr = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
