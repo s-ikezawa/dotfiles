@@ -9,3 +9,4 @@ require("configs.provider")
 require("configs.options")
 
 require("plugins.catppuccin")
+require("plugins.tree-sitter-manager")

@@ -125,6 +125,16 @@ gh = "latest"
 # $RIPGREP_CONFIG_PATH が指すファイルだけを読む)。今は設定を置いていないので設定しない。
 ripgrep = "latest"
 
+# tree-sitter の CLI。パーサを生成・ビルドするのに使う。
+# Neovim 0.12 は tree-sitter を本体に取り込んだがパーサのインストーラは持っておらず、
+# それを補う tree-sitter-manager.nvim がこの CLI を要求する(ビルドに使う C コンパイラは
+# Xcode CLT の clang がそのまま使われる)。
+#
+# 短縮名のままでレジストリ先頭の aqua:tree-sitter/tree-sitter に解決される。
+# 配布物は GitHub の artifact attestation で検証される
+# (`mise tool tree-sitter` の Security 欄が github_attestations)。
+tree-sitter = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
