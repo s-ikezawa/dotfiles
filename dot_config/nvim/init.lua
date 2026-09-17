@@ -7,6 +7,8 @@
 -- 読み込む順に依存があるものが出てきたら、この並びで調整する。
 require("configs.provider")
 require("configs.options")
+require("configs.keymaps")
 
 require("plugins.catppuccin")
 require("plugins.tree-sitter-manager")
+require("plugins.fzf-lua")

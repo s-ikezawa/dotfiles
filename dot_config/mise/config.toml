@@ -135,6 +135,14 @@ ripgrep = "latest"
 # (`mise tool tree-sitter` の Security 欄が github_attestations)。
 tree-sitter = "latest"
 
+# fzf。コマンドラインのファジーファインダーで、Neovim の fzf-lua が本体として呼ぶ
+# (fzf-lua は UI だけを持ち、絞り込みは fzf に投げる)。単体でも使える。
+#
+# 短縮名のままでレジストリ先頭の aqua:junegunn/fzf に解決される。
+# リリースに sha256 が並んでいるのでチェックサム検証が効く
+# (`mise tool fzf` の Security 欄が checksum (sha256))。
+fzf = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
