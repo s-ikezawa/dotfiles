@@ -11,6 +11,20 @@ printf '%s\n' "$current" | /usr/bin/jq '
     type: "command",
     command: "~/.config/claude/scripts/statusline.sh"
   }
+  # セッションを auto mode で始める。
+  # プロジェクトの .claude/settings.json では auto が効かないため、ユーザー設定に置く。
+  | .permissions.defaultMode = "auto"
+  # claude.ai から同期される Anthropic 製スキルのうち、使わないものを隠す。
+  # 同期は止めずに skillOverrides で一覧と / メニューから外す。
+  | .skillOverrides += {
+      "anthropic-skills:docs": "off",
+      "anthropic-skills:docx": "off",
+      "anthropic-skills:pptx": "off",
+      "anthropic-skills:xlsx": "off",
+      "anthropic-skills:pdf": "off",
+      "anthropic-skills:morning": "off",
+      "anthropic-skills:import-memory": "off"
+    }
   # auto mode の "Bash 優先" ステアを無効化する。
   # これが有効だとファイル読み込みが cat/grep になり、サブディレクトリの
   # CLAUDE.md や .claude/rules (paths スコープ) が発火しない。
