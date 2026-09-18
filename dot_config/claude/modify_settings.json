@@ -16,4 +16,9 @@ printf '%s\n' "$current" | /usr/bin/jq '
   # CLAUDE.md や .claude/rules (paths スコープ) が発火しない。
   # Read/Edit/Write を使わせるために内部フラグ thrifty_sonic を明示的に切る。
   | .env.CLAUDE_CODE_THRIFTY_SONIC = "0"
+  # Claude が下書きしたフィードバックの送信カード（1: review / 2: send）を出さない。
+  # SendFeedback ツールごと外れる。settings の feedbackDrafts: "off" と同じ効果。
+  | .env.CLAUDE_CODE_SEND_FEEDBACK = "0"
+  # "How is Claude doing?" のセッション評価アンケートを出さない。
+  | .env.CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1"
 '
