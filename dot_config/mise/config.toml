@@ -163,6 +163,26 @@ fzf = "latest"
 # 更新は他のツールと同じく `mise run up` で行う。
 herdr = "latest"
 
+# mo。Markdown をブラウザで開くビューア(GFM・Shiki のシンタックスハイライト・Mermaid・KaTeX・
+# GitHub Alerts に対応)。保存すると表示が追従する。
+#
+# 既定でバックグラウンドに回り、コマンドはすぐ返る。サーバは port 6275 に 1 つだけ立ち、
+# 2 回目以降の `mo <file>` は新しく建てずに走っているサーバへファイルを足す
+# (別セッションが要るなら -p で port を変える)。止めるのは `mo --shutdown`。
+# 開いていたファイルは自動で保存され、次の起動で復元される。
+#
+# レジストリには無い(`mise registry mo` が tool not found)ので、バックエンドを明示する。
+# aqua に定義があり(pkgs/k1LoW/mo)、sha256 の検証が効く
+# (`mise tool aqua:k1LoW/mo` の Security 欄が checksum (sha256))。aqua の定義は
+# リリースの checksums.txt を指しているが、実際の取得時に mise が使うのは GitHub API が
+# 返すアセットの digest(MISE_VERBOSE=1 で "using GitHub API digest for checksum
+# verification"。1.6.8 で確認)。upstream は Homebrew tap を案内しているが、mise で揃える。
+#
+# 設定ファイルは持たない(オプションはフラグのみ)。セッションの保存先は
+# $XDG_STATE_HOME/mo/backup/mo-<port>.json、ログは $XDG_STATE_HOME/mo/log/ で、
+# XDG_STATE_HOME を見る(未設定なら ~/.local/state)。.zshenv で設定済みなので追加は要らない。
+"aqua:k1LoW/mo" = "latest"
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
