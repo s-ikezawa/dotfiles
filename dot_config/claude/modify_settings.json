@@ -25,6 +25,14 @@ printf '%s\n' "$current" | /usr/bin/jq '
       "anthropic-skills:morning": "off",
       "anthropic-skills:import-memory": "off"
     }
+  # claude.ai アカウントから降ってくる MCP コネクタのうち Claude Docs を止める。
+  # ローカルの mcpServers には載らない(Claude Code が自分で取得する)ので
+  # `claude mcp remove` では消せず、設定側で拒否する必要がある。
+  # serverName は `claude mcp list` の表示名そのまま。
+  # 全コネクタを止める disableClaudeAiConnectors は使わない(他が来た時に巻き添えになる)。
+  | .deniedMcpServers = (
+      (.deniedMcpServers // []) + [{ serverName: "claude.ai Claude Docs" }] | unique
+    )
   # auto mode の "Bash 優先" ステアを無効化する。
   # これが有効だとファイル読み込みが cat/grep になり、サブディレクトリの
   # CLAUDE.md や .claude/rules (paths スコープ) が発火しない。
