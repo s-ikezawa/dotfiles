@@ -43,4 +43,6 @@ printf '%s\n' "$current" | /usr/bin/jq '
   | .env.CLAUDE_CODE_SEND_FEEDBACK = "0"
   # "How is Claude doing?" のセッション評価アンケートを出さない。
   | .env.CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1"
+  # 入力欄に次のプロンプトの候補を出さない。
+  | .env.CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION = "false"
 '
