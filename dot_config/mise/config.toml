@@ -260,6 +260,7 @@ macos-x64 = { url = "https://download.jetbrains.com/language-server/kotlin-serve
 "brew-cask:claude" = { os = "macos" }
 "brew-cask:obsidian" = { os = "macos" }
 "brew-cask:visual-studio-code" = { os = "macos" }
+"brew-cask:drawio" = { os = "macos" }
 
 # フォント。Nerd Font 版の UDEV Gothic(BIZ UDゴシック + JetBrains Mono)。
 # 半角:全角 = 1:2 の NF / NFLG と、3:5 の 35NF / 35NFLG が一緒に入る。
