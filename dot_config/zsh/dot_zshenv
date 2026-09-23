@@ -24,6 +24,31 @@ export HOMEBREW_PREFIX=/opt/homebrew
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
 # ---------------------------------------------------------------------------
+# コンテナ(colima / docker)
+# ---------------------------------------------------------------------------
+# docker CLI の設定・認証情報・context・CLI プラグインの置き場。既定は ~/.docker。
+# mise の docker-compose の postinstall が symlink を張る $DOCKER_CONFIG/cli-plugins もここ。
+#
+# colima を起動する前に効いている必要がある。colima は起動のたびに docker context を作って
+# active にするが、書き込み先はこの変数で決まる。未設定のまま起動すると ~/.docker 側に
+# context ができ、後から XDG に寄せた時点で context を見失う(以前の構成で踏んだ)。
+export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+
+# colima の置き場を指定する環境変数(COLIMA_HOME / COLIMA_CACHE_HOME)は要らない。
+# colima は XDG_* をそのまま見る(0.10.3 のソース config/files.go で確認)。
+#   設定・VM   $XDG_CONFIG_HOME/colima   (~/.colima があるとそちらが優先されるので作らないこと)
+#   キャッシュ $XDG_CACHE_HOME/colima    (VM のディスクイメージ)
+# VM の実体(lima のインスタンス)も設定側の _lima に置かれる。
+#
+# LIMA_HOME も設定しない。colima は VM を $COLIMA_HOME/_lima に作るが、LIMA_HOME があると
+# そちらを見にいって `colima is not running` になる(以前の構成で踏んだ)。
+#
+# DOCKER_HOST も設定しない。docker CLI は colima が作る context から socket を見つける。
+# DOCKER_HOST があると context より優先され、`docker context ls` が警告を出す。context を
+# 読まないツール(Testcontainers など)を使うときは、socket
+# ($XDG_CONFIG_HOME/colima/default/docker.sock)を見て足す。
+
+# ---------------------------------------------------------------------------
 # Gradle
 # ---------------------------------------------------------------------------
 # 既定の ~/.gradle には依存キャッシュ・ラッパーが落とす Gradle 本体・ツールチェーンの

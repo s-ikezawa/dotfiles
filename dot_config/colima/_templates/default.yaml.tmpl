@@ -1,0 +1,81 @@
+# colima が新しく作る VM の既定値。置き場は $XDG_CONFIG_HOME/colima/_templates/default.yaml
+# (`colima template --print` で確認できる)。全項目のコメント付き雛形は colima の
+# リポジトリの embedded/defaults/colima.yaml。
+#
+# 作成済みの VM には反映されない。初回の colima start でインスタンス側の
+# $XDG_CONFIG_HOME/colima/default/colima.yaml に写され、以後はそちらが使われる。
+# 起動に失敗した回でも写される(以前の構成で踏んだ)ので、直した後に反映させるには
+# colima delete → colima start。値を変えるだけなら default/colima.yaml を直して colima restart
+# でもよいが、vmType / mountType / runtime / arch は作成後に変えられない。
+
+# --- リソース ---------------------------------------------------------------
+# ホストの半分を渡す(値は chezmoi が sysctl から展開する)。
+# vz はメモリを先に確保せず、ゲストが使った分だけホストから取る。
+cpu: {{ div (output "sysctl" "-n" "hw.ncpu" | trim | atoi) 2 }}
+memory: {{ div (output "sysctl" "-n" "hw.memsize" | trim | atoi) 2147483648 }}
+
+# コンテナのデータ用ディスク(GiB)。疎ファイルなので使った分しかホストを消費しない。
+# 作成後は拡大しかできない。
+disk: 100
+
+# --- 仮想化 -----------------------------------------------------------------
+# 雛形の既定値は vmType: qemu / mountType: sshfs(全プラットフォーム共通の値)なので、
+# Apple Silicon で速い vz + virtiofs を明示する。どちらも VM 作成後は変えられない。
+vmType: vz
+mountType: virtiofs
+
+# amd64 しか無いイメージを Rosetta で動かす(vz + Apple Silicon が前提)。
+# Rosetta 自体は run_once_before_05-rosetta.sh が入れる。無いと binfmt の qemu に落ちて遅い。
+rosetta: true
+
+# --- マウント ---------------------------------------------------------------
+# VM に見せるホストのディレクトリ。docker の bind mount(-v / devcontainer の workspace /
+# compose の volumes)は VM の中で解決されるので、ここに無いパスは使えない。
+#
+# 見えないパスを bind mount してもエラーにならず、空のディレクトリがマウントされる
+# (colima の FAQ "Issue with Docker bind mount showing empty")。気づきにくい壊れ方をするので、
+# ツールが渡してきうるパスは先に通しておく。
+#
+# colima の既定は「$HOME を書き込み可で 1 つ」だけで、mounts を書くとここに並べたものが
+# 全てになる(既定に足されるのではない)。VM の中でも同じパスにマウントされ、docker は
+# クライアントが渡した文字列をそのまま VM の中のパスとして引くので、同じ場所でも表記ごとに通す。
+#
+# /tmp は書かない。VM の /tmp は lima が使っていて、ホスト側で覆えない。ホストの /tmp を
+# bind mount すると VM の /tmp が見える。/tmp の中身を渡すときは /private/tmp 表記で渡すこと。
+#
+# 所有者の調整は要らない。コンテナの中では非 root(devcontainer の uid 1000)でも読み書きでき、
+# コンテナが作ったファイルはホストでは自分の所有になる(下の 4 つすべてで実測)。
+#
+# location に裸の `~` は書けない。YAML では null になり location が空になって、
+# `overlapping mounts not supported` で起動に失敗する(以前の構成で踏んだ)。
+# 絶対パスを chezmoi に展開させる。
+mounts:
+  # ソースコード。devcontainer の workspace もここで解決される。
+  - location: {{ .chezmoi.homeDir }}
+    writable: true
+  # macOS の $TMPDIR(/var/folders/…/T/)。一時ファイルを bind mount するツール向け。
+  - location: /var/folders
+    writable: true
+  # 同じ場所の実パス表記。realpath を通してから渡すツール(pytest の tmp_path など)向け。
+  - location: /private/var/folders
+    writable: true
+  # ホストの /tmp の実パス。
+  - location: /private/tmp
+    writable: true
+
+# ホスト側での変更を inotify のイベントとして VM に伝える。virtiofs はホスト側の書き込みを
+# ゲストに通知しないので、これが無いとホスト(nvim など)で編集してもコンテナ内のファイル監視
+# (ホットリロードなど)が反応しない(inotify を止めた状態でイベント 0 件を実測)。
+#
+# 仕組みは、ホスト側の colima daemon が動いているコンテナの bind mount 元を 5 秒ごとに拾って
+# 監視し、変更があったファイルに VM の中で同じモードの chmod をかけるというもの。
+# コンテナに届くのは書き込みではなく属性変更(IN_ATTRIB)のイベントなので、属性変更を
+# 無視する監視ツールは反応しない。コンテナの起動直後の数秒間の変更も取りこぼしうる。
+# colima はこの機能を experimental としている。
+mountInotify: true
+
+# --- ランタイム -------------------------------------------------------------
+runtime: docker
+
+kubernetes:
+  enabled: false

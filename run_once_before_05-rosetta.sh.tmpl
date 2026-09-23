@@ -6,7 +6,7 @@
 # colima の VM で速く動かすために入れる。無くても binfmt の qemu に落ちて動くが、
 # 実測で 2 倍以上遅い。
 #
-# colima 側は dot_config/colima/_templates/default.yaml の rosetta: true で
+# colima 側は dot_config/colima/_templates/default.yaml.tmpl の rosetta: true で
 # 有効化済み。ただし**VM は作成・起動時に Rosetta を掴む**ので、後から入れた
 # 場合は colima restart が要る。ここ(before フェーズ)で入れておけば、
 # 初回の colima start には間に合う。

@@ -6,3 +6,9 @@ README.md
 # 中身は各プラグインの revision なので管理しない(`chezmoi add -r ~/.config/nvim` でも拾わない)。
 .config/nvim/nvim-pack-lock.json
 
+{{ if ne .chezmoi.os "darwin" -}}
+# colima の雛形は macOS 前提(vz / virtiofs / Rosetta を使い、リソース値を sysctl の
+# hw.* から取っている)。
+.config/colima
+{{ end -}}
+

@@ -183,6 +183,36 @@ herdr = "latest"
 # XDG_STATE_HOME を見る(未設定なら ~/.local/state)。.zshenv で設定済みなので追加は要らない。
 "aqua:k1LoW/mo" = "latest"
 
+# コンテナ。Docker Desktop は使わず、colima が lima で建てた Linux VM の中で docker の
+# デーモンを動かし、ホストからは docker CLI で話す。
+#
+#   lima            VM の実体(limactl)。colima が PATH から呼ぶ
+#   colima          VM と docker デーモンの起動・停止、docker context の用意
+#   docker-cli      docker コマンド(クライアントのみ。デーモンは VM の中)
+#   docker-compose  compose v2。docker 本体とは別配布の CLI プラグイン
+#
+# VM の設定(マウントなど)は chezmoi 側の dot_config/colima/_templates/default.yaml.tmpl、
+# DOCKER_CONFIG は .zshenv。起動は手動(`colima start`)で、常駐させない。
+#
+# どれも短縮名のままレジストリ先頭に解決される。検証は `mise tool <name>` の Security 欄で、
+# lima は sha256 と GitHub の artifact attestation、colima は sha256、docker-compose は sha256・
+# attestation・SLSA。docker-cli(aqua:docker/cli)は取得元の download.docker.com が
+# チェックサムを配っていないため検証は行われない([none]。2026-09-18 に確認)。
+lima = "latest"
+colima = "latest"
+docker-cli = "latest"
+
+# compose は単体バイナリなので、docker が CLI プラグインを探す $DOCKER_CONFIG/cli-plugins へ
+# symlink を張って `docker compose` で呼べるようにする(`docker-compose` のままでも呼べる)。
+# リンク先はインストール先の実体なので、バージョンを上げると postinstall が張り直す。
+# DOCKER_CONFIG は .zshenv が設定する。install.sh からの初回実行ではまだ読まれていないので、
+# 同じ既定値を組んで補う。
+docker-compose = { version = "latest", postinstall = '''
+plugins="${DOCKER_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/docker}/cli-plugins"
+mkdir -p "$plugins"
+ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-compose" "$plugins/docker-compose"
+''' }
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
