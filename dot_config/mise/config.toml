@@ -97,7 +97,20 @@ uv = "latest"
 #  拡張は $XDG_DATA_HOME/gh)。
 #
 # `gh auth login` しておくと mise も GitHub のトークンとして使う(上の [settings.github])。
-gh = "latest"
+#
+# postinstall で拡張を入れる。
+#   gh-stack  スタックした PR を扱う(`gh stack`)。GitHub 公式のビルド済みバイナリ拡張。
+# 拡張は gh のバージョンとは別の場所に入るので、gh を上げても入れ直しにはならない。
+# 入っていれば何もせず終了コード 0 を返し、未ログインでも入る(2026-09-24 に確認)。
+# 拡張の更新は `gh extension upgrade --all`。
+#
+# gh は shim ではなくインストール先の実体を呼ぶ。shim 経由だと mise が上の credential_command
+# (`mise exec gh`)を走らせ、それがインストール中の gh のロックを待って止まる(実際に踏んだ)。
+# aqua 版の実体は $MISE_TOOL_INSTALL_PATH/gh_<版>_macOS_<arch>/bin/gh にある。
+gh = { version = "latest", postinstall = '''
+set -- "$MISE_TOOL_INSTALL_PATH"/*/bin/gh
+"$1" extension install github/gh-stack
+''' }
 
 # Neovim。公式リリースの macOS 向け tarball(nvim-macos-arm64.tar.gz)を展開して
 # bin/nvim が shim になる。
