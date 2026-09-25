@@ -115,6 +115,16 @@ export PYTHON_HISTORY="${XDG_STATE_HOME}/python/history"
 #   設定        $XDG_CONFIG_HOME/uv/uv.toml
 
 # ---------------------------------------------------------------------------
+# Go
+# ---------------------------------------------------------------------------
+# 既定の GOPATH は ~/go で、モジュールキャッシュ($GOPATH/pkg/mod)と `go install` の
+# 入り先($GOPATH/bin)が入る。data 側へ移し、GOBIN も明示する。
+# GOCACHE(ビルドキャッシュ)は macOS では ~/Library/Caches/go-build で、XDG_CACHE_HOME は
+# 見ない(os.UserCacheDir)。ホーム直下を汚さないのでそのままにしている。
+export GOPATH="${XDG_DATA_HOME}/go"
+export GOBIN="${GOPATH}/bin"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
@@ -136,6 +146,8 @@ _zsh_setup_path() {
     # pnpm はグローバルの bin が PATH に無いと pnpm add -g 自体をエラーにする。
     "${XDG_DATA_HOME}/npm/bin"
     "${XDG_DATA_HOME}/pnpm/bin"
+    # go install で入れたコマンド。npm と同じく mise の shims より後ろ。
+    "$GOBIN"
     # GNU 版コマンド(coreutils / gnu-sed / grep / findutils など)を BSD 版より優先する。
     # gnubin には g 接頭辞なしの名前(ls, sed, grep ...)で入る。(N) は該当なしでもエラーにしない。
     $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)

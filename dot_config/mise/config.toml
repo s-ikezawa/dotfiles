@@ -92,6 +92,16 @@ python = "latest"
 # 見るので、環境変数の設定は要らない(詳細は .zshenv)。
 uv = "latest"
 
+# Go。GOROOT は mise activate(.zshrc)が設定する(go.set_goroot の既定値)。
+# GOPATH / GOBIN は .zshenv で XDG の下へ移している(`go install` の入り先は $GOBIN)。
+# 検証は `mise tool <name>` の Security 欄で、go は sha256、golangci-lint は sha256 と
+# GitHub の artifact attestation(2026-09-25 に確認)。
+go = "latest"
+
+# golangci-lint。公式は `go install` での導入の動作を保証しておらず、バイナリでの導入を
+# 勧めている(golangci-lint.run の Install)ので、リリースのバイナリを入れる。
+golangci-lint = "latest"
+
 # GitHub CLI。設定・状態・拡張の置き場は gh 自身が XDG_* を見るので環境変数は要らない
 # (2.100.0 で確認。config は $XDG_CONFIG_HOME/gh、state は $XDG_STATE_HOME/gh、
 #  拡張は $XDG_DATA_HOME/gh)。
