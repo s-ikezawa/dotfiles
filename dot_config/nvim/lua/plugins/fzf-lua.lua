@@ -11,9 +11,16 @@ vim.pack.add({
   { src = "https://github.com/ibhagwan/fzf-lua" },
 })
 
--- 既定のままで動く。アイコンは nvim-web-devicons か mini.icons があれば出るが、
--- どちらも入れていないので出ない。
-require("fzf-lua").setup({})
+-- アイコンは nvim-web-devicons か mini.icons があれば出るが、どちらも入れていないので出ない。
+--
+-- no_ignore = true で rg に --no-ignore を付け、.gitignore されたファイルも候補に出す。
+-- files と grep(live_grep も grep の設定を使う)の両方に要る。.git の中は files が
+-- -g "!.git" で、grep は hidden = false で隠しファイルごと除いているので混ざらない。
+-- 一時的に .gitignore を効かせたいときはピッカー内で alt-i を押すと切り替わる。
+require("fzf-lua").setup({
+  files = { no_ignore = true },
+  grep = { no_ignore = true },
+})
 
 -- キーマップ。リーダーは lua/configs/keymaps.lua でスペースにしている。
 -- <Cmd> を使うとコマンドモードに降りずに実行されるので、レジスタや検索の状態が汚れない。
