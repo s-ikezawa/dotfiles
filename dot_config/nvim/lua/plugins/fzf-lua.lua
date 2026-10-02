@@ -11,7 +11,7 @@ vim.pack.add({
   { src = "https://github.com/ibhagwan/fzf-lua" },
 })
 
--- アイコンは nvim-web-devicons か mini.icons があれば出るが、どちらも入れていないので出ない。
+-- アイコンは mini.icons(lua/plugins/mini-icons.lua)から取るので、そちらを先に読む。
 --
 -- no_ignore = true で rg に --no-ignore を付け、.gitignore されたファイルも候補に出す。
 -- files と grep(live_grep も grep の設定を使う)の両方に要る。.git の中は files が
