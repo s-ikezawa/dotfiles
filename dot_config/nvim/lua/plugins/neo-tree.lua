@@ -33,6 +33,25 @@ require("neo-tree").setup({
   },
 })
 
+-- ツリーの絞り込み(/ や # など)で、入力してから検索を始めるまでの待ち時間を 50ms にする。
+-- neo-tree は入力の長さで 1 文字 500ms・2 文字 400ms・3 文字 200ms・4 文字以上 100ms 待つ値を
+-- 直書きしていて(sources/filesystem/lib/filter.lua)、設定では変えられない。検索そのものは
+-- 外部コマンド(fd。mise で入れている)なので速く、遅く感じるのはこの待ち時間だった。
+-- 約 6 万ファイルのリポジトリで最後のキーから結果が出るまでを測ると、1 文字で 542ms → 81ms、
+-- 2 文字で 473ms → 25ms になった(3.42.0)。打つたびに fd が走るが、前の検索は neo-tree が止める。
+-- 内部の関数(neo-tree.utils の debounce)を差し替えているので、neo-tree の更新で名前や
+-- 呼び方が変わると効かなくなる。そのときは差し替えずに既定の動きのまま使う。
+local ok, utils = pcall(require, "neo-tree.utils")
+if ok and type(utils.debounce) == "function" then
+  local debounce = utils.debounce
+  utils.debounce = function(id, fn, delay, ...)
+    if id == "filesystem_filter" then
+      delay = 50
+    end
+    return debounce(id, fn, delay, ...)
+  end
+end
+
 -- 開いているファイルの位置までツリーを展開して開く。開いていれば閉じる。
 -- ツリーの中の主なキー(既定):
 --   <CR> 開く / a 作成 / r 名前の変更 / d 削除 / c コピー / m 移動 / ? キーの一覧
