@@ -18,8 +18,13 @@ o.sidescrolloff = 8
 o.wrap = false          -- 長い行を折り返さない
 -- ステータスラインを出さない。0 が効くのは一番下のウィンドウだけで、上下に分割したときの
 -- 上側のウィンドウには区切りとしてステータスラインが出る(:h 'laststatus')。
--- 行・列は既定で有効な ruler がコマンドラインの右端に出し、ファイル名は <C-g> で見る。
+-- ファイル名は incline(lua/plugins/incline.lua)が出す。行・列は <C-g> で見る。
 o.laststatus = 0
+-- コマンドラインの行も出さない。: は tiny-cmdline、/ と ? は searchbox がフロートで出し、
+-- メッセージは ui2 が右下に一時的に出す(lua/configs/ui2.lua)。
+-- 代わりに、コマンドラインの行に出ていた ruler(行・列)・showmode(-- INSERT --)・
+-- showcmd(d3 のような入力途中のキー)・マクロ記録中の recording @a は見えなくなる。
+o.cmdheight = 0
 o.winborder = "rounded" -- LSP のホバーなどフロートウィンドウの枠(0.11 で追加されたオプション)
 o.pumheight = 10        -- 補完候補ウィンドウの高さの上限
 
