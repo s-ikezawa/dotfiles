@@ -148,6 +148,17 @@ set -- "$MISE_TOOL_INSTALL_PATH"/*/bin/gh
 # $RIPGREP_CONFIG_PATH が指すファイルだけを読む)。今は設定を置いていないので設定しない。
 ripgrep = "latest"
 
+# fd。.gitignore を尊重して再帰的にファイルを探す find。
+# Neovim の neo-tree はツリーの絞り込み(/ や # など)で fd があれば fd、無ければ find を呼ぶ。
+# find だと .gitignore が効かず node_modules までたどり、macOS の find は neo-tree が渡す
+# -regextype を知らないので # の絞り込み(fuzzy_sorter)がエラーになる。
+# fzf-lua のファイル検索も fd があれば rg より優先して使う(どちらも node_modules を除くよう
+# lua/plugins/fzf-lua.lua で設定済み)。
+#
+# 短縮名のままでレジストリ先頭の aqua:sharkdp/fd に解決される。チェックサムの定義は無い
+# (`mise tool fd` の Security 欄が [none])。
+fd = "latest"
+
 # tree-sitter の CLI。パーサを生成・ビルドするのに使う。
 # Neovim 0.12 は tree-sitter を本体に取り込んだがパーサのインストーラは持っておらず、
 # それを補う tree-sitter-manager.nvim がこの CLI を要求する(ビルドに使う C コンパイラは
