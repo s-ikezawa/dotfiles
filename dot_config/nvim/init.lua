@@ -9,6 +9,7 @@
 require("configs.provider")
 require("configs.options")
 require("configs.keymaps")
+require("configs.diagnostic")
 
 require("plugins.catppuccin")
 require("plugins.tree-sitter-manager")
