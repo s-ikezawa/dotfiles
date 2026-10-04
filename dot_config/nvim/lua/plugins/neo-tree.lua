@@ -23,6 +23,21 @@ require("neo-tree").setup({
   popup_border_style = "",
   window = {
     position = "float",
+    mappings = {
+      -- カーソルのファイルかフォルダを、herdr 経由で Claude Code に @ の参照として送る
+      -- (lua/configs/claude.lua)。開いていないファイルも送れる。続けて何個も送れるよう、
+      -- 送った後もフォーカスはツリーに残す。
+      -- 既定の <space>(フォルダの開閉)は nowait = false なので、<leader>as を待ってくれる。
+      ["<leader>as"] = {
+        function(state)
+          local node = state.tree:get_node()
+          if node.type == "file" or node.type == "directory" then
+            require("configs.claude").send_path(node.path, nil, { focus = false })
+          end
+        end,
+        desc = "Claude Code に送る",
+      },
+    },
   },
   filesystem = {
     -- 子が 1 つしかないフォルダを api/src/modules/user のように 1 行にまとめる(VSCode の
