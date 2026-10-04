@@ -1,6 +1,7 @@
 -- Neovim のエントリポイント。ここには設定を書かず、読み込むだけにする。
 --
 --   lua/configs/  Neovim 自体の設定。テーマごとに 1 ファイル
+--                 icons.lua だけは共通のアイコンの表で、ここでは読まず使う側が require する
 --   lua/plugins/  プラグインごとの設定。1 プラグイン 1 ファイル
 --
 -- require("configs.xxx") は runtimepath 配下の lua/configs/xxx.lua を読む。
@@ -15,4 +16,5 @@ require("plugins.tree-sitter-manager")
 require("plugins.mini-icons")
 require("plugins.fzf-lua")
 require("plugins.render-markdown")
+require("plugins.gitsigns")
 require("plugins.incline")
