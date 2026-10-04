@@ -9,6 +9,7 @@
 require("configs.provider")
 require("configs.options")
 require("configs.keymaps")
+require("configs.autocmds")
 require("configs.diagnostic")
 -- cmdheight = 0(configs.options)の後、tiny-cmdline より前に有効にする。
 require("configs.ui2")
