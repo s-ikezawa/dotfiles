@@ -12,6 +12,7 @@ require("configs.keymaps")
 require("configs.diagnostic")
 -- cmdheight = 0(configs.options)の後、tiny-cmdline より前に有効にする。
 require("configs.ui2")
+require("configs.claude")
 
 require("plugins.catppuccin")
 require("plugins.tree-sitter-manager")
