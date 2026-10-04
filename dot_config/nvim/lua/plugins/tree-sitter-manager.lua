@@ -14,6 +14,11 @@ vim.pack.add({
 })
 
 require("tree-sitter-manager").setup({
+  -- 起動時に入っていなければ入れる。Markdown の中に埋め込まれた言語として使うもの。
+  -- auto_install は FileType で動くので、埋め込みの言語では発火しない。
+  --   html  render-markdown が HTML コメントを隠すのに使う
+  --   yaml  render-markdown がフロントマターを描画するのに使う
+  ensure_installed = { "html", "yaml" },
   -- 未導入の言語のファイルを開いたときに自動でパーサを入れる。
   auto_install = true,
   -- ただし Neovim 本体が同梱している分は入れ直さない。この 7 つは

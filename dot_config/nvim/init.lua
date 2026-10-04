@@ -14,3 +14,4 @@ require("plugins.tree-sitter-manager")
 -- アイコンを使うプラグインより前に読む。
 require("plugins.mini-icons")
 require("plugins.fzf-lua")
+require("plugins.render-markdown")
