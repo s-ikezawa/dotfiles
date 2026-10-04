@@ -21,4 +21,8 @@ require("render-markdown").setup({
   -- 数式($...$ / $$...$$)の描画は使わない。使うには latex パーサと、変換コマンドの
   -- utftex(libtexprintf)か latex2text(pylatexenc)が要り、無いと :checkhealth が警告を出す。
   latex = { enabled = false },
+  -- コードブロックの ``` の行を、背景色の半角ブロック(上は ▄、下は ▀)で細い帯にして見せる。
+  -- 既定の hide は言語名もアイコンも出ない行を隠すため、閉じ側の ``` の行が消えて
+  -- ブロックの終わりが分かりにくい。上側の行は thin でも言語名とアイコンが出る。
+  code = { border = "thin" },
 })
