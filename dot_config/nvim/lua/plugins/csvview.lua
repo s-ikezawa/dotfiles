@@ -44,3 +44,19 @@ vim.api.nvim_create_autocmd("FileType", {
     require("csvview").enable(args.buf)
   end,
 })
+
+-- 外で書き換えられたファイルを読み込み直すと、csvview が古い内容で列を測ってしまう不具合の回避。
+-- csvview のパーサーは読んだ行(と行数)をキャッシュしている。編集したとき(on_lines)はキャッシュを
+-- 捨ててから測り直すが、読み込み直したとき(on_reload)は捨てずに測り直す(main の 2466bdd 時点)。
+-- そのため古い行の位置で色を付けようとして、短くなった行で「Invalid 'end_col': out of range」になる。
+-- 読み込む直前(BufReadPre)にキャッシュを捨てておく。_parser は非公開のフィールドなので、
+-- 上流で直ったらこの autocmd は消す。
+vim.api.nvim_create_autocmd("BufReadPre", {
+  group = vim.api.nvim_create_augroup("csvview-reload-fix", {}),
+  callback = function(args)
+    local view = require("csvview.view").get(args.buf)
+    if view then
+      view.metrics._parser:invalidate_cache()
+    end
+  end,
+})
