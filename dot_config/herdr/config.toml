@@ -67,6 +67,16 @@ prefix = "ctrl+a"
 split_vertical = ["prefix+|", "prefix+v"]
 split_horizontal = "prefix+minus"
 
+# ワークスペースの選択画面（prefix+w で入る navigate モード）で j / k でも上下に動く。
+# 既定は矢印の up / down だけなので、それも残す。
+#
+# navigate モードの既定では h / j / k / l がペインの移動（navigate_pane_*）に付いている。
+# キーがぶつかると先に読んだ方が残り、ユーザーの設定は既定より先に読まれるので
+# （v0.9.3 の src/config/keybinds.rs）、j / k はワークスペースの移動になり、ペインの上下移動は
+# このモードでは割り当てが無くなる。ペインの左右（h / l と左右の矢印）はそのまま使える。
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+
 # ---------------------------------------------------------------------------
 # worktree
 # ---------------------------------------------------------------------------
