@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+export PATH="${HOME}/.local/bin:${PATH}"
+
+if command -v claude >/dev/null 2>&1; then
+  skip "Claude Code はインストール済み ($(command -v claude))"
+else
+  log "Claude Code をインストール"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
