@@ -19,6 +19,8 @@ fi
 starship = "latest"
 # リポジトリを ~/Projects/<ホスト>/<オーナー>/<リポジトリ> に揃えて clone する（root は git の設定 ghq.root）
 ghq = "latest"
+# あいまい検索で一覧から選ぶ（.zshrc の Ctrl+G で ghq のリポジトリを選ぶのに使う）
+fzf = "latest"
 
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
