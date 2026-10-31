@@ -1,0 +1,7 @@
+# ログインシェルでのみ読まれる。/etc/zprofile の path_helper が PATH を組み直して
+# ~/.zshenv で先頭に置いたパスを末尾へ回すため、ここで並び順を戻す。
+#
+#   /etc/zshenv → ~/.zshenv → /etc/zprofile(path_helper) → ~/.zprofile → ~/.zshrc
+#
+# path は typeset -U なので、再度先頭に積んでも重複は末尾側が消えるだけ。
+_zsh_setup_path

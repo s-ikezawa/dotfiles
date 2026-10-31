@@ -1,0 +1,72 @@
+# 対話シェルでのみ読まれる。環境変数と PATH は .zshenv 側。
+#
+#   /etc/zshenv → ~/.zshenv → /etc/zprofile → ~/.zprofile → /etc/zshrc → ~/.zshrc
+
+[[ -d "${XDG_STATE_HOME}/zsh" ]] || mkdir -p "${XDG_STATE_HOME}/zsh"
+[[ -d "${XDG_CACHE_HOME}/zsh" ]] || mkdir -p "${XDG_CACHE_HOME}/zsh"
+[[ -d "${LESSHISTFILE:h}" ]] || mkdir -p "${LESSHISTFILE:h}"
+
+# ---------------------------------------------------------------------------
+# ヒストリ
+# ---------------------------------------------------------------------------
+# /etc/zshrc が HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history を設定するため、
+# XDG に寄せるには明示的な上書きが必須（放っておくと ~/.config/zsh/.zsh_history）。
+# cache ではなく state に置くのは、消えても壊れないが消えてほしくはないため。
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
+HISTSIZE=100000   # メモリ上に保持する数
+SAVEHIST=100000   # ファイルに保存する数
+
+setopt extended_history         # 実行時刻と所要時間も記録する
+setopt inc_append_history_time  # シェル終了時ではなくコマンドごとに追記する
+                                # （複数ウインドウの履歴を即座に混ぜたいなら share_history）
+setopt hist_ignore_dups         # 直前と同じコマンドは記録しない
+setopt hist_ignore_space        # 空白で始めたコマンドは記録しない
+setopt hist_reduce_blanks       # 余分な空白を詰めて記録する
+setopt hist_find_no_dups        # 検索時に同じ候補を続けて出さない
+setopt hist_verify              # !! などのヒストリ展開を即実行せず一度行に出す
+setopt hist_no_store            # history コマンド自体は記録しない
+
+# ---------------------------------------------------------------------------
+# 補完
+# ---------------------------------------------------------------------------
+# 補完関数は compinit より前に fpath へ足す必要がある。site-functions には各 formula が
+# 置いた補完定義が入る。
+# fpath は .zshenv で typeset -U 済みなので重複しても消える。
+fpath=(
+  "${HOMEBREW_PREFIX}/share/zsh/site-functions"
+  $fpath
+)
+
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
+# 生成から 24 時間以内なら -C で fpath の再検証を省いて起動を速くする。
+# (#qN.mh-24) = グロブ修飾子。N:該当なしでもエラーにしない mh-24:24時間以内に更新
+if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
+  compinit -C -d "$_zcompdump"
+else
+  compinit -d "$_zcompdump"
+fi
+unset _zcompdump
+
+# ---------------------------------------------------------------------------
+# キーバインド
+# ---------------------------------------------------------------------------
+# emacs キーバインドに固定する。
+#
+# zsh は起動時、VISUAL か EDITOR の値に "vi" が含まれていれば vi キーバインド(viins)を、
+# そうでなければ emacs を選ぶ。.zshenv の EDITOR は nvim か vim のどちらかで、いずれも "vi" が
+# 引っ掛かるため、明示しないと viins になる(実測: nvim → viins、vim → viins、nano → emacs)。
+# viins だと ^P が self-insert のままで履歴を辿れない。
+#
+# 個別の bindkey を足すときは、この行より後に書くこと(bindkey -e は main キーマップの
+# 差し替えなので、先に書いた分は viins 側に入って消える)。
+bindkey -e
+
+# ---------------------------------------------------------------------------
+# mise
+# ---------------------------------------------------------------------------
+# .zshenv で PATH に入れた shims は非対話シェル（スクリプトなど）向け。対話シェルでは
+# activate でプロンプトごとに mise hook-env を走らせ、ツールの bin を PATH に直接積み、
+# ツールが設定する環境変数（java の JAVA_HOME など）や [env] も反映する。
+# shims と activate の併用は mise が想定している構成。
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
