@@ -1,0 +1,10 @@
+# 全リポジトリ共通の ignore。core.excludesFile を指定しなくても
+# Git は ~/.config/git/ignore を読む。
+# プロジェクト固有のものではなく「自分の環境だから出るもの」だけを書く。
+
+# macOS
+.DS_Store
+
+# Claude Code の個人用設定（共有する設定は .claude/settings.json に書く）
+.claude/settings.local.json
+CLAUDE.local.md
