@@ -101,6 +101,23 @@ unset _zcompdump
 # 差し替えなので、先に書いた分は viins 側に入って消える)。
 bindkey -e
 
+# Ctrl+G: ghq で clone したリポジトリを fzf で選んで、そのルートへ cd する。
+# 入力途中のコマンドラインはそのまま残す。widget の中の cd ではプロンプトを出し直す前の
+# precmd が走らないので、自分で呼んでから reset-prompt する（starship や mise の表示を更新するため）。
+_ghq_fzf_cd() {
+  local root repo f
+  root=$(ghq root 2>/dev/null) || return
+  repo=$(ghq list | fzf --height=40% --reverse --prompt='repo> ' \
+    --preview="git -C ${(q)root}/{} log --oneline --color=always -10") || { zle reset-prompt; return }
+  cd -- "${root}/${repo}" || { zle reset-prompt; return }
+  for f in $precmd_functions; do "$f"; done
+  zle reset-prompt
+}
+if (( $+commands[ghq] && $+commands[fzf] )); then
+  zle -N _ghq_fzf_cd
+  bindkey '^G' _ghq_fzf_cd
+fi
+
 # ---------------------------------------------------------------------------
 # プロンプト
 # ---------------------------------------------------------------------------
