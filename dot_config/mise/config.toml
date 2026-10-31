@@ -6,6 +6,7 @@
 ################################################################################
 [bootstrap.packages]
 # CLIツール
+"brew:git" = { os = "macos" }
 "brew:chezmoi" = { os = "macos" }
 
 # GUIツール
