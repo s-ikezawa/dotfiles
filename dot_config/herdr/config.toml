@@ -16,3 +16,8 @@ split_horizontal = "prefix+minus"
 # ペイン移動は prefix+h/j/k/l で行うので問題ない。
 navigate_workspace_down = "j"
 navigate_workspace_up = "k"
+
+[worktrees]
+# worktree の作成場所を XDG Base Directory に合わせる（デフォルトは ~/.herdr/worktrees）。
+# 環境変数は展開されないので ~ で書く。
+directory = "~/.local/share/herdr/worktrees"
