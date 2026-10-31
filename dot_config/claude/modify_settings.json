@@ -24,5 +24,7 @@ printf '%s\n' "$current" | /usr/bin/jq '
   | .env.CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION = "false"
   # 組み込みの差分パネル（/diff の右側ペイン。編集時に自動で開く）を出さない。
   # 差分は Neovim や hunk で確認する。/plugin の Installed タブで無効にしたときと同じ。
-  | .enabledPlugins["cc-plugin-diff@builtin"] = false
+  # キーは外向きの名前 diff@builtin。内部名の cc-plugin-diff@builtin では効かない。
+  | .enabledPlugins["diff@builtin"] = false
+  | del(.enabledPlugins["cc-plugin-diff@builtin"])
 '
