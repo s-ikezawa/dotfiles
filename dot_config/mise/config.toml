@@ -2,7 +2,19 @@
 # AppStore経由のツールをCLIでインストールできるように
 mas = { version = "latest", os = ["macos"] }
 # ターミナル上で動くエージェントマルチプレクサ
-herdr = "latest"
+# インストール・更新のたびに Claude Code 連携 (SessionStart フック) も入れる/更新する。
+# chezmoi 管理の herdr 設定は onboarding = false のため、初回起動時の連携インストール画面が出ない。
+# CLAUDE_CONFIG_DIR は .zshenv で設定しているが、初回セットアップ時のスクリプトには
+# まだ渡っていないので明示する。Claude の設定ディレクトリが無いと herdr が失敗し、
+# postinstall の失敗は mise install 全体の失敗になるため、無ければ飛ばす。
+herdr = { version = "latest", postinstall = """
+dir="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}"
+if [ -d "$dir" ]; then
+  CLAUDE_CONFIG_DIR="$dir" "$MISE_TOOL_INSTALL_PATH/herdr" integration install claude
+else
+  echo "herdr: $dir が無いため Claude 連携のインストールを飛ばします" >&2
+fi
+""" }
 
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
