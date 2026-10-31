@@ -1,0 +1,11 @@
+{{- /*
+  chezmoi の設定ファイル (~/.config/chezmoi/chezmoi.toml) を生成するテンプレート。
+  公開リポジトリに置きたくない個人情報は、ここで初回の chezmoi init 時に入力させ、
+  ローカルの chezmoi.toml にだけ保存する。2 回目以降は保存済みの値が使われる。
+*/ -}}
+{{- $gitName := promptStringOnce . "git.name" "Git user.name" -}}
+{{- $gitEmail := promptStringOnce . "git.email" "Git user.email" -}}
+
+[data.git]
+name = {{ $gitName | quote }}
+email = {{ $gitEmail | quote }}

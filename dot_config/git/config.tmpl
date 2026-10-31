@@ -1,0 +1,28 @@
+# Git のグローバル設定。XDG に合わせて ~/.config/git/config に置く
+# （~/.gitconfig が存在するとそちらも読まれるので作らないこと）。
+
+[user]
+	# 公開リポジトリに載せないため、値は chezmoi init 時に入力して
+	# ~/.config/chezmoi/chezmoi.toml に保存したものを使う（.chezmoi.toml.tmpl 参照）。
+	name = {{ .git.name }}
+	email = {{ .git.email }}
+
+[init]
+	defaultBranch = main
+
+[push]
+	# 初回 push で -u を付けなくても同名の upstream を作る。
+	# herdr の worktree などで切ったブランチをそのまま push できるようにする。
+	autoSetupRemote = true
+
+[pull]
+	# fast-forward できないときは止める（意図しないマージコミットを作らない）。
+	ff = only
+
+[fetch]
+	# リモートで消えたブランチの追跡ブランチを fetch 時に削除する。
+	prune = true
+
+[rerere]
+	# 一度解決したコンフリクトの解決内容を記録して再利用する。
+	enabled = true
