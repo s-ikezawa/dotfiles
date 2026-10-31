@@ -1,1 +1,4 @@
 font-family = "UDEV Gothic 35NF"
+
+# Option キーを Alt として送る（右 Option は特殊文字入力用に残す）
+macos-option-as-alt = left
