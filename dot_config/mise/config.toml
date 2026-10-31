@@ -5,6 +5,7 @@
 "brew-cask:1password-cli" = { os = "macos" }
 "brew-cask:karabiner-elements" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
+"brew-cask:firefox" = { os = "macos" }
 
 ################################################################################
 # macOS 設定
