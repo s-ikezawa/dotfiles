@@ -4,8 +4,10 @@
   ローカルの chezmoi.toml にだけ保存する。2 回目以降は保存済みの値が使われる。
 */ -}}
 {{- $gitName := promptStringOnce . "git.name" "Git user.name" -}}
-{{- $gitEmail := promptStringOnce . "git.email" "Git user.email" -}}
+{{- $gitEmail := promptStringOnce . "git.email" "Git user.email（プライベート用 github.com/s-ikezawa）" -}}
+{{- $gitWorkEmail := promptStringOnce . "git.workEmail" "Git user.email（会社用 github.com/ebisol）" -}}
 
 [data.git]
 name = {{ $gitName | quote }}
 email = {{ $gitEmail | quote }}
+workEmail = {{ $gitWorkEmail | quote }}

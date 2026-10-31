@@ -20,7 +20,17 @@ bash -c "$(curl -fsLS https://raw.githubusercontent.com/s-ikezawa/dotfiles/main/
 | 質問 | 用途 |
 | --- | --- |
 | `Git user.name?` | `~/.config/git/config` の `user.name` |
-| `Git user.email?` | `~/.config/git/config` の `user.email` |
+| `Git user.email（プライベート用 github.com/s-ikezawa）?` | `~/Projects/github.com/s-ikezawa/` 配下の `user.email` |
+| `Git user.email（会社用 github.com/ebisol）?` | `~/Projects/github.com/ebisol/` 配下の `user.email` |
+
+`user.email` は `~/.config/git/config` の `includeIf` で、リポジトリの場所ごとに切り替える。
+どれにも当てはまらない場所では `user.useConfigOnly = true` のため commit できない（メールアドレスの取り違えを防ぐ）。
+この dotfiles リポジトリ（`~/.local/share/chezmoi`）も当てはまらないので、commit する前にリポジトリに設定しておく
+（`user.name` はグローバルのものが使われる）。
+
+```sh
+chezmoi git -- config --local user.email "<プライベート用のメールアドレス>"
+```
 
 項目の定義は `.chezmoi.toml.tmpl` にある。
 

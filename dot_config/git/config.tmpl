@@ -5,7 +5,9 @@
 	# 公開リポジトリに載せないため、値は chezmoi init 時に入力して
 	# ~/.config/chezmoi/chezmoi.toml に保存したものを使う（.chezmoi.toml.tmpl 参照）。
 	name = {{ .git.name }}
-	email = {{ .git.email }}
+	# email はここには書かず、末尾の includeIf でリポジトリの場所ごとに決める。
+	# どれにも当てはまらない場所では、メールアドレスを推測させずに commit を止める。
+	useConfigOnly = true
 
 [init]
 	defaultBranch = main
@@ -30,3 +32,18 @@
 [ghq]
 	# ghq get で clone する場所。~ は ghq が git config --path で読むので展開される。
 	root = ~/Projects
+
+# ---------------------------------------------------------------------------
+# リポジトリの場所ごとの user.email
+# ---------------------------------------------------------------------------
+# gitdir: はリポジトリの .git の場所で判定する。末尾の / で配下すべてに当てはまる。
+# herdr などの worktree は .git が元のリポジトリの中にあるので、元の場所の設定が使われる。
+# path は、この設定ファイルのあるフォルダ（~/.config/git）から見た相対パス。
+
+# プライベート用（ghq get github.com/s-ikezawa/...）
+[includeIf "gitdir:~/Projects/github.com/s-ikezawa/"]
+	path = users/s-ikezawa
+
+# 会社用（ghq get github.com/ebisol/...）
+[includeIf "gitdir:~/Projects/github.com/ebisol/"]
+	path = users/ebisol
