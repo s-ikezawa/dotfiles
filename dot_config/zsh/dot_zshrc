@@ -27,18 +27,57 @@ setopt hist_verify              # !! などのヒストリ展開を即実行せ�
 setopt hist_no_store            # history コマンド自体は記録しない
 
 # ---------------------------------------------------------------------------
+# mise
+# ---------------------------------------------------------------------------
+# .zshenv で PATH に入れた shims は非対話シェル（スクリプトなど）向け。対話シェルでは
+# activate でプロンプトごとに mise hook-env を走らせ、ツールの bin を PATH に直接積み、
+# ツールが設定する環境変数（java の JAVA_HOME など）や [env] も反映する。
+# shims と activate の併用は mise が想定している構成。
+# activate は読み込み時にも hook-env を走らせるので、この後は commands[ツール] がシムでなく
+# 実体を指す（補完の生成で使う）。そのため補完より前に置く。
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
+
+# ---------------------------------------------------------------------------
 # 補完
 # ---------------------------------------------------------------------------
 # 補完関数は compinit より前に fpath へ足す必要がある。site-functions には各 formula が
 # 置いた補完定義が入る。
 # fpath は .zshenv で typeset -U 済みなので重複しても消える。
+#
+# completions には、補完定義を自分で出力するコマンド（mise で入れたものなど）の分を生成して置く。
+_zcompdir="${XDG_CACHE_HOME}/zsh/completions"
 fpath=(
+  "$_zcompdir"
   "${HOMEBREW_PREFIX}/share/zsh/site-functions"
   $fpath
 )
 
-autoload -Uz compinit
 _zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump"
+
+# _gencomp <コマンド> <補完を出力するコマンドライン...>
+# 生成に使ったコマンドの実体のパスを _<コマンド>.src に記録し、パスが変わったとき（初回・
+# バージョンの更新後）だけ生成し直す。mise の実体のパスにはバージョンが入る（…/0.9.5/herdr）。
+# 更新日時で比べないのは、アーカイブの日時のまま展開されるツールがあるため（starship など）。
+# 生成し直したら zcompdump も消す。下の compinit -C は新しい補完関数を探さないため。
+_gencomp() {
+  local cmd=$1; shift
+  [[ -n ${commands[$cmd]} ]] || return 0
+  local src=${commands[$cmd]:A} out="${_zcompdir}/_${cmd}"
+  [[ -s $out && -r ${out}.src && $(<${out}.src) == $src ]] && return 0
+  [[ -d $_zcompdir ]] || mkdir -p "$_zcompdir"
+  if "$@" >| "${out}.tmp" 2>/dev/null && [[ -s ${out}.tmp ]]; then
+    mv -f "${out}.tmp" "$out"
+    print -r -- "$src" >| "${out}.src"
+    rm -f "$_zcompdump"
+  else
+    rm -f "${out}.tmp"
+  fi
+}
+_gencomp herdr herdr completion zsh
+unfunction _gencomp
+unset _zcompdir
+
+autoload -Uz compinit
 # 生成から 24 時間以内なら -C で fpath の再検証を省いて起動を速くする。
 # (#qN.mh-24) = グロブ修飾子。N:該当なしでもエラーにしない mh-24:24時間以内に更新
 if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
@@ -61,15 +100,6 @@ unset _zcompdump
 # 個別の bindkey を足すときは、この行より後に書くこと(bindkey -e は main キーマップの
 # 差し替えなので、先に書いた分は viins 側に入って消える)。
 bindkey -e
-
-# ---------------------------------------------------------------------------
-# mise
-# ---------------------------------------------------------------------------
-# .zshenv で PATH に入れた shims は非対話シェル（スクリプトなど）向け。対話シェルでは
-# activate でプロンプトごとに mise hook-env を走らせ、ツールの bin を PATH に直接積み、
-# ツールが設定する環境変数（java の JAVA_HOME など）や [env] も反映する。
-# shims と activate の併用は mise が想定している構成。
-(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # ---------------------------------------------------------------------------
 # プロンプト
