@@ -4,6 +4,12 @@ mas = { version = "latest", os = ["macos"] }
 # ターミナル上で動くエージェントマルチプレクサ
 herdr = "latest"
 
+# GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
+# gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
+# 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。
+[settings.github]
+credential_command = 'gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
+
 ################################################################################
 # ツールの導入
 ################################################################################
