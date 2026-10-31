@@ -1,0 +1,7 @@
+# 初回起動時のオンボーディングを表示しない（herdr が自動で書き込む設定を引き継ぐ）
+onboarding = false
+
+[keys]
+# prefix を tmux 風に Ctrl+A にする。
+# zsh の行頭移動 (Ctrl+A) は prefix を2回押すとペインに送られる。
+prefix = "ctrl+a"
