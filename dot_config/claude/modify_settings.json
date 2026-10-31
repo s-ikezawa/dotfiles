@@ -1,0 +1,18 @@
+#!/bin/bash
+# Claude Code は settings.json を自分で書き換える (theme, model など)。
+# ファイル丸ごとは管理せず、ここで指定したキーだけを既存の内容にマージする。
+set -euo pipefail
+
+current=$(cat)
+[ -n "$current" ] || current='{}'
+
+printf '%s\n' "$current" | /usr/bin/jq '
+  # ステータスラインを表示
+  .statusLine = {
+    type: "command",
+    command: "~/.config/claude/scripts/statusline.sh"
+  }
+  # セッションを auto mode で始める。
+  # プロジェクトの .claude/settings.json では auto が効かないため、ユーザー設定に置く。
+  | .permissions.defaultMode = "auto"
+'
