@@ -3,8 +3,6 @@
 mas = { version = "latest", os = ["macos"] }
 # ターミナル上で動くエージェントマルチプレクサ
 herdr = "latest"
-# GitHub CLI（PR や Issue、CI の確認をエージェントからも行う）
-gh = "latest"
 
 ################################################################################
 # ツールの導入
@@ -13,6 +11,9 @@ gh = "latest"
 # CLIツール
 "brew:git" = { os = "macos" }
 "brew:chezmoi" = { os = "macos" }
+# GitHub CLI（PR や Issue、CI の確認をエージェントからも行う）。
+# mise の credential_command から呼ぶため、非対話シェルでも PATH にある Homebrew で入れる。
+"brew:gh" = { os = "macos" }
 
 # GUIツール
 "brew-cask:1password" = { os = "macos" }
