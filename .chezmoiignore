@@ -1,3 +1,4 @@
 # ホームディレクトリに配置しない、リポジトリ管理用のファイル。
 README.md
 install.sh
+HANDOFF.md
