@@ -5,3 +5,14 @@ onboarding = false
 # prefix を tmux 風に Ctrl+A にする。
 # zsh の行頭移動 (Ctrl+A) は prefix を2回押すとペインに送られる。
 prefix = "ctrl+a"
+
+# ペイン分割を tmux 風の見た目に合わせる。
+# | で左右に分割（縦の境界線）、- で上下に分割（横の境界線）。
+split_vertical = "prefix+|"
+split_horizontal = "prefix+minus"
+
+# ナビゲートモード (prefix+w) で j/k を Spaces (ワークスペース) の移動に使う。
+# デフォルトの j/k (ペインの上下移動) はこの設定に上書きされて無効になるが、
+# ペイン移動は prefix+h/j/k/l で行うので問題ない。
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
