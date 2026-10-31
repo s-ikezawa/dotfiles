@@ -17,6 +17,8 @@ fi
 """ }
 # シェルのプロンプト（設定は ~/.config/starship.toml）
 starship = "latest"
+# リポジトリを ~/Projects/<ホスト>/<オーナー>/<リポジトリ> に揃えて clone する（root は git の設定 ghq.root）
+ghq = "latest"
 
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
