@@ -16,6 +16,7 @@ mas = { version = "latest", os = ["macos"] }
 "brew-cask:karabiner-elements" = { os = "macos" }
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:firefox" = { os = "macos" }
+"brew-cask:ghostty" = { os = "macos" }
 
 # Font
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
