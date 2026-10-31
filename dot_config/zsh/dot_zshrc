@@ -70,3 +70,10 @@ bindkey -e
 # ツールが設定する環境変数（java の JAVA_HOME など）や [env] も反映する。
 # shims と activate の併用は mise が想定している構成。
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
+
+# ---------------------------------------------------------------------------
+# プロンプト
+# ---------------------------------------------------------------------------
+# 見た目は ~/.config/starship.toml で設定する。starship は mise で入れているので、
+# mise activate より後に書く。
+(( $+commands[starship] )) && eval "$(starship init zsh)"

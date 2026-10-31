@@ -1,0 +1,21 @@
+# Starship のプロンプト設定。https://starship.rs/config/
+#
+# 初期設定は言語のバージョンなど表示が多いので、表示するモジュールを format で絞る。
+# macOS の既定（/etc/zshrc の PS1="%n@%m %1~ %# "）に近い「フォルダ名 + Git のブランチ名」から始める。
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = "$directory$git_branch$character"
+
+# プロンプトの前に空行を入れない
+add_newline = false
+
+# 大きなリポジトリで git の情報取得が遅いときはここを上げる（ミリ秒）
+# command_timeout = 500
+
+[directory]
+# 末尾のフォルダ名だけを出す（%1~ 相当）
+truncation_length = 1
+truncate_to_repo = false
+
+[git_branch]
+format = "[$symbol$branch]($style) "
