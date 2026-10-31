@@ -17,6 +17,9 @@ mas = { version = "latest", os = ["macos"] }
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:firefox" = { os = "macos" }
 
+# AppStore
+"mas:497799835" = { os = "macos" } # Xcode
+
 ################################################################################
 # macOS 設定
 #
