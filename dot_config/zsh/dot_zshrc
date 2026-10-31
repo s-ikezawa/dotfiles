@@ -74,6 +74,8 @@ _gencomp() {
   fi
 }
 _gencomp herdr herdr completion zsh
+# ghq は補完を出力するコマンドを持たないが、配布物の misc/zsh/_ghq に補完定義が入っている。
+_gencomp ghq cat "${commands[ghq]:A:h}/misc/zsh/_ghq"
 unfunction _gencomp
 unset _zcompdir
 
