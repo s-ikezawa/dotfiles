@@ -23,6 +23,8 @@ ghq = "latest"
 fzf = "latest"
 # 高速な grep（rg）。.gitignore を見て、無視されたファイルは検索しない
 ripgrep = "latest"
+# 高速な find（fd）。.gitignore を見て、無視されたファイルは出さない
+fd = "latest"
 
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
