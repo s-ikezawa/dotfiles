@@ -132,6 +132,19 @@ if (( $+commands[fzf] )); then
   FZF_ALT_C_COMMAND= source <(fzf --zsh)
 fi
 
+# Ctrl+R のときだけ、ほかのシェル（herdr の別ペインなど）の履歴も検索できるようにする。
+# share_history は使わない（↑ や Ctrl+P で遡る履歴は、そのシェルのものだけにしたい）。
+# fc -RI で、履歴ファイルからまだ読んでいない分だけを取り込んでから fzf を開く。
+# 一度取り込んだ分は、そのシェルの ↑ にも出るようになる。
+if (( $+widgets[fzf-history-widget] )); then
+  _fzf_history_widget_with_shared() {
+    fc -RI
+    zle fzf-history-widget
+  }
+  zle -N _fzf_history_widget_with_shared
+  bindkey '^R' _fzf_history_widget_with_shared
+fi
+
 # Ctrl+G: ghq で clone したリポジトリを fzf で選んで、そのルートへ cd する。
 # 入力途中のコマンドラインはそのまま残す。widget の中の cd ではプロンプトを出し直す前の
 # precmd が走らないので、自分で呼んでから reset-prompt する（starship や mise の表示を更新するため）。
