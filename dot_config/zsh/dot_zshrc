@@ -91,6 +91,21 @@ else
 fi
 unset _zcompdump
 
+# fzf-tab: <Tab> で出る補完候補の一覧を fzf にして、文字を打って絞り込めるようにする。
+# 本体は .chezmoiexternal.toml で clone している。compinit より後、かつ widget を包む
+# ほかのプラグイン（zsh-autosuggestions など）より前に読む必要がある。
+_fzf_tab="${XDG_DATA_HOME}/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
+if [[ -r $_fzf_tab ]] && (( $+commands[fzf] )); then
+  source "$_fzf_tab"
+  # 補完のグループ名（[files] など）を出す。fzf-tab は < > でグループを切り替える。
+  zstyle ':completion:*:descriptions' format '[%d]'
+  # zsh 標準の選択メニューは使わない（fzf-tab が代わりに出す）
+  zstyle ':completion:*' menu no
+  # cd の候補では、右側にフォルダの中身を出す。ls は BSD 版でも GNU 版でも通るオプションだけ使う。
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1A -- $realpath'
+fi
+unset _fzf_tab
+
 # ---------------------------------------------------------------------------
 # キーバインド
 # ---------------------------------------------------------------------------
