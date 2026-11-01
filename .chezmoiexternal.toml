@@ -1,0 +1,11 @@
+# chezmoi が外部から取ってきて配置するもの。https://www.chezmoi.io/reference/special-files/chezmoiexternal-format/
+# chezmoi apply のときに、refreshPeriod より古ければ取り直す（chezmoi apply --refresh-externals で今すぐ）。
+
+# zsh の補完候補の一覧を fzf で絞り込めるようにするプラグイン。.zshrc から source する。
+# プラグインマネージャーは使わず、ここで clone して chezmoi apply で更新する。
+[".local/share/zsh/plugins/fzf-tab"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/fzf-tab.git"
+refreshPeriod = "168h"
+clone.args = ["--depth", "1"]
+pull.args = ["--ff-only"]
