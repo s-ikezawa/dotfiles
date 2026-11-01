@@ -120,6 +120,18 @@ unset _fzf_tab
 # 差し替えなので、先に書いた分は viins 側に入って消える)。
 bindkey -e
 
+# fzf のシェル連携。次のキーと補完が fzf になる。
+#   Ctrl+R: 履歴を検索して行に入れる   Ctrl+T: ファイルを選んで行に入れる
+#   **<Tab>: 例 `vim **<Tab>` でファイルを選ぶ
+# fzf は読み込んだ時点の <Tab> の widget を覚えて、** でないときはそちらに任せる。
+# fzf-tab（補完の節で読む）より後に読むことで、ふだんの <Tab> は fzf-tab のまま使える。
+#
+# Alt+C（フォルダを選んで cd）は使わない。リポジトリへの移動は下の Ctrl+G で足りる。
+# FZF_ALT_C_COMMAND を空にすると fzf はこのキーを割り当てない。
+if (( $+commands[fzf] )); then
+  FZF_ALT_C_COMMAND= source <(fzf --zsh)
+fi
+
 # Ctrl+G: ghq で clone したリポジトリを fzf で選んで、そのルートへ cd する。
 # 入力途中のコマンドラインはそのまま残す。widget の中の cd ではプロンプトを出し直す前の
 # precmd が走らないので、自分で呼んでから reset-prompt する（starship や mise の表示を更新するため）。
