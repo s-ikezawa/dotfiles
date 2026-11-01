@@ -21,6 +21,8 @@ starship = "latest"
 ghq = "latest"
 # あいまい検索で一覧から選ぶ（.zshrc の Ctrl+G で ghq のリポジトリを選ぶのに使う）
 fzf = "latest"
+# 高速な grep（rg）。.gitignore を見て、無視されたファイルは検索しない
+ripgrep = "latest"
 
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
