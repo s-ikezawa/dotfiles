@@ -1,6 +1,7 @@
 [tools]
 # AppStore経由のツールをCLIでインストールできるように
 mas = { version = "latest", os = ["macos"] }
+
 # ターミナル上で動くエージェントマルチプレクサ
 # インストール・更新のたびに Claude Code 連携 (SessionStart フック) も入れる/更新する。
 # chezmoi 管理の herdr 設定は onboarding = false のため、初回起動時の連携インストール画面が出ない。
@@ -15,14 +16,19 @@ else
   echo "herdr: $dir が無いため Claude 連携のインストールを飛ばします" >&2
 fi
 """ }
+
 # シェルのプロンプト（設定は ~/.config/starship.toml）
 starship = "latest"
+
 # リポジトリを ~/Projects/<ホスト>/<オーナー>/<リポジトリ> に揃えて clone する（root は git の設定 ghq.root）
 ghq = "latest"
+
 # あいまい検索で一覧から選ぶ（.zshrc の Ctrl+G で ghq のリポジトリを選ぶのに使う）
 fzf = "latest"
+
 # 高速な grep（rg）。.gitignore を見て、無視されたファイルは検索しない
 ripgrep = "latest"
+
 # 高速な find（fd）。.gitignore を見て、無視されたファイルは出さない
 fd = "latest"
 
@@ -69,6 +75,7 @@ mise bootstrap packages upgrade --yes
 # CLIツール
 "brew:git" = { os = "macos" }
 "brew:chezmoi" = { os = "macos" }
+
 # GitHub CLI（PR や Issue、CI の確認をエージェントからも行う）。
 # mise の credential_command から呼ぶため、非対話シェルでも PATH にある Homebrew で入れる。
 "brew:gh" = { os = "macos" }
