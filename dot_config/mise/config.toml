@@ -36,13 +36,13 @@ credential_command = 'gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
 # タスク
 ################################################################################
 # [tools] と [bootstrap.packages]（Homebrew / App Store）をまとめて更新する。
-# `mise upgrade` は組み込みコマンドで [tools] しか更新しないため、別の名前にしている。
+# `mise run up` で実行する。`mise up` は組み込みの `mise upgrade` の別名で [tools] しか更新しないので、run を省かないこと。
 # dir をホームに固定するのは、プロジェクト内で実行してもそのプロジェクトのツールや
 # mise.lock を巻き込まないようにするため。
 # mas は root でないとき自分で sudo を呼び直すが、mise が出力を取り込むのでパスワードを
 # 聞かれても何の入力か分からない。そこで先に認証し、brew の更新中に既定タイムアウト（5 分）で
 # 切れないよう延長し続ける（入出力を切り離す理由などは 02-homebrew を参照）。
-[tasks.upgrade-all]
+[tasks.up]
 description = "mise のツールと Homebrew・App Store のパッケージをまとめて更新する"
 dir = "{{ env.HOME }}"
 raw = true
