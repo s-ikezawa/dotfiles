@@ -35,7 +35,7 @@ credential_command = 'gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
 ################################################################################
 # タスク
 ################################################################################
-# [tools] と [bootstrap.packages]（Homebrew / App Store）をまとめて更新する。
+# mise 本体と [tools]、[bootstrap.packages]（Homebrew / App Store）をまとめて更新する。
 # `mise run up` で実行する。`mise up` は組み込みの `mise upgrade` の別名で [tools] しか更新しないので、run を省かないこと。
 # dir をホームに固定するのは、プロジェクト内で実行してもそのプロジェクトのツールや
 # mise.lock を巻き込まないようにするため。
@@ -43,7 +43,7 @@ credential_command = 'gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
 # 聞かれても何の入力か分からない。そこで先に認証し、brew の更新中に既定タイムアウト（5 分）で
 # 切れないよう延長し続ける（入出力を切り離す理由などは 02-homebrew を参照）。
 [tasks.up]
-description = "mise のツールと Homebrew・App Store のパッケージをまとめて更新する"
+description = "mise 本体とツール、Homebrew・App Store のパッケージをまとめて更新する"
 dir = "{{ env.HOME }}"
 raw = true
 run = """
@@ -57,6 +57,7 @@ while kill -0 "$$" 2>/dev/null && sudo -n true 2>/dev/null; do sleep 30; done \
 sudo_keepalive_pid=$!
 trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}" 2>/dev/null; true' EXIT
 
+mise self-update --yes
 mise upgrade
 mise bootstrap packages upgrade --yes
 """
