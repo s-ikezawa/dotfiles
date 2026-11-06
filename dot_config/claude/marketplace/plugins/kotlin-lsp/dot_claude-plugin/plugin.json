@@ -1,14 +1,14 @@
 {
   "name": "kotlin-lsp",
   "version": "0.1.0",
-  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。キャッシュとインデックスは Neovim のもの（~/.cache/kotlin-lsp）と分け、同じフォルダを 2 つの言語サーバーが同時に使わないようにする",
+  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。キャッシュとインデックスは $XDG_CACHE_HOME/kotlin-lsp-claude に置き、Neovim のもの（kotlin-lsp）と分けて、同じフォルダを 2 つの言語サーバーが同時に使わないようにする（args の ${XDG_CACHE_HOME} は Claude Code が展開する）",
   "author": {
     "name": "s-ikezawa"
   },
   "lspServers": {
     "kotlin": {
       "command": "intellij-server",
-      "args": ["--stdio", "--system-path=${CLAUDE_PLUGIN_DATA}/system"],
+      "args": ["--stdio", "--system-path=${XDG_CACHE_HOME}/kotlin-lsp-claude"],
       "extensionToLanguage": {
         ".kt": "kotlin",
         ".kts": "kotlin"
