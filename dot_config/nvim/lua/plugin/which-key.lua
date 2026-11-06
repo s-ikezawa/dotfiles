@@ -11,6 +11,7 @@ wk.setup({
 
 -- <leader> の後のキーのまとまりに名前を付ける（keymaps.lua の割り当てと合わせる）
 wk.add({
+  { '<leader>a', group = 'Claude Code' },
   { '<leader>b', group = 'バッファ' },
   { '<leader>c', group = 'コード' },
   { '<leader>f', group = 'ファイル' },
