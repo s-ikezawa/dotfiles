@@ -7,6 +7,12 @@
 vim.pack.add({ { src = 'https://github.com/esmuellert/codediff.nvim', version = vim.version.range('*') } }) -- 最新のリリースを追う
 
 require('codediff').setup({
+  diff = {
+    -- 差分を 1 つのウィンドウに出し、消した行は仮想の行として重ねる。
+    -- 左右に並べる表示だと、新しいファイルなどは 1 つのウィンドウになり、ファイルによって見た目が変わるため。
+    -- 差分の画面で t を押すと左右に並べる表示と切り替えられる。
+    layout = 'inline',
+  },
   explorer = {
     view_mode = 'tree',              -- 変更されたファイルの一覧をツリーで出す（i で一覧と切り替え）
     line_stats = { enabled = true }, -- ファイルごとに増えた行と減った行の数（+12 -4）を出す
