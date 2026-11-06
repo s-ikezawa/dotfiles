@@ -88,6 +88,26 @@ lua-language-server = "latest"
 # TS・Go・Kotlin などに対応。主に Claude Code が使う（使い方は ~/.config/claude/CLAUDE.md）。
 ast-grep = "latest"
 
+# Kotlin の言語サーバー（JetBrains の kotlin-lsp。設定は ~/.config/nvim/lsp/kotlin_lsp.lua）。
+# Homebrew の tap は新しい版が出ても追いつくのが遅いので、JetBrains の配布サイトから直接落とす。
+# 版は GitHub のリリースの一覧（タグは kotlin-lsp/v<版>）から探す。中身は zip で、拡張子だけ .sit になっている。
+# コマンドの名前は intellij-server。rename_exe で kotlin-lsp に変えると、mise の作業フォルダの名前が
+# 長くなりすぎて入れられない（mise 2026.11.1）ため、元の名前のまま使う。
+# 起動すると同梱の EULA に同意したことになる（内容は intellij-server --show-eula）。
+# 表の見出しの後のキーは次の見出しまですべてこの表に入るので、[tools] の最後に置くこと。
+[tools."http:kotlin-lsp"]
+version = "latest"
+version_list_url = "https://api.github.com/repos/Kotlin/kotlin-lsp/releases"
+version_regex = 'kotlin-lsp/v(\d+\.\d+\.\d+)'
+version_order = "semver" # 一覧の並びは新しい順でないうえ、古い形式の版（0.253.x）も混ざるので、版の大小で並べる
+format = "zip"
+strip_components = 1                              # kotlin-server-<版>/ の 1 階層を外す
+bin_path = "bin"
+
+[tools."http:kotlin-lsp".platforms]
+macos-arm64 = { url = "https://download.jetbrains.com/language-server/kotlin-server/{{ version }}/kotlin-server-{{ version }}-aarch64.sit", checksum_url = "https://download.jetbrains.com/language-server/kotlin-server/{{ version }}/kotlin-server-{{ version }}-aarch64.sit.sha256" }
+macos-x64 = { url = "https://download.jetbrains.com/language-server/kotlin-server/{{ version }}/kotlin-server-{{ version }}.sit", checksum_url = "https://download.jetbrains.com/language-server/kotlin-server/{{ version }}/kotlin-server-{{ version }}.sit.sha256" }
+
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
 # 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。
