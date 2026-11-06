@@ -5,6 +5,8 @@
 
 vim.lsp.enable({
   'lua_ls', -- Lua（lsp/lua_ls.lua）
+  'tsgo',   -- TypeScript・JavaScript（lsp/tsgo.lua）
+  'gopls',  -- Go（lsp/gopls.lua）
 })
 
 -- 診断の見た目
