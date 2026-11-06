@@ -14,6 +14,7 @@ wk.add({
   { '<leader>b', group = 'バッファ' },
   { '<leader>c', group = 'コード' },
   { '<leader>f', group = 'ファイル' },
+  { '<leader>g', group = 'git' },
   { '<leader>q', group = '終了' },
   { '<leader>u', group = '表示の切り替え' },
   { '<leader>w', group = 'ウィンドウ' },
