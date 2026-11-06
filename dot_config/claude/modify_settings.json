@@ -37,4 +37,6 @@ printf '%s\n' "$current" | /usr/bin/jq '
   | .extraKnownMarketplaces.dotfiles.source = { source: "directory", path: (env.HOME + "/.config/claude/marketplace") }
   # TypeScript 7 の言語サーバー（tsc --lsp --stdio）を LSP ツールで使う自作のプラグイン
   | .enabledPlugins["tsgo-lsp@dotfiles"] = true
+  # JetBrains の kotlin-lsp を LSP ツールで使う自作のプラグイン（公式の kotlin-lsp の代わり）
+  | .enabledPlugins["kotlin-lsp@dotfiles"] = true
 '

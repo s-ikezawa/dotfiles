@@ -9,6 +9,11 @@
       "name": "tsgo-lsp",
       "source": "./plugins/tsgo-lsp",
       "description": "TypeScript 7 に組み込まれた言語サーバー（tsc --lsp --stdio）を LSP ツールで使う"
+    },
+    {
+      "name": "kotlin-lsp",
+      "source": "./plugins/kotlin-lsp",
+      "description": "JetBrains の kotlin-lsp（intellij-server --stdio）を LSP ツールで使う"
     }
   ]
 }
