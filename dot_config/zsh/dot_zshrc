@@ -95,6 +95,10 @@ else
 fi
 unset _zcompdump
 
+# eza の配布物には補完定義が入っていないため、zsh 標準の _gnu_generic で --help の出力から
+# オプションを拾う。
+(( $+commands[eza] )) && compdef _gnu_generic eza
+
 # fzf-tab: <Tab> で出る補完候補の一覧を fzf にして、文字を打って絞り込めるようにする。
 # 本体は .chezmoiexternal.toml で clone している。compinit より後、かつ widget を包む
 # ほかのプラグイン（zsh-autosuggestions など）より前に読む必要がある。
@@ -105,8 +109,13 @@ if [[ -r $_fzf_tab ]] && (( $+commands[fzf] )); then
   zstyle ':completion:*:descriptions' format '[%d]'
   # zsh 標準の選択メニューは使わない（fzf-tab が代わりに出す）
   zstyle ':completion:*' menu no
-  # cd の候補では、右側にフォルダの中身を出す。ls は BSD 版でも GNU 版でも通るオプションだけ使う。
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1A -- $realpath'
+  # cd の候補では、右側にフォルダの中身を出す。eza が無ければ ls で出す
+  # （ls は BSD 版でも GNU 版でも通るオプションだけ使う）。
+  if (( $+commands[eza] )); then
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1a --icons=always --color=always --group-directories-first -- $realpath'
+  else
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1A -- $realpath'
+  fi
 fi
 unset _fzf_tab
 
@@ -134,12 +143,12 @@ bindkey -e
 # FZF_ALT_C_COMMAND を空にすると fzf はこのキーを割り当てない。
 if (( $+commands[fzf] )); then
   # Ctrl+T では、右側に選んでいるファイルの中身を bat で色付きで出す（先頭 500 行）。
-  # bat が無ければ head で色なしで出す。フォルダが選ばれているときは中身の一覧を出す。
-  if (( $+commands[bat] )); then
-    FZF_CTRL_T_OPTS="--preview '[[ -d {} ]] && ls -1A -- {} || bat --color=always --style=numbers --line-range=:500 -- {}'"
-  else
-    FZF_CTRL_T_OPTS="--preview '[[ -d {} ]] && ls -1A -- {} || head -n 500 -- {}'"
-  fi
+  # bat が無ければ head で色なしで出す。フォルダが選ばれているときは中身の一覧を出す（eza が無ければ ls）。
+  _dir_preview='ls -1A --' _file_preview='head -n 500 --'
+  (( $+commands[eza] )) && _dir_preview='eza -1a --icons=always --color=always --group-directories-first --'
+  (( $+commands[bat] )) && _file_preview='bat --color=always --style=numbers --line-range=:500 --'
+  FZF_CTRL_T_OPTS="--preview '[[ -d {} ]] && ${_dir_preview} {} || ${_file_preview} {}'"
+  unset _dir_preview _file_preview
   FZF_ALT_C_COMMAND= source <(fzf --zsh)
 fi
 
@@ -171,6 +180,17 @@ _ghq_fzf_cd() {
 if (( $+commands[ghq] && $+commands[fzf] )); then
   zle -N _ghq_fzf_cd
   bindkey '^G' _ghq_fzf_cd
+fi
+
+# ---------------------------------------------------------------------------
+# エイリアス
+# ---------------------------------------------------------------------------
+# ll: 隠しファイルも含めて詳しく一覧する。git 管理下なら各ファイルの状態も出す。
+# ls は置き換えない（スクリプトやほかの人の手順にある ls のオプションとの違いで迷わないため）。
+# エイリアスでなく関数にして、引数が無ければ . を渡す。eza（0.23.5 で確認）は --git 付きで
+# 引数を省くと、git リポジトリのルートでは何も出さずに終わるため（. を明示すれば出る）。
+if (( $+commands[eza] )); then
+  ll() { eza -la --git --icons=auto --group-directories-first -- "${@:-.}" }
 fi
 
 # ---------------------------------------------------------------------------

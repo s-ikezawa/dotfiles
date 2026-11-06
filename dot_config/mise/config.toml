@@ -51,6 +51,9 @@ jq = "latest"
 # YAML / TOML / XML を jq と同じ書き方で整形・抽出・書き換える（mikefarah 版の yq）
 yq = "latest"
 
+# アイコンと git の状態付きの ls（eza）。ls は置き換えず、.zshrc の ll と fzf のプレビューで使う
+eza = "latest"
+
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
 # 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。
