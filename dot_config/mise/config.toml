@@ -63,6 +63,13 @@ neovim = "latest"
 # Tree-sitter の CLI。Neovim の tree-sitter-manager.nvim がパーサーをビルドするのに使う
 tree-sitter = "latest"
 
+# Node.js（LTS を追う）と pnpm。npm・pnpm でグローバルに入れたものの置き場所は .zshenv で XDG に揃える
+node = "lts"
+pnpm = "latest"
+
+# Go。go install で入れたものの置き場所（GOPATH）は .zshenv で XDG に揃える
+go = "latest"
+
 # Lua の言語サーバー（Neovim の設定を書くときに補完や診断を出す。設定は ~/.config/nvim/lsp/lua_ls.lua）
 lua-language-server = "latest"
 
