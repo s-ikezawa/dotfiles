@@ -11,6 +11,8 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
 export LANG=en_US.UTF-8
 export SHELL_SESSIONS_DISABLE=1
+# git のコミットメッセージなどを書くエディタ（Neovim は mise で入れる）
+export EDITOR=nvim
 export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 
 # ---------------------------------------------------------------------------

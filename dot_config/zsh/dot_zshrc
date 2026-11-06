@@ -128,7 +128,7 @@ unset _fzf_tab
 # emacs キーバインドに固定する。
 #
 # zsh は起動時、VISUAL か EDITOR の値に "vi" が含まれていれば vi キーバインド(viins)を、
-# そうでなければ emacs を選ぶ。.zshenv の EDITOR は nvim か vim のどちらかで、いずれも "vi" が
+# そうでなければ emacs を選ぶ。.zshenv の EDITOR は nvim で "vi" が
 # 引っ掛かるため、明示しないと viins になる(実測: nvim → viins、vim → viins、nano → emacs)。
 # viins だと ^P が self-insert のままで履歴を辿れない。
 #
