@@ -31,6 +31,16 @@
 - JSON は `jq`。gh の出力は文字列を解析せず、`gh ... --json <項目> --jq <式>` で取り出す。
 - YAML / TOML / XML は sed・awk・python ではなく `yq`（mikefarah 版 v4、jq と同じ書き方）。
   TOML を読むときは `-p toml` が要る。YAML で出すなら `-oy`、TOML のまま出すなら `-o toml`。
+- コードを形で探すとき（関数呼び出しや構文のパターン。改行や空白の違いを無視し、コメントや
+  文字列の中は除きたいとき）は `ast-grep`（`sg`）。TS・Go・Kotlin などに使える。
+  名前や文字列を探すだけなら rg のほうが速くて簡単なので rg を使う。型や参照の解決
+  （同じ名前の別の関数と区別して呼び出し元を探すなど）は ast-grep ではできない。
+  - 例: `ast-grep run -l ts -p 'useEffect($F, [])'`。`$A` は 1 つのノード、`$$$` は 0 個以上に一致する。
+  - Go の `pkg.Func($$$)` だけのパターンは型変換と解釈されて何も一致しない。文脈を付けて
+    `ast-grep scan --inline-rules` で `pattern: {context: "func t() { fmt.Println($$$A) }", selector: call_expression}` のように書く。
+  - 一致が 0 件のときは、パターンの誤りを疑って `--debug-query=ast` で解釈を確かめる。
+  - `-r` での置き換えは、まず `-U` を付けずに差分を出して確かめる。ファイルに書き込む `-U` は
+    シェルでの編集にあたるので、上の「ファイルの編集」のとおり、実行する前にユーザーに確認する。
 - GitHub のリポジトリ、PR、Issue、CI のログは、curl や Web の取得ではなく `gh`（認証済み）と
   `gh api` で見る。
 - リポジトリは `ghq root` の下（`~/Projects/<ホスト>/<オーナー>/<リポジトリ>`）に clone してある。
