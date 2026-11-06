@@ -78,6 +78,7 @@ _gencomp herdr herdr completion zsh
 _gencomp ghq cat "${commands[ghq]:A:h}/misc/zsh/_ghq"
 _gencomp rg rg --generate complete-zsh
 _gencomp fd fd --gen-completions zsh
+_gencomp bat bat --completion zsh
 unfunction _gencomp
 unset _zcompdir
 
@@ -129,6 +130,13 @@ bindkey -e
 # Alt+C（フォルダを選んで cd）は使わない。リポジトリへの移動は下の Ctrl+G で足りる。
 # FZF_ALT_C_COMMAND を空にすると fzf はこのキーを割り当てない。
 if (( $+commands[fzf] )); then
+  # Ctrl+T では、右側に選んでいるファイルの中身を bat で色付きで出す（先頭 500 行）。
+  # bat が無ければ head で色なしで出す。フォルダが選ばれているときは中身の一覧を出す。
+  if (( $+commands[bat] )); then
+    FZF_CTRL_T_OPTS="--preview '[[ -d {} ]] && ls -1A -- {} || bat --color=always --style=numbers --line-range=:500 -- {}'"
+  else
+    FZF_CTRL_T_OPTS="--preview '[[ -d {} ]] && ls -1A -- {} || head -n 500 -- {}'"
+  fi
   FZF_ALT_C_COMMAND= source <(fzf --zsh)
 fi
 
