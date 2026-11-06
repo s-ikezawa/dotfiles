@@ -79,6 +79,7 @@ _gencomp ghq cat "${commands[ghq]:A:h}/misc/zsh/_ghq"
 _gencomp rg rg --generate complete-zsh
 _gencomp fd fd --gen-completions zsh
 _gencomp bat bat --completion zsh
+_gencomp delta delta --generate-completion zsh
 unfunction _gencomp
 unset _zcompdir
 

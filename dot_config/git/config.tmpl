@@ -12,6 +12,23 @@
 [init]
 	defaultBranch = main
 
+[core]
+	# git diff / log -p / show などの出力を delta で表示する。
+	pager = delta
+
+[interactive]
+	# git add -p でも delta で色を付ける。--color-only は、git が行の対応を取れるよう
+	# 行の増減やレイアウトの変更をせず、色だけ付けさせる指定。
+	diffFilter = delta --color-only
+
+[delta]
+	# n / N で次・前のファイルやハンクへ移動できるようにする。
+	navigate = true
+	line-numbers = true
+	# コードの色は bat（~/.config/bat/config）と揃える。delta は bat の設定ファイルを
+	# 読まないので、ここでも指定する。
+	syntax-theme = Catppuccin Mocha
+
 [push]
 	# 初回 push で -u を付けなくても同名の upstream を作る。
 	# herdr の worktree などで切ったブランチをそのまま push できるようにする。
