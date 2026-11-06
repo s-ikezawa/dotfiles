@@ -84,6 +84,12 @@ ast-grep = "latest"
 [settings.github]
 credential_command = 'gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
 
+# go install の入れ先（GOBIN）を mise に設定させない。
+# 既定では Go の版のフォルダ（installs/go/<版>/bin）になり、Go を上げると入れたものが消えるため。
+# GOBIN を設定しなければ $GOPATH/bin（.zshenv で XDG_DATA_HOME の下にしている）に入る。
+[settings.go]
+set_gobin = false
+
 ################################################################################
 # タスク
 ################################################################################

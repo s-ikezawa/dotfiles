@@ -26,6 +26,28 @@ export HOMEBREW_PREFIX=/opt/homebrew
 export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
 
 # ---------------------------------------------------------------------------
+# Node.js / npm / pnpm（本体は mise で入れる）
+# ---------------------------------------------------------------------------
+# npm は XDG に従わないので、置き場所を環境変数で指定する。
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc" # 設定（既定は ~/.npmrc）
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"             # キャッシュ（既定は ~/.npm）
+# npm install -g の入れ先（既定は Node.js の版のフォルダで、Node.js を上げると消える）。
+# 実行ファイルは $NPM_CONFIG_PREFIX/bin に入る（PATH に入れる）。
+export NPM_CONFIG_PREFIX="$XDG_DATA_HOME/npm"
+export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history" # node の対話モードの履歴（既定は ~/.node_repl_history）
+# pnpm add -g の入れ先（実行ファイルもここに入る。PATH に入れる）。
+# 設定・キャッシュ・ストアは、XDG_CONFIG_HOME などが設定されていればその下（pnpm/）に置かれる。
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+
+# ---------------------------------------------------------------------------
+# Go（本体は mise で入れる）
+# ---------------------------------------------------------------------------
+export GOPATH="$XDG_DATA_HOME/go"           # go install の入れ先は $GOPATH/bin（既定は ~/go）
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"  # ダウンロードしたモジュール（既定は $GOPATH/pkg/mod）
+export GOCACHE="$XDG_CACHE_HOME/go-build"   # ビルドのキャッシュ（既定は ~/Library/Caches/go-build）
+export GOENV="$XDG_CONFIG_HOME/go/env"      # go env -w の書き込み先（既定は ~/Library/Application Support/go/env）
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
@@ -42,6 +64,10 @@ _zsh_setup_path() {
     "$HOME/.local/bin"
     "$HOME/bin"
     "${XDG_DATA_HOME}/mise/shims"
+    # npm・pnpm・go install でグローバルに入れた実行ファイル。mise のツールの方を優先する
+    "$NPM_CONFIG_PREFIX/bin"
+    "$PNPM_HOME"
+    "$GOPATH/bin"
     # GNU 版コマンド(coreutils / gnu-sed / grep / findutils など)を BSD 版より優先する。
     # gnubin には g 接頭辞なしの名前(ls, sed, grep ...)で入る。(N) は該当なしでもエラーにしない。
     $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)
