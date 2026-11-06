@@ -100,6 +100,7 @@ vim.opt.jumpoptions:append('view')   -- <C-o> などで戻ったとき、画面�
 -- ---------------------------------------------------------------------------
 vim.o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- ヤンクを macOS のクリップボードと共有する（SSH 中は OSC 52 に任せる）
 vim.o.mouse = 'a'                    -- すべてのモードでマウスを使う
+vim.o.autoread = true                -- 外で書き換えられたファイルを読み直す（Neovim の既定。確かめるきっかけは autocmds.lua）
 vim.o.undofile = true                -- undo の履歴をファイルに残し、閉じても戻せるようにする
 vim.o.undolevels = 10000             -- undo できる回数
 vim.o.confirm = true                 -- 保存していないバッファを閉じるとき、エラーにせず保存するか聞く

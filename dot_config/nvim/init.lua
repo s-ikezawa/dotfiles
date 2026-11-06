@@ -3,6 +3,7 @@
 require('config.options')
 require('config.keymaps')
 require('config.lsp')
+require('config.autocmds')
 
 -- プラグインは標準の vim.pack で入れる（更新は :lua vim.pack.update()）。
 -- ロックファイル（nvim-pack-lock.json）は chezmoi で管理せず、マシンごとに nvim に任せる。
