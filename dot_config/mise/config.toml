@@ -43,6 +43,11 @@ delta = "latest"
 # `hunk diff --watch` を開く（作業ツリーの変更を追いかけて自動で再読み込みする）。
 hunk = "latest"
 
+# JSON を整形・抽出する（jq）。Claude Code のステータスライン（statusline.sh）でも使う。
+# macOS にも /usr/bin/jq があるが、OS の更新でバージョンが変わらないよう mise で揃える。
+# 補完は zsh 本体に _jq が入っているので生成しない。
+jq = "latest"
+
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
 # 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。
