@@ -1,26 +1,28 @@
-# Communication
+# やりとり
 
-- Write everything addressed to the user in Japanese: answers, explanations, questions, and confirmations.
-- Ask the user only one thing at a time: one question, one confirmation, or one instruction
-  (e.g. a command for them to run). Wait for the reply before the next one.
-  Reason: several at once force the user to scroll, and when a command they ran gives an
-  unexpected result, going back to find which step it was is tedious.
-  Only after the reply move on; if the remaining items depend on it, adjust them first.
+- ユーザーに向けて書くもの（回答、説明、質問、確認）はすべて日本語で書く。
+- ユーザーへの質問、確認、指示（実行してもらうコマンドなど）は、1 回に 1 つだけ出す。
+  返事を待ってから次を出す。返事によって残りの内容が変わるなら、直してから出す。
+  理由: 一度に複数出すとスクロールの手間がかかり、実行したコマンドの結果が期待どおりで
+  なかったときに、どの手順のものか遡って探すのが大変なため。
 
-# Shell tools
+# シェルで使うツール
 
-These tools are installed via mise. Prefer them over the classic equivalents in Bash.
+次のツールは mise で入れてある。Bash では従来のコマンドよりこちらを使う。
 
-- Text search: `rg`, not `grep -r`. It skips files ignored by `.gitignore` and hidden files;
-  add `--hidden` or `-uu` when searching dotfiles or ignored paths (e.g. `.github/`, build output).
-- File search: `fd`, not `find`. Same default as rg (respects `.gitignore`, skips hidden);
-  use `-H` for hidden and `-I` for ignored files. Note the argument order: `fd <pattern> [dir]`.
-- JSON: `jq`. Combine with `gh ... --json <fields> --jq <expr>` rather than parsing text output.
-- YAML / TOML / XML: `yq` (mikefarah v4, jq-like syntax), not sed/awk/python.
-  TOML input needs `-p toml`; add `-oy` for YAML output or `-o toml` to keep TOML.
-- GitHub: `gh` (authenticated) instead of curl or web fetch for repos, PRs, issues, CI logs, and `gh api`.
-- Local clones: repositories live under `ghq root` (`~/Projects/<host>/<owner>/<repo>`);
-  find one with `ghq list -p | rg <name>` before cloning anything.
+- 文字列の検索は `grep -r` ではなく `rg`。`.gitignore` で無視されたファイルと隠しファイルは
+  既定で探さないので、dotfiles や無視されたパス（`.github/`、ビルド結果など）も探すときは
+  `--hidden` か `-uu` を付ける。
+- ファイルの検索は `find` ではなく `fd`。既定の振る舞いは rg と同じ（`.gitignore` に従い、
+  隠しファイルを飛ばす）。隠しファイルは `-H`、無視されたファイルは `-I` で含める。
+  引数の順は `fd <パターン> [フォルダ]`。
+- JSON は `jq`。gh の出力は文字列を解析せず、`gh ... --json <項目> --jq <式>` で取り出す。
+- YAML / TOML / XML は sed・awk・python ではなく `yq`（mikefarah 版 v4、jq と同じ書き方）。
+  TOML を読むときは `-p toml` が要る。YAML で出すなら `-oy`、TOML のまま出すなら `-o toml`。
+- GitHub のリポジトリ、PR、Issue、CI のログは、curl や Web の取得ではなく `gh`（認証済み）と
+  `gh api` で見る。
+- リポジトリは `ghq root` の下（`~/Projects/<ホスト>/<オーナー>/<リポジトリ>`）に clone してある。
+  clone する前に `ghq list -p | rg <名前>` で手元にないか探す。
 
-Do not use `bat`, `eza`, or `delta` for your own output: they are for interactive use, and their
-colors and decorations only add noise. Use plain `cat`/`sed -n`, `ls`, and `git diff`.
+`bat`、`eza`、`delta` は自分の作業には使わない。人が端末で見るためのもので、色や飾りが
+出力に混ざるだけになる。代わりに `cat` か `sed -n`、`ls`、`git diff` を使う。
