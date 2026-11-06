@@ -1,0 +1,14 @@
+{
+  "name": "dotfiles",
+  "description": "dotfiles（chezmoi）で管理している自作のプラグイン",
+  "owner": {
+    "name": "s-ikezawa"
+  },
+  "plugins": [
+    {
+      "name": "tsgo-lsp",
+      "source": "./plugins/tsgo-lsp",
+      "description": "TypeScript 7 に組み込まれた言語サーバー（tsc --lsp --stdio）を LSP ツールで使う"
+    }
+  ]
+}

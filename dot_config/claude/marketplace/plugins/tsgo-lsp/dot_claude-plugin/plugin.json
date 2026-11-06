@@ -1,0 +1,24 @@
+{
+  "name": "tsgo-lsp",
+  "version": "0.1.0",
+  "description": "TypeScript 7 に組み込まれた言語サーバー（tsc --lsp --stdio。mise で npm:typescript として導入）を LSP ツールで使う。公式の typescript-lsp は TypeScript 5・6 向けの typescript-language-server を使うため、代わりにこれを使う",
+  "author": {
+    "name": "s-ikezawa"
+  },
+  "lspServers": {
+    "tsgo": {
+      "command": "tsc",
+      "args": ["--lsp", "--stdio"],
+      "extensionToLanguage": {
+        ".ts": "typescript",
+        ".mts": "typescript",
+        ".cts": "typescript",
+        ".tsx": "typescriptreact",
+        ".js": "javascript",
+        ".mjs": "javascript",
+        ".cjs": "javascript",
+        ".jsx": "javascriptreact"
+      }
+    }
+  }
+}

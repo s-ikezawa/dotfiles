@@ -32,4 +32,9 @@ printf '%s\n' "$current" | /usr/bin/jq '
   # 新しいマシンでは、ここで有効にしたあと claude plugin install <名前> で入れる。
   | .enabledPlugins["gopls-lsp@claude-plugins-official"] = true
   | .enabledPlugins["lua-lsp@claude-plugins-official"] = true
+  # 自作のプラグインのマーケットプレイス（~/.config/claude/marketplace。chezmoi で管理）。
+  # 手元のフォルダなので、プラグインはコピーされずにその場から読み込まれる。
+  | .extraKnownMarketplaces.dotfiles.source = { source: "directory", path: (env.HOME + "/.config/claude/marketplace") }
+  # TypeScript 7 の言語サーバー（tsc --lsp --stdio）を LSP ツールで使う自作のプラグイン
+  | .enabledPlugins["tsgo-lsp@dotfiles"] = true
 '
