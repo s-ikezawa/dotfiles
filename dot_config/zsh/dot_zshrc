@@ -225,3 +225,14 @@ fi
 # 見た目は ~/.config/starship.toml で設定する。starship は mise で入れているので、
 # mise activate より後に書く。
 (( $+commands[starship] )) && eval "$(starship init zsh)"
+
+# ---------------------------------------------------------------------------
+# シンタックスハイライト（必ず最後）
+# ---------------------------------------------------------------------------
+# zsh-syntax-highlighting: 入力中のコマンドラインを色分けする。存在しないコマンドは赤、
+# 打ち間違いが実行前に分かる。本体は .chezmoiexternal.toml で clone している。
+# 読んだ時点で定義済みの widget を包むので、ほかの widget（fzf、zsh-autosuggestions など）を
+# すべて定義した後、.zshrc の最後で読む必要がある。
+_zsh_syntax_highlighting="${XDG_DATA_HOME}/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -r $_zsh_syntax_highlighting ]] && source "$_zsh_syntax_highlighting"
+unset _zsh_syntax_highlighting

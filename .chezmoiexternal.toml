@@ -17,3 +17,11 @@ url = "https://github.com/zsh-users/zsh-autosuggestions.git"
 refreshPeriod = "168h"
 clone.args = ["--depth", "1"]
 pull.args = ["--ff-only"]
+
+# 入力中のコマンドラインを色分けするプラグイン（存在しないコマンドは赤）。.zshrc の最後で source する。
+[".local/share/zsh/plugins/zsh-syntax-highlighting"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+refreshPeriod = "168h"
+clone.args = ["--depth", "1"]
+pull.args = ["--ff-only"]
