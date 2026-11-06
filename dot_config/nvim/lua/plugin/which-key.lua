@@ -15,6 +15,7 @@ wk.add({
   { '<leader>c', group = 'コード' },
   { '<leader>f', group = 'ファイル' },
   { '<leader>g', group = 'git' },
+  { '<leader>gh', group = '変更の固まり（hunk）' },
   { '<leader>q', group = '終了' },
   { '<leader>u', group = '表示の切り替え' },
   { '<leader>w', group = 'ウィンドウ' },

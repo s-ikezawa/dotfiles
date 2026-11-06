@@ -19,6 +19,7 @@ vim.o.number = true                  -- 行番号を出す
 vim.o.relativenumber = true          -- 行番号をカーソルからの相対値で出す（5j などの移動に使う）
 vim.o.numberwidth = 2                -- 行番号の列の最小幅
 vim.o.signcolumn = 'yes'             -- サインの列を常に出す（印が付くたびに本文が左右にずれないように）
+vim.o.statuscolumn = "%!v:lua.require'config.statuscolumn'.render()" -- 行番号の右に git の印を出す（lua/config/statuscolumn.lua）
 vim.o.cursorline = true              -- カーソル行を強調する
 vim.o.scrolloff = 5                  -- カーソルの上下に最低 5 行を残してスクロールする
 vim.o.sidescrolloff = 8              -- カーソルの左右に最低 8 列を残して横にスクロールする
