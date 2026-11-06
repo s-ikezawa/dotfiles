@@ -1,0 +1,14 @@
+#!/bin/bash
+# Claude Code は .claude.json（グローバルの設定と、プロジェクトごとの履歴などの状態）を自分で書き換える。
+# ファイル丸ごとは管理せず、ここで指定したキーだけを既存の内容にマージする（modify_settings.json と同じ）。
+set -euo pipefail
+
+current=$(cat)
+[ -n "$current" ] || current='{}'
+
+printf '%s\n' "$current" | /usr/bin/jq '
+  # 起動したときに、開いている Neovim（claudecode.nvim）へ自動でつなぐ。
+  # /config の「Auto-connect to IDE (external terminal)」と同じ。
+  # Claude Code より後に開いた Neovim には自動ではつながらないので、そのときは /ide でつなぐ。
+  .autoConnectIde = true
+'
