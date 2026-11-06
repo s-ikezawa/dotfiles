@@ -2,3 +2,7 @@
 
 # 配色を bat・delta と揃える（hunk に同梱のテーマ）。
 theme = "catppuccin-mocha"
+
+# 差分は常に 1 列（unified）で出す。既定の auto はターミナルが広いと左右に並べるので、
+# delta や Neovim の CodeDiff（inline）と見た目が変わらないよう固定する。
+mode = "unified"
