@@ -54,6 +54,9 @@ yq = "latest"
 # アイコンと git の状態付きの ls（eza）。ls は置き換えず、.zshrc の ll と fzf のプレビューで使う
 eza = "latest"
 
+# よく行くフォルダへ `z <名前の一部>` で移動する（zoxide）。`zi` で候補を fzf から選ぶ
+zoxide = "latest"
+
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
 # 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。

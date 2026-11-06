@@ -82,6 +82,8 @@ _gencomp bat bat --completion zsh
 _gencomp delta delta --generate-completion zsh
 _gencomp hunk hunk completion zsh
 _gencomp yq yq shell-completion zsh
+# zoxide も補完を出力するコマンドを持たないが、配布物の completions/_zoxide に入っている。
+_gencomp zoxide cat "${commands[zoxide]:A:h}/completions/_zoxide"
 unfunction _gencomp
 unset _zcompdir
 
@@ -180,6 +182,19 @@ _ghq_fzf_cd() {
 if (( $+commands[ghq] && $+commands[fzf] )); then
   zle -N _ghq_fzf_cd
   bindkey '^G' _ghq_fzf_cd
+fi
+
+# ---------------------------------------------------------------------------
+# zoxide
+# ---------------------------------------------------------------------------
+# cd したフォルダを記録しておき、`z <名前の一部>` で行った回数と最近さが一番のものへ移動する。
+# `zi` は候補を fzf で選ぶ。cd は置き換えない。Ctrl+G で移動したリポジトリも記録される
+# （記録は cd のたびに走る chpwd フックで行うため）。
+# 記録の置き場所は、指定しないと macOS では ~/Library/Application Support/zoxide になるので
+# XDG に寄せる。z の引数の補完を登録するため compinit より後に読む。
+if (( $+commands[zoxide] )); then
+  export _ZO_DATA_DIR="${XDG_DATA_HOME}/zoxide"
+  eval "$(zoxide init zsh)"
 fi
 
 # ---------------------------------------------------------------------------
