@@ -1,0 +1,6 @@
+// lua-language-server にこのフォルダ（~/.config/nvim）をプロジェクトのルートと認識させるための目印。
+// ~/.config/nvim は git リポジトリではないため、これが無いとルートが決まらず、診断が出ない。
+// 設定は lsp/lua_ls.lua に書くので、ここには書かない。
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json"
+}

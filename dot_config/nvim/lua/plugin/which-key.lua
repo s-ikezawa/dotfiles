@@ -22,6 +22,7 @@ wk.add({
   { '[', group = '前へ' },
   { ']', group = '次へ' },
   { 'g', group = 'g で始まる操作' },
+  { 'gr', group = 'LSP' },
   { 'z', group = '折り畳み・画面の位置' },
 })
 
