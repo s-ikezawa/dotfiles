@@ -218,6 +218,11 @@ unset _zsh_autosuggest
 # 引数を省くと、git リポジトリのルートでは何も出さずに終わるため（. を明示すれば出る）。
 if (( $+commands[eza] )); then
   ll() { eza -la --git --icons=auto --group-directories-first -- "${@:-.}" }
+
+  # tree: 隠しファイルも含めて深さ 2 までをツリーで出す。依存やビルド結果などは除く。
+  # 後から付けた -L は前の指定を上書きする（tree -L 3 で深くできる）。
+  # -I も上書きなので、tree -I '...' と付けると下の除外は効かなくなる。
+  alias tree="eza -Ta -L 2 --icons=auto --group-directories-first -I '.git|node_modules|.venv|venv|__pycache__|.DS_Store|.next|.gradle|.idea|target|dist|build|coverage'"
 fi
 
 # ---------------------------------------------------------------------------
