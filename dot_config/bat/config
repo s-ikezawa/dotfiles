@@ -1,0 +1,6 @@
+# bat の設定。ここに書いたオプションは毎回のコマンドラインの先頭に足される。
+# fzf のプレビュー（.zshrc の Ctrl+T）で呼ぶ bat にも効く。
+
+# 配色。Catppuccin は bat に同梱されているので、テーマファイルを置く必要はない
+# （一覧は bat --list-themes）。
+--theme="Catppuccin Mocha"
