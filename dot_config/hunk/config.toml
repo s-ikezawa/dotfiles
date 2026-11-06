@@ -1,0 +1,4 @@
+# hunk の設定。https://hunk.dev/docs/reference/config/
+
+# 配色を bat・delta と揃える（hunk に同梱のテーマ）。
+theme = "catppuccin-mocha"
