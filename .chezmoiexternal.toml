@@ -9,3 +9,11 @@ url = "https://github.com/Aloxaf/fzf-tab.git"
 refreshPeriod = "168h"
 clone.args = ["--depth", "1"]
 pull.args = ["--ff-only"]
+
+# 履歴から入力の続きを薄く表示するプラグイン。→ か Ctrl+E で確定する。.zshrc から source する。
+[".local/share/zsh/plugins/zsh-autosuggestions"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+refreshPeriod = "168h"
+clone.args = ["--depth", "1"]
+pull.args = ["--ff-only"]
