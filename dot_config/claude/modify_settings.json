@@ -27,4 +27,9 @@ printf '%s\n' "$current" | /usr/bin/jq '
   # キーは外向きの名前 diff@builtin。内部名の cc-plugin-diff@builtin では効かない。
   | .enabledPlugins["diff@builtin"] = false
   | del(.enabledPlugins["cc-plugin-diff@builtin"])
+  # 言語サーバーと連携する LSP ツールを使う（定義・参照・型の調べ、編集した直後の型エラーの報告）。
+  # 公式のプラグインは、mise で入れた言語サーバー（gopls・lua-language-server）を PATH から起動する。
+  # 新しいマシンでは、ここで有効にしたあと claude plugin install <名前> で入れる。
+  | .enabledPlugins["gopls-lsp@claude-plugins-official"] = true
+  | .enabledPlugins["lua-lsp@claude-plugins-official"] = true
 '
