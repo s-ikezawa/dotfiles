@@ -82,6 +82,7 @@ _gencomp bat bat --completion zsh
 _gencomp delta delta --generate-completion zsh
 _gencomp hunk hunk completion zsh
 _gencomp yq yq shell-completion zsh
+_gencomp ast-grep ast-grep completions zsh
 # zoxide も補完を出力するコマンドを持たないが、配布物の completions/_zoxide に入っている。
 _gencomp zoxide cat "${commands[zoxide]:A:h}/completions/_zoxide"
 unfunction _gencomp

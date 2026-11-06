@@ -57,6 +57,11 @@ eza = "latest"
 # よく行くフォルダへ `z <名前の一部>` で移動する（zoxide）。`zi` で候補を fzf から選ぶ
 zoxide = "latest"
 
+# 構文木で照合するコード検索・置換（ast-grep。sg という短い名前のコマンドも入る）。
+# 改行や空白、コメントの違いを気にせず、関数呼び出しなどを形で探して書き換えられる。
+# TS・Go・Kotlin などに対応。主に Claude Code が使う（使い方は ~/.config/claude/CLAUDE.md）。
+ast-grep = "latest"
+
 # GitHub API のトークンを gh から取得する（匿名のレートリミット対策）。
 # gh はトークンを macOS のキーチェーンに保存するため、mise が自動で読む hosts.yml には
 # 書かれない。credential_command で gh に問い合わせればトークンをファイルに書かずに済む。
