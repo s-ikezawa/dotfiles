@@ -70,6 +70,13 @@ pnpm = "latest"
 # Go。go install で入れたものの置き場所（GOPATH）は .zshenv で XDG に揃える
 go = "latest"
 
+# TypeScript。7 系は Go 製で、言語サーバーも組み込まれている（tsc --lsp --stdio。設定は ~/.config/nvim/lsp/tsgo.lua）。
+# プロジェクトに入れた tsc（pnpm exec tsc など）があれば、そちらが使われる
+"npm:typescript" = "latest"
+
+# Go の言語サーバー（gopls。設定は ~/.config/nvim/lsp/gopls.lua）
+"go:golang.org/x/tools/gopls" = "latest"
+
 # Lua の言語サーバー（Neovim の設定を書くときに補完や診断を出す。設定は ~/.config/nvim/lsp/lua_ls.lua）
 lua-language-server = "latest"
 
