@@ -60,6 +60,9 @@ zoxide = "latest"
 # エディタ（Neovim。設定は ~/.config/nvim）。簡単な差分は hunk、じっくりレビューするときは Neovim で見る
 neovim = "latest"
 
+# Tree-sitter の CLI。Neovim の tree-sitter-manager.nvim がパーサーをビルドするのに使う
+tree-sitter = "latest"
+
 # 構文木で照合するコード検索・置換（ast-grep。sg という短い名前のコマンドも入る）。
 # 改行や空白、コメントの違いを気にせず、関数呼び出しなどを形で探して書き換えられる。
 # TS・Go・Kotlin などに対応。主に Claude Code が使う（使い方は ~/.config/claude/CLAUDE.md）。
