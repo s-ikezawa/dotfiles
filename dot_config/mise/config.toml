@@ -70,6 +70,9 @@ pnpm = "latest"
 # Go。go install で入れたものの置き場所（GOPATH）は .zshenv で XDG に揃える
 go = "latest"
 
+# Java（OpenJDK）。Gradle などで Kotlin のプロジェクトをビルドするのに使う。JAVA_HOME は mise が設定する
+java = "latest"
+
 # TypeScript。7 系は Go 製で、言語サーバーも組み込まれている（tsc --lsp --stdio。設定は ~/.config/nvim/lsp/tsgo.lua）。
 # プロジェクトに入れた tsc（pnpm exec tsc など）があれば、そちらが使われる
 "npm:typescript" = "latest"
