@@ -1,0 +1,17 @@
+// このリポジトリ（chezmoi のソース）で Lua のファイルを開いたときの lua-language-server の設定。
+// Lua は Neovim の設定（dot_config/nvim）だけなので、Neovim 向けにする。
+// Neovim の中で開いたときは lsp/lua_ls.lua の設定も渡るが、Claude Code の LSP ツールが起動する
+// lua-language-server には渡らない。ここに書いて、どちらでも vim を正しく扱えるようにする。
+// ホームには置かない（.chezmoiignore）。
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",                 // Neovim が使う Lua の処理系
+  "diagnostics.globals": ["vim"],               // vim をグローバル変数として扱う
+  "workspace.checkThirdParty": false,          // サードパーティのライブラリ設定を勧める通知を出さない
+  "workspace.library": [                       // 型の情報を読む場所
+    // Neovim 本体（vim.api などの型）。$VIMRUNTIME は Neovim の外では決まらないので、
+    // mise が作る latest のリンクで指す（Neovim を上げても変わらない）
+    "~/.local/share/mise/installs/neovim/latest/share/nvim/runtime",
+    "${3rd}/luv/library"                         // vim.uv（libuv）の型
+  ]
+}

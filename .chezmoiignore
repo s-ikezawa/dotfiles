@@ -2,3 +2,5 @@
 README.md
 install.sh
 HANDOFF.md
+# lua-language-server の設定（このリポジトリで Neovim の設定を編集するとき用）
+.luarc.jsonc
