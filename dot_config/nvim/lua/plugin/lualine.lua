@@ -1,5 +1,5 @@
 -- lualine: ステータスライン。モード、git のブランチとリポジトリ全体の変更の数、ファイル名、
--- そのファイルの差分の行数、診断の数、ファイルタイプ、カーソル位置を出す。
+-- そのファイルの差分の行数、言語サーバーの状態、診断の数、ファイルタイプ、カーソル位置を出す。
 -- https://github.com/nvim-lualine/lualine.nvim
 
 vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' }) -- リリースのタグがないので既定のブランチを追う
@@ -7,6 +7,11 @@ vim.pack.add({ 'https://github.com/nvim-lualine/lualine.nvim' }) -- リリース
 local repo_status = require('config.repo_status')
 repo_status.setup({
   -- 数が変わったらすぐ描き直す（lualine は描き直しを予約して、決まった間隔でしか描かないため）
+  on_change = function() require('lualine').refresh({ force = true, place = { 'statusline' } }) end,
+})
+
+local lsp_progress = require('config.lsp_progress')
+lsp_progress.setup({
   on_change = function() require('lualine').refresh({ force = true, place = { 'statusline' } }) end,
 })
 
@@ -47,6 +52,7 @@ require('lualine').setup({
       },
     },
     lualine_x = {
+      lsp_progress.text,        -- 言語サーバーの名前と、インデックス作業などの進み具合
       {
         'diagnostics',          -- このファイルの診断の数（アイコンは lsp.lua のサインと揃える）
         symbols = { error = '\u{f057} ', warn = '\u{f071} ', info = '\u{f05a} ', hint = '\u{f0eb} ' },
