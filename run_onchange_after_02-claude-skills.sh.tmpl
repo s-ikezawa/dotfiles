@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+{{ template "lib.sh" }}
+
+# Claude Code の skill を gh で入れる。
+# 中身は chezmoi で管理せず、入れる skill の一覧だけをここに書く。更新は `mise run up` の
+# `gh skill update --all` で行う（入れたときの取得元が SKILL.md に書き込まれるので、それで追える）。
+# 一覧を変えるとこのスクリプトの内容が変わるので、次の chezmoi apply で再実行される。
+#
+# 入れた skill を外すときは、ここから消すだけでなく
+# ~/.config/claude/skills/<名前> も手で消すこと（このスクリプトは入れるだけ）。
+
+# "<リポジトリ> <skill 名>" を 1 行ずつ。
+skills=(
+  # hunk の画面をエージェントから操作してレビューのコメントを付ける（hunk は mise で入れている）
+  "modem-dev/hunk hunk-review"
+)
+
+# gh は 01-mise-bootstrap で Homebrew から入る。
+load_brew || true
+command -v gh >/dev/null 2>&1 || { echo "gh が見つかりません (01-mise-bootstrap が失敗している)" >&2; exit 1; }
+
+# gh は CLAUDE_CONFIG_DIR を見て Claude Code の設定フォルダに入れる。.zshenv で設定しているが、
+# 初回セットアップ時のスクリプトにはまだ渡っていないので明示する。
+export CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/claude}"
+
+# 入っている skill の名前（gh skill list は「名前 エージェント スコープ 取得元」のタブ区切り）。
+# 何も入っていないときに失敗扱いにならないよう || true。
+installed=$(gh skill list 2>/dev/null | awk -F'\t' '$2 == "claude-code" && $3 == "user" { print $1 }' || true)
+
+for entry in "${skills[@]}"; do
+  read -r repo name <<<"$entry"
+  if grep -qxF -- "$name" <<<"$installed"; then
+    skip "skill ${name} はインストール済み"
+    continue
+  fi
+  log "skill ${name} をインストール (${repo})"
+  # 既に入っているものを上書きしないよう --force は付けない。stdin を切るのは、
+  # 足りない引数を対話で聞かれて止まらないようにするため。
+  gh skill install "$repo" "$name" --agent claude-code --scope user </dev/null
+done
