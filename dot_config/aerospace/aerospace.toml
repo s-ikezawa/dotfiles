@@ -221,3 +221,12 @@ gaps.outer.right =      0
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# 【変更】ウィンドウが開いたときに、アプリごとに実行するコマンド
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
+# アプリの ID は `aerospace list-apps` で調べられる
+
+# Finder は常にフローティングにする（タイルに入れず自由に置く）
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
