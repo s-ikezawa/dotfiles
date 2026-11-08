@@ -1,5 +1,7 @@
 # ホームディレクトリに配置しない、リポジトリ管理用のファイル。
 README.md
+# Claude Code がこのリポジトリで作業するときの指示（~/CLAUDE.md として置かない）
+CLAUDE.md
 install.sh
 HANDOFF.md
 .config/nvim/README.md
