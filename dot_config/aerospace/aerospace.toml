@@ -229,7 +229,50 @@ gaps.outer.right =      6
 # 参照: https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callback
 # アプリの ID は `aerospace list-apps` で調べられる
 
-# Finder は常にフローティングにする（タイルに入れず自由に置く）
+# 次のアプリは常にフローティングにする（タイルに入れず自由に置く）。
+# たまに開いて少し操作したら閉じるものや、大きさが決まっていて引き伸ばすと見にくいもの。
+# if.app-id は 1 つしか書けないので、アプリごとに [[on-window-detected]] を分ける
+
+# Finder
 [[on-window-detected]]
     if.app-id = 'com.apple.finder'
+    run = 'layout floating'
+
+# パスワードの管理（1Password、macOS のパスワード）
+[[on-window-detected]]
+    if.app-id = 'com.1password.1password'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Passwords'
+    run = 'layout floating'
+
+# 設定のアプリ（システム設定、Karabiner-Elements の設定と EventViewer）
+[[on-window-detected]]
+    if.app-id = 'com.apple.systempreferences'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'org.pqrs.Karabiner-EventViewer'
+    run = 'layout floating'
+
+# 小さなユーティリティ（計算機、アクティビティモニタ、Digital Color Meter、スティッキーズ）
+[[on-window-detected]]
+    if.app-id = 'com.apple.calculator'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.ActivityMonitor'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.DigitalColorMeter'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Stickies'
     run = 'layout floating'
