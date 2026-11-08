@@ -48,6 +48,13 @@ export GOCACHE="$XDG_CACHE_HOME/go-build"   # ビルドのキャッシュ（既�
 export GOENV="$XDG_CONFIG_HOME/go/env"      # go env -w の書き込み先（既定は ~/Library/Application Support/go/env）
 
 # ---------------------------------------------------------------------------
+# Gradle（Kotlin のプロジェクトのビルドに使う。Java は mise で入れる）
+# ---------------------------------------------------------------------------
+# ダウンロードした依存やラッパーの Gradle 本体、デーモンの置き場所（既定は ~/.gradle）。
+# キャッシュと設定（gradle.properties）が同じフォルダに入り分けられないので、data に置く。
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
