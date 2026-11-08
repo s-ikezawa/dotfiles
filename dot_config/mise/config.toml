@@ -165,6 +165,12 @@ trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}"
 
 mise self-update --yes
 mise upgrade
+
+# tap のパッケージのレシピを読むのに Ruby 3 以上が要るので、Homebrew の Ruby を PATH の先頭に置く
+# （理由は chezmoi のソースの .chezmoitemplates/lib.sh の load_brew_ruby。同じ処理）
+brew_ruby="$(brew --repository)/Library/Homebrew/vendor/portable-ruby/current/bin"
+[[ -x "${brew_ruby}/ruby" ]] || brew vendor-install ruby
+export PATH="${brew_ruby}:${PATH}"
 mise bootstrap packages upgrade --yes
 gh skill update --all
 """
@@ -188,6 +194,11 @@ gh skill update --all
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:firefox" = { os = "macos" }
 "brew-cask:ghostty" = { os = "macos" }
+
+# タイル型のウィンドウマネージャ（AeroSpace）。公式の配布は作者の tap（nikitabobko/tap）だけにある。
+# tap は GitHub の nikitabobko/homebrew-tap にあるので、mise が自動で見つける（[bootstrap.brew.taps] は不要）。
+# 設定ファイル（~/.config/aerospace/aerospace.toml）はまだ置かず、組み込みのデフォルト設定で使う。
+"brew-cask:nikitabobko/tap/aerospace" = { os = "macos" }
 
 # Font
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
