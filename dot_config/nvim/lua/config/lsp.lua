@@ -2,6 +2,7 @@
 -- 言語サーバーごとの設定は lsp/<名前>.lua に置き、ここで有効にする。
 -- Neovim 0.11 以降の標準のキー: K（ホバー）、grn（名前の変更）、gra（コードアクション）、
 -- grr（参照）、gri（実装）、grt（型定義）、gO（シンボルの一覧）、挿入モードの <C-s>（シグネチャ）。
+-- gd（定義）・grr・gri・grt は glance で開くように lua/plugin/glance.lua で置き換えている。
 
 vim.lsp.enable({
   'lua_ls', -- Lua（lsp/lua_ls.lua）
@@ -32,8 +33,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local buf = args.buf
 
-    -- 標準にない定義・宣言へのジャンプを足す
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = buf, desc = '定義へ移る（LSP）' })
+    -- 標準にない宣言へのジャンプを足す（定義へ移る gd は glance.lua）
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = buf, desc = '宣言へ移る（LSP）' })
 
     -- 入力中に補完の候補を自動で出す

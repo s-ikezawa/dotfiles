@@ -85,6 +85,7 @@ mise で入れるもの:
 | [tree-sitter-manager.nvim](https://github.com/romus204/tree-sitter-manager.nvim) | Tree-sitter のパーサーを入れて、構文に沿ったハイライトを有効にする。パーサーのない言語のファイルを開くと、その場で入れる。`:TSManager` で一覧から入れたり消したり、`:TSUpdate` で更新 |
 | [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | カーソルのある関数やクラスの見出し行を、画面の上に固定する（3 行まで）。長い関数や差分の途中でも、どこにいるかがわかる |
 | [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) | 関数・クラス・引数を単位にして選んだり（`vaf`・`dif`・`yac` など）、移ったり（`]f`・`[c` など）する。構文木を使うので、インデントや括弧の形に左右されない |
+| [glance.nvim](https://github.com/DNLHC/glance.nvim) | 定義・参照・実装・型定義を、その場のフローティングウィンドウで覗く（VS Code の Peek）。左にコードのプレビュー、右に見つかった場所の一覧が出て、ジャンプせずに読める。標準の `gd`・`grr`・`gri`・`grt` を置き換え、結果が 1 件なら直接移る |
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | 診断・参照・定義・**呼び出し階層**・シンボル・quickfix を、ファイルごとにまとめたツリー状のリストで出す |
 
@@ -112,7 +113,8 @@ mise で入れるもの:
 
 ### コードをたどる
 
-- `gd` で定義へ、`grr` で参照の一覧、`gri` で実装へ移る（`<C-o>` で戻る）。
+- `gd` で定義へ、`gri` で実装へ、`grt` で型定義へ移る（`<C-o>` で戻る）。候補が複数あるときは glance が開き、選んでから移れる。
+- `grr` で参照を glance で覗く。一覧の場所を選ぶと左のプレビューが変わるので、ジャンプせずに使われ方を読める。
 - `<leader>cl` で、カーソルの語の定義・参照・実装などをまとめて右に出す（trouble）。
 - `<leader>ci` でこの関数を呼んでいるところ、`<leader>co` でこの関数から呼んでいるものを一覧する。言語サーバーが対応していれば使える（gopls は使える。lua-language-server は対応していない）。
 - `<leader>cs` で、このファイルのシンボル（関数・クラスなど）の一覧を右に出す（aerial）。`<leader>cS` では、階層ごとに並べたフローティングの一覧から選んで移る。
@@ -225,17 +227,18 @@ Neovim の標準のキー（言語サーバーがつながっているとき）:
 | `K` | ホバー（型やドキュメントを出す） |
 | `grn` | 名前を変える |
 | `gra` | コードアクション |
-| `grr` | 参照の一覧 |
-| `gri` | 実装へ |
-| `grt` | 型定義へ |
 | `gO` | このファイルのシンボルの一覧 |
 | `<C-s>`（挿入モード） | シグネチャを出す |
 
-足したキー:
+足したキー・置き換えたキー:
 
 | キー | 動き |
 |---|---|
-| `gd`・`gD` | 定義・宣言へ |
+| `gd` | 定義へ（複数なら glance で覗く） |
+| `grr` | 参照を glance で覗く（標準の quickfix の代わり） |
+| `gri` | 実装へ（複数なら glance で覗く） |
+| `grt` | 型定義へ（複数なら glance で覗く） |
+| `gD` | 宣言へ |
 | `<leader>cl` | カーソルの語の定義・参照・実装などを右に一覧する（trouble） |
 | `<leader>cs` | シンボルの一覧（アウトライン）を右に出す・閉じる（aerial。カーソルはコードに残る） |
 | `<leader>cS` | シンボルを階層ごとに並べたフローティングの一覧から選んで移る（aerial） |
@@ -245,6 +248,8 @@ Neovim の標準のキー（言語サーバーがつながっているとき）:
 | `<leader>K` | カーソルの語を `keywordprg` で調べる |
 
 入力中は補完の候補が自動で出ます。
+
+glance の一覧では、`j`・`k` で選び（左のプレビューが変わる）、`<CR>`・`o` で移ります。`v`・`s` で縦・横に分けて開き、`<Tab>`・`<S-Tab>` で次・前の場所へ移ります。`<C-q>` で一覧を trouble に送り、`<leader>l` でプレビューと一覧を行き来し、`q`・`<Esc>` で閉じます。プレビューの中ではそのまま編集できます。
 
 aerial の一覧では、`<CR>` で移り、`p` でカーソルを一覧に残したままコードをその位置まで動かします。`{`・`}` で前・次のシンボルへ、`o`・`za` で畳む・開く、`q` で閉じます。`?` でキーの一覧が出ます。
 
