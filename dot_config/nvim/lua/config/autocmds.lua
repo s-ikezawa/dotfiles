@@ -32,3 +32,21 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
     vim.notify(('外で変更されたので読み直しました: %s'):format(vim.fn.fnamemodify(args.file, ':~:.')))
   end,
 })
+
+-- ---------------------------------------------------------------------------
+-- 構文で折り畳む
+-- ---------------------------------------------------------------------------
+-- Tree-sitter のパーサーがあるファイルでは、関数・クラス・ブロックなどの構文の単位で折り畳む。
+-- パーサーのないファイル（zsh や chezmoi のテンプレートなど）は、options.lua のインデントでの折り畳みのまま
+-- （Tree-sitter の折り畳みにすると、まったく畳めなくなるため）。
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup('treesitter_fold'),
+  desc = 'Tree-sitter のパーサーがあれば構文で折り畳む',
+  callback = function(args)
+    if args.match:find('chezmoitmpl', 1, true) then return end -- テンプレートは {{ }} があってパーサーが正しく読めない
+    local ok, parser = pcall(vim.treesitter.get_parser, args.buf) -- パーサーがないとエラーか nil になる
+    if not ok or not parser then return end
+    vim.opt_local.foldmethod = 'expr'
+    vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  end,
+})
