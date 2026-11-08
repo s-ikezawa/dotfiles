@@ -93,6 +93,11 @@ ast-grep = "latest"
 #   chezmoi execute-template < run_once_before_02-homebrew.sh.tmpl | shellcheck -s bash -
 shellcheck = "latest"
 
+# シェルスクリプト（sh・bash）の言語サーバー（bash-language-server）。PATH にある shellcheck を内部で呼び、
+# その警告を LSP の診断として返す。Claude Code の LSP ツール（~/.config/claude/marketplace の bash-lsp）と
+# Neovim（~/.config/nvim/lsp/bashls.lua）で使う。zsh と chezmoi のテンプレート（*.sh.tmpl）には使えない
+"npm:bash-language-server" = "latest"
+
 # シェルスクリプトを整形する（shfmt）。既定はタブでインデントし、パイプの | を行末に置くので、
 # Google の Shell Style Guide（~/.config/nvim/after/ftplugin/sh.lua と同じスペース 2 つ。| は行の先頭）に合わせて
 # -i 2（スペース 2 つ）-ci（case の中もインデント）-bn（| や && を行の先頭に置く）を付けて使う:

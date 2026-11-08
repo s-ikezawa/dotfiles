@@ -14,6 +14,11 @@
       "name": "kotlin-lsp",
       "source": "./plugins/kotlin-lsp",
       "description": "JetBrains の kotlin-lsp（intellij-server --stdio）を LSP ツールで使う"
+    },
+    {
+      "name": "bash-lsp",
+      "source": "./plugins/bash-lsp",
+      "description": "bash-language-server（bash-language-server start）を LSP ツールで使う。shellcheck の警告が診断として届く"
     }
   ]
 }

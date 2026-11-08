@@ -39,4 +39,7 @@ printf '%s\n' "$current" | /usr/bin/jq '
   | .enabledPlugins["tsgo-lsp@dotfiles"] = true
   # JetBrains の kotlin-lsp を LSP ツールで使う自作のプラグイン（公式の kotlin-lsp の代わり）
   | .enabledPlugins["kotlin-lsp@dotfiles"] = true
+  # シェルスクリプト（sh・bash）の bash-language-server を LSP ツールで使う自作のプラグイン。
+  # shellcheck の警告が、編集した直後の診断として届く（公式にはシェルスクリプト用の LSP プラグインがない）
+  | .enabledPlugins["bash-lsp@dotfiles"] = true
 '
