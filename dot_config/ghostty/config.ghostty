@@ -1,4 +1,7 @@
 font-family = "UDEV Gothic 35NF"
 
+# 配色。Neovim・bat・delta・hunk と同じ Catppuccin Mocha にそろえる（Ghostty に同梱のテーマ）
+theme = "Catppuccin Mocha"
+
 # Option キーを Alt として送る（右 Option は特殊文字入力用に残す）
 macos-option-as-alt = left
