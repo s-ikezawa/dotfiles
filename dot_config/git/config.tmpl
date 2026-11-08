@@ -28,6 +28,49 @@
 	# コードの色は bat（~/.config/bat/config）と揃える。delta は bat の設定ファイルを
 	# 読まないので、ここでも指定する。
 	syntax-theme = Catppuccin Mocha
+	# 移動しただけの行（下の diff.colorMoved。git は移動元を太字のマゼンタ、移動先を太字のシアンで送ってくる）を、
+	# 構文の色を残したまま、追加・削除とは別の背景色にする（Catppuccin Mocha の mauve・sapphire を暗くした色）。
+	map-styles = bold purple => syntax "#33284a", bold cyan => syntax "#1e3a4a"
+
+[diff]
+	# 差分を histogram で取る。既定の myers より、関数の入れ替えなどで人が読んで自然な差分になる。
+	# Neovim の diffopt（~/.config/nvim/lua/config/options.lua）も histogram なので、見え方が揃う。
+	algorithm = histogram
+	# 移動しただけの行を、追加・削除とは別の色で出す（delta の map-styles で色を決める）。
+	# Claude がコードを移動しただけなのか、中身も変えたのかを見分けるため。
+	colorMoved = plain
+
+[merge]
+	# コンフリクトの印の間に、両方が変える前の元の内容も出す（zdiff3 は diff3 の共通部分を省いたもの。git 2.35 以降）。
+	conflictStyle = zdiff3
+
+[commit]
+	# コミットメッセージを書く画面（Neovim）の下に、コミットする差分を出す（保存時には取り除かれる）。
+	verbose = true
+
+[rebase]
+	# fixup! や squash! のコミットを、rebase -i で自動的に対象のコミットの後ろに並べる。
+	autoSquash = true
+	# rebase の前にコミットしていない変更を退避し、終わったら戻す。
+	autoStash = true
+	# 積み重ねたブランチ（stacked branches）の参照も、rebase で書き換えたコミットに合わせて動かす。
+	updateRefs = true
+
+[branch]
+	# git branch の一覧を、最近コミットした順に並べる（既定は名前順）。
+	sort = -committerdate
+
+[tag]
+	# git tag の一覧を、版の番号として並べる（0.5.101 が 0.5.1000 より前）。
+	sort = version:refname
+
+[column]
+	# git branch などの一覧を、画面に収まるよう段組みで出す。
+	ui = auto
+
+[help]
+	# コマンドを打ち間違えたら、正しいと思われるコマンドを出して、実行してよいか聞く。
+	autocorrect = prompt
 
 [push]
 	# 初回 push で -u を付けなくても同名の upstream を作る。
@@ -45,6 +88,8 @@
 [rerere]
 	# 一度解決したコンフリクトの解決内容を記録して再利用する。
 	enabled = true
+	# 記録した解決を当てたら、そのままステージする（git add の手間を省く）。
+	autoUpdate = true
 
 [ghq]
 	# ghq get で clone する場所。~ は ghq が git config --path で読むので展開される。
