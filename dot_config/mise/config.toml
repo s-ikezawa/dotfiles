@@ -88,6 +88,18 @@ lua-language-server = "latest"
 # TS・Go・Kotlin などに対応。主に Claude Code が使う（使い方は ~/.config/claude/CLAUDE.md）。
 ast-grep = "latest"
 
+# シェルスクリプトの間違いを見つける（shellcheck）。主に Claude Code が、書いたスクリプトを確かめるのに使う。
+# chezmoi のテンプレート（*.sh.tmpl）は {{ }} があってそのままでは読めないので、展開してから渡す:
+#   chezmoi execute-template < run_once_before_02-homebrew.sh.tmpl | shellcheck -s bash -
+shellcheck = "latest"
+
+# シェルスクリプトを整形する（shfmt）。既定はタブでインデントし、パイプの | を行末に置くので、
+# Google の Shell Style Guide（~/.config/nvim/after/ftplugin/sh.lua と同じスペース 2 つ。| は行の先頭）に合わせて
+# -i 2（スペース 2 つ）-ci（case の中もインデント）-bn（| や && を行の先頭に置く）を付けて使う:
+#   shfmt -i 2 -ci -bn -d <ファイル>（差分を見る）  shfmt -i 2 -ci -bn -w <ファイル>（書き換える）
+# プロジェクトに .editorconfig があれば、shfmt はそちらの indent_style・indent_size を使う。
+shfmt = "latest"
+
 # Kotlin の言語サーバー（JetBrains の kotlin-lsp。設定は ~/.config/nvim/lsp/kotlin_lsp.lua）。
 # Homebrew の tap は新しい版が出ても追いつくのが遅いので、JetBrains の配布サイトから直接落とす。
 # 版は GitHub のリリースの一覧（タグは kotlin-lsp/v<版>）から探す。中身は zip で、拡張子だけ .sit になっている。
