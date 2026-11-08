@@ -32,16 +32,3 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
     vim.notify(('外で変更されたので読み直しました: %s'):format(vim.fn.fnamemodify(args.file, ':~:.')))
   end,
 })
-
--- ---------------------------------------------------------------------------
--- Markdown は折り返す
--- ---------------------------------------------------------------------------
--- 文章が多く、横にスクロールするより読みやすいため（ほかのファイルは options.lua の wrap = false のまま）。
--- render-markdown で隠した記号（リンクの URL など）も折り返す位置の計算に入るので、
--- リンクの多い行は少し早めに折り返されることがある（Neovim の制約）。<leader>uw で切り替えられる。
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup('markdown_wrap'),
-  pattern = 'markdown',
-  desc = 'Markdown のファイルでは長い行を折り返す',
-  callback = function() vim.opt_local.wrap = true end,
-})
