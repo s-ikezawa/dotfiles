@@ -114,13 +114,12 @@ map('n', '<C-q>', '<cmd>q!<cr>', { desc = '保存せずにウィンドウを閉�
 -- ---------------------------------------------------------------------------
 -- 診断・リスト
 -- ---------------------------------------------------------------------------
--- 診断へ移り、内容をフローティングウィンドウで出す
+-- 診断へ移る。移った先はカーソル行なので、内容は lsp.lua の virtual_lines で行の下に出る
 local function diagnostic_goto(next, severity)
   return function()
     vim.diagnostic.jump({
       count = (next and 1 or -1) * vim.v.count1,
       severity = severity and vim.diagnostic.severity[severity] or nil,
-      float = true,
     })
   end
 end

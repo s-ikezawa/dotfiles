@@ -13,7 +13,10 @@ vim.lsp.enable({
 
 -- 診断の見た目
 vim.diagnostic.config({
-  virtual_text = true,  -- 診断の内容を行末に出す
+  -- カーソル行以外の診断は、行末に 1 行で出す
+  virtual_text = { current_line = false },
+  -- カーソル行の診断は、行の下に全文を折り返して出す（TS の型エラーのような長いものも切れずに読める）
+  virtual_lines = { current_line = true },
   severity_sort = true, -- 同じ行に複数あるときは重いもの（エラー）を上にする
   float = { source = true }, -- フローティングウィンドウには、どのサーバーの診断かも出す
   signs = {
