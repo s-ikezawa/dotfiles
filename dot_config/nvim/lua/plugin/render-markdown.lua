@@ -10,11 +10,13 @@ vim.pack.add({ { src = 'https://github.com/MeanderingProgrammer/render-markdown.
 require('render-markdown').setup({
   latex = { enabled = false }, -- 数式は使わないので切る（latex のパーサーと utftex などのツールを入れずに済む）
   heading = {
-    -- 見出しの # を隠し、その左にアイコンを差し込む。どの階層の見出しも左端から始まる
+    -- 見出しの「# 」を隠し、アイコンは出さない（空の文字列）。どの階層の見出しも左端から始まる
     -- （既定の overlay は # の上にアイコンを重ねるので、### のように # が多いほど右から始まり、入れ子に見える）。
-    -- 階層はアイコン（󰲡・󰲣・󰲥…）と色で見分ける
+    -- アイコンを nil にすると # が隠れずに残るので、空の文字列にする。階層は色で見分ける
     position = 'inline',
+    icons = { '' },
   },
+  sign = { enabled = false }, -- 見出しやコードブロックの印を、行番号の左（サインの列）に出さない
 })
 
 vim.keymap.set('n', '<leader>um', '<cmd>RenderMarkdown toggle<cr>', { desc = 'Markdown の整形表示（render-markdown）を切り替える' })
