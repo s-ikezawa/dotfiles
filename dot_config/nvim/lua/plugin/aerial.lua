@@ -8,6 +8,11 @@ vim.pack.add({ { src = 'https://github.com/stevearc/aerial.nvim', version = vim.
 
 require('aerial').setup({
   show_guides = true, -- 入れ子のシンボルの前に罫線を引いて、階層を見やすくする
+  layout = {
+    -- 幅はシンボルの名前に合わせて変わり、上限は「60 列」と「画面の幅の 30%」の小さいほう（既定は 40 列と 20%）。
+    -- TSX・JSX では div などの要素も入れ子のシンボルとして出て階層が深くなるので、既定より広げる
+    max_width = { 60, 0.3 },
+  },
 })
 
 vim.keymap.set('n', '<leader>cs', '<cmd>AerialToggle!<cr>', { desc = 'シンボルの一覧（アウトライン）を開く・閉じる' }) -- ! でカーソルはコードに残す

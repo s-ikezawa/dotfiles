@@ -86,7 +86,7 @@ mise で入れるもの:
 | [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | カーソルのある関数やクラスの見出し行を、画面の上に固定する（3 行まで）。長い関数や差分の途中でも、どこにいるかがわかる |
 | [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) | 関数・クラス・引数を単位にして選んだり（`vaf`・`dif`・`yac` など）、移ったり（`]f`・`[c` など）する。構文木を使うので、インデントや括弧の形に左右されない |
 | [glance.nvim](https://github.com/DNLHC/glance.nvim) | 定義・参照・実装・型定義を、その場のフローティングウィンドウで覗く（VS Code の Peek）。左にコードのプレビュー、右に見つかった場所の一覧が出て、ジャンプせずに読める。標準の `gd`・`grr`・`gri`・`grt` を置き換え、結果が 1 件なら直接移る |
-| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る |
+| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る。TSX・JSX では `div` などの要素も入れ子で出るので、幅は名前に合わせて最大「60 列」か「画面の 30%」の小さいほうまで広がる |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | 診断・参照・定義・**呼び出し階層**・シンボル・quickfix を、ファイルごとにまとめたツリー状のリストで出す |
 
 ### 検索・置換
