@@ -1,0 +1,8 @@
+// ~/.config/hammerspoon を開いたときの lua-language-server の設定。
+// このフォルダは git リポジトリではないので、これがプロジェクトのルートの目印にもなる。
+// Neovim の lsp/lua_ls.lua は Neovim 向け（LuaJIT・vim）なので、ここで Hammerspoon 向けに上書きする。
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.4",   // Hammerspoon に組み込まれている Lua の版
+  "diagnostics.globals": ["hs"]   // hs（Hammerspoon の API）をグローバル変数として扱う
+}

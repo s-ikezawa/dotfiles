@@ -205,6 +205,11 @@ gh skill update --all
 # （起動と色の切り替えは ~/.config/aerospace/aerospace.toml から行う）。作者の tap にだけある。
 "brew:felixkratz/formulae/borders" = { os = "macos" }
 
+# Lua で macOS を操作する（Hammerspoon）。ウィンドウを決まった位置に置いたり、一時的に中央に
+# 大きく出して元に戻したりするのに使う。設定は ~/.config/hammerspoon/init.lua
+# （置き場所は下の [bootstrap.macos.defaults."org.hammerspoon.Hammerspoon"] で変えている）
+"brew-cask:hammerspoon" = { os = "macos" }
+
 # Font
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
 
@@ -242,6 +247,9 @@ orientation = "left"                            # 位置を左に
 minimize-to-application = true                  # ウインドウをアプリケーションアイコンにしまう
 autohide = true                                 # 自動で表示・非表示をオン
 show-recents = false                            # 最近使用したアプリを表示しない
+
+[bootstrap.macos.defaults."org.hammerspoon.Hammerspoon"]
+MJConfigFile = "~/.config/hammerspoon/init.lua"  # 設定ファイルを ~/.hammerspoon でなく XDG の場所から読む
 
 [bootstrap.macos.defaults."com.apple.WindowManager"]
 StandardHideDesktopIcons = true                 # 項目を表示 > デスクトップをオフ
