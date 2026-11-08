@@ -63,7 +63,7 @@ mise で入れるもの:
 |---|---|
 | [catppuccin](https://github.com/catppuccin/nvim) | カラースキーム（Mocha）。hunk・bat・delta と同じ配色にそろえる。入れたプラグインを見つけて、その配色も合わせる |
 | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | ステータスライン。モード、ブランチ、**リポジトリ全体の変更の数**、ファイル名、そのファイルの差分の行数、**言語サーバーの状態と進み具合**、診断の数、ファイルタイプ、位置 |
-| [which-key.nvim](https://github.com/folke/which-key.nvim) | キーを途中まで押すと、続けて押せるキーと説明を一覧する |
+| [which-key.nvim](https://github.com/folke/which-key.nvim) | キーを途中まで押すと、続けて押せるキーと説明を一覧する。Neovim 標準のキー（`z` の折り畳み、`<C-w>` のウィンドウ、テキストオブジェクトなど）の説明も日本語にしている（`lua/config/keymap_desc_ja.lua`。キーの動きは変えない） |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | ファイルの種類ごとのアイコン（neo-tree・which-key・trouble などが使う） |
 
 ### ファイルを探す・開く

@@ -30,6 +30,10 @@ wk.add({
   { 'z', group = '折り畳み・画面の位置' },
 })
 
+-- Neovim 標準のキー（折り畳みの z、ウィンドウの <C-w>、テキストオブジェクトなど）の説明を日本語にする。
+-- which-key の presets と Neovim 本体の既定のマッピングは英語の説明なので、同じキーに日本語の説明を重ねる（動きは変えない）
+wk.add(require('config.keymap_desc_ja'))
+
 -- <leader>? で、いまのバッファだけのマッピングを一覧する
 vim.keymap.set('n', '<leader>?', function()
   wk.show({ global = false })
