@@ -19,6 +19,13 @@ require('glance').setup({
     end,
   },
   use_trouble_qf = true, -- <C-q> で一覧を quickfix ではなく trouble に送る
+  border = {
+    -- 上下に横線を引いて、元のコードとの境目をわかりやすくする（glance は左右の縦線には対応していない）。
+    -- 線の文字は、ほかのフローティングウィンドウの枠（winborder = 'rounded'）と同じ罫線にする
+    enable = true,
+    top_char = '─',
+    bottom_char = '─',
+  },
 })
 
 -- 言語サーバーがつながったバッファだけで置き換える（ほかのバッファでは gd などは Neovim 標準のまま）
