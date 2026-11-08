@@ -7,6 +7,9 @@
 vim.pack.add({ 'https://github.com/romus204/tree-sitter-manager.nvim' })
 
 require('tree-sitter-manager').setup({
+  -- 起動したときに入っていなければ入れる。ファイルを開いても入らない、ほかの言語の中に埋め込まれる言語
+  -- （render-markdown が Markdown の中の HTML のコメントと、先頭の frontmatter に使う）
+  ensure_installed = { 'html', 'yaml' },
   auto_install = true, -- パーサーのない言語のファイルを開いたら、その場で入れる
   noauto_install = {   -- Neovim に同梱のパーサーがある言語は入れない
     'c', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',

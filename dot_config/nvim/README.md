@@ -89,6 +89,12 @@ mise で入れるもの:
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る。TSX・JSX では `div` などの要素も入れ子で出るので、幅は名前に合わせて最大「60 列」か「画面の 30%」の小さいほうまで広がる |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | 診断・参照・定義・**呼び出し階層**・シンボル・quickfix を、ファイルごとにまとめたツリー状のリストで出す |
 
+### Markdown を読む
+
+| プラグイン | できること |
+|---|---|
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Markdown をバッファの中で整えて見せる（見出しの色分け、表の罫線、コードブロックの背景、チェックボックスや箇条書きのアイコンなど）。カーソルのある行と挿入モードでは元の記号のまま出るので、そのまま編集できる。`<leader>um` で切り替え |
+
 ### 検索・置換
 
 | プラグイン | できること |
@@ -326,6 +332,7 @@ grug-far のバッファでは、次のキーが使えます。`g?` を押すと
 | `<leader>ud` | 診断の表示 |
 | `<leader>uh` | インレイヒント（LSP） |
 | `<leader>ut` | 見出しの固定表示（treesitter-context） |
+| `<leader>um` | Markdown の整形表示（render-markdown） |
 | `<leader>ur` | 再描画（検索の強調を消し、差分を取り直す） |
 | `<leader>ui` | カーソル位置のハイライトを調べる |
 | `<leader>uI` | 構文木（Tree-sitter）を出す |
