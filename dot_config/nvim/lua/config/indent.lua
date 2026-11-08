@@ -25,10 +25,9 @@ function M.tabs(width)
   vim.opt_local.shiftwidth = 0    -- >> や自動インデントの幅を tabstop に合わせる
   vim.opt_local.softtabstop = 0   -- <Tab>・<BS> でタブ 1 文字ずつ動く
   vim.opt_local.tabstop = width   -- タブを width 桁で表示する
-  -- タブの印（options.lua の listchars の »）を出さない。すべてのインデントがタブなので、印だらけになるため。
-  -- 行末の空白（·）とノーブレークスペース（␣）の印はそのまま出す
-  vim.opt_local.listchars:append({ tab = '  ' })
-  add_undo('setlocal et< sw< sts< ts< lcs<')
+  -- タブの印（options.lua の listchars の »）は、ほかのファイルとそろえてそのまま出す
+  -- （言語によって出たり出なかったりすると、見るたびに考えることが増えるため）
+  add_undo('setlocal et< sw< sts< ts<')
 end
 
 return M
