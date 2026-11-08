@@ -18,6 +18,7 @@ wk.add({
   { '<leader>g', group = 'git' },
   { '<leader>gh', group = '変更の固まり（hunk）' },
   { '<leader>q', group = '終了' },
+  { '<leader>s', group = '検索・置換' },
   { '<leader>u', group = '表示の切り替え' },
   { '<leader>w', group = 'ウィンドウ' },
   { '<leader>x', group = 'リスト' },
