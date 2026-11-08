@@ -152,6 +152,12 @@ unset _fzf_tab
 # 差し替えなので、先に書いた分は viins 側に入って消える)。
 bindkey -e
 
+# Ctrl+X Ctrl+E: 入力中のコマンドを EDITOR（Neovim）で開いて編集する。保存して閉じると行に戻る
+# （実行はされないので、確かめてから Enter）。Claude が出す長いコマンドを貼り付けて直すときに使う。
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
 # fzf のシェル連携。次のキーと補完が fzf になる。
 #   Ctrl+R: 履歴を検索して行に入れる   Ctrl+T: ファイルを選んで行に入れる
 #   **<Tab>: 例 `vim **<Tab>` でファイルを選ぶ
