@@ -14,7 +14,8 @@ config-version = 2
 after-startup-command = ['exec-and-forget ~/.config/aerospace/mode-border.sh']
 
 # ログイン時に AeroSpace を起動する
-start-at-login = false
+# 【変更】ログインしたら自動で起動する（枠の borders も after-startup-command から一緒に起動する）
+start-at-login = true
 
 # 設定ファイルを保存したら、自動で設定を読み直す
 # true にした後、自動の読み直しを始めるために一度だけ手で読み直すこと
