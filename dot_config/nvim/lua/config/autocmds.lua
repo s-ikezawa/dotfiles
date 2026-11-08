@@ -34,6 +34,28 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 })
 
 -- ---------------------------------------------------------------------------
+-- 前回のカーソル位置に戻る
+-- ---------------------------------------------------------------------------
+-- ファイルを開き直したら、前に閉じたときの位置（'" のマーク。shada に残る）から始める。
+-- 戻すのはバッファごとに最初に開いたときだけ。外で書き換えられて読み直したとき（上の :checktime）にも
+-- BufReadPost が起きるので、そのたびに戻すと読んでいる途中でカーソルが飛んでしまうため。
+-- コミットメッセージなどは毎回新しい内容なので、先頭から始める。
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = augroup('last_location'),
+  desc = '前回のカーソル位置に戻る',
+  callback = function(args)
+    local buf = args.buf
+    if vim.b[buf].config_last_location_done then return end
+    vim.b[buf].config_last_location_done = true
+    if vim.list_contains({ 'gitcommit', 'gitrebase', 'jj' }, vim.bo[buf].filetype) then return end
+    local mark = vim.api.nvim_buf_get_mark(buf, '"')
+    if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(buf) then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
+-- ---------------------------------------------------------------------------
 -- 構文で折り畳む
 -- ---------------------------------------------------------------------------
 -- Tree-sitter のパーサーがあるファイルでは、関数・クラス・ブロックなどの構文の単位で折り畳む。
