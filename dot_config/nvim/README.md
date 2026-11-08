@@ -85,6 +85,7 @@ mise で入れるもの:
 | [tree-sitter-manager.nvim](https://github.com/romus204/tree-sitter-manager.nvim) | Tree-sitter のパーサーを入れて、構文に沿ったハイライトを有効にする。パーサーのない言語のファイルを開くと、その場で入れる。`:TSManager` で一覧から入れたり消したり、`:TSUpdate` で更新 |
 | [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | カーソルのある関数やクラスの見出し行を、画面の上に固定する（3 行まで）。長い関数や差分の途中でも、どこにいるかがわかる |
 | [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) | 関数・クラス・引数を単位にして選んだり（`vaf`・`dif`・`yac` など）、移ったり（`]f`・`[c` など）する。構文木を使うので、インデントや括弧の形に左右されない |
+| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | 診断・参照・定義・**呼び出し階層**・シンボル・quickfix を、ファイルごとにまとめたツリー状のリストで出す |
 
 ### 検索・置換
@@ -114,7 +115,7 @@ mise で入れるもの:
 - `gd` で定義へ、`grr` で参照の一覧、`gri` で実装へ移る（`<C-o>` で戻る）。
 - `<leader>cl` で、カーソルの語の定義・参照・実装などをまとめて右に出す（trouble）。
 - `<leader>ci` でこの関数を呼んでいるところ、`<leader>co` でこの関数から呼んでいるものを一覧する。言語サーバーが対応していれば使える（gopls は使える。lua-language-server は対応していない）。
-- `<leader>cs` で、このファイルのシンボル（関数・クラスなど）の一覧を右に出す。
+- `<leader>cs` で、このファイルのシンボル（関数・クラスなど）の一覧を右に出す（aerial）。`<leader>cS` では、階層ごとに並べたフローティングの一覧から選んで移る。
 - 画面の上に固定された見出しで、いまどの関数の中かがわかる。`[x` でその見出しへ移る。
 - `]f`・`[f` で次・前の関数へ、`]c`・`[c` で次・前のクラスへ移る。`vaf` で関数全体を、`vif` で中身を選ぶ。
 
@@ -236,13 +237,16 @@ Neovim の標準のキー（言語サーバーがつながっているとき）:
 |---|---|
 | `gd`・`gD` | 定義・宣言へ |
 | `<leader>cl` | カーソルの語の定義・参照・実装などを右に一覧する（trouble） |
-| `<leader>cs` | シンボルの一覧を右に出す（trouble） |
+| `<leader>cs` | シンボルの一覧（アウトライン）を右に出す・閉じる（aerial。カーソルはコードに残る） |
+| `<leader>cS` | シンボルを階層ごとに並べたフローティングの一覧から選んで移る（aerial） |
 | `<leader>ci` | この関数を呼んでいるところを一覧する（trouble） |
 | `<leader>co` | この関数から呼んでいるものを一覧する（trouble） |
 | `[x` | 画面の上に固定された見出し（関数・クラスなど）へ移る（treesitter-context） |
 | `<leader>K` | カーソルの語を `keywordprg` で調べる |
 
 入力中は補完の候補が自動で出ます。
+
+aerial の一覧では、`<CR>` で移り、`p` でカーソルを一覧に残したままコードをその位置まで動かします。`{`・`}` で前・次のシンボルへ、`o`・`za` で畳む・開く、`q` で閉じます。`?` でキーの一覧が出ます。
 
 ### 関数・クラス・引数（treesitter-textobjects）
 

@@ -11,8 +11,7 @@ local map = vim.keymap.set
 -- 診断
 map('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = '診断の一覧（すべてのファイル）を開く・閉じる' })
 map('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = '診断の一覧（このファイル）を開く・閉じる' })
--- LSP（右に出し、カーソルはコードに残す）
-map('n', '<leader>cs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'シンボルの一覧を開く・閉じる' })
+-- LSP（右に出し、カーソルはコードに残す）。シンボルの一覧は aerial（<leader>cs）で出す
 map('n', '<leader>cl', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', { desc = 'カーソルの語の定義・参照・実装などを一覧する' })
 map('n', '<leader>ci', '<cmd>Trouble lsp_incoming_calls toggle<cr>', { desc = 'この関数を呼んでいるところを一覧する' })
 map('n', '<leader>co', '<cmd>Trouble lsp_outgoing_calls toggle<cr>', { desc = 'この関数から呼んでいるものを一覧する' })
