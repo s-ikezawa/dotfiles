@@ -13,7 +13,7 @@ vim.cmd.colorscheme('catppuccin')
 -- catppuccin は配色をキャッシュし、setup() の設定が変わったときしか作り直さないので、
 -- プラグインを入れたり消したりしても、そのプラグインの配色が入らない（または残る）。
 -- vim.pack で入れたり消したりしたら、キャッシュの印（cached）を消して、次に起動したときに作り直させる。
--- catppuccin.lua はプラグインの設定の中で最初に読まれるので、ほかのプラグインの vim.pack.add より先に登録できる。
+-- catppuccin.lua はプラグインの設定の中で最初に読まれる（init.lua）ので、ほかのプラグインの vim.pack.add より先に登録できる。
 vim.api.nvim_create_autocmd('PackChanged', {
   group = vim.api.nvim_create_augroup('config_catppuccin_recompile', { clear = true }),
   callback = function(ev)
