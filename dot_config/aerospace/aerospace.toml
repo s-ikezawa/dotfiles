@@ -1,82 +1,81 @@
 # AeroSpace の設定（~/.config/aerospace/aerospace.toml）。
 # AeroSpace に同梱のデフォルト設定（/Applications/AeroSpace.app/Contents/Resources/default-config.toml）を
-# 写したもの。変えたところには日本語のコメントを付けている。
+# 写して、コメントを日本語に訳したもの。デフォルトから変えたところには【変更】と付けている。
 # 変えた後は service モード（alt-shift-; の後）で esc を押すと読み直す。
 
-# Config version for compatibility and deprecations
-# See: https://nikitabobko.github.io/AeroSpace/guide#config-version
-# Fallback value (if you omit the key): config-version = 1
+# 互換性の維持と、廃止された設定の扱いのための設定の版
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#config-version
+# 省略したときの値: config-version = 1
 config-version = 2
 
-# You can use it to add commands that run after AeroSpace startup.
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+# AeroSpace の起動後に実行するコマンドを書ける。
+# 使えるコマンド: https://nikitabobko.github.io/AeroSpace/commands
 # 【変更】フォーカスしているウィンドウに枠を付ける（JankyBorders を起動する）
 after-startup-command = ['exec-and-forget ~/.config/aerospace/mode-border.sh']
 
-# Start AeroSpace at login
+# ログイン時に AeroSpace を起動する
 start-at-login = false
 
-# Automatically reload the config when the config file is saved
-# After setting this to true, reload once manually to start the auto-reloading
+# 設定ファイルを保存したら、自動で設定を読み直す
+# true にした後、自動の読み直しを始めるために一度だけ手で読み直すこと
 auto-reload-config = false
 
-# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+# 正規化（ウィンドウの入れ物の組み方を自動で整える）。参照: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
-# The 'accordion-padding' specifies the size of accordion padding
-# You can set 0 to disable the padding feature
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# 'accordion-padding' はアコーディオン表示で、後ろのウィンドウを見せる幅
+# 0 にすると、この機能を切れる
 accordion-padding = 30
 
-# Possible values: tiles|accordion
+# 指定できる値: tiles|accordion
 default-root-container-layout = 'tiles'
 
-# Possible values: horizontal|vertical|auto
-# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
-#               tall monitor (anything higher than wide) gets vertical orientation
+# 指定できる値: horizontal|vertical|auto
+# 'auto' は、横長のモニター（高さより幅が大きいもの）では横に並べ（horizontal）、
+#             縦長のモニター（幅より高さが大きいもの）では縦に並べる（vertical）
 default-root-container-orientation = 'auto'
 
-# Mouse follows focus when focused monitor changes
-# Drop it from your config, if you don't like this behavior
-# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
-# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
-# Fallback value (if you omit the key): on-focused-monitor-changed = []
+# フォーカスしているモニターが変わったら、マウスもそのモニターへ動かす
+# この動きが嫌なら、設定から消すこと
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#move-mouse
+# 省略したときの値: on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
-# Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
-# Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
+# これを切り替えると、macOS の「アプリケーションを隠す」（cmd-h）を事実上使えなくできる
+# この機能を使わないのに、うっかり cmd-h や cmd-alt-h を押してしまう人に向く
+# 参照: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
 
-# List of workspaces that should stay alive even when they contain no windows,
-# even when they are invisible.
-# This config option is only available since 'config-version = 2'
-# Fallback value (if you omit the key): persistent-workspaces = []
+# ウィンドウが 1 つも無く、画面に出ていないときでも残しておくワークスペースの一覧
+# この設定は 'config-version = 2' から使える
+# 省略したときの値: persistent-workspaces = []
 persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
                          "C", "D", "E", "F", "G", "I", "M", "N", "O", "P", "Q",
                          "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-# A callback that runs every time binding mode changes
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+# キー割り当てのモードが変わるたびに実行するコールバック
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#mode
 # 【変更】service モードの間は枠の色を変えて、モードに入っていることを分かるようにする
 on-mode-changed = ['exec-and-forget ~/.config/aerospace/mode-border.sh']
 
 focus-follows-mouse.enabled = false
 
-# Possible values: (qwerty|dvorak|colemak)
-# See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
+# 指定できる値: (qwerty|dvorak|colemak)
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 key-mapping.preset = 'qwerty'
 
-# Gaps between windows (inner-*) and between monitor edges (outer-*).
-# Possible values:
-# - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
-#                 In this example, 24 is a default value when there is no match.
-#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
-#                 See:
-#                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+# ウィンドウどうしの隙間（inner-*）と、モニターの端との隙間（outer-*）
+# 指定できる値:
+# - 固定の値:       gaps.outer.top = 8
+# - モニターごと:   gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                   この例では、どれにも当てはまらないときの値が 24 になる。
+#                   モニターの指定のしかたは 'workspace-to-monitor-force-assignment' と同じ。
+#                   参照:
+#                   https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 gaps.inner.horizontal = 0
 gaps.inner.vertical =   0
 gaps.outer.left =       0
@@ -84,56 +83,56 @@ gaps.outer.bottom =     0
 gaps.outer.top =        0
 gaps.outer.right =      0
 
-# 'main' binding mode declaration
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-# 'main' binding mode must be always presented
-# Fallback value (if you omit the key): mode.main.binding = {}
+# 'main' モード（通常のモード）のキー割り当て
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 'main' モードは必ず書くこと
+# 省略したときの値: mode.main.binding = {}
 [mode.main.binding]
 
-    # All possible keys:
-    # - Letters.        a, b, c, ..., z
-    # - Numbers.        0, 1, 2, ..., 9
-    # - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
-    # - F-keys.         f1, f2, ..., f20
-    # - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon,
-    #                   backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
-    #                   backspace, tab, pageUp, pageDown, home, end, forwardDelete,
-    #                   sectionSign (ISO keyboards only, european keyboards only)
-    # - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
-    #                   keypadMinus, keypadMultiply, keypadPlus
-    # - Arrows.         left, down, up, right
+    # 使えるキーの一覧:
+    # - 英字.             a, b, c, ..., z
+    # - 数字.             0, 1, 2, ..., 9
+    # - テンキーの数字.   keypad0, keypad1, keypad2, ..., keypad9
+    # - ファンクションキー. f1, f2, ..., f20
+    # - 特殊なキー.       minus, equal, period, comma, slash, backslash, quote, semicolon,
+    #                     backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
+    #                     backspace, tab, pageUp, pageDown, home, end, forwardDelete,
+    #                     sectionSign（ISO キーボードだけ。ヨーロッパのキーボードだけ）
+    # - テンキーの特殊キー. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+    #                     keypadMinus, keypadMultiply, keypadPlus
+    # - 矢印キー.         left, down, up, right
 
-    # All possible modifiers: cmd, alt, ctrl, shift
+    # 使える修飾キー: cmd, alt, ctrl, shift
 
-    # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+    # 使えるコマンドの一覧: https://nikitabobko.github.io/AeroSpace/commands
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-    # You can uncomment the following lines to open up terminal with alt + enter shortcut
-    # (like in i3)
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+    # 次の行のコメントを外すと、alt + enter でターミナルを開ける
+    # （i3 と同じ）
     # alt-enter = '''exec-and-forget osascript -e \
     # 'tell application "Terminal" to tell (do script) to activate' '''
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#layout
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#focus
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
     alt-j = 'focus down'
     alt-k = 'focus up'
     alt-l = 'focus right'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'
     alt-shift-j = 'move down'
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#resize
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#resize
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#workspace
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
     alt-3 = 'workspace 3'
@@ -143,7 +142,7 @@ gaps.outer.right =      0
     alt-7 = 'workspace 7'
     alt-8 = 'workspace 8'
     alt-9 = 'workspace 9'
-    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+    alt-a = 'workspace A' # 自分の設定では、要らないワークスペースの割り当ては消してよい
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'
@@ -166,7 +165,7 @@ gaps.outer.right =      0
     alt-y = 'workspace Y'
     alt-z = 'workspace Z'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'
     alt-shift-2 = 'move-node-to-workspace 2'
     alt-shift-3 = 'move-node-to-workspace 3'
@@ -199,23 +198,23 @@ gaps.outer.right =      0
     alt-shift-y = 'move-node-to-workspace Y'
     alt-shift-z = 'move-node-to-workspace Z'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
+    # 参照: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
 
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 'service' モードのキー割り当て
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
-    r = ['flatten-workspace-tree', 'mode main'] # reset layout
-    f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+    r = ['flatten-workspace-tree', 'mode main'] # 組み方をほどいて元に戻す
+    f = ['layout floating tiling', 'mode main'] # フローティング（タイルに入れず自由に置く）とタイルを切り替える
     backspace = ['close-all-windows-but-current', 'mode main']
 
-    # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+    # sticky はまだ使えない https://github.com/nikitabobko/AeroSpace/issues/2
     #s = ['layout sticky tiling', 'mode main']
 
     alt-shift-h = ['join-with left', 'mode main']
