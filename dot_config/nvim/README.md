@@ -91,6 +91,12 @@ mise で入れるもの:
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 関数・クラス・メソッドなどのシンボルの一覧（アウトライン）を右のサイドバーに出す。カーソルを動かすと一覧の選択も付いてくる。シンボルは Tree-sitter から取り、取れない言語では LSP から取る。TSX・JSX では `div` などの要素も入れ子で出るので、幅は名前に合わせて最大「60 列」か「画面の 30%」の小さいほうまで広がる |
 | [trouble.nvim](https://github.com/folke/trouble.nvim) | 診断・参照・定義・**呼び出し階層**・シンボル・quickfix を、ファイルごとにまとめたツリー状のリストで出す |
 
+### chezmoi のソースを読む
+
+| プラグイン | できること |
+|---|---|
+| [chezmoi.vim](https://github.com/alker0/chezmoi.vim) | chezmoi のソース（`~/.local/share/chezmoi`）のファイルタイプを、`dot_`・`executable_`・`run_once_` などの接頭辞と `.tmpl` を外して判定する（`dot_zshrc` → zsh、`dot_config/git/ignore` → gitignore）。テンプレート（`*.tmpl`・`.chezmoitemplates/`・`.chezmoiignore` など）は、中身の言語の色の上に `{{ }}` の Go テンプレートの色を重ねる。テンプレートだけは Tree-sitter を止めて、Vim の構文ハイライトで色を付ける |
+
 ### Markdown を読む
 
 | プラグイン | できること |
