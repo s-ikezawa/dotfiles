@@ -62,7 +62,6 @@ typeset -U path fpath
 _zsh_setup_path() {
   path=(
     "$HOME/.local/bin"
-    "$HOME/bin"
     "${XDG_DATA_HOME}/mise/shims"
     # npm・pnpm・go install でグローバルに入れた実行ファイル。mise のツールの方を優先する
     "$NPM_CONFIG_PREFIX/bin"
