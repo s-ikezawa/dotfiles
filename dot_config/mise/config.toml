@@ -200,6 +200,11 @@ gh skill update --all
 # 設定ファイル（~/.config/aerospace/aerospace.toml）はまだ置かず、組み込みのデフォルト設定で使う。
 "brew-cask:nikitabobko/tap/aerospace" = { os = "macos" }
 
+# フォーカスしているウィンドウに枠を付ける（JankyBorders。コマンド名は borders）。
+# AeroSpace の service モードの間は枠の色を変えて、モードに入っていることを分かるようにする
+# （起動と色の切り替えは ~/.config/aerospace/aerospace.toml から行う）。作者の tap にだけある。
+"brew:felixkratz/formulae/borders" = { os = "macos" }
+
 # Font
 "brew-cask:font-udev-gothic-nf" = { os = "macos" }
 
