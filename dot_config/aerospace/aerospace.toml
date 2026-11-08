@@ -76,12 +76,15 @@ key-mapping.preset = 'qwerty'
 #                   モニターの指定のしかたは 'workspace-to-monitor-force-assignment' と同じ。
 #                   参照:
 #                   https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
-gaps.inner.horizontal = 0
-gaps.inner.vertical =   0
-gaps.outer.left =       0
-gaps.outer.bottom =     0
-gaps.outer.top =        0
-gaps.outer.right =      0
+# 【変更】デフォルトはすべて 0。フォーカスしているウィンドウの枠（mode-border.sh の width）は
+# ウィンドウの外側に描かれるので、0 だとモニターの端や隣のウィンドウに隠れる。
+# 12 や 10 だと広すぎたので、枠の幅（8.0）と合わせて狭くしている
+gaps.inner.horizontal = 6
+gaps.inner.vertical =   6
+gaps.outer.left =       6
+gaps.outer.bottom =     6
+gaps.outer.top =        6
+gaps.outer.right =      6
 
 # 'main' モード（通常のモード）のキー割り当て
 # 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

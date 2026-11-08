@@ -9,11 +9,11 @@ set -euo pipefail
 export PATH="/opt/homebrew/bin:${PATH}"
 
 case "$(aerospace list-modes --current)" in
-  service) active_color=0xfffab387 ;; # Peach。service モードに入っていることを目立たせる
-  *) active_color=0xff89b4fa ;;       # Blue
+  service) active_color=0xff89b4fa ;; # Blue。service モードに入っていることを分かるようにする
+  *) active_color=0xfffab387 ;;       # Peach
 esac
 
 # inactive_color は透明にして、フォーカスしていないウィンドウには枠を付けない
-# 幅は 5.0 だと細くて分かりにくかったので 10.0 にしている
-exec borders style=round width=10.0 hidpi=on \
+# 幅は 5.0 だと細くて分かりにくく、10.0 だと aerospace.toml の隙間（gaps）を広く取る必要があったので 8.0 にしている
+exec borders style=round width=8.0 hidpi=on \
   active_color="${active_color}" inactive_color=0x00000000
