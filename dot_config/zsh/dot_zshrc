@@ -91,11 +91,20 @@ unset _zcompdir
 autoload -Uz compinit
 # 生成から 24 時間以内なら -C で fpath の再検証を省いて起動を速くする。
 # (#qN.mh-24) = グロブ修飾子。N:該当なしでもエラーにしない mh-24:24時間以内に更新
-if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
-  compinit -C -d "$_zcompdump"
-else
-  compinit -d "$_zcompdump"
-fi
+# [[ ]] の中でグロブ修飾子を効かせる (#q) は extended_glob が要る。無効のままだと文字列のまま残って
+# -n が常に真になり、24 時間たっても -C のままになる。シェル全体で有効にすると ^ や # の意味が変わる
+# （git reset HEAD^ など）ので、無名関数の中だけで有効にする。
+() {
+  setopt local_options extended_glob
+  if [[ -n ${1}(#qN.mh-24) ]]; then
+    compinit -C -d "$1"
+  else
+    compinit -d "$1"
+    # 補完の増減がなければ compinit は zcompdump を書き直さず、日時も古いままになる。
+    # そのままだと毎回この重い方に来るので、確かめ終えた印に日時を更新する
+    touch "$1"
+  fi
+} "$_zcompdump"
 unset _zcompdump
 
 # eza の配布物には補完定義が入っていないため、zsh 標準の _gnu_generic で --help の出力から
