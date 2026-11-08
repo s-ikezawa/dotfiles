@@ -55,9 +55,6 @@ if [[ -n "$(mise bootstrap packages apply --dry-run --manager mas 2>/dev/null)" 
   sudo_keepalive_pid=$!
   trap 'pkill -P "${sudo_keepalive_pid}" 2>/dev/null; kill "${sudo_keepalive_pid}" 2>/dev/null; true' EXIT
 fi
-
-# tap のパッケージのレシピを読むのに Ruby 3 以上が要る（理由は lib.sh の load_brew_ruby）。
-load_brew_ruby || { echo "Homebrew の Ruby を PATH に載せられませんでした" >&2; exit 1; }
 {{ end -}}
 # `mise bootstrap packages apply` ではなく `--only packages` を使う。
 # サブコマンド形式だと [bootstrap.hooks.post-packages] が呼ばれない(--dry-run で確認)。
