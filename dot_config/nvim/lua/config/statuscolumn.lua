@@ -44,11 +44,17 @@ function M.render()
   local buf = vim.api.nvim_win_get_buf(win)
   local lnum, relnum, virtnum = vim.v.lnum, vim.v.relnum, vim.v.virtnum
 
+  -- 行番号もサインの列も出さないウィンドウ（aerial などの一覧）では何も描かない。
+  -- 空白でも返すと、Neovim はその幅だけ列を広げるので、本文の左に空白ができる。
+  -- コードのウィンドウ（signcolumn = 'yes'）では、行番号を切っても印は出し続ける
+  local wo = vim.wo[win]
+  if not wo.number and not wo.relativenumber and wo.signcolumn == 'no' then return '' end
+
   local git, other = signs_of(buf, lnum)
 
   -- 行番号。相対行番号のときは、カーソル行だけ実際の行番号を出す。折り返した続きの行には出さない
   local num = ''
-  if virtnum == 0 and (vim.wo[win].number or vim.wo[win].relativenumber) then
+  if virtnum == 0 and (wo.number or wo.relativenumber) then
     if vim.wo[win].relativenumber and relnum ~= 0 then
       num = tostring(relnum)
     else
