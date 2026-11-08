@@ -29,6 +29,7 @@ Claude Code は Neovim の中ではなく herdr の別のペインで動かし�
 | `lua/config/statuscolumn.lua` | 行番号の周りの列（git の印を行番号の右に出す） |
 | `lua/config/repo_status.lua` | リポジトリ全体の変更の数（ステータスラインに出す） |
 | `lua/config/lsp_progress.lua` | 言語サーバーの状態と進み具合（ステータスラインに出す） |
+| `lua/config/indent.lua` | ファイルタイプごとのインデントを設定する関数（`after/ftplugin/` から呼ぶ） |
 | `lua/plugin/<名前>.lua` | プラグインごとの設定。1 つのプラグインにつき 1 ファイル |
 | `lsp/<名前>.lua` | 言語サーバーごとの設定（`vim.lsp.enable` で有効にする） |
 | `after/ftplugin/<ファイルタイプ>.lua` | ファイルタイプごとの設定（Neovim に同梱の ftplugin のあとに読まれる） |
@@ -346,6 +347,22 @@ grug-far のバッファでは、次のキーが使えます。`g?` を押すと
 - **リポジトリ全体の変更の数**: ステータスラインのブランチの隣に、変更・追加・削除・未追跡のファイルの数を出します。裏で 2 秒ごとに `git status` を実行します。
 - **言語サーバーの進み具合**: ステータスラインの右側に、つながっている言語サーバーと、インデックス作業などの進み具合を出します。Kotlin のようにインデックスを作り終えるまで使えないサーバーで、待つ目安になります。
 - **Markdown は折り返す**: ほかのファイルは長い行を折り返しませんが、Markdown は文章が多いので折り返します（`after/ftplugin/markdown.lua`。単語の切れ目で折り返し、インデントも揃える）。render-markdown で隠したリンクの URL なども折り返す位置の計算に入るので、リンクの多い行は少し早めに折り返されることがあります。`<leader>uw` で切り替えられます。
-- **Go はタブでインデントする**: gofmt と同じくタブでインデントし、タブは 4 マスで表示します（`after/ftplugin/go.lua`）。ほかのファイルで出しているタブの印（`»`）は、すべてのインデントに付いてうるさいので、Go では出しません。
+- **ファイルタイプごとのインデント**: `.editorconfig` の `indent_style`・`indent_size` にあたるものを、各言語のスタイルガイドに合わせて `after/ftplugin/<ファイルタイプ>.lua` に書いています（中身は `lua/config/indent.lua` の `spaces()`・`tabs()`）。プロジェクトに `.editorconfig` があれば、そちらが優先されます。タブでインデントするファイルでは、すべてのインデントに付いてうるさいので、タブの印（`»`）を出しません。
+
+  | インデント | ファイルタイプ | 根拠 |
+  |---|---|---|
+  | スペース 2 | Lua | Neovim 本体の `.stylua.toml` |
+  | スペース 2 | TypeScript・JavaScript（TSX・JSX も） | Google の JavaScript スタイルガイド、Prettier |
+  | スペース 2 | JSON・JSONC | Prettier |
+  | スペース 2 | YAML | Prettier（YAML の仕様はタブ禁止・幅は自由） |
+  | スペース 2 | TOML | taplo |
+  | スペース 2 | HTML・CSS・SCSS | Google の HTML/CSS スタイルガイド、Prettier |
+  | スペース 2 | sh・bash・zsh | Google の Shell Style Guide |
+  | スペース 4 | Kotlin | Kotlin のコーディング規約、Google の Android Kotlin スタイルガイド |
+  | スペース 4 | Markdown | Google の Markdown スタイルガイド（入れ子のリストは 4） |
+  | タブ（4 桁で表示） | Go | Effective Go（gofmt） |
+  | タブ（4 桁で表示） | Makefile | GNU make（レシピの行はタブが必須） |
+  | タブ（4 桁で表示） | gitconfig | `git config` が書き込む形 |
+
 - **差分の取り方**: `histogram` で差分を取り、変更された行どうしを対応付けます（`linematch:60`）。
 - **undo の履歴を残す**: 閉じたあとでも undo で戻せます。
