@@ -51,7 +51,7 @@ jq = "latest"
 # YAML / TOML / XML を jq と同じ書き方で整形・抽出・書き換える（mikefarah 版の yq）
 yq = "latest"
 
-# アイコンと git の状態付きの ls（eza）。ls は置き換えず、.zshrc の ll と fzf のプレビューで使う
+# アイコンと git の状態付きの ls（eza）。.zshrc の ls・ll・tree と fzf のプレビューで使う
 eza = "latest"
 
 # よく行くフォルダへ `z <名前の一部>` で移動する（zoxide）。`zi` で候補を fzf から選ぶ
