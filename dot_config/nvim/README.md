@@ -38,7 +38,8 @@ Claude Code は Neovim の中ではなく herdr の別のペインで動かし�
 
 mise で入れるもの:
 
-- 言語サーバー: lua-language-server、TypeScript 7（`npm:typescript`。`tsc --lsp` を使う）、gopls、kotlin-lsp
+- 言語サーバー: lua-language-server、TypeScript 7（`npm:typescript`。`tsc --lsp` を使う）、gopls、kotlin-lsp、
+  bash-language-server（`npm:bash-language-server`。sh・bash。shellcheck の警告も診断に出すので shellcheck も要る）
 - tree-sitter CLI（パーサーのビルド用。C コンパイラとして Xcode も要る）
 - ripgrep（`rg`）、ast-grep（grug-far と `:grep` で使う）
 

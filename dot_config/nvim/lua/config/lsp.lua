@@ -9,6 +9,7 @@ vim.lsp.enable({
   'tsgo',   -- TypeScript・JavaScript（lsp/tsgo.lua）
   'gopls',  -- Go（lsp/gopls.lua）
   'kotlin_lsp', -- Kotlin（lsp/kotlin_lsp.lua）
+  'bashls',     -- シェルスクリプトの sh・bash。shellcheck の警告も診断に出る（lsp/bashls.lua）
 })
 
 -- 診断の見た目
