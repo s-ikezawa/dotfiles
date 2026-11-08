@@ -251,6 +251,10 @@ if (( $+commands[eza] )); then
   alias tree="eza -Ta -L 2 --icons=auto --group-directories-first -I '.git|node_modules|.venv|venv|__pycache__|.DS_Store|.next|.gradle|.idea|target|dist|build|coverage'"
 fi
 
+# vim: 癖で打っても macOS 標準の Vim でなく Neovim を開く（設定は ~/.config/nvim にしかないため）。
+# 標準の Vim を使いたいときは \vim か command vim で呼べる。
+(( $+commands[nvim] )) && alias vim=nvim
+
 # ---------------------------------------------------------------------------
 # プロンプト
 # ---------------------------------------------------------------------------
