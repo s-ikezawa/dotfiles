@@ -135,4 +135,99 @@ end
 -- Ctrl + Option + L
 hs.hotkey.bind({ "ctrl", "alt" }, "l", applyLayout)
 
+--------------------------------------------------------------------------------
+-- Neovim の which-key のように、リーダーキー（Ctrl + Option + /）を押すと、次に押せるキーと
+-- その内容を画面に出す。続けてキーを押すと実行し、Esc かもう一度リーダーキーで閉じる。
+-- キーが増えても覚えるのはリーダーキーだけで済むようにする。
+-- 一覧に無いキーを押したときは、一覧を開いたまま、そのキーはアプリにそのまま届く。
+--------------------------------------------------------------------------------
+-- リーダーキーの後に押すキーと、その内容。キーを足すときはここに 1 行足す。
+--   key:   hs.hotkey に渡すキーの名前、label: 一覧に出す名前（省くと key をそのまま出す）
+--   desc:  一覧に出す説明、fn: 実行する関数
+local whichKeyItems = {
+  { key = "l", desc = "モニターの構成に合わせてウィンドウを並べ直す", fn = applyLayout },
+  { key = "return", label = "Enter", desc = "ウィンドウを中央に大きく出す／元に戻す", fn = toggleCenter },
+  { key = "r", desc = "Hammerspoon の設定を読み直す", fn = hs.reload },
+}
+
+-- 一覧の見た目。配色は Ghostty・Neovim と同じ Catppuccin Mocha、フォントは Ghostty と同じ
+local whichKeyStyle = {
+  font = "UDEVGothic35NF-Regular",
+  fontSize = 20,
+  padding = 24,
+  width = 720,
+  background = { hex = "#1e1e2e", alpha = 0.95 }, -- Base
+  border = { hex = "#89b4fa" },                   -- Blue
+  title = { hex = "#89b4fa" },                    -- Blue
+  key = { hex = "#fab387" },                      -- Peach
+  text = { hex = "#cdd6f4" },                     -- Text
+}
+
+local whichKeyCanvas = nil
+
+local function whichKeyText()
+  local s = whichKeyStyle
+  local function styled(str, color)
+    return hs.styledtext.new(str, { font = { name = s.font, size = s.fontSize }, color = color })
+  end
+
+  local text = styled("Hammerspoon（Esc で閉じる）\n\n", s.title)
+  for _, item in ipairs(whichKeyItems) do
+    local label = item.label or item.key
+    text = text .. styled(string.format("%-6s", label), s.key) .. styled("  " .. item.desc .. "\n", s.text)
+  end
+  return text
+end
+
+local function showWhichKey()
+  local s = whichKeyStyle
+  local lineHeight = s.fontSize * 1.5
+  local height = s.padding * 2 + lineHeight * (#whichKeyItems + 2)
+  local screen = hs.screen.mainScreen():frame()
+
+  whichKeyCanvas = hs.canvas.new({
+    x = screen.x + (screen.w - s.width) / 2,
+    y = screen.y + (screen.h - height) / 2,
+    w = s.width,
+    h = height,
+  })
+  whichKeyCanvas:appendElements(
+    {
+      type = "rectangle",
+      action = "strokeAndFill",
+      fillColor = s.background,
+      strokeColor = s.border,
+      strokeWidth = 2,
+      roundedRectRadii = { xRadius = 12, yRadius = 12 },
+    },
+    {
+      type = "text",
+      text = whichKeyText(),
+      frame = { x = s.padding, y = s.padding, w = s.width - s.padding * 2, h = height - s.padding * 2 },
+    }
+  )
+  whichKeyCanvas:level(hs.canvas.windowLevels.overlay)
+  whichKeyCanvas:show()
+end
+
+local function hideWhichKey()
+  if whichKeyCanvas then
+    whichKeyCanvas:delete()
+    whichKeyCanvas = nil
+  end
+end
+
+-- Ctrl + Option + /
+local whichKey = hs.hotkey.modal.new({ "ctrl", "alt" }, "/")
+whichKey.entered = showWhichKey
+whichKey.exited = hideWhichKey
+whichKey:bind({}, "escape", function() whichKey:exit() end)
+whichKey:bind({ "ctrl", "alt" }, "/", function() whichKey:exit() end)
+for _, item in ipairs(whichKeyItems) do
+  whichKey:bind({}, item.key, function()
+    whichKey:exit() -- 先に閉じてから実行する（並べ直しや中央表示に一覧が重ならないように）
+    item.fn()
+  end)
+end
+
 hs.alert.show("Hammerspoon の設定を読み込みました")
