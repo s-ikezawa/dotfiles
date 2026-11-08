@@ -1,0 +1,7 @@
+# SSH の設定。chezmoi で管理していて、公開リポジトリに載る。
+# 会社のサーバーのホスト名など、公開したくない設定はここに書かず、管理外のファイルに分けて
+# 先頭で Include すること（例: Include ~/.ssh/config.local）。
+
+# 鍵はファイルに置かず 1Password に入れ、1Password の SSH エージェントから使う。
+Host *
+	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
