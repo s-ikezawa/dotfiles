@@ -78,6 +78,11 @@ uv = "latest"
 # AWS の CLI（aws）。認証情報と設定の置き場所は .zshenv で XDG に揃える（~/.config/aws）
 aws-cli = "latest"
 
+# Dev Container の CLI（devcontainer）。リポジトリの .devcontainer/devcontainer.json からコンテナを作って
+# 中でコマンドを動かす（devcontainer up --workspace-folder . / devcontainer exec --workspace-folder . <コマンド>）。
+# docker の CLI を呼ぶので、Colima を起動しておくこと（`colima start`）。
+devcontainer-cli = "latest"
+
 # Java（OpenJDK）。Gradle などで Kotlin のプロジェクトをビルドするのに使う。JAVA_HOME は mise が設定する
 java = "latest"
 
@@ -217,6 +222,11 @@ gh skill update --all
 "brew-cask:firefox" = { os = "macos" }
 "brew-cask:ghostty" = { os = "macos" }
 
+# VS Code。主に Dev Containers 拡張機能でコンテナの中を開くのに使う（拡張機能は下の post-packages で入れる）。
+# docker の CLI と同じく、.zshenv の DOCKER_CONFIG にある Colima の context に接続する
+# （Dock から開いても、VS Code は起動時にログインシェルの環境変数を読み込む）。
+"brew-cask:visual-studio-code" = { os = "macos" }
+
 # Lua で macOS を操作する（Hammerspoon）。ウィンドウを決まった位置に置いたり、一時的に中央に
 # 大きく出して元に戻したりするのに使う。設定は ~/.config/hammerspoon/init.lua
 # （置き場所は下の [bootstrap.macos.defaults."org.hammerspoon.Hammerspoon"] で変えている）
@@ -227,6 +237,15 @@ gh skill update --all
 
 # AppStore
 "mas:497799835" = { os = "macos" } # Xcode
+
+# VS Code の拡張機能を入れる（code は brew-cask:visual-studio-code が入れる）。
+# 入っていれば何もしないので、毎回走ってよい。
+[bootstrap.hooks.post-packages]
+run = """
+if command -v code >/dev/null 2>&1; then
+  code --install-extension ms-vscode-remote.remote-containers  # Dev Containers
+fi
+"""
 
 ################################################################################
 # macOS 設定
