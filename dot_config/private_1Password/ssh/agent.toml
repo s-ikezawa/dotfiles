@@ -1,0 +1,6 @@
+# 1Password の SSH エージェントが使う鍵。
+# 書かないと Personal の保管庫の鍵しか使わないので、鍵を置いている Main を指定する。
+# https://developer.1password.com/docs/ssh/agent/config/
+
+[[ssh-keys]]
+vault = "Main"
