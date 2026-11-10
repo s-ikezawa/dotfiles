@@ -3,6 +3,10 @@
 
 export PATH="${HOME}/.local/bin:${PATH}"
 
+# CLAUDE_CONFIG_DIR は .zshenv で設定しているが、初回は dotfiles を置く前にこのスクリプトが走るので
+# まだ渡っていない。指定しないとインストーラーが ~/.claude.json をホーム直下に作るため、ここで明示する。
+export CLAUDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude"
+
 if command -v claude >/dev/null 2>&1; then
   skip "Claude Code はインストール済み ($(command -v claude))"
 else
