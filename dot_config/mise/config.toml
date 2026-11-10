@@ -110,6 +110,17 @@ ast-grep = "latest"
 #   chezmoi execute-template < run_once_before_02-homebrew.sh.tmpl | shellcheck -s bash -
 shellcheck = "latest"
 
+# Docker 公式の言語サーバー（docker-language-server。設定は ~/.config/nvim/lsp/docker_language_server.lua）。
+# Dockerfile と compose のファイルで補完・ホバー・診断（BuildKit のチェックや compose の書き方の誤り）を出す。
+# mise の registry に無いので、GitHub のリリースから直接入れる（中身は実行ファイル 1 つ）
+"github:docker/docker-language-server" = "latest"
+
+# Dockerfile のリンター（hadolint）。ベストプラクティスに外れた書き方（apt-get のキャッシュを消していない、
+# 版を固定していないなど）を指摘する。RUN の中のシェルは shellcheck でも確かめる。
+# Neovim では保存したときなどに走らせ、警告を診断として出す（~/.config/nvim/lua/config/hadolint.lua）。
+# 言語サーバーではないので、Claude Code は CLI で使う: hadolint <Dockerfile>
+hadolint = "latest"
+
 # シェルスクリプト（sh・bash）の言語サーバー（bash-language-server）。PATH にある shellcheck を内部で呼び、
 # その警告を LSP の診断として返す。Claude Code の LSP ツール（~/.config/claude/marketplace の bash-lsp）と
 # Neovim（~/.config/nvim/lsp/bashls.lua）で使う。zsh と chezmoi のテンプレート（*.sh.tmpl）には使えない

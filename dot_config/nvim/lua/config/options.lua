@@ -111,3 +111,18 @@ vim.o.updatetime = 250               -- 入力が止まってからスワップ�
 vim.o.timeoutlen = 500               -- <leader> などの複数キーのマッピングを待つ時間（ミリ秒）
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true }) -- 保存時・起動画面・補完中のメッセージを出さない
 vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' } -- :mksession で保存する内容
+
+-- ---------------------------------------------------------------------------
+-- ファイルタイプ
+-- ---------------------------------------------------------------------------
+-- compose のファイルを、ただの yaml でなく yaml.docker-compose にする（Docker の言語サーバーをつなぐため。
+-- lsp/docker_language_server.lua）。ドットでつないだファイルタイプなので、YAML の ftplugin とハイライトもそのまま効く。
+-- compose.override.yaml や docker-compose.prod.yml のような、名前の後ろに足したものも含める
+vim.filetype.add({
+  pattern = {
+    ['.*/docker%-compose%.ya?ml'] = 'yaml.docker-compose',       -- docker-compose.yml
+    ['.*/docker%-compose%.[^/]+%.ya?ml'] = 'yaml.docker-compose', -- docker-compose.prod.yml
+    ['.*/compose%.ya?ml'] = 'yaml.docker-compose',               -- compose.yaml
+    ['.*/compose%.[^/]+%.ya?ml'] = 'yaml.docker-compose',        -- compose.override.yaml
+  },
+})

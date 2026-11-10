@@ -22,7 +22,7 @@ Claude Code は Neovim の中ではなく herdr の別のペインで動かし�
 | 場所 | 中身 |
 |---|---|
 | `init.lua` | 入り口。`config/` を読み、`lua/plugin/` のファイルを名前順にすべて読む |
-| `lua/config/options.lua` | エディタのオプション |
+| `lua/config/options.lua` | エディタのオプション（compose のファイルを `yaml.docker-compose` にするファイルタイプの設定も） |
 | `lua/config/keymaps.lua` | プラグインを使わないキーマップ |
 | `lua/config/autocmds.lua` | 自動コマンド（外で書き換えられたファイルを読み直す） |
 | `lua/config/lsp.lua` | LSP と診断の設定 |
@@ -30,6 +30,7 @@ Claude Code は Neovim の中ではなく herdr の別のペインで動かし�
 | `lua/config/repo_status.lua` | リポジトリ全体の変更の数（ステータスラインに出す） |
 | `lua/config/lsp_progress.lua` | 言語サーバーの状態と進み具合（ステータスラインに出す） |
 | `lua/config/indent.lua` | ファイルタイプごとのインデントを設定する関数（`after/ftplugin/` から呼ぶ） |
+| `lua/config/hadolint.lua` | Dockerfile を hadolint で確かめ、警告を診断に出す（`after/ftplugin/dockerfile.lua` から呼ぶ） |
 | `lua/plugin/<名前>.lua` | プラグインごとの設定。1 つのプラグインにつき 1 ファイル |
 | `lsp/<名前>.lua` | 言語サーバーごとの設定（`vim.lsp.enable` で有効にする） |
 | `after/ftplugin/<ファイルタイプ>.lua` | ファイルタイプごとの設定（Neovim に同梱の ftplugin のあとに読まれる） |
@@ -39,7 +40,9 @@ Claude Code は Neovim の中ではなく herdr の別のペインで動かし�
 mise で入れるもの:
 
 - 言語サーバー: lua-language-server、TypeScript 7（`npm:typescript`。`tsc --lsp` を使う）、gopls、kotlin-lsp、
-  bash-language-server（`npm:bash-language-server`。sh・bash。shellcheck の警告も診断に出すので shellcheck も要る）
+  bash-language-server（`npm:bash-language-server`。sh・bash。shellcheck の警告も診断に出すので shellcheck も要る）、
+  docker-language-server（`github:docker/docker-language-server`。Dockerfile と compose のファイル）
+- hadolint（Dockerfile のリンター。言語サーバーではないので `lua/config/hadolint.lua` から呼び、警告を診断に出す）
 - tree-sitter CLI（パーサーのビルド用。C コンパイラとして Xcode も要る）
 - ripgrep（`rg`）、ast-grep（grug-far と `:grep` で使う）
 
