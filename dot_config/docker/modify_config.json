@@ -1,0 +1,15 @@
+#!/bin/bash
+# docker の CLI は config.json を自分で書き換える（Colima が currentContext を、docker login が
+# auths・credsStore を書く）。ファイル丸ごとは管理せず、ここで指定したキーだけを既存の内容にマージする。
+set -euo pipefail
+
+current=$(cat)
+[ -n "$current" ] || current='{}'
+
+# docker と同じ書き方（タブでインデントし、末尾に改行を付けない）で出す。揃えないと docker が
+# 書き換えるたびに、中身は同じでも chezmoi status に差分として出る。
+printf '%s\n' "$current" | /usr/bin/jq --tab -j '
+  # Homebrew で入れたプラグイン（docker-compose・docker-buildx）の場所を docker に教える。
+  # 既定では ~/.config/docker/cli-plugins などしか探さず、`docker compose` が動かない。
+  .cliPluginsExtraDirs = ((.cliPluginsExtraDirs // []) + ["/opt/homebrew/lib/docker/cli-plugins"] | unique)
+'

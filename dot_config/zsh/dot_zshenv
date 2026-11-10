@@ -63,6 +63,14 @@ export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 
 # ---------------------------------------------------------------------------
+# Docker（CLI と Colima は Homebrew で入れる）
+# ---------------------------------------------------------------------------
+# docker の CLI の設定の置き場所（既定は ~/.docker）。config.json に加えて、Colima が作る
+# docker の context（接続先の VM）や、docker login の情報もここに入る。
+# Colima 自身は ~/.colima が無ければ $XDG_CONFIG_HOME/colima を使うので、設定しなくてよい。
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
