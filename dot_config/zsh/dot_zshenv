@@ -69,6 +69,14 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 # docker の context（接続先の VM）や、docker login の情報もここに入る。
 # Colima 自身は ~/.colima が無ければ $XDG_CONFIG_HOME/colima を使うので、設定しなくてよい。
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+# 接続先を Colima の VM のソケットに固定する。docker の CLI は Colima が作る context でつながるが、
+# Testcontainers（Kotlin・Go のテスト）は context を見ず、DOCKER_HOST か /var/run/docker.sock を探すため。
+# DOCKER_HOST を設定すると docker の CLI も context より DOCKER_HOST を使う（`docker context use` は効かなくなる）。
+# Colima のプロファイルを default 以外にしたら、ここも変えること。
+export DOCKER_HOST="unix://$XDG_CONFIG_HOME/colima/default/docker.sock"
+# Testcontainers は後片付けをするコンテナ（Ryuk）に docker のソケットをマウントする。そのとき使う、
+# VM の中から見たソケットの場所（上の DOCKER_HOST は Mac から見た場所なので、VM の中には無い）
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 
 # ---------------------------------------------------------------------------
 # SSH エージェント（1Password）
