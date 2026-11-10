@@ -109,3 +109,10 @@
 # 会社用（ghq get github.com/ebisol/...）
 [includeIf "gitdir:~/Projects/github.com/ebisol/"]
 	path = users/ebisol
+
+# 会社のホスト名など、公開したくない設定はここに書かず、chezmoi で管理しない
+# ~/.config/git/config.local に書く（無くてもエラーにならない）。git は後に読んだ値を使うので、
+# 上の設定を上書きできるよう末尾で読み込む。path は ~/.config/git から見た相対パスなので、
+# config.local の includeIf からも users/ebisol などをそのまま使える。
+[include]
+	path = config.local
