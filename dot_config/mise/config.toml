@@ -83,6 +83,10 @@ aws-cli = "latest"
 # docker の CLI を呼ぶので、Colima を起動しておくこと（`colima start`）。
 devcontainer-cli = "latest"
 
+# Docker のコンテナ・ログ・イメージ・ボリュームを TUI で見て操作する（lazydocker）。
+# .zshenv の DOCKER_HOST で Colima の VM につなぐ
+lazydocker = "latest"
+
 # Java（OpenJDK）。Gradle などで Kotlin のプロジェクトをビルドするのに使う。JAVA_HOME は mise が設定する
 java = "latest"
 
