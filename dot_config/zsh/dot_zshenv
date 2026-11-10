@@ -79,6 +79,13 @@ export DOCKER_HOST="unix://$XDG_CONFIG_HOME/colima/default/docker.sock"
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 
 # ---------------------------------------------------------------------------
+# データベースのクライアント（psql・mysql。Homebrew の libpq・mysql-client で入れる）
+# ---------------------------------------------------------------------------
+# 対話モードの履歴の置き場所（既定は ~/.psql_history・~/.mysql_history）
+export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
+export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql_history"
+
+# ---------------------------------------------------------------------------
 # SSH エージェント（1Password）
 # ---------------------------------------------------------------------------
 # ssh 自身は ~/.ssh/config の IdentityAgent で 1Password のエージェントを使うが、VS Code の
@@ -115,6 +122,9 @@ _zsh_setup_path() {
     # GNU 版コマンド(coreutils / gnu-sed / grep / findutils など)を BSD 版より優先する。
     # gnubin には g 接頭辞なしの名前(ls, sed, grep ...)で入る。(N) は該当なしでもエラーにしない。
     $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N)
+    # keg-only（サーバー本体の formula とぶつかるので、Homebrew が bin に入れない）の DB のクライアント
+    "$HOMEBREW_PREFIX/opt/libpq/bin"
+    "$HOMEBREW_PREFIX/opt/mysql-client/bin"
     "$HOMEBREW_PREFIX/bin"
     "$HOMEBREW_PREFIX/sbin"
     $path
