@@ -1,6 +1,10 @@
 # SSH の設定。chezmoi で管理していて、公開リポジトリに載る。
-# 会社のサーバーのホスト名など、公開したくない設定はここに書かず、管理外のファイルに分けて
-# 先頭で Include すること（例: Include ~/.ssh/config.local）。
+# 会社のサーバーのホスト名など、公開したくない設定はここに書かず、chezmoi で管理しない
+# ~/.ssh/config.local に書く（無くてもエラーにならない）。
+
+# ssh は最初に見つけた値を使うので、Host * より前で読み込む。後ろに置くと、config.local の
+# Host の中で IdentityAgent などを変えても、下の Host * の値が先に決まって効かない。
+Include ~/.ssh/config.local
 
 # 鍵はファイルに置かず 1Password に入れ、1Password の SSH エージェントから使う。
 Host *
