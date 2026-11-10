@@ -71,6 +71,20 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # ---------------------------------------------------------------------------
+# SSH エージェント（1Password）
+# ---------------------------------------------------------------------------
+# ssh 自身は ~/.ssh/config の IdentityAgent で 1Password のエージェントを使うが、VS Code の
+# Dev Containers などはコンテナに SSH_AUTH_SOCK のエージェントを渡す。macOS の既定のまま
+# （launchd の空のエージェント）だと、コンテナの中の git が鍵を使えないので 1Password に向ける。
+# herdr の中では herdr が自分のエージェント（herdr.sock.agent）を設定しているので、上書きしない。
+# 1Password が起動していない（ソケットが無い）ときは何もしない。
+_op_agent_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+if [[ -S "$_op_agent_sock" && ( -z "$SSH_AUTH_SOCK" || "$SSH_AUTH_SOCK" == /private/tmp/com.apple.launchd.*/Listeners ) ]]; then
+  export SSH_AUTH_SOCK="$_op_agent_sock"
+fi
+unset _op_agent_sock
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
