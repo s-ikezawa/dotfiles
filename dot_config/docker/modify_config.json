@@ -12,4 +12,9 @@ printf '%s\n' "$current" | /usr/bin/jq --tab -j '
   # Homebrew で入れたプラグイン（docker-compose・docker-buildx）の場所を docker に教える。
   # 既定では ~/.config/docker/cli-plugins などしか探さず、`docker compose` が動かない。
   .cliPluginsExtraDirs = ((.cliPluginsExtraDirs // []) + ["/opt/homebrew/lib/docker/cli-plugins"] | unique)
+  # docker login の認証情報を、config.json でなく macOS のキーチェーンに入れる
+  # （docker-credential-osxkeychain。brew:docker-credential-helper で入れる）。
+  # docker はイメージを取るたびにこのコマンドを PATH から探すので、/opt/homebrew/bin が PATH に無いと
+  # pull が失敗する。そうなったら、そのツールに PATH を渡すこと。
+  | .credsStore = "osxkeychain"
 '

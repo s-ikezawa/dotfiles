@@ -213,6 +213,9 @@ gh skill update --all
 "brew:docker" = { os = "macos" }          # CLI だけ（Docker Desktop ではない）
 "brew:docker-compose" = { os = "macos" }  # docker compose
 "brew:docker-buildx" = { os = "macos" }   # docker buildx（BuildKit でのビルド）
+# docker login の認証情報を macOS のキーチェーンに預ける（docker-credential-osxkeychain）。
+# 無いと config.json に base64 で書かれる。使うことは modify_config.json の credsStore で指定している
+"brew:docker-credential-helper" = { os = "macos" }
 
 # GUIツール
 "brew-cask:1password" = { os = "macos" }
