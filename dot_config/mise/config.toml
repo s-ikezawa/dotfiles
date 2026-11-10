@@ -236,6 +236,21 @@ JIMPrefLiveConversionKey = false                # ライブ変換を無効化
 
 [bootstrap.macos.defaults."com.apple.finder"]
 AppleShowAllFiles = true                        # 隠しファイルを表示
+ShowPathbar = true                              # 下にパスバー（今いるフォルダまでの道筋）を出す
+ShowStatusBar = true                            # 下にステータスバー（項目数と空き容量）を出す
+NewWindowTarget = "PfHm"                        # 新しいウィンドウではホームを開く（既定は最近の項目）
+FXDefaultSearchScope = "SCcf"                   # 検索は Mac 全体でなく、今いるフォルダの中から探す
+
+# ネットワークドライブと USB メモリには .DS_Store を作らない（ほかの人や Windows から見えて邪魔になるため）
+[bootstrap.macos.defaults."com.apple.desktopservices"]
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+# スクリーンショットの保存先（location）はデスクトップでなく ~/Pictures/Screenshots にする。
+# 値には絶対パスが要るが、~ は展開されず、mise のテンプレート（{{ env.HOME }}）もここでは展開されない
+# （mise 2026.11.4 で確認）。そこで下の post-defaults でフォルダを作るときに $HOME を使って書く。
+[bootstrap.macos.defaults."com.apple.screencapture"]
+disable-shadow = true                           # ウィンドウを撮ったときに周りの影を付けない
 
 [bootstrap.macos.defaults."com.apple.dock"]
 tilesize = 16                                   # サイズを最小に
@@ -257,7 +272,13 @@ AutoHide = true                                 # 最近使用したアプリを
 StandardHideWidgets = true                      # ウィジェット表示 > デスクトップにをオフ
 StageManagerHideWidgets = true                  # ウィジェット表示 > ステージマネージャにをオフ
 
-# mise はアプリを kill しない方針なので、反映は自前で行う。
+# スクリーンショットの保存先を作って設定する（上の com.apple.screencapture を参照）。
+# mise はアプリを kill しない方針なので、反映は自前で行う。スクリーンショットの設定は SystemUIServer が読む。
 # killall は対象が居ないと 1 を返すため || true が必須。
+# フックは毎回走るが、mkdir -p も defaults write も何度やっても同じ結果になる。
 [bootstrap.hooks.post-defaults]
-run = "killall Finder Dock WindowManager 2>/dev/null || true"
+run = """
+mkdir -p "$HOME/Pictures/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots"
+killall Finder Dock WindowManager SystemUIServer 2>/dev/null || true
+"""
