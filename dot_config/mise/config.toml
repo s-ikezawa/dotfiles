@@ -75,6 +75,9 @@ go = "latest"
 # uv tool install で入れたコマンドは XDG_BIN_HOME（~/.local/bin。.zshenv で設定）に入る。
 uv = "latest"
 
+# AWS の CLI（aws）。認証情報と設定の置き場所は .zshenv で XDG に揃える（~/.config/aws）
+aws-cli = "latest"
+
 # Java（OpenJDK）。Gradle などで Kotlin のプロジェクトをビルドするのに使う。JAVA_HOME は mise が設定する
 java = "latest"
 

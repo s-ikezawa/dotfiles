@@ -123,6 +123,13 @@ unset _zcompdump
 # オプションを拾う。
 (( $+commands[eza] )) && compdef _gnu_generic eza
 
+# aws は zsh 用の補完定義を持たず、候補を返す aws_completer を bash の complete -C の形で使う。
+# zsh で bash の complete を使えるようにする bashcompinit は compinit より後に読む。
+if (( $+commands[aws_completer] )); then
+  autoload -Uz bashcompinit && bashcompinit
+  complete -C aws_completer aws
+fi
+
 # fzf-tab: <Tab> で出る補完候補の一覧を fzf にして、文字を打って絞り込めるようにする。
 # 本体は .chezmoiexternal.toml で clone している。compinit より後、かつ widget を包む
 # ほかのプラグイン（zsh-autosuggestions など）より前に読む必要がある。

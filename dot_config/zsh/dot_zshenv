@@ -55,6 +55,14 @@ export GOENV="$XDG_CONFIG_HOME/go/env"      # go env -w の書き込み先（既
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # ---------------------------------------------------------------------------
+# AWS CLI（mise で入れる）
+# ---------------------------------------------------------------------------
+# 設定と認証情報の置き場所（既定はどちらも ~/.aws）。SSO のトークンなどのキャッシュは
+# 変えられず ~/.aws/sso・~/.aws/cli に作られる。
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+
+# ---------------------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------------------
 typeset -U path fpath
