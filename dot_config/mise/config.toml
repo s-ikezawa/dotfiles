@@ -70,6 +70,11 @@ pnpm = "latest"
 # Go。go install で入れたものの置き場所（GOPATH）は .zshenv で XDG に揃える
 go = "latest"
 
+# Python のパッケージ・プロジェクト管理（uv）。Python 本体も uv が入れる（uv python install）ので、mise では入れない。
+# 置き場所は macOS でも XDG に従う（キャッシュ ~/.cache/uv、Python 本体と tool ~/.local/share/uv、設定 ~/.config/uv）。
+# uv tool install で入れたコマンドは XDG_BIN_HOME（~/.local/bin。.zshenv で設定）に入る。
+uv = "latest"
+
 # Java（OpenJDK）。Gradle などで Kotlin のプロジェクトをビルドするのに使う。JAVA_HOME は mise が設定する
 java = "latest"
 
