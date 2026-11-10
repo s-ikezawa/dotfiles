@@ -1,0 +1,4 @@
+# git が SSH の署名を確かめるときに信頼する、メールアドレスと公開鍵の組み合わせ（config の gpg.ssh.allowedSignersFile）。
+# 書式は ssh-keygen の ALLOWED SIGNERS。署名したコミットのメールアドレスがここにあり、鍵が一致すれば「Good signature」になる。
+# メールアドレスは公開リポジトリに載せないため、chezmoi init で入力した値を使う。鍵は config の user.signingKey と同じもの。
+{{ .git.email }},{{ .git.workEmail }} namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDhOhUYF0odEl2aDAc4uMDepHcewzmadt9KQaIzOpXo

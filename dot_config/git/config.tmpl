@@ -8,6 +8,21 @@
 	# email はここには書かず、末尾の includeIf でリポジトリの場所ごとに決める。
 	# どれにも当てはまらない場所では、メールアドレスを推測させずに commit を止める。
 	useConfigOnly = true
+	# コミットとタグに署名する鍵（1Password にある「GitHub」の SSH の公開鍵。公開鍵なので公開リポジトリに載せてよい）。
+	# プライベート用と会社用で同じ鍵を使う（GitHub のアカウントが 1 つなので）。
+	# GitHub で「Verified」と出すには、この鍵を認証用とは別に「Signing Key」としても登録しておくこと。
+	signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDhOhUYF0odEl2aDAc4uMDepHcewzmadt9KQaIzOpXo
+
+[gpg]
+	# 署名に GPG でなく SSH の鍵を使う。
+	format = ssh
+
+[gpg "ssh"]
+	# 秘密鍵は 1Password にしかないので、1Password に署名させる。署名のたびに 1Password が許可を求める
+	# （一度許可すると、1Password がロックされるまでは聞かれない）。
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	# git log --show-signature などで署名を確かめるときの、信頼する鍵とメールアドレスの組み合わせ。
+	allowedSignersFile = ~/.config/git/allowed_signers
 
 [init]
 	defaultBranch = main
@@ -47,6 +62,8 @@
 [commit]
 	# コミットメッセージを書く画面（Neovim）の下に、コミットする差分を出す（保存時には取り除かれる）。
 	verbose = true
+	# すべてのコミットに署名する（鍵は上の user.signingKey）。
+	gpgSign = true
 
 [rebase]
 	# fixup! や squash! のコミットを、rebase -i で自動的に対象のコミットの後ろに並べる。
@@ -63,6 +80,8 @@
 [tag]
 	# git tag の一覧を、版の番号として並べる（0.5.101 が 0.5.1000 より前）。
 	sort = version:refname
+	# 注釈付きのタグ（git tag -a）に署名する。
+	gpgSign = true
 
 [column]
 	# git branch などの一覧を、画面に収まるよう段組みで出す。
