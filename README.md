@@ -34,6 +34,19 @@ chezmoi git -- config --local user.email "<プライベート用のメールア�
 
 項目の定義は `.chezmoi.toml.tmpl` にある。
 
+### 手で作るファイル
+
+会社のホスト名など、公開したくない設定は chezmoi で管理せず、マシンごとに次のファイルへ手で書く。
+どちらも無くてもエラーにはならないので、必要になったときに作ればよい（中身は今のマシンから写す）。
+
+| ファイル | 読み込む場所 | 書くもの |
+| --- | --- | --- |
+| `~/.ssh/config.local` | `~/.ssh/config` の先頭 | 会社のサーバーの `Host` など |
+| `~/.config/git/config.local` | `~/.config/git/config` の末尾 | 会社のホストのリポジトリ用の `includeIf`（`path = users/ebisol` で会社用の `user.email` を使う） |
+
+`~/.config/git/config.local` を作り忘れると、そこに書くはずだった場所のリポジトリでは
+`user.useConfigOnly = true` のため commit できない（別のメールアドレスで commit されることはない）。
+
 ### 入力した値を変更するとき
 
 もう一度入力し直す場合は `--prompt` を付けて init し、反映する。
