@@ -29,8 +29,10 @@ printf '%s\n' "$current" | /usr/bin/jq '
       "Read(~/.config/gh/hosts.yml)",
       "Read(~/.config/docker/config.json)",
       "Read(~/.config/op/**)",
-      "Read(.env)",
-      "Read(.env.*)",
+      # .env は // を付けてファイルシステムのどこでも止める。先頭に何もない Read(.env) はカレントディレクトリより
+      # 下にしか効かず、ほかのリポジトリやスクラッチパッド（/private/tmp）の .env を読めてしまう
+      "Read(//**/.env)",
+      "Read(//**/.env.*)",
       "Bash(gh auth token *)",
       "Bash(security find-generic-password *)",
       "Bash(security find-internet-password *)",
@@ -49,6 +51,8 @@ printf '%s\n' "$current" | /usr/bin/jq '
       "Bash(grep *--recursive*)",
       "Bash(grep *--dereference-recursive*)"
     ] | unique)
+  # 以前に書いていた、カレントディレクトリより下にしか効かない .env のルールを消す（上の //**/.env に置き換えた）
+  | .permissions.deny -= ["Read(.env)", "Read(.env.*)"]
   # Claude が下書きしたフィードバックの送信カード（1: review / 2: send）を出さない。
   # SendFeedback ツールごと外れる。settings の feedbackDrafts: "off" と同じ効果。
   | .env.CLAUDE_CODE_SEND_FEEDBACK = "0"
