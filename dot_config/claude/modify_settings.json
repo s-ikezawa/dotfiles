@@ -15,6 +15,32 @@ printf '%s\n' "$current" | /usr/bin/jq '
   # セッションを auto mode で始める。
   # プロジェクトの .claude/settings.json では auto が効かないため、ユーザー設定に置く。
   | .permissions.defaultMode = "auto"
+  # シークレットを読ませない（読んだ時点で API に送られ、取り消せないため）。
+  # deny はスコープをまたいで足し合わされ、allow で打ち消せない。Read のルールは cat・head などにも効き、
+  # 同じパスへの Edit・Write も止める。効くのは Claude のツール呼び出しだけで、gh・ssh・aws などが
+  # 自分で設定を読むのには影響しない。コマンドの文字列で判定するので、grep -r やスクリプトの中での
+  # 読み取りは防げない（防ぐにはサンドボックスが要る）。
+  # パスは gitignore の書き方で、~/ はホーム基準、先頭に何もないものはカレントディレクトリ以下のどこでも。
+  # 実際にあるもの（XDG に寄せた ~/.config/aws・~/.config/docker を含む）と、入れているツールのコマンドだけを書く
+  | .permissions.deny = ((.permissions.deny // []) + [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/aws/**)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.config/docker/config.json)",
+      "Read(~/.config/op/**)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Bash(gh auth token *)",
+      "Bash(security find-generic-password *)",
+      "Bash(security find-internet-password *)",
+      "Bash(op read *)",
+      "Bash(op item get *)",
+      "Bash(op document get *)",
+      "Bash(op inject *)",
+      "Bash(aws configure export-credentials *)",
+      "Bash(docker-credential-osxkeychain get *)"
+    ] | unique)
   # Claude が下書きしたフィードバックの送信カード（1: review / 2: send）を出さない。
   # SendFeedback ツールごと外れる。settings の feedbackDrafts: "off" と同じ効果。
   | .env.CLAUDE_CODE_SEND_FEEDBACK = "0"
