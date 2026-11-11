@@ -51,6 +51,8 @@ mise で入れるもの:
 - Nerd Font（アイコンに使う）
 - Ghostty（左の Option を Alt として使う設定。`<A-j>`・`<A-k>` で行を移すため）
 - herdr（Claude Code を動かすペイン。Claude に送るキーで使う）
+- ImageMagick と librsvg（Homebrew。mise の `[bootstrap.packages]` で入れる）。snacks.nvim が画像を PNG に変えるのに使う。
+  SVG は `~/.config/ImageMagick/delegates.xml` で rsvg-convert に変換させている（`.zshenv` の `MAGICK_CONFIGURE_PATH` で読ませる）
 
 ## プラグインの入れ方・更新
 
@@ -106,6 +108,7 @@ mise で入れるもの:
 | プラグイン | できること |
 |---|---|
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | Markdown をバッファの中で整えて見せる（見出しの色分け、表の罫線、コードブロックの背景、チェックボックスや箇条書きのアイコンなど）。カーソルのある行と挿入モードでは元の記号のまま出るので、そのまま編集できる。`<leader>um` で切り替え |
+| [snacks.nvim](https://github.com/folke/snacks.nvim)（image だけ） | Markdown の中の画像（`![...](...)`）を、画像を書いた行の下に表示する。SVG・JPEG なども ImageMagick で PNG に変えて出す。画像のファイルを開いたときも表示する。Ghostty で、herdr の中でも出る |
 
 ### 検索・置換
 
