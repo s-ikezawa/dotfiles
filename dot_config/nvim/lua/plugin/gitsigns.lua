@@ -2,7 +2,14 @@
 -- 印は VS Code のように行番号の右に色付きの縦線で出す（並びは lua/config/statuscolumn.lua）。
 -- https://github.com/lewis6991/gitsigns.nvim
 
-vim.pack.add({ { src = 'https://github.com/lewis6991/gitsigns.nvim', version = vim.version.range('*') } }) -- 最新のリリースを追う
+-- v3.0.0 が出るまでの間だけ main を追う。出たら vim.version.range('*')（最新のリリース）に戻す。
+-- v2.1.0 には、外で git commit しても印が古いまま残る不具合がある。.git を見張るハンドル（uv_fs_event）の
+-- 後片付けを GC に任せていて、リポジトリのバッファが全部閉じた直後に GC が走ると、見張りだけ止まった
+-- リポジトリの情報がキャッシュに残り、同じリポジトリのファイルを開き直すとそれが使い回される。
+-- 修正は main の c5480c0（GC に任せずに片付ける）と 1189caf（fs_event が失敗したら fs_poll に切り替える）。
+-- リリースの PR（#1511）は 2026-11-11 の時点で未マージ。
+-- version を変えただけでは入っている版は変わらないので、vim.pack.update({ 'gitsigns.nvim' }) で切り替える。
+vim.pack.add({ { src = 'https://github.com/lewis6991/gitsigns.nvim', version = 'main' } })
 
 local bar = '▎' -- 細い縦線
 
