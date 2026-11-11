@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ImageMagick が SVG を読むときに使う外部コマンドを、Inkscape から rsvg-convert（librsvg）に替える。
+  ImageMagick は SVG をまず svg:decode のコマンドに任せ、それが無ければ内蔵の変換（MSVG）を使う。
+  MSVG は font-family にフォントを並べると読めずに失敗し、グラデーションなども崩れやすい。
+  Homebrew の ImageMagick は librsvg を組み込んでおらず、既定の svg:decode は Inkscape（入れていない）なので、ここで差し替える。
+  Neovim の snacks.nvim が Markdown の SVG を PNG に変えるときに使う。
+
+  %s には順に、入力のファイル、出力の PNG、解像度（-density。既定は 96）、背景色、背景の不透明度が入る。
+  rsvg-convert の dpi は mm や pt などの単位にしか効かず px の図は大きくならないので、解像度 / 96 を倍率（zoom）にして渡す。
+  背景は透明のまま（指定しない）にする。
+-->
+<delegatemap>
+  <delegate decode="svg:decode" stealth="True" command="sh -c &apos;rsvg-convert --zoom &quot;$(awk &quot;BEGIN { print $3 / 96 }&quot;)&quot; --output &quot;$2&quot; &quot;$1&quot;&apos; sh &apos;%s&apos; &apos;%s&apos; &apos;%s&apos; &apos;%s&apos; &apos;%s&apos;"/>
+</delegatemap>

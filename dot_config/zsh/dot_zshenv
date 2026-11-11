@@ -86,6 +86,13 @@ export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql_history"
 
 # ---------------------------------------------------------------------------
+# ImageMagick（Homebrew で入れる。Neovim の snacks.nvim が画像の変換に使う）
+# ---------------------------------------------------------------------------
+# 設定（delegates.xml。SVG を rsvg-convert で変換する）の置き場所。ImageMagick は ~/.config/ImageMagick も
+# 探すが、本体に同梱の設定のほうが優先されて効かないため、ここで先に探させる
+export MAGICK_CONFIGURE_PATH="$XDG_CONFIG_HOME/ImageMagick"
+
+# ---------------------------------------------------------------------------
 # SSH エージェント（1Password）
 # ---------------------------------------------------------------------------
 # ssh 自身は ~/.ssh/config の IdentityAgent で 1Password のエージェントを使うが、VS Code の
