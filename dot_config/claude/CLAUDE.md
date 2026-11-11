@@ -39,3 +39,9 @@
 - GitHub（リポジトリ・PR・Issue・CI ログ）は curl や Web 取得でなく `gh` / `gh api`（認証済み）。
 - リポジトリは `~/Projects/<ホスト>/<オーナー>/<リポジトリ>`（ghq）。clone 前に `ghq list -p | rg <名前>`。
 - `bat`・`eza`・`delta` は使わない（人向けの装飾が出力に混ざる）。代わりに Read・`ls`・`git diff`。
+
+# 図のフォント
+
+- SVG の font-family は OS の標準フォントだけを並べる:
+  `'Menlo', 'Consolas', 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif`
+  （画像として埋め込むと外部フォントを読み込めず、追加フォントやメイリオだけでは Mac で崩れるため）。
