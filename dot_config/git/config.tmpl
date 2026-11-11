@@ -110,6 +110,11 @@
 	# 記録した解決を当てたら、そのままステージする（git add の手間を省く）。
 	autoUpdate = true
 
+[alias]
+	# git graph でコミットグラフを serie（mise で入れる TUI）で開く。後ろに付けたオプションは serie に渡る
+	# （git graph -n 100 など。使えるオプションは serie --help）。! で始まる別名はリポジトリの一番上で動く。
+	graph = !serie
+
 [ghq]
 	# ghq get で clone する場所。~ は ghq が git config --path で読むので展開される。
 	root = ~/Projects
