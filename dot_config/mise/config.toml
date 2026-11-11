@@ -43,6 +43,11 @@ delta = "latest"
 # `hunk diff --watch` を開く（作業ツリーの変更を追いかけて自動で再読み込みする）。
 hunk = "latest"
 
+# git のコミットグラフを TUI で見る（serie）。リポジトリで `serie` と打つ。表示だけで、コミットなどの操作はしない。
+# グラフは文字でなく画像で描く（kitty の画像表示の仕組み。Ghostty は対応）ので、対応していないターミナルでは崩れる。
+# mise の registry に無いので aqua から入れる
+"aqua:lusingander/serie" = "latest"
+
 # JSON を整形・抽出する（jq）。Claude Code のステータスライン（statusline.sh）でも使う。
 # macOS にも /usr/bin/jq があるが、OS の更新でバージョンが変わらないよう mise で揃える。
 # 補完は zsh 本体に _jq が入っているので生成しない。
