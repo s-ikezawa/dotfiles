@@ -1,0 +1,16 @@
+# rg の既定のオプション（.zshenv の RIPGREP_CONFIG_PATH で読ませる）。1 行に 1 つ書く。
+#
+# シークレットのファイルを検索の対象から外す（Claude が rg で中身を読んでしまわないため）。
+# --glob の除外は --hidden・-uu を付けても効く（.gitignore や隠しファイルの除外とは別の仕組み）。
+# Claude Code の permissions.deny（~/.config/claude/settings.json）の Read と同じものを並べる。
+# 外したいときは --no-config で、この設定ごと読まずに動かす。
+# 除外は解除できない（--glob=.env.example のような肯定の glob は「それだけを探す」意味になる）ので、
+# .env.example も外れる。
+--glob=!.env
+--glob=!.env.*
+--glob=!.ssh
+--glob=!.aws
+--glob=!**/.config/aws
+--glob=!**/.config/op
+--glob=!**/.config/gh/hosts.yml
+--glob=!**/.config/docker/config.json

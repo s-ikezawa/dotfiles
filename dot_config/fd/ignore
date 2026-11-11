@@ -1,0 +1,12 @@
+# fd のグローバルな除外（gitignore の書き方）。-H（隠しファイルも出す）でも効くが、-I・-u では外れる。
+# シークレットのファイルを一覧に出さない（Claude がそこから中身を読みに行かないため）。
+# Claude Code の permissions.deny と、rg の設定（~/.config/ripgrep/config）と同じものを並べる。
+.env
+.env.*
+.ssh/
+.aws/
+# 途中に / があるパターンは決まった場所が起点になり、探し始める場所によっては当たらないので、**/ を付ける
+**/.config/aws/
+**/.config/op/
+**/.config/gh/hosts.yml
+**/.config/docker/config.json

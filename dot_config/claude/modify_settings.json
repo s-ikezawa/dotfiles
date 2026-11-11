@@ -39,7 +39,15 @@ printf '%s\n' "$current" | /usr/bin/jq '
       "Bash(op document get *)",
       "Bash(op inject *)",
       "Bash(aws configure export-credentials *)",
-      "Bash(docker-credential-osxkeychain get *)"
+      "Bash(docker-credential-osxkeychain get *)",
+      # grep には除外の設定ファイルがないので、再帰検索だけを止める（検索は除外を設定した rg を使う）。
+      # -rn のようにまとめた形や、後ろに置いた -r にも当てる。-ir のように r が 2 文字目以降の形は止められない
+      "Bash(grep -r*)",
+      "Bash(grep -R*)",
+      "Bash(grep * -r*)",
+      "Bash(grep * -R*)",
+      "Bash(grep *--recursive*)",
+      "Bash(grep *--dereference-recursive*)"
     ] | unique)
   # Claude が下書きしたフィードバックの送信カード（1: review / 2: send）を出さない。
   # SendFeedback ツールごと外れる。settings の feedbackDrafts: "off" と同じ効果。

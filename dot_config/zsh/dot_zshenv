@@ -86,6 +86,12 @@ export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 export MYSQL_HISTFILE="$XDG_STATE_HOME/mysql_history"
 
 # ---------------------------------------------------------------------------
+# ripgrep
+# ---------------------------------------------------------------------------
+# 既定のオプション（シークレットのファイルを検索から外す）。rg は設定ファイルを自分では探さない
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+
+# ---------------------------------------------------------------------------
 # ImageMagick（Homebrew で入れる。Neovim の snacks.nvim が画像の変換に使う）
 # ---------------------------------------------------------------------------
 # 設定（delegates.xml。SVG を rsvg-convert で変換する）の置き場所。ImageMagick は ~/.config/ImageMagick も
