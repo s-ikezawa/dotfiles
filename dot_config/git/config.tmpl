@@ -30,6 +30,8 @@
 [core]
 	# git diff / log -p / show などの出力を delta で表示する。
 	pager = delta
+	# git status・diff・ls-files などで、日本語のファイル名を "\346\227\245..." のようにエスケープせず、そのまま出す。
+	quotePath = false
 
 [interactive]
 	# git add -p でも delta で色を付ける。--color-only は、git が行の対応を取れるよう
