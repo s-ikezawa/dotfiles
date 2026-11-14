@@ -1,13 +1,14 @@
 // このリポジトリ（chezmoi のソース）で Lua のファイルを開いたときの lua-language-server の設定。
 // Lua は主に Neovim の設定（dot_config/nvim）なので、Neovim 向けにする。
-// Hammerspoon の設定（dot_config/hammerspoon）もあるので、その hs もグローバル変数として扱う。
+// Hammerspoon の設定（dot_config/hammerspoon）と Rex の設定（dot_config/rex）もあるので、
+// その hs と rex もグローバル変数として扱う。
 // Neovim の中で開いたときは lsp/lua_ls.lua の設定も渡るが、Claude Code の LSP ツールが起動する
 // lua-language-server には渡らない。ここに書いて、どちらでも vim を正しく扱えるようにする。
 // ホームには置かない（.chezmoiignore）。
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "runtime.version": "LuaJIT",                 // Neovim が使う Lua の処理系
-  "diagnostics.globals": ["vim", "hs"],         // vim（Neovim）と hs（Hammerspoon）をグローバル変数として扱う
+  "diagnostics.globals": ["vim", "hs", "rex"],  // vim（Neovim）・hs（Hammerspoon）・rex（Rex）をグローバル変数として扱う
   "workspace.checkThirdParty": false,          // サードパーティのライブラリ設定を勧める通知を出さない
   "workspace.library": [                       // 型の情報を読む場所
     // Neovim 本体（vim.api などの型）。$VIMRUNTIME は Neovim の外では決まらないので、

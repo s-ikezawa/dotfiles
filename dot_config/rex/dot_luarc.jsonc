@@ -1,0 +1,8 @@
+// ~/.config/rex を開いたときの lua-language-server の設定。
+// このフォルダは git リポジトリではないので、これがプロジェクトのルートの目印にもなる。
+// Neovim の lsp/lua_ls.lua は Neovim 向け（LuaJIT・vim）なので、ここで Rex 向けに上書きする。
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "Lua 5.1",   // Rex に組み込まれている Lua の版（ドキュメントの Lua API に記載）
+  "diagnostics.globals": ["rex"]  // rex（Rex の API）をグローバル変数として扱う
+}
