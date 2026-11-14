@@ -333,13 +333,14 @@ show-recents = false                            # 最近使用したアプリを
 MJConfigFile = "~/.config/hammerspoon/init.lua"  # 設定ファイルを ~/.hammerspoon でなく XDG の場所から読む
 
 # Rex のフォントとテーマは init.lua で設定できず、設定画面の値がここに入る。
-# フォントは Ghostty と同じ UDEV Gothic にしたいが、Rex の一覧には 35NF が出ないため NF にしている。
+# フォントは Ghostty と同じ UDEV Gothic 35NF にしたいが、Rex の一覧には 35NF が出ない
+# （インストール済みでも）。一覧に出る 35NFLG（35NF にリガチャを足した版）にしている。
 # テーマ（Catppuccin Mocha）は data 型の Workspace.customThemes に入り、darkThemeID もその中の
 # ランダムな ID を指すので、ここでは管理できない。新しい Mac では手で入れる:
 # Settings > Themes > Import a Ghostty or iTerm theme file で
 # /Applications/Ghostty.app/Contents/Resources/ghostty/themes/Catppuccin Mocha を選び、Dark theme にする。
 [bootstrap.macos.defaults."com.superlogical.rex"]
-"Workspace.terminalFontName" = "UDEV Gothic NF"  # Settings > Terminal > Typography > Terminal font
+"Workspace.terminalFontName" = "UDEV Gothic 35NFLG"  # Settings > Terminal > Typography > Terminal font
 "Workspace.terminalFontPointSize" = 14.0        # 同 Font size（Rex は float で保存する。14 だと int で書かれる）
 # Ghostty の macos-option-as-alt = left と同じく、左 Option を Alt として送る（右 Option は特殊文字入力用に残す）
 "Workspace.terminalOptionKeyBehavior" = "leftActsAsAlt"  # Settings > Terminal > Keyboard > Option key: Left sends Alt
