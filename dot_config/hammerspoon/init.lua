@@ -71,10 +71,10 @@ local layouts = {
     windows = {
       -- 画面を FHD の高さで上下 2 段に分け、中央の FHD の幅に置く
       -- 下の段の中央に FHD（1920 × 1080）
-      ["com.mitchellh.ghostty"] = function(f)
+      ["com.superlogical.rex"] = function(f)
         return { x = f.x + (f.w - 1920) / 2, y = f.y + f.h - 1080, w = 1920, h = 1080 }
       end,
-      -- 上の段の中央に、Ghostty と同じ幅で。高さはメニューバーの下から Ghostty の上まで
+      -- 上の段の中央に、Rex と同じ幅で。高さはメニューバーの下から Rex の上まで
       ["com.google.Chrome"] = function(f)
         return { x = f.x + (f.w - 1920) / 2, y = f.y, w = 1920, h = f.h - 1080 }
       end,
