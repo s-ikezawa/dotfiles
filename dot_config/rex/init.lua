@@ -35,3 +35,13 @@ rex.bind("navigate/j", "session.next")
 rex.bind("navigate/k", "session.previous")
 rex.bind("navigate/h", "pane.focus.left")
 rex.bind("navigate/l", "pane.focus.right")
+
+-- リサイズモード（prefix+r）。h/j/k/l で境界線をその向きに 5% ずつ動かし、= で均等に戻す。Esc で抜ける。
+-- 何度も続けて押すので、prefix を毎回押さずに済むようモードにしている。
+rex.mode("resize", { exclusive = true })
+rex.bind(prefix .. ">r", "client.mode.enter", { name = "resize" })
+rex.bind("resize/h", "pane.resize", { direction = "left" })
+rex.bind("resize/j", "pane.resize", { direction = "down" })
+rex.bind("resize/k", "pane.resize", { direction = "up" })
+rex.bind("resize/l", "pane.resize", { direction = "right" })
+rex.bind("resize/=", "pane.balance")
