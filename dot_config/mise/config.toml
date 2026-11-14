@@ -256,6 +256,7 @@ gh skill update --all
 "brew-cask:google-chrome" = { os = "macos" }
 "brew-cask:firefox" = { os = "macos" }
 "brew-cask:ghostty" = { os = "macos" }
+"brew-cask:obsidian" = { os = "macos" }
 
 # VS Code。主に Dev Containers 拡張機能でコンテナの中を開くのに使う（拡張機能は下の post-packages で入れる）。
 # docker の CLI と同じく、.zshenv の DOCKER_CONFIG にある Colima の context に接続する
