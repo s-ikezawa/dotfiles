@@ -144,7 +144,9 @@ hs.hotkey.bind({ "ctrl", "alt" }, "l", applyLayout)
 -- リーダーキーの後に押すキーと、その内容。キーを足すときはここに 1 行足す。
 --   key:   hs.hotkey に渡すキーの名前、label: 一覧に出す名前（省くと key をそのまま出す）
 --   desc:  一覧に出す説明、fn: 実行する関数
+local showRexKeys -- 下の Rex の節で定義する
 local whichKeyItems = {
+  { key = "x", desc = "Rex の Ctrl+A のキーの一覧を出す", fn = function() showRexKeys() end },
   { key = "l", desc = "モニターの構成に合わせてウィンドウを並べ直す", fn = applyLayout },
   { key = "return", label = "Enter", desc = "ウィンドウを中央に大きく出す／元に戻す", fn = toggleCenter },
   { key = "r", desc = "Hammerspoon の設定を読み直す", fn = hs.reload },
@@ -165,29 +167,39 @@ local whichKeyStyle = {
 
 local whichKeyCanvas = nil
 
-local function whichKeyText()
+-- items は { label = 一覧に出すキー, desc = 説明 } の並び
+local function whichKeyText(title, items)
   local s = whichKeyStyle
   local function styled(str, color)
     return hs.styledtext.new(str, { font = { name = s.font, size = s.fontSize }, color = color })
   end
 
-  local text = styled("Hammerspoon（Esc で閉じる）\n\n", s.title)
-  for _, item in ipairs(whichKeyItems) do
-    local label = item.label or item.key
-    text = text .. styled(string.format("%-6s", label), s.key) .. styled("  " .. item.desc .. "\n", s.text)
+  local text = styled(title .. "\n\n", s.title)
+  for _, item in ipairs(items) do
+    text = text .. styled(string.format("%-6s", item.label), s.key) .. styled("  " .. item.desc .. "\n", s.text)
   end
   return text
 end
 
-local function showWhichKey()
+local function hideWhichKey()
+  if whichKeyCanvas then
+    whichKeyCanvas:delete()
+    whichKeyCanvas = nil
+  end
+end
+
+-- 一覧を出す。position が "bottom" なら画面の下寄りに出す（既定は中央）
+local function showWhichKeyList(title, items, position)
+  hideWhichKey()
   local s = whichKeyStyle
   local lineHeight = s.fontSize * 1.5
-  local height = s.padding * 2 + lineHeight * (#whichKeyItems + 2)
+  local height = s.padding * 2 + lineHeight * (#items + 2)
   local screen = hs.screen.mainScreen():frame()
+  local y = position == "bottom" and (screen.y + screen.h - height - 48) or (screen.y + (screen.h - height) / 2)
 
   whichKeyCanvas = hs.canvas.new({
     x = screen.x + (screen.w - s.width) / 2,
-    y = screen.y + (screen.h - height) / 2,
+    y = y,
     w = s.width,
     h = height,
   })
@@ -202,7 +214,7 @@ local function showWhichKey()
     },
     {
       type = "text",
-      text = whichKeyText(),
+      text = whichKeyText(title, items),
       frame = { x = s.padding, y = s.padding, w = s.width - s.padding * 2, h = height - s.padding * 2 },
     }
   )
@@ -210,11 +222,12 @@ local function showWhichKey()
   whichKeyCanvas:show()
 end
 
-local function hideWhichKey()
-  if whichKeyCanvas then
-    whichKeyCanvas:delete()
-    whichKeyCanvas = nil
+local function showWhichKey()
+  local items = {}
+  for _, item in ipairs(whichKeyItems) do
+    table.insert(items, { label = item.label or item.key, desc = item.desc })
   end
+  showWhichKeyList("Hammerspoon（Esc で閉じる）", items)
 end
 
 -- Ctrl + Option + /
@@ -229,5 +242,180 @@ for _, item in ipairs(whichKeyItems) do
     item.fn()
   end)
 end
+
+--------------------------------------------------------------------------------
+-- Rex の which-key。Rex が前面にあるときに Ctrl+A（Rex の init.lua の prefix）を押すと、
+-- 続けて押せるキーを上の一覧と同じ見た目で出す。Rex には次に押せるキーを出す機能がないため。
+-- キーは横取りせず見るだけなので、Rex にはそのまま届く。次のキーを押すと消える。
+-- そのキーでキーモード（client.mode.enter）に入ったら、モードの中のキーを出したままにし、Esc で消す。
+-- キーの一覧は `rex keymap --json` から作るので、Rex の init.lua にキーを足せば一覧にも出る。
+--------------------------------------------------------------------------------
+local rexBundleID = "com.superlogical.rex"
+-- Hammerspoon からはシェルの PATH が見えないので、rex を置き場所で呼ぶ
+local rexCommand = os.getenv("HOME")
+  .. "/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+local rexPrefix = "ctrl+a"
+
+-- 一覧に出す説明。ここに無いアクションは、アクションの名前と引数をそのまま出す
+local rexActionDesc = {
+  ["pane.split.right"] = "左右に分割する",
+  ["pane.split.down"] = "上下に分割する",
+  ["pane.focus.left"] = "左のブロックへ",
+  ["pane.focus.down"] = "下のブロックへ",
+  ["pane.focus.up"] = "上のブロックへ",
+  ["pane.focus.right"] = "右のブロックへ",
+  ["pane.balance"] = "分割を均等に戻す",
+  ["pane.send_key"] = "Ctrl+A をターミナルに送る",
+  ["client.tab.rename"] = "タブの名前を変える",
+  ["session.rename"] = "セッションの名前を変える",
+  ["session.next"] = "次のセッションへ",
+  ["session.previous"] = "前のセッションへ",
+}
+local rexDirection = { left = "左", right = "右", up = "上", down = "下" }
+local rexModeDesc = { navigate = "ナビゲートモード", resize = "リサイズモード" }
+
+local function rexDescribe(b)
+  local args = b.args or {}
+  if b.action == "client.mode.enter" then
+    return (rexModeDesc[args.name] or (args.name .. " モード")) .. "に入る"
+  elseif b.action == "pane.resize" and rexDirection[args.direction] then
+    return "境界線を" .. rexDirection[args.direction] .. "へ動かす"
+  end
+  local desc = rexActionDesc[b.action]
+  if desc then return desc end
+  return b.args and (b.action .. " " .. hs.json.encode(b.args)) or b.action
+end
+
+-- Rex のキーの書き方を、一覧に出す形にする（shift+\ → |、ctrl+a → Ctrl+A など）
+local rexShifted = { ["\\"] = "|", ["4"] = "$", ["-"] = "_", ["="] = "+", [","] = "<", ["."] = ">", ["/"] = "?" }
+local function rexLabel(key)
+  local base = key:match("^shift%+(.+)$")
+  if base and rexShifted[base] then return rexShifted[base] end
+  return (key:gsub("ctrl%+", "Ctrl+"):gsub("shift%+", "Shift+"):gsub("alt%+", "Opt+"):gsub("cmd%+", "Cmd+"))
+end
+
+local rexBindings = {} -- 最後に読んだ rex keymap --json の bindings
+
+-- 裏で rex keymap --json を読み直す。読み終えたら done を呼ぶ（省いてよい）
+local function rexReloadKeymap(done)
+  hs.task.new(rexCommand, function(code, out)
+    if code == 0 then
+      local ok, data = pcall(hs.json.decode, out)
+      if ok and data and data.bindings then rexBindings = data.bindings end
+    end
+    if done then done() end
+  end, { "keymap", "--json" }):start()
+end
+
+-- init.lua の書いた順に並べる（source は "init.lua:<行>"）
+local function rexLine(b) return tonumber((b.source or ""):match(":(%d+)$")) or 0 end
+
+-- mode が nil なら prefix に続くキー、名前ならそのモードの中のキー
+local function rexItems(mode)
+  local list = {}
+  for _, b in ipairs(rexBindings) do -- JSON の null（モードの外）は nil になる
+    local match
+    if mode == nil then
+      match = b.mode == nil and #b.keys == 2 and b.keys[1] == rexPrefix
+    else
+      match = b.mode == mode and #b.keys == 1
+    end
+    if match then table.insert(list, b) end
+  end
+  table.sort(list, function(a, b) return rexLine(a) < rexLine(b) end)
+  local items = {}
+  for _, b in ipairs(list) do
+    table.insert(items, { label = rexLabel(b.keys[#b.keys]), desc = rexDescribe(b), binding = b })
+  end
+  return items
+end
+
+-- 一覧を出しているかと、何の一覧か。
+--   nil: 出していない、"prefix": Ctrl+A を押した後、"list": リーダーキーから出した（次のキーで消す）、
+--   それ以外: そのキーモードの中
+local rexState = nil
+
+local function rexHide()
+  rexState = nil
+  hideWhichKey()
+end
+
+-- 下寄りに出す（リサイズモードで、画面の中央にある境界線が隠れないように）
+local function rexShowPrefix()
+  rexState = "prefix"
+  showWhichKeyList("Rex: Ctrl+A に続けて押すキー", rexItems(nil), "bottom")
+end
+
+local function rexShowMode(name)
+  rexState = name
+  showWhichKeyList("Rex: " .. (rexModeDesc[name] or name) .. "（Esc で抜ける）", rexItems(name), "bottom")
+end
+
+-- リーダーキーから出す。Rex に Ctrl+A は届いていないので、次のキーはモードに入るかを見ずに消すだけにする
+showRexKeys = function()
+  rexReloadKeymap(function()
+    rexShowPrefix()
+    rexState = "list"
+  end)
+end
+
+-- キーを押したときの Rex のキーの名前（Shift を押さない側の文字。Rex の照合と同じ）
+local function rexKeyName(event)
+  local key = hs.keycodes.map[event:getKeyCode()]
+  if not key then return nil end
+  local flags = event:getFlags()
+  local mods = {}
+  if flags.ctrl then table.insert(mods, "ctrl") end
+  if flags.alt then table.insert(mods, "alt") end
+  if flags.shift then table.insert(mods, "shift") end
+  if flags.cmd then table.insert(mods, "cmd") end
+  table.insert(mods, key)
+  return table.concat(mods, "+")
+end
+
+local function rexIsFront()
+  local app = hs.application.frontmostApplication()
+  return app ~= nil and app:bundleID() == rexBundleID
+end
+
+-- キーを押すたびに呼ばれる。false を返して、キーは必ず Rex に届ける。
+-- macOS は時間のかかるコールバックのイベントタップを止めるので、ここでは rex を待たない。
+-- イベントタップとウォッチャーは、ローカル変数にするとガベージコレクションで止まるのでグローバルに置く
+RexKeyTap = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+  if not rexIsFront() then
+    if rexState then rexHide() end
+    return false
+  end
+  local key = rexKeyName(event)
+
+  if rexState == "list" then
+    rexHide()
+  elseif rexState == "prefix" then
+    local pressed = nil
+    for _, item in ipairs(rexItems(nil)) do
+      if item.binding.keys[2] == key then pressed = item.binding end
+    end
+    if pressed and pressed.action == "client.mode.enter" and pressed.args and pressed.args.name then
+      rexShowMode(pressed.args.name)
+    else
+      rexHide()
+    end
+  elseif rexState then -- キーモードの中
+    if key == "escape" then rexHide() end
+  elseif key == rexPrefix then
+    rexShowPrefix()         -- いま覚えている一覧ですぐ出し、
+    rexReloadKeymap(function() -- 読み直したら出し直す（init.lua を変えた直後でも合うように）
+      if rexState == "prefix" then rexShowPrefix() end
+    end)
+  end
+  return false
+end):start()
+
+-- Rex から離れたら消す
+RexAppWatcher = hs.application.watcher.new(function(_, eventType, app)
+  if eventType == hs.application.watcher.deactivated and app and app:bundleID() == rexBundleID then rexHide() end
+end):start()
+
+rexReloadKeymap()
 
 hs.alert.show("Hammerspoon の設定を読み込みました")
