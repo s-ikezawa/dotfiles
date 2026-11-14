@@ -26,6 +26,11 @@ rex.bind(prefix .. ">j", "pane.focus.down")
 rex.bind(prefix .. ">k", "pane.focus.up")
 rex.bind(prefix .. ">l", "pane.focus.right")
 
+-- tmux と同じく、, でタブ（tmux の window）、$ でセッションの名前を変える。
+-- $ は Shift を押さない側の文字で shift+4 と書く（| を shift+\ と書くのと同じ）。
+rex.bind(prefix .. ">,", "client.tab.rename")
+rex.bind(prefix .. ">shift+4", "session.rename")
+
 -- herdr のナビゲートモード（prefix+w）に当たるもの。Esc で抜ける。
 -- herdr と同じく j/k を Spaces（Rex ではセッション）の移動に使い、h/l はペインの左右移動にする。
 -- exclusive にして、モード中にほかのキーがターミナルへ入力されないようにする。
