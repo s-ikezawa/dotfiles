@@ -1,7 +1,7 @@
 # Neovim の設定
 
 Claude Code が書き換えたコードを、じっくり読んでレビューするための Neovim の設定です（簡単な差分は hunk で見ます）。
-Claude Code は Neovim の中ではなく herdr の別のペインで動かし、claudecode.nvim でつなぎます。
+Claude Code は Neovim の中ではなく Rex の別のペインで動かし、claudecode.nvim でつなぎます。
 
 - Neovim 0.12 以降が前提です（プラグインは標準の `vim.pack` で入れます）。
 - `<leader>` はスペース、`<localleader>` は `\` です。
@@ -50,7 +50,6 @@ mise で入れるもの:
 
 - Nerd Font（アイコンに使う）
 - Ghostty（左の Option を Alt として使う設定。`<A-j>`・`<A-k>` で行を移すため）
-- herdr（Claude Code を動かすペイン。Claude に送るキーで使う）
 - ImageMagick と librsvg（Homebrew。mise の `[bootstrap.packages]` で入れる）。snacks.nvim が画像を PNG に変えるのに使う。
   SVG は `~/.config/ImageMagick/delegates.xml` で rsvg-convert に変換させている（`.zshenv` の `MAGICK_CONFIGURE_PATH` で読ませる）
 
@@ -130,7 +129,7 @@ mise で入れるもの:
 2. `]c`・`[c` で変更を、`]f`・`[f` でファイルを移る。`t` で 1 列の表示と左右に並べる表示を切り替える。
 3. 気になるところは、ファイルを開いて `]h`・`[h` で変更の固まりを移りながら読む。`<leader>ghp` で変更前の内容をその場に出す。
 4. 良ければ `<leader>ghs` でステージし、だめなら `<leader>ghr` で戻す。
-5. 直してほしいところは、行や範囲を選んで `<leader>ap` を押し、指示を書いて Claude に送る。
+5. 直してほしいところは、行や範囲を選んで `<leader>as` で Claude に送り、Claude のペインで指示を書く。
 
 ### コードをたどる
 
@@ -327,15 +326,14 @@ grug-far のバッファでは、次のキーが使えます。`g?` を押すと
 
 | キー | 動き |
 |---|---|
-| `<leader>ap` | この行（選んだ範囲）に指示を付けて Claude に送り、送信まで済ませる（herdr。`@<ファイル>#L<行> <指示>` の形で送る） |
 | `<leader>as` | 選んだ範囲を Claude に送る（neo-tree の中では、カーソルのファイルを送る） |
 | `<leader>ab` | このファイルを Claude に送る |
-| `<leader>af` | Claude のペインへ移る（herdr） |
 | `<leader>aS` | Claude との接続の状態を出す |
 | `<leader>aa`・`<leader>ad` | Claude の変更の提案を受け入れる・断る |
 
-範囲やファイルを送ると、続けて打ち込めるよう Claude のペインへ移ります。
-`<leader>ap` と `<leader>af` は、herdr の同じタブ（なければ同じワークスペース）にいる Claude のペインに送ります。
+先に Claude Code で `/ide` を実行して、この Neovim につないでおきます。
+送るのは `@<ファイル>#L<行>` の参照だけで、Claude の入力欄に入ります（送信はしません）。
+Rex のキー（`Ctrl+A` → `h`・`l`）で Claude のペインへ移り、続けて指示を書きます。
 
 ### 表示の切り替え（`<leader>u`）
 
