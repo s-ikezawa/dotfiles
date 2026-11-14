@@ -48,6 +48,19 @@
 - シークレットをコマンドの引数に直接書かない（シェルの履歴やログに残るため）。
 - `git commit --no-verify` などでコミット前のフックを飛ばさない。フックで止まったら原因をユーザーに報告する。
 
+# 引用
+
+- markdown の引用ブロックの出典は、ファイルの最後にまとめず、引用ブロックの最後の行（`> — [タイトル](URL)`）か
+  直下に書く（どの引用がどこからか、離れた場所を見なくても分かるため）。
+- 日本語以外の文章を引用するときは、原文の各行の下に日本語訳を同じ引用ブロックの中に書く:
+
+  ```markdown
+  > The format is intentionally minimal.
+  > 形式は意図的に最小限にしている。
+  >
+  > — [OKF v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) §1
+  ```
+
 # 図のフォント
 
 - SVG の font-family は OS の標準フォントだけを並べる:
