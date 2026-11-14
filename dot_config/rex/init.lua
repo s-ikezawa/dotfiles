@@ -20,7 +20,7 @@ rex.bind(prefix .. ">ctrl+a", "pane.send_key", { key = "ctrl+a" })
 rex.bind(prefix .. ">shift+\\", "pane.split.right")
 rex.bind(prefix .. ">-", "pane.split.down")
 
--- h/j/k/l でペインを移動する（herdr の初期設定と同じ）。
+-- h/j/k/l でブロック（Rex での分割した 1 区画の呼び名。アクション名では pane）を移動する（herdr の初期設定と同じ）。
 rex.bind(prefix .. ">h", "pane.focus.left")
 rex.bind(prefix .. ">j", "pane.focus.down")
 rex.bind(prefix .. ">k", "pane.focus.up")
@@ -32,7 +32,7 @@ rex.bind(prefix .. ">,", "client.tab.rename")
 rex.bind(prefix .. ">shift+4", "session.rename")
 
 -- herdr のナビゲートモード（prefix+w）に当たるもの。Esc で抜ける。
--- herdr と同じく j/k を Spaces（Rex ではセッション）の移動に使い、h/l はペインの左右移動にする。
+-- herdr と同じく j/k を Spaces（Rex ではセッション）の移動に使い、h/l はブロックの左右移動にする。
 -- exclusive にして、モード中にほかのキーがターミナルへ入力されないようにする。
 rex.mode("navigate", { exclusive = true })
 rex.bind(prefix .. ">w", "client.mode.enter", { name = "navigate" })
