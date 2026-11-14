@@ -1,0 +1,4 @@
+-- Rex の設定（~/.config/rex/init.lua）。
+-- Rex はファイルの変更を見張らないので、書き換えたら `rex config reload` で読み直す。
+-- 反映する前に `rex config check` で書き間違いがないか確かめられる。
+-- ドキュメント: https://www.superlogical.com/rex/docs/customize/config
