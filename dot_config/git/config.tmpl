@@ -115,7 +115,9 @@
 [alias]
 	# git graph でコミットグラフを serie（mise で入れる TUI）で開く。後ろに付けたオプションは serie に渡る
 	# （git graph -n 100 など。使えるオプションは serie --help）。! で始まる別名はリポジトリの一番上で動く。
-	graph = !serie
+	# -p kitty: serie の自動判定は kitty・Ghostty の環境変数しか見ず、Rex では iTerm2 方式を選んで
+	# グラフが色の付いた線だけになる。Rex も Ghostty も kitty 方式で描けるので指定しておく。
+	graph = !serie -p kitty
 
 [ghq]
 	# ghq get で clone する場所。~ は ghq が git config --path で読むので展開される。
