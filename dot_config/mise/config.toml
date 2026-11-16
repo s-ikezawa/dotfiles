@@ -80,6 +80,12 @@ go = "latest"
 # uv tool install で入れたコマンドは XDG_BIN_HOME（~/.local/bin。.zshenv で設定）に入る。
 uv = "latest"
 
+# PDF から文字を取り出す（pdfminer.six の pdf2txt.py）。主に Claude Code が、論文などの PDF を読むのに使う:
+#   pdf2txt.py <ファイル>.pdf（ページを絞るなら --page-numbers 1 2 3）
+# pypi バックエンドは、uv があれば uv tool install で入れる（pipx: は同じバックエンドの別名だが、
+# 別のツールとして扱われ二重に入るので pypi: に揃える）
+"pypi:pdfminer.six" = "latest"
+
 # AWS の CLI（aws）。認証情報と設定の置き場所は .zshenv で XDG に揃える（~/.config/aws）
 aws-cli = "latest"
 
