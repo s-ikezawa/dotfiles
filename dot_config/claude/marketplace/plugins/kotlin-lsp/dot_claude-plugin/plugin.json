@@ -1,7 +1,7 @@
 {
   "name": "kotlin-lsp",
   "version": "0.1.0",
-  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。キャッシュとインデックスは $XDG_CACHE_HOME/kotlin-lsp-claude に置き、Neovim のもの（kotlin-lsp）と分けて、同じフォルダを 2 つの言語サーバーが同時に使わないようにする（args の ${XDG_CACHE_HOME} は Claude Code が展開する）",
+  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。設定・ロックは $XDG_CACHE_HOME/kotlin-lsp-claude に置き、Neovim のもの（kotlin-lsp）と分けて、同じフォルダを 2 つの言語サーバーが同時に使わないようにする（args の ${XDG_CACHE_HOME} は Claude Code が展開する）。271.2085.0 からインデックスのデータベースは --system-path の外の ~/Library/Caches/JetBrains/IntelliJServer/workspaces/<ハッシュ> に置かれる。initializationOptions の indexDir はプロジェクトごとに変えられないのでここでは指定せず、Neovim の側で indexDir を指定して分ける",
   "author": {
     "name": "s-ikezawa"
   },

@@ -12,6 +12,16 @@ return {
     -- キャッシュとインデックスの置き場所。指定しないと起動のたびに一時フォルダに作り直し、毎回インデックス作業から始まる
     '--system-path=' .. cache,
   },
+  -- インデックスのデータベースの置き場所。271.2085.0 から --system-path の外（指定しないと
+  -- ~/Library/Caches/JetBrains/IntelliJServer/workspaces/<ハッシュ>）に置かれ、Claude Code の kotlin-lsp と
+  -- 同じプロジェクトで取り合って「While lock file: .../rocks/v241/LOCK: Resource temporarily unavailable」で失敗する。
+  -- indexDir は渡したフォルダの直下にそのまま作るので、プロジェクトのルートのハッシュで分ける。
+  before_init = function(params, config)
+    local options = params.initializationOptions --[[@as table?]]
+    params.initializationOptions = vim.tbl_extend('force', options or {}, {
+      indexDir = vim.fs.joinpath(cache, 'index', vim.fn.sha256(config.root_dir or vim.fn.getcwd())),
+    })
+  end,
   filetypes = { 'kotlin' },                           -- このファイルタイプのバッファで動かす
   root_markers = {                                    -- 上の階層へ探して、最初に見つかった場所をプロジェクトのルートにする
     { 'settings.gradle.kts', 'settings.gradle' },     -- Gradle のマルチプロジェクトのルート
