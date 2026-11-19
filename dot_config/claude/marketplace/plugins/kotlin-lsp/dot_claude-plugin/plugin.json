@@ -1,19 +1,18 @@
 {
   "name": "kotlin-lsp",
-  "version": "0.1.0",
-  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。設定・ロックは $XDG_CACHE_HOME/kotlin-lsp-claude に置き、Neovim のもの（kotlin-lsp）と分けて、同じフォルダを 2 つの言語サーバーが同時に使わないようにする（args の ${XDG_CACHE_HOME} は Claude Code が展開する）。271.2085.0 からインデックスのデータベースは --system-path の外の ~/Library/Caches/JetBrains/IntelliJServer/workspaces/<ハッシュ> に置かれる。initializationOptions の indexDir はプロジェクトごとに変えられないのでここでは指定せず、Neovim の側で indexDir を指定して分ける",
+  "version": "0.2.0",
+  "description": "JetBrains の kotlin-lsp（mise で導入。コマンドの名前は intellij-server）を LSP ツールで使う。公式の kotlin-lsp プラグインは kotlin-lsp という名前のコマンドを探すうえ、キャッシュの場所を指定できないため、代わりにこれを使う。kotlin-lsp は 1 つの作業用のフォルダ（--system-path）を 1 つのサーバーしか使えず、会話ごとに起動すると別の会話が使っている間は起動できないので、scripts/connect.sh が --multi-client のサーバーを 1 つだけ裏で動かし、各会話は nc でそこにつなぐ。サーバーの作業用のフォルダは $XDG_CACHE_HOME/kotlin-lsp-claude-shared で、Neovim のもの（kotlin-lsp）とは分けている。インデックスのデータベースは --system-path の外の ~/Library/Caches/JetBrains/IntelliJServer/workspaces/<ハッシュ> に置かれ、1 つのサーバーの中で共有される。サーバーは、どの会話もつないでいない状態が 30 分続くと自分で止まる。手で止めると、つないでいた会話の Claude Code は kotlin-lsp を『server is running』と思い込んだまま使えなくなり、起動し直しが要るので、手では止めない",
   "author": {
     "name": "s-ikezawa"
   },
   "lspServers": {
     "kotlin": {
-      "command": "intellij-server",
-      "args": ["--stdio", "--system-path=${XDG_CACHE_HOME}/kotlin-lsp-claude"],
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/connect.sh",
       "extensionToLanguage": {
         ".kt": "kotlin",
         ".kts": "kotlin"
       },
-      "startupTimeout": 120000
+      "startupTimeout": 180000
     }
   }
 }
