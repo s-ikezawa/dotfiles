@@ -55,6 +55,15 @@ export GOENV="$XDG_CONFIG_HOME/go/env"      # go env -w の書き込み先（既
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # ---------------------------------------------------------------------------
+# Android の SDK（CLI は Homebrew の android-commandlinetools で入れる）
+# ---------------------------------------------------------------------------
+# SDK の場所。sdkmanager は自分の置き場所（<SDK>/cmdline-tools/latest）から SDK の場所を決めるので、
+# cask が入れる場所に合わせる。Gradle（Android Gradle Plugin）もこの変数で SDK を探す。
+export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
+# エミュレーターの仮想端末（AVD）や adb の鍵などの置き場所（既定は ~/.android）。AVD は $ANDROID_USER_HOME/avd に入る
+export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
+
+# ---------------------------------------------------------------------------
 # AWS CLI（mise で入れる）
 # ---------------------------------------------------------------------------
 # 設定と認証情報の置き場所（既定はどちらも ~/.aws）。SSO のトークンなどのキャッシュは
@@ -138,6 +147,9 @@ _zsh_setup_path() {
     # keg-only（サーバー本体の formula とぶつかるので、Homebrew が bin に入れない）の DB のクライアント
     "$HOMEBREW_PREFIX/opt/libpq/bin"
     "$HOMEBREW_PREFIX/opt/mysql-client/bin"
+    # Android の adb と emulator（sdkmanager で入れる。sdkmanager・avdmanager は Homebrew の bin に入る）
+    "$ANDROID_HOME/platform-tools"
+    "$ANDROID_HOME/emulator"
     "$HOMEBREW_PREFIX/bin"
     "$HOMEBREW_PREFIX/sbin"
     $path

@@ -248,6 +248,18 @@ gh skill update --all
 "brew:libpq" = { os = "macos" }         # psql・pg_dump など（PostgreSQL）
 "brew:mysql-client" = { os = "macos" }  # mysql・mysqldump など（MySQL）
 
+# Android の SDK の CLI（sdkmanager・avdmanager など）。Android Studio は入れず、ビルド・エミュレーター・adb を
+# すべて CLI で扱う（実装とデバッグは主に Claude Code が行うため）。cask は
+# <prefix>/share/android-commandlinetools/cmdline-tools/latest に入り、sdkmanager はそこから SDK の場所を
+# <prefix>/share/android-commandlinetools と決める。ANDROID_HOME も同じ場所にしている（.zshenv）。
+# platform-tools・エミュレーター・プラットフォームなどの版はプロジェクトごとに違うので、ここでは入れず、
+# プロジェクトの mise のタスクで入れる。
+# cask には Android CLI（android コマンド）も入る。sdkmanager は非推奨になり、`android sdk` が後継。
+# ビルド・エミュレーター・画面の確認と操作・Compose のプレビューの画像化まで扱える、AI エージェント向けの公式の CLI。
+# 使い方のデータを Google に送るので、~/.androidrc（dot_androidrc）で --no-metrics を既定にしている。
+# .androidrc にはコメントを書けるか分からないので、説明はここに書く
+"brew-cask:android-commandlinetools" = { os = "macos" }
+
 # 画像の変換（ImageMagick の magick）。Neovim の snacks.nvim が Markdown の画像を表示するときに、
 # PNG 以外（SVG・JPEG など）を PNG に変える
 "brew:imagemagick" = { os = "macos" }
