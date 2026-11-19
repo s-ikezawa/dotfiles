@@ -60,8 +60,11 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 # SDK の場所。sdkmanager は自分の置き場所（<SDK>/cmdline-tools/latest）から SDK の場所を決めるので、
 # cask が入れる場所に合わせる。Gradle（Android Gradle Plugin）もこの変数で SDK を探す。
 export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
-# エミュレーターの仮想端末（AVD）や adb の鍵などの置き場所（既定は ~/.android）。AVD は $ANDROID_USER_HOME/avd に入る
+# エミュレーターの仮想端末（AVD）や adb の鍵などの置き場所（既定は ~/.android）
 export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
+# AVD の置き場所。Android CLI（android emulator create）は $ANDROID_USER_HOME/avd に作るが、エミュレーター本体は
+# ANDROID_USER_HOME を見ず、ANDROID_AVD_HOME が無いと ~/.android/avd を探して「Unknown AVD name」で起動しない
+export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
 
 # ---------------------------------------------------------------------------
 # AWS CLI（mise で入れる）
