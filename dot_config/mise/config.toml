@@ -80,14 +80,6 @@ go = "latest"
 # uv tool install で入れたコマンドは XDG_BIN_HOME（~/.local/bin。.zshenv で設定）に入る。
 uv = "latest"
 
-# PDF の文字の取り出しとページの画像化（poppler の pdftotext・pdftoppm など）。主に Claude Code が PDF を読むのに使う。
-# Claude Code の Read ツールは、PDF のページを pdftoppm で画像にして読むので、図も読める（無いと PDF を開けない）。
-# 文字だけで足りるときや、本文を検索するときは pdftotext を使う:
-#   pdftotext -layout -f <最初のページ> -l <最後のページ> <ファイル>.pdf -（- で標準出力に出す）
-# 以前は文字の取り出しに pdfminer.six（pdf2txt.py）を入れていたが、図を読めないので poppler に置き換えた。
-# mise の registry では conda バックエンド（conda:poppler）で入る
-poppler = "latest"
-
 # AWS の CLI（aws）。認証情報と設定の置き場所は .zshenv で XDG に揃える（~/.config/aws）
 aws-cli = "latest"
 
@@ -268,6 +260,16 @@ gh skill update --all
 # SVG の変換（rsvg-convert）。ImageMagick は rsvg-convert があれば SVG の変換をそちらに任せる。
 # ImageMagick に内蔵の変換（MSVG）は font-family にフォントを並べると読めずに失敗し、グラデーションなども崩れやすい
 "brew:librsvg" = { os = "macos" }
+
+# PDF の文字の取り出しとページの画像化（poppler の pdftotext・pdftoppm など）。主に Claude Code が PDF を読むのに使う。
+# Claude Code の Read ツールは、PDF のページを pdftoppm で画像にして読むので、図も読める（無いと PDF を開けない）。
+# 文字だけで足りるときや、本文を検索するときは pdftotext を使う:
+#   pdftotext -layout -f <最初のページ> -l <最後のページ> <ファイル>.pdf -（- で標準出力に出す）
+# mise の registry の poppler（conda:poppler）は、日本語の言語データ（Adobe-Japan1）を同梱していて置き場所も合っているのに、
+# 「Missing language pack for 'Adobe-Japan1' mapping」と言って、一部の日本語の PDF（オライリー・ジャパンの本）を文字にできなかった
+# （poppler 26.11.0。原因は分からない）。Homebrew の poppler は日本語の言語データを組み込んでいて、同じ PDF を文字にできたのでこちらにする。
+# 以前は pdfminer.six（pdf2txt.py）を入れていたが、図を読めないので poppler に置き換えた
+"brew:poppler" = { os = "macos" }
 
 # GUIツール
 "brew-cask:1password" = { os = "macos" }
