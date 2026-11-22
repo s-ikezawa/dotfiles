@@ -80,11 +80,13 @@ go = "latest"
 # uv tool install で入れたコマンドは XDG_BIN_HOME（~/.local/bin。.zshenv で設定）に入る。
 uv = "latest"
 
-# PDF から文字を取り出す（pdfminer.six の pdf2txt.py）。主に Claude Code が、論文などの PDF を読むのに使う:
-#   pdf2txt.py <ファイル>.pdf（ページを絞るなら --page-numbers 1 2 3）
-# pypi バックエンドは、uv があれば uv tool install で入れる（pipx: は同じバックエンドの別名だが、
-# 別のツールとして扱われ二重に入るので pypi: に揃える）
-"pypi:pdfminer.six" = "latest"
+# PDF の文字の取り出しとページの画像化（poppler の pdftotext・pdftoppm など）。主に Claude Code が PDF を読むのに使う。
+# Claude Code の Read ツールは、PDF のページを pdftoppm で画像にして読むので、図も読める（無いと PDF を開けない）。
+# 文字だけで足りるときや、本文を検索するときは pdftotext を使う:
+#   pdftotext -layout -f <最初のページ> -l <最後のページ> <ファイル>.pdf -（- で標準出力に出す）
+# 以前は文字の取り出しに pdfminer.six（pdf2txt.py）を入れていたが、図を読めないので poppler に置き換えた。
+# mise の registry では conda バックエンド（conda:poppler）で入る
+poppler = "latest"
 
 # AWS の CLI（aws）。認証情報と設定の置き場所は .zshenv で XDG に揃える（~/.config/aws）
 aws-cli = "latest"
