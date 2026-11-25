@@ -48,6 +48,11 @@ hunk = "latest"
 # mise の registry に無いので aqua から入れる
 "aqua:lusingander/serie" = "latest"
 
+# Markdown をブラウザで見る（mo）。`mo <ファイル>.md` や `mo docs/` で開き、保存すると自動で表示し直す。
+# GitHub 風の表示に加え、Mermaid の図や数式も描く。サーバーは 1 つ（ポート 6275）で、2 回目以降の mo は
+# 開いているページにファイルを足す。mise の registry に無いので aqua から入れる
+"aqua:k1LoW/mo" = "latest"
+
 # JSON を整形・抽出する（jq）。Claude Code のステータスライン（statusline.sh）でも使う。
 # macOS にも /usr/bin/jq があるが、OS の更新でバージョンが変わらないよう mise で揃える。
 # 補完は zsh 本体に _jq が入っているので生成しない。
